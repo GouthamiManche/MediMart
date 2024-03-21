@@ -5,7 +5,11 @@ export default {
 "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily:{
+       "Akaya": ["Akaya Kanadaka", "system-ui"],
+      }
+    },
   },
   plugins: [],
 }
