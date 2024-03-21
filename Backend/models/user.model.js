@@ -8,12 +8,20 @@ const userSchema = new mongoose.Schema({
       type: String,
       required: true,
       unique: true,
+      validate: {
+        validator: (value) => {
+          // Regular expression to validate email format
+          return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        },
+        message: 'Invalid email format',
+      },
     },
     password: {
       type: String,
       required: true,
-      minlength: 8,
+      minlength: 5,
     },
   });
 
-  module.exports = mongoose.model('User', userSchema);
+  const User = mongoose.model('User', userSchema);
+  module.exports = User;

@@ -1,65 +1,61 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react';
+import { useNavigate  } from 'react-router-dom';
+import axios from 'axios';
 
-function Login() {
+const LoginForm = () => {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+  const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Email:', email);
-    console.log('Password:', password);
-  }; 
+    try {
+      const response = await axios.post('http://localhost:4000/api/login', formData);
+      console.log(response.data); // Log the response from the backend
+      // Redirect to home page
+      navigate('/');
+    } catch (error) {
+      console.error('Error during login:', error);
+      if (error.response && error.response.data && error.response.data.error) {
+        setErrorMessage(error.response.data.error);
+      } else {
+        setErrorMessage('An error occurred during login.');
+      }
+    }
+  };
 
-  const [user,setUser]=useState({});
-  function handleCallbackResponse(response) {
-    console.log("encoded: " + response.credential);
-    var object = response.credential;
-    var userObject = jwtDecode(object);
-    console.log(userObject);
-    setUser(userObject);
-    document.getElementById("signin").hidden = true;
-}
-function handleSignOut(event){
-  setUser({});
-  document.getElementById("signin").hidden = false;
-}
-  useEffect(()=>{
-//google
-google.accounts.id.initialize({
-  client_id:"221746536037-24msh502h0uesab03aqi1vo0f3hbf9pi.apps.googleusercontent.com",
-  callback:handleCallbackResponse
-});
-google.accounts.id.renderButton(
-  document.getElementById("signin"),
-  {theme:"outline",size :"medium"}
-);
-google.accounts.id.prompt();
-  },[])
   return (
-  <>
-    <div>
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md">
-        <div className="bg-white rounded-lg shadow-md p-8">
-          <h1 className="text-3xl font-bold text-center mb-8">Login</h1>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-            <div>
-      <div id ="signin" className='font-bold py-2 '></div>
-            {
-              Object.keys(user).length !=0 && <button className="font-bold py-2 px-4" onClick={(e)=>handleSignOut(e)}>Sign Out</button>
-            }
-    </div> 
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-    </div>
+    <form onSubmit={handleSubmit}>
+      {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
+      <h2>Email/Username</h2>
+      <input
+        type="email"
+        name="email"
+        value={formData.email}
+        onChange={handleChange}
+        required
+      />
 
-    </>
-  )
-}
+      <h2>Password</h2>
+      <input
+        type="password"
+        name="password"
+        value={formData.password}
+        onChange={handleChange}
+        required
+      />
 
-export default Login
+      <button type="submit">Log in</button>
+    </form>
+  );
+};
+
+export default LoginForm;
