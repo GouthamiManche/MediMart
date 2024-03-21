@@ -1,70 +1,57 @@
-import React, { useEffect, useState } from 'react'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import { FaCartPlus } from 'react-icons/fa'; 
-//import jwt_decode from 'jwt-decode';
-import { jwtDecode } from 'jwt-decode';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { FaCartPlus, FaBars, FaTimes } from 'react-icons/fa';
 
 function Navbar() {
-  const [user,setUser]=useState({});
-  function handleCallbackResponse(response) {
-    console.log("encoded: " + response.credential);
-    var object = response.credential;
-    var userObject = jwtDecode(object);
-    console.log(userObject);
-    setUser(userObject);
-    document.getElementById("signin").hidden = true;
-}
-function handleSignOut(event){
-  setUser({});
-  document.getElementById("signin").hidden = false;
-}
-  useEffect(()=>{
-//google
-google.accounts.id.initialize({
-  client_id:"221746536037-24msh502h0uesab03aqi1vo0f3hbf9pi.apps.googleusercontent.com",
-  callback:handleCallbackResponse
-});
-google.accounts.id.renderButton(
-  document.getElementById("signin"),
-  {theme:"outline",size :"medium"}
-);
-google.accounts.id.prompt();
-  },[])
+  const [user, setUser] = useState({});
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
-    <>
-    <div className='flex flex-col h-screen'>
-      <div className="">
-        <header className="text-black text-l py-4 px-6 flex justify-between items-center bg-blue-100">
-          <nav className="flex gap-5 ">
-            <Link to="/" className="font-bold">LOGO</Link>
-            <div className='flex gap-9'>
-              <Link to="/">Home</Link>
-              <Link to="/shop">Shop</Link>
-              <Link to="/about">About Us</Link>
+    <div className="bg-white">
+      <header className="container mx-auto py-4 px-6 flex items-center justify-between">
+        <div className="flex items-center">
+          <Link to="/" className="text-xl md:text-3xl font-bold transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500">
+            MEDIMART
+          </Link>
+          <nav className="hidden md:flex md:ml-[22rem]">
+            <div className="flex gap-12">
+              <Link to="/" className="transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500">Home</Link>
+              <Link to="/shop" className="transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500">Shop</Link>
+              <Link to="/about" className="transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500">About Us</Link>
             </div>
           </nav>
-          <nav className='flex justify-between gap-4'>
-          <Link className='py-2 px-4 font-bold text-lg' to="/login">Login</Link>
-          {user &&
-              // <Link className="font-bold py-2 px-4" >{user.name}</Link>
-              <div>
-                <h3 className='font-bold py-2 px-4'>{user.name}</h3>
-              </div>
-              }
+        </div>
+        <div className="md:hidden">
+          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+            {mobileMenuOpen ? <FaTimes className="text-xl" /> : <FaBars className="text-xl" />}
+          </button>
+        </div>
+        <nav className="hidden md:flex items-center gap-4">
+          <Link className="py-2 px-4 font-bold text-lg transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500" to="/login">Login</Link>
+          {user && (
             <div>
-              
-              <Link to="/cart" className="font-bold py-2 px-4 rounded flex items-center">
-                <span className="text-lg">Cart</span>
-                <span className="text-xl"><FaCartPlus /></span>
-              </Link>
-              
+              <h3 className="font-bold py-2">{user.name}</h3>
             </div>
-          </nav>
-        </header>
-      </div>
-      </div>
-    </>
-  )
+          )}
+          <Link to="/cart" className="font-bold py-2 rounded flex items-center transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500">
+            <FaCartPlus className="text-xl" />
+            <span className="text-lg ml-1">Cart</span>
+          </Link>
+        </nav>
+      </header>
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-white text-black">
+          <div className="px-2 pt-2 pb-3 space-y-1">
+            <Link to="/" className="block px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500" onClick={() => setMobileMenuOpen(false)}>Home</Link>
+            <Link to="/shop" className="block px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500" onClick={() => setMobileMenuOpen(false)}>Shop</Link>
+            <Link to="/about" className="block px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500" onClick={() => setMobileMenuOpen(false)}>About Us</Link>
+            <Link to="/login" className="block px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500" onClick={() => setMobileMenuOpen(false)}>Login</Link>
+            <Link to="/cart" className="block px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500" onClick={() => setMobileMenuOpen(false)}>Cart</Link>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
-export default Navbar
+export default Navbar;
