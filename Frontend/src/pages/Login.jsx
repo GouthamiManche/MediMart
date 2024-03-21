@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../Components/Navbar';
@@ -9,8 +10,10 @@ function Login() {
   const [password, setPassword] = useState('');
   const [user, setUser] = useState({});
 
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     console.log('Email:', email);
     console.log('Password:', password);
   };
@@ -111,3 +114,4 @@ function Login() {
 }
 
 export default Login;
+
