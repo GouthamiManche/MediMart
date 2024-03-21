@@ -7,12 +7,16 @@ import Signup from './pages/SignUp';
 
 function App() {
   return (
-    <Router>
+    <Router >
       <Routes>
+       
         <Route exact path="/" element={<Home />}/>
         <Route exact path="/Shop" element={<Shop />}/>
         <Route exact path="/Login" element={<Login />}/>
         <Route exact path="/Signup" element={<Signup/>}/>
+
+        
+
       </Routes>
     </Router>
   );

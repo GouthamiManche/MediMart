@@ -1,12 +1,16 @@
 import React from 'react'
 import Navbar from '../Components/Navbar'
 import Footer from '../Components/Footer'
-import DataCards from '../Components/DataCards'
+import CircleMouseFollower from '../Components/CircleMouseFollower'
+import SearchBar from '../Components/SearchBar'
 
 function Shop() {
   return (
-    <div>
-        <DataCards/>
+    <div className='font-Akaya'>
+      <CircleMouseFollower />
+        <Navbar/>
+       <SearchBar/>
+        <Footer/>
     </div>
   )
 }
