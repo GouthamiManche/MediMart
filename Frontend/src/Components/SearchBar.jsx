@@ -17,9 +17,9 @@ function SearchBar() {
   // };
 
   return (
-    <>
-      <div className="bg-white py-10">
-        <div className="flex justify-center mb-6">
+    <div className=" ">
+      <div className="bg-gray-100 py-10 ">
+        <div className="flex justify-center mb-6 ">
           <input
             id="searchInput"
             type="text"
@@ -62,7 +62,7 @@ function SearchBar() {
 </div>
 
       </div>
-    </>
+    </div>
   );
 }
 

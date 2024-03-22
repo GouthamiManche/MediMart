@@ -5,6 +5,7 @@ import Navbar from '../Components/Navbar';
 import CircleMouseFollower from '../Components/CircleMouseFollower';
 import { FcGoogle } from 'react-icons/fc';
 
+
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -46,51 +47,48 @@ function Login() {
 
   return (
     <div className='font-Akaya'>
-      <CircleMouseFollower />
+      {/* <CircleMouseFollower /> */}
       <Navbar />
-
-      {/* Login Page */}
-      <div className='flex items-center justify-center h-screen bg-gradient-to-r from-blue-200 to-blue-400 shadow-md'>
-        {/* 2nd Half */}
-        <div className='w-[26rem] bg-white h-[30rem] p-8 rounded-md shadow-lg '>
-          <h1 className='text-black text-2xl font-bold mb-4 text-center'>Welcome Back!</h1>
-
-          {/* Email */}
-          <div className='mb-4'>
-            <label htmlFor='email' className='text-black text-sm font-semibold'>
-              Email/Username{' '}
-            </label>
-            <input type='email' id='email' name='email'   pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" className='border border-slate-500 w-full h-8 mt-1 rounded' required />
-          </div>
-
-          {/* Password */}
-          <div className='mb-4'>
-            <label htmlFor='password' className='text-black text-sm font-semibold'>
-              Password
-            </label>
-            <input type='password' id='password' name='password' className='border border-slate-500 w-full h-8 mt-1 rounded' required />
-          </div>
-
-          {/* Checkbox and Forgot Password */}
-          <div className='flex justify-between mb-4'>
-            <div className='flex items-center'>
-              <input type='checkbox' id='rememberMe' className='bg-teal-200 mr-2' />
-              <label htmlFor='rememberMe' className='text-slate-400 text-sm'>
-                Remember me
-              </label>
+      <div className=' h-dvh flex bg-gray-100'>
+      {/* 1st half */}
+        
+      <div className='w-1/2 mt-20 ml-56 mb-16 drop-shadow-xl bg-gradient-to-r from-blue-200 to-blue-400'>
+                    <h1 className='text-white mt-7 ml-8 font-bold'>MEDIMART</h1>
+                    <h1 className='font-bold text-white text-5xl mt-10 pt-20 ml-8 '>Welcome</h1>
+                    <h1 className='font-bold text-white text-5xl mt-7 ml-8'>Back!</h1>
             </div>
-            <p className='text-slate-400 text-sm'>Forgot Password?</p>
-          </div>
 
-          {/* Log in Button */}
-          <button className='text-white font-bold py-2 px-20 w-full h-10 bg-black rounded mb-4'>Log in</button>
+                    {/* 2nd Half */}
 
-          {/* Continue with Google Button */}
-          <button onClick={handleGoogleSignIn} className='flex items-center justify-center text-white font-bold py-2 px-4 w-full h-10 bg-black rounded mb-4'>
-            <FcGoogle className='mr-2' /> Continue with Google
-          </button>
+            <div className='basis-1/2 bg-white mt-20 mb-16 mr-56 drop-shadow-2xl '>
 
-          <form onSubmit={handleSubmit}>
+                <h1 className='text-black text-2xl font-bold mt-14 ml-8' >Login</h1>
+                <p className='text-slate-400 mt-2 ml-8'>Welcome back! Please login to your <br/>account</p>
+                
+
+                      {/* Email */}
+                <h2 className='text-black text-sm font-semibold mt-5 ml-8'>Email/Username</h2>
+                <input type="email" name="username" className='border border-slate-500 w-80 h-8 mt-3 ml-8 rounded'required/>
+
+                      {/* Password */}
+                <h2 className='text-black text-sm font-semibold mt-5 ml-8'>Password</h2>
+                <input type="password" name="password" className='border border-slate-500 w-80 h-8 mt-3 ml-8 rounded'required/>
+
+                     {/* CheckBox */}
+            <p className='flex'> 
+                <p className="flex">
+                    <input type="checkbox" id="rememberMe" className='bg-teal-200 mt-4 mb-5 ml-8 mr-2'/>
+                    <p className="mt-6 ml-0 text-slate-400 text-sm">Remember me</p>
+                </p>
+                <p className="ml-20 mb-8 mt-6 text-slate-400 text-sm mr-10">Forgot Password?</p>
+            </p>
+
+            
+                {/* Log in Button */}
+                <button className="text-white font-bold py-2 px-20 w-80 h-10 ml-8 rounded bg-gradient-to-r from-blue-200 to-blue-400">
+                    Log in
+                </button>
+                <form onSubmit={handleSubmit}>
             <div className='mb-4'>
               <div id='signin' className='font-bold py-2'></div>
               {Object.keys(user).length !== 0 && (
@@ -101,15 +99,16 @@ function Login() {
             </div>
           </form>
 
-          <div className='flex'>
-            <p className='text-slate-400 mr-2'>New User?</p>
-            <Link to='/SignUp' className='text-blue-500'>
-              Sign up
-            </Link>
-          </div>
+             
+
+                <div className="flex">
+                    <p className=" text-slate-400 mt-2 ml-8 mr-2">New User? </p>
+                    <Link to='/SignUp' className="mt-2" style={{color:"#90CCBA"}}>Signup</Link>
+                </div>
+                
+            </div>
         </div>
-      </div>
-    </div>
+        </div>
   );
 }
 
