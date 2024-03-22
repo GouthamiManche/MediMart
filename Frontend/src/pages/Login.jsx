@@ -20,6 +20,7 @@ const LoginForm = () => {
     try {
       const response = await axios.post('http://localhost:4000/api/login', formData);
       console.log(response.data); // Log the response from the backend
+      localStorage.setItem('token', token);
       // Redirect to home page
       navigate('/');
     } catch (error) {

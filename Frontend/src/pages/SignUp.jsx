@@ -8,6 +8,7 @@ const RegisterForm = () => {
     email: '',
     password: '',
   });
+  
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate(); // navigate to different page
 

@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const Schema = require('./models/user.model')
 const data =require('./models/data.model')
+require('dotenv').config()
 const cors = require('cors'); 
 const { getAllUsers } = require('./controllers/Users'); 
 const { getAllData } = require('./controllers/Data');
