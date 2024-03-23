@@ -1,5 +1,9 @@
 import React from 'react'
-
+import { Link } from 'react-router-dom';
+import { FaTwitter } from "react-icons/fa";
+import { FaFacebook } from "react-icons/fa";
+import { FaLinkedin } from "react-icons/fa";
+import { FaYoutube } from "react-icons/fa";
 function Footer() {
   return (
     <div>
@@ -8,70 +12,51 @@ function Footer() {
         <div className="flex flex-wrap">
           <div className="w-full md:w-1/4 text-center md:text-left">
             <h2 className="text-lg font-bold mb-4">About</h2>
-            <p className="mb-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel
-              tellus vel ipsum consectetur commodo.
-            </p>
+            <ul className="mb-4">
+             <Link to = '/'><li className="mb-2">Home</li></Link>
+             <Link to = '/shop'><li className="mb-2">Shop</li></Link>
+           
+            </ul>
           </div>
           <div className="w-full md:w-1/4 text-center md:text-left">
             <h2 className="text-lg font-bold mb-4">Help</h2>
-            <ul className="list-unstyled">
-              <li className="mb-2">FAQs</li>
+            <ul className="list-unstyled">              
               <li className="mb-2">Shipping & Returns</li>
-              <li className="mb-2">Contact Us</li>
+              <li className="mb-2">Track Orders</li>
+              <li className="mb-2">FAQs</li>
             </ul>
           </div>
           <div className="w-full md:w-1/4 text-center md:text-left">
-            <h2 className="text-lg font-bold mb-4">Shop</h2>
+            <h2 className="text-lg font-bold mb-4">Contact</h2>
             <ul className="list-unstyled">
-              <li className="mb-2">Browse Medicines</li>
-              <li className="mb-2">Order Tracking</li>
-              <li className="mb-2">Prescription Services</li>
+              <li className="mb-2">Phone:</li>
+              <li className="mb-2">(+1)123 456 7890</li>
+              <li className="mb-2">Email:</li>
+              <li className="mb-2">name@gmail.com</li>
             </ul>
           </div>
           <div className="w-full md:w-1/4 text-center md:text-left">
-            <h2 className="text-lg font-bold mb-4">Subscribe</h2>
-            <form>
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="w-full px-3 py-2 mb-4 rounded-lg bg-gray-700 text-white border border-gray-700 focus:outline-none focus:border-white"
-              />
-              <button className="w-full py-2 mb-4 rounded-lg bg-blue-500 hover:bg-blue-600 text-white font-bold">
-                Subscribe
-              </button>
-            </form>
-            <p className="text-sm">
-              We respect your privacy and will never share your email address.
+            <h2 className="text-2xl font-bold mb-4">Medimart</h2>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio vel sed adipisci, officiis voluptatem, aspernatur tempore in earum labore nostrum praesentium, ut id!
             </p>
+            <div className='flex gap-2 mt-[1rem]'>
+            <FaTwitter className='text-blue-400'/>
+            <FaFacebook className='text-blue-800'/>
+            <FaLinkedin className='text-purple-300'/>
+            <FaYoutube className='text-red-600'/>
+            </div>
           </div>
         </div>
         <hr className="my-8 border-gray-700" />
         <div className="flex flex-wrap items-center justify-center md:justify-between">
           <div className="w-full md:w-auto text-center md:text-left mb-4 md:mb-0">
-            <p className="text-sm">
-              &copy; {new Date().getFullYear()} PharmaEasy. All rights reserved.
+            <p className="text-lg">
+              &copy; {new Date().getFullYear()} Medimart. All rights reserved.
             </p>
           </div>
           <div className="w-full md:w-auto text-center md:text-right">
-            <ul className="list-inline">
-              <li className="list-inline-item">
-                <a
-                  href="#"
-                  className="text-white hover:text-gray-400 text-sm font-bold"
-                >
-                  Privacy Policy
-                </a>
-              </li>
-              <li className="list-inline-item">
-                <a
-                  href="#"
-                  className="text-white hover:text-gray-400 text-sm font-bold"
-                >
-                  Terms & Conditions
-                </a>
-              </li>
-            </ul>
+           <p>Privacy Policy Terms & Condition</p>
           </div>
         </div>
       </div>

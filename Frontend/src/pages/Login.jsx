@@ -44,7 +44,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const { email, password } = formData;
-  
+
     // Validate email
     if (!validateEmail(email)) {
       setEmailError("Please enter a valid email address.");
@@ -56,7 +56,7 @@ function Login() {
       } else {
         setPasswordError("");
       }
-  
+
       // If both email and password are valid, proceed with login
       if (validateEmail(email) && validatePassword(password)) {
         try {
@@ -91,23 +91,22 @@ function Login() {
   return (
     <div className="font-Akaya">
       <Navbar />
-      <div className=" h-dvh flex bg-gray-100">
+      <div className="flex flex-col md:flex-row bg-gray-100 h-screen">
         {/* 1st half */}
-        <div className="w-1/2 mt-20 ml-56 mb-16 drop-shadow-xl bg-gradient-to-r from-blue-200 to-blue-400">
+        <div className="w-full md:w-1/2 bg-gradient-to-r from-blue-200 to-blue-400 p-8 md:mt-20 md:ml-56 md:mb-16 drop-shadow-xl">
           <h1 className="text-white mt-7 ml-8 font-bold">MEDIMART</h1>
-          <h1 className="font-bold text-white text-5xl mt-10 pt-20 ml-8 ">
+          <h1 className="font-bold text-white text-5xl mt-10 pt-20 ml-8">
             Welcome
           </h1>
-          <h1 className="font-bold text-white text-5xl mt-7 ml-8">Back!</h1>
-
+          <h1 className="font-bold text-white text-5xl mt-7 mb-[6rem] ml-8">Back!</h1>
         </div>
 
         {/* 2nd Half */}
-        <div className="basis-1/2 bg-white mt-20 mb-16 mr-56 drop-shadow-2xl ">
-          <h1 className="text-black text-2xl font-bold mt-14 ml-8">Login</h1>
+        <div className="w-full md:w-1/2 bg-white md:mt-20 md:mb-16 md:mr-56 drop-shadow-2xl p-8">
+          <h1 className="text-black text-2xl font-bold mt-14">Login</h1>
           <form onSubmit={handleSubmit}>
             {/* Email */}
-            <h2 className="text-black text-sm font-semibold mt-5 ml-8">
+            <h2 className="text-black text-sm font-semibold mt-5">
               Email/Username
             </h2>
             <input
@@ -115,31 +114,29 @@ function Login() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="border border-slate-500 w-80 h-8 mt-3 ml-8 rounded"
+              className="border border-slate-500 w-full h-8 mt-3 rounded"
               required
             />
             {emailError && (
-              <p className="text-red-500 ml-8 mt-1">{emailError}</p>
+              <p className="text-red-500 mt-1">{emailError}</p>
             )}
 
             {/* Password */}
-            <h2 className="text-black text-sm font-semibold mt-5 ml-8">
-              Password
-            </h2>
+            <h2 className="text-black text-sm font-semibold mt-5">Password</h2>
             <input
               type="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className="border border-slate-500 w-80 h-8 mt-3 ml-8 rounded"
+              className="border border-slate-500 w-full h-8 mt-3 rounded"
               required
             />
             {passwordError && (
-              <p className="text-red-500 ml-8 mt-1">{passwordError}</p>
+              <p className="text-red-500 mt-1">{passwordError}</p>
             )}
 
             {/* CheckBox */}
-            <div className="flex">
+            <div className="flex flex-col md:flex-row">
               <div className="flex">
                 <input
                   type="checkbox"
@@ -147,11 +144,11 @@ function Login() {
                   name="rememberMe"
                   checked={formData.rememberMe}
                   onChange={handleChange}
-                  className="bg-teal-200 mt-4 mb-5 ml-8 mr-2"
+                  className="bg-teal-200 mt-4 mb-5 mr-2"
                 />
-                <h3 className="mt-6 ml-0 text-slate-400 text-sm">Remember me</h3>
+                <h3 className="mt-6 text-slate-400 text-sm">Remember me</h3>
               </div>
-              <h3 className="ml-20 mb-8 mt-6 text-slate-400 text-sm mr-10">
+              <h3 className="mt-2 mb-8 text-slate-400 text-sm ml-auto">
                 Forgot Password?
               </h3>
             </div>
@@ -159,29 +156,26 @@ function Login() {
             {/* Log in Button */}
             <button
               type="submit"
-              className="text-white font-bold py-2 px-20 w-80 h-10 ml-8 rounded bg-gradient-to-r from-blue-200 to-blue-400"
+              className="text-white font-bold py-2 px-20 w-full h-10 rounded bg-gradient-to-r from-blue-200 to-blue-400"
               disabled={!formData.email || !formData.password}
             >
               Log in
             </button>
           </form>
           {userNotFound && (
-            <div className="flex ml-8 mt-4">
+            <div className="mt-4">
               <p className="text-red-500">
-                User not found. Please Signup
-                
-                instead.
+                User not found. Please Signup instead.
               </p>
             </div>
           )}
           {/* ... */}
-          <div className="flex">
-            <h3 className=" text-slate-400 mt-2 ml-8 mr-2">New User? </h3>
-            <Link to="/SignUp" className="mt-2" style={{ color: "#90CCBA" }}>
+          <div className="flex mt-2">
+            <h3 className="text-slate-400 mr-2">New User?</h3>
+            <Link to="/SignUp" style={{ color: "#90CCBA" }}>
               Signup
             </Link>
           </div>
-
         </div>
       </div>
     </div>

@@ -8,8 +8,8 @@ function Navbar() {
 
   return (
     <div className="bg-white">
-      <header className="container mx-auto py-4 px-6 flex items-center justify-between">
-        <div className="flex items-center">
+      <header className="container mx-auto py-4 px-6 flex items-center justify-between ">
+        <div className="flex items-center ">
           <Link to="/" className="text-xl md:text-3xl font-bold transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500">
             MEDIMART
           </Link>
