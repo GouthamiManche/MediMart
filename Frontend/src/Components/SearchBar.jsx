@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import data from '../json/pharmacy.dataset.json';
+import { Link } from 'react-router-dom';
 
 function SearchBar() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(20);
-  const [visibleRange, setVisibleRange] = useState([1, 5]); 
+  const [visibleRange, setVisibleRange] = useState([1, 5]);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
   const totalItems = data.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
+
 
   const paginateNext = () => {
     setCurrentPage(currentPage + 1);
@@ -37,6 +39,8 @@ function SearchBar() {
     return pageNumbers;
   };
 
+
+
   return (
     <div className="bg-gray-100 py-10 px-4">
       <div className="flex justify-center mb-6">
@@ -45,7 +49,7 @@ function SearchBar() {
           type="text"
           placeholder="Search here..."
           onChange={(event) => setSearchTerm(event.target.value)}
-          className="px-4 py-3 w-[60%] rounded-md border-2 border-black"
+          className="px-4 py-3 w-[60%] rounded-md border-2 border-black transition duration-300 ease-in-out hover:border-blue-500"
         />
       </div>
       <div className="flex flex-wrap justify-center">
@@ -61,17 +65,16 @@ function SearchBar() {
           })
           .map((val) => {
             return (
-              <div
+              <Link
                 key={val._id.$oid}
-                className="bg-white m-6 p-4 rounded-md shadow-md flex flex-col items-center w-[16rem] h-[22rem]"
+                to={`/singleproduct/${val._id.$oid}`}
+                state={val}
+                
+                className="bg-white m-6 p-4 rounded-md border border-black shadow-md flex flex-col items-center w-[16rem] h-[22rem] transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg hover:border-blue-500"
               >
-                <img
-                  src={val.Image_URL}
-                  alt=""
-                  className="h-64"
-                />
+                <img src={val.Image_URL} alt="" className="h-64" />
                 <h3 className="text-base font-bold mt-4">{val.Medicine_Name}</h3>
-              </div>
+              </Link>
             );
           })}
       </div>

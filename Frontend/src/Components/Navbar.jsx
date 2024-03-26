@@ -14,10 +14,11 @@ function Navbar() {
             MEDIMART
           </Link>
           <nav className="hidden md:flex md:ml-[22rem]">
-            <div className="flex gap-12">
+            <div className="flex gap-10">
               <Link to="/" className="transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500">Home</Link>
               <Link to="/shop" className="transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500">Shop</Link>
-              <Link to="/about" className="transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500">About Us</Link>
+              <Link to="/about" className="transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500">About</Link>
+              <Link to="/contact" className="transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500">Contact</Link>
             </div>
           </nav>
         </div>
@@ -47,6 +48,8 @@ function Navbar() {
             <Link to="/about" className="block px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500" onClick={() => setMobileMenuOpen(false)}>About Us</Link>
             <Link to="/login" className="block px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500" onClick={() => setMobileMenuOpen(false)}>Login</Link>
             <Link to="/cart" className="block px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500" onClick={() => setMobileMenuOpen(false)}>Cart</Link>
+            <Link to="/contact" className="block px-3 py-2 rounded-md text-base font-medium transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500" onClick={() => setMobileMenuOpen(false)}>Contact</Link>
+            
           </div>
         </div>
       )}
