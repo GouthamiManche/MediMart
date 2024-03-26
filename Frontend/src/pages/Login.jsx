@@ -1,112 +1,188 @@
-
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import Navbar from '../Components/Navbar';
-import CircleMouseFollower from '../Components/CircleMouseFollower';
-import { FcGoogle } from 'react-icons/fc';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import Navbar from "../Components/Navbar";
+import CircleMouseFollower from "../Components/CircleMouseFollower";
+import { FcGoogle } from "react-icons/fc";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [user, setUser] = useState({});
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    rememberMe: false,
+  });
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [userNotFound, setUserNotFound] = useState(false);
 
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    const inputValue = type === "checkbox" ? checked : value;
+    setFormData((prevData) => ({ ...prevData, [name]: inputValue }));
+
+    // Clear error messages when input values change
+    if (name === "email") {
+      setEmailError("");
+      setUserNotFound(false);
+    } else if (name === "password") {
+      setPasswordError("");
+    }
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePassword = (password) => {
+    return password.length >= 8;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log('Email:', email);
-    console.log('Password:', password);
-  };
-
-  function handleCallbackResponse(response) {
-    console.log('encoded: ' + response.credential);
-    var object = response.credential;
-    var userObject = jwtDecode(object);
-    console.log(userObject);
-    setUser(userObject);
-    document.getElementById('signin').hidden = true;
-  }
-
-  function handleSignOut(event) {
-    setUser({});
-    document.getElementById('signin').hidden = false;
-  }
-
-  useEffect(() => {
-    //google
-    google.accounts.id.initialize({
-      client_id: '221746536037-24msh502h0uesab03aqi1vo0f3hbf9pi.apps.googleusercontent.com',
-      callback: handleCallbackResponse,
-    });
-  }, []);
-
-  const handleGoogleSignIn = () => {
-    google.accounts.id.prompt(); // Trigger Google sign-in process
+// 
+//     const { email, password } = formData;
+  
+//     // Validate email
+//     if (!validateEmail(email)) {
+//       setEmailError("Please enter a valid email address.");
+//       setPasswordError("");
+//     } else {
+//       // Email is valid, validate password
+//       if (!validatePassword(password)) {
+//         setPasswordError("Password must be at least 8 characters long.");
+//       } else {
+//         setPasswordError("");
+//       }
+  
+//       // If both email and password are valid, proceed with login
+//       if (validateEmail(email) && validatePassword(password)) {
+//         try {
+//           const response = await axios.post(
+//             "http://localhost:4000/api/login",
+//             formData
+//           );
+//           console.log(response.data); // Log the response from the backend
+//           navigate("/");
+//         } catch (error) {
+//           console.error("Error during login:", error);
+//           if (error.response && error.response.data && error.response.data.error) {
+//             if (error.response.data.error === "User not found") {
+//               setUserNotFound(true);
+//               setPasswordError("");
+//             } else if (error.response.data.error === "Incorrect password") {
+//               setPasswordError("Incorrect password");
+//               setUserNotFound(false);
+//             } else {
+//               setErrorMessage(error.response.data.error);
+//               setPasswordError("");
+//             }
+//           } else {
+//             setErrorMessage("An error occurred during login.");
+//             setPasswordError("");
+//           }
+//         }
+//       }
+//     }
   };
 
   return (
-    <div className='font-Akaya'>
-      <CircleMouseFollower />
+    <div className="font-Akaya">
       <Navbar />
+      <div className=" h-dvh flex bg-gray-100">
+        {/* 1st half */}
+        <div className="w-1/2 mt-20 ml-56 mb-16 drop-shadow-xl bg-gradient-to-r from-blue-200 to-blue-400">
+          <h1 className="text-white mt-7 ml-8 font-bold">MEDIMART</h1>
+          <h1 className="font-bold text-white text-5xl mt-10 pt-20 ml-8 ">
+            Welcome
+          </h1>
+          <h1 className="font-bold text-white text-5xl mt-7 ml-8">Back!</h1>
 
-      {/* Login Page */}
-      <div className='flex items-center justify-center h-screen bg-gradient-to-r from-blue-200 to-blue-400 shadow-md'>
+        </div>
+
         {/* 2nd Half */}
-        <div className='w-[26rem] bg-white h-[30rem] p-8 rounded-md shadow-lg '>
-          <h1 className='text-black text-2xl font-bold mb-4 text-center'>Welcome Back!</h1>
-
-          {/* Email */}
-          <div className='mb-4'>
-            <label htmlFor='email' className='text-black text-sm font-semibold'>
-              Email/Username{' '}
-            </label>
-            <input type='email' id='email' name='email'   pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" className='border border-slate-500 w-full h-8 mt-1 rounded' required />
-          </div>
-
-          {/* Password */}
-          <div className='mb-4'>
-            <label htmlFor='password' className='text-black text-sm font-semibold'>
-              Password
-            </label>
-            <input type='password' id='password' name='password' className='border border-slate-500 w-full h-8 mt-1 rounded' required />
-          </div>
-
-          {/* Checkbox and Forgot Password */}
-          <div className='flex justify-between mb-4'>
-            <div className='flex items-center'>
-              <input type='checkbox' id='rememberMe' className='bg-teal-200 mr-2' />
-              <label htmlFor='rememberMe' className='text-slate-400 text-sm'>
-                Remember me
-              </label>
-            </div>
-            <p className='text-slate-400 text-sm'>Forgot Password?</p>
-          </div>
-
-          {/* Log in Button */}
-          <button className='text-white font-bold py-2 px-20 w-full h-10 bg-black rounded mb-4'>Log in</button>
-
-          {/* Continue with Google Button */}
-          <button onClick={handleGoogleSignIn} className='flex items-center justify-center text-white font-bold py-2 px-4 w-full h-10 bg-black rounded mb-4'>
-            <FcGoogle className='mr-2' /> Continue with Google
-          </button>
-
+        <div className="basis-1/2 bg-white mt-20 mb-16 mr-56 drop-shadow-2xl ">
+          <h1 className="text-black text-2xl font-bold mt-14 ml-8">Login</h1>
           <form onSubmit={handleSubmit}>
-            <div className='mb-4'>
-              <div id='signin' className='font-bold py-2'></div>
-              {Object.keys(user).length !== 0 && (
-                <button className='font-bold py-2 px-4' onClick={(e) => handleSignOut(e)}>
-                  Sign Out
-                </button>
-              )}
-            </div>
-          </form>
+            {/* Email */}
+            <h2 className="text-black text-sm font-semibold mt-5 ml-8">
+              Email/Username
+            </h2>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className="border border-slate-500 w-80 h-8 mt-3 ml-8 rounded"
+              required
+            />
+            {emailError && (
+              <p className="text-red-500 ml-8 mt-1">{emailError}</p>
+            )}
 
-          <div className='flex'>
-            <p className='text-slate-400 mr-2'>New User?</p>
-            <Link to='/SignUp' className='text-blue-500'>
-              Sign up
+            {/* Password */}
+            <h2 className="text-black text-sm font-semibold mt-5 ml-8">
+              Password
+            </h2>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              className="border border-slate-500 w-80 h-8 mt-3 ml-8 rounded"
+              required
+            />
+            {passwordError && (
+              <p className="text-red-500 ml-8 mt-1">{passwordError}</p>
+            )}
+
+            {/* CheckBox */}
+            <div className="flex">
+              <div className="flex">
+                <input
+                  type="checkbox"
+                  id="rememberMe"
+                  name="rememberMe"
+                  checked={formData.rememberMe}
+                  onChange={handleChange}
+                  className="bg-teal-200 mt-4 mb-5 ml-8 mr-2"
+                />
+                <h3 className="mt-6 ml-0 text-slate-400 text-sm">Remember me</h3>
+              </div>
+              <h3 className="ml-20 mb-8 mt-6 text-slate-400 text-sm mr-10">
+                Forgot Password?
+              </h3>
+            </div>
+
+            {/* Log in Button */}
+            <button
+              type="submit"
+              className="text-white font-bold py-2 px-20 w-80 h-10 ml-8 rounded bg-gradient-to-r from-blue-200 to-blue-400"
+              disabled={!formData.email || !formData.password}
+            >
+              Log in
+            </button>
+          </form>
+          {userNotFound && (
+            <div className="flex ml-8 mt-4">
+              <p className="text-red-500">
+                User not found. Please Signup
+                
+                instead.
+              </p>
+            </div>
+          )}
+          {/* ... */}
+          <div className="flex">
+            <h3 className=" text-slate-400 mt-2 ml-8 mr-2">New User? </h3>
+            <Link to="/SignUp" className="mt-2" style={{ color: "#90CCBA" }}>
+              Signup
             </Link>
           </div>
+
         </div>
       </div>
     </div>
@@ -114,4 +190,3 @@ function Login() {
 }
 
 export default Login;
-

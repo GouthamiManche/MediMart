@@ -7,7 +7,7 @@ import SearchBar from '../Components/SearchBar'
 function Shop() {
   return (
     <div className='font-Akaya'>
-      <CircleMouseFollower />
+      {/* <CircleMouseFollower /> */}
         <Navbar/>
        <SearchBar/>
         <Footer/>
