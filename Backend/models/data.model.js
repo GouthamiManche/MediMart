@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+//const ObjectID = mongoose.Schema.Types.ObjectId
 const dataSchema = new mongoose.Schema({
     Medicine_Name: String,
     Composition: String,
@@ -6,11 +7,10 @@ const dataSchema = new mongoose.Schema({
     Side_effects: String,
     Image_URL: String,
     Manufacturer: String,
-    Excellent_Review: Number,
-    Average_Review: Number,
-    Poor_Review: Number,
-    Price: Number
+    Excellent_Review:Number,
+    Average_Review:Number,
+    Poor_Review:Number,
+    Price:Number
 })
 const Data = mongoose.model('dataset', dataSchema);
 module.exports= Data;
-
