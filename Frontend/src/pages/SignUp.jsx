@@ -75,27 +75,27 @@ function SignUp() {
   return (
     <div className="font-Akaya bg-gray-100">
       <Navbar />
-      <div className="h-dvh lg:flex lg:pt-0 pt-[2rem]">
-        <div className="lg:w-1/2 lg:mt-20 lg:ml-56 lg:mb-16 drop-shadow-xl mt-[1rem] ml-[1rem] mb-[5rem] w-[19.7rem] bg-gradient-to-r from-blue-200 to-blue-400">
-          <h1 className="text-white lg:mt-7 lg:ml-8 font-bold mt-8 ml-2">
-            MEDIMART
-          </h1>
-          <h1 className="font-bold text-white lg:text-5xl lg:mt-10 lg:pt-20 lg:ml-8 mt-[4rem] text-2xl ml-4 ">
-            Welcome
-          </h1>
-          <h1 className="font-bold text-white lg:text-5xl lg:mt-7 lg:ml-8 mt-[0.7rem] text-2xl ml-4 ">
-          To Medimart
-          </h1>
+      <div className="flex flex-col md:flex-row h-screen">
+        <div className="w-full md:w-1/2 bg-gradient-to-r from-blue-200 to-blue-400 p-8 md:mt-20 md:ml-56 md:mb-16 drop-shadow-xl">
+          <h1 className="text-white mt-7 ml-8 font-bold">MEDIMART</h1>
+          <div className="text-center md:text-left">
+            <h1 className="font-bold text-white text-5xl md:text-5xl mt-10 pt-20">
+              Welcome
+            </h1>
+            <h1 className="font-bold text-white mb-[6rem] text-5xl md:text-5xl mt-7">
+              To Medimart
+            </h1>
+          </div>
         </div>
 
-        <div className="basis-1/2 bg-white lg:mt-20 lg:mb-16 md:h-[32.5rem] h-[25rem] lg:ml-0 lg:mr-56 drop-shadow-2xl mt-[-5rem] ml-[1rem] w-[19.7rem]">
-          <h1 className="text-black text-2xl font-bold lg:mt-14 lg:ml-8 ml-[7rem] mt-4">
+        <div className="w-full md:w-1/2 bg-white md:mt-20 md:mb-16 md:mr-56 drop-shadow-2xl p-8">
+          <h1 className="text-black text-2xl font-bold mt-4 md:mt-14 md:ml-8">
             Sign up
           </h1>
           
           <form onSubmit={handleSubmit}>
             <div>
-              <h2 className="text-black text-sm font-semibold lg:mt-5 lg:ml-8 mt-4 ml-10">
+              <h2 className="text-black text-sm font-semibold mt-4 md:mt-5 md:ml-8">
                 Username
               </h2>
               <input
@@ -104,13 +104,13 @@ function SignUp() {
                 value={formData.username}
                 onChange={handleChange}
                 required
-                className={`border border-slate-500 lg:w-80 lg:h-8 lg:mt-3 lg:ml-8 w-60 mt-2 ml-10 rounded ${formErrors.username && isSubmit ? 'border-red-500' : ''}`}
+                className={`border border-slate-500 w-full md:w-80 h-8 mt-2 md:mt-3 md:ml-8 rounded ${formErrors.username && isSubmit ? 'border-red-500' : ''}`}
               />
-              {isSubmit && formErrors.username && <p className="text-red-500 ml-10">{formErrors.username}</p>}
+              {isSubmit && formErrors.username && <p className="text-red-500 mt-1 md:ml-8">{formErrors.username}</p>}
             </div>
 
             <div>
-              <h2 className="text-black text-sm font-semibold lg:mt-5 lg:ml-8 mt-4 ml-10">
+              <h2 className="text-black text-sm font-semibold mt-4 md:mt-5 md:ml-8">
                 Email
               </h2>
               <input
@@ -119,13 +119,13 @@ function SignUp() {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className={`border border-slate-500 lg:w-80 lg:h-8 lg:mt-3 lg:ml-8 w-60 mt-2 ml-10 rounded ${formErrors.email && isSubmit ? 'border-red-500' : ''}`}
+                className={`border border-slate-500 w-full md:w-80 h-8 mt-2 md:mt-3 md:ml-8 rounded ${formErrors.email && isSubmit ? 'border-red-500' : ''}`}
               />
-              {isSubmit && formErrors.email && <p className="text-red-500 ml-10">{formErrors.email}</p>}
+              {isSubmit && formErrors.email && <p className="text-red-500 mt-1 md:ml-8">{formErrors.email}</p>}
             </div>
 
             <div>
-              <h2 className="text-black text-sm font-semibold lg:mt-5 lg:ml-8 mt-4 ml-10">
+              <h2 className="text-black text-sm font-semibold mt-4 md:mt-5 md:ml-8">
                 Password
               </h2>
               <input
@@ -134,25 +134,24 @@ function SignUp() {
                 value={formData.password}
                 onChange={handleChange}
                 required
-                className={`border border-slate-500 lg:w-80 lg:h-8 lg:mt-3 lg:ml-8 w-60 mt-2 ml-10 rounded ${formErrors.password && isSubmit ? 'border-red-500' : ''}`}
+                className={`border border-slate-500 w-full md:w-80 h-8 mt-2 md:mt-3 md:ml-8 rounded ${formErrors.password && isSubmit ? 'border-red-500' : ''}`}
               />
-              {isSubmit && formErrors.password && <p className="text-red-500 ml-10">{formErrors.password}</p>}
+              {isSubmit && formErrors.password && <p className="text-red-500 mt-1 md:ml-8">{formErrors.password}</p>}
             </div>
 
-            {errorMessage && <p className="text-red-500 ml-10">{errorMessage}</p>}
+            {errorMessage && <p className="text-red-500 mt-2 md:ml-8">{errorMessage}</p>}
 
-            <button className="text-white font-bold lg:w-80 lg:h-10 lg:ml-8 lg:mb-4 lg:mt-8 w-60 mt-4 ml-10 h-8 rounded bg-gradient-to-r from-blue-200 to-blue-400">
+            <button className="text-white font-bold w-full md:w-80 h-10 mt-4 md:ml-8 md:mb-4 md:mt-8 rounded bg-gradient-to-r from-blue-200 to-blue-400">
               Sign up
             </button>
           </form>
 
-          <div className="flex">
-            <p className="text-slate-400 lg:ml-8 lg:mr-2 lg:mt-0 mt-2 ml-8">
+          <div className="flex mt-2 md:ml-8">
+            <p className="text-slate-400 mr-2">
               Already have an account?{" "}
             </p>
             <Link
               to="/login"
-              className="lg:mb-12 lg:mb-4 lg:mt-0 mt-2 "
               style={{ color: "#90CCBA" }}
             >
               Login
@@ -165,4 +164,3 @@ function SignUp() {
 }
 
 export default SignUp;
-``
