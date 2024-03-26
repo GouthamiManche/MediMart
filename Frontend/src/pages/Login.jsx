@@ -13,20 +13,6 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:4000/api/login', formData);
-      console.log(response.data); // Log the response from the backend
-      localStorage.setItem('token', token);
-      // Redirect to home page
-      navigate('/');
-    } catch (error) {
-      console.error('Error during login:', error);
-      if (error.response && error.response.data && error.response.data.error) {
-        setErrorMessage(error.response.data.error);
-      } else {
-        setErrorMessage('An error occurred during login.');
-      }
-    }
 
     console.log('Email:', email);
     console.log('Password:', password);
