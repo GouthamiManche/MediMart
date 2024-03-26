@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 function HomeImage() {
   return (
     <div className="relative ">
@@ -13,9 +13,11 @@ function HomeImage() {
           <h1 className=" text-xl md:text-4xl lg:text-6xl font-extrabold text-gray-900 max-w-lg mx-auto ">
            MEDIMART
           </h1>
+          <Link to = '/shop'>
           <button className="mt-4 bg-black text-white rounded-md py-2 px-[3rem]">
             Shop Now
           </button>
+          </Link>
         </div>
       </div>
     </div>
