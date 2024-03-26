@@ -5,7 +5,7 @@ const data =require('./models/data.model')
 require('dotenv').config()
 const cors = require('cors'); 
 const { getAllUsers } = require('./controllers/Users'); 
-const { getAllData } = require('./controllers/Data');
+const { checkAccess, getAllData } = require('./controllers/Data');
 
 const { registerUser, loginUser } = require('./controllers/Login');
 const app = express();
@@ -24,7 +24,7 @@ app.use(cors());
 app.post('/api/register', registerUser);
 app.post('/api/login', loginUser); 
 app.get('/api/users', getAllUsers);
-app.get('/api/data', getAllData);
+app.get('/api/data', checkAccess, getAllData);
 
 app.get('/', (req, res) => {
     res.send('Hello, this is your Express API!');

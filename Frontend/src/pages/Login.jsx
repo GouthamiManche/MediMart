@@ -43,6 +43,7 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const { email, password } = formData;
 
     // Validate email
@@ -86,6 +87,52 @@ function Login() {
         }
       }
     }
+
+// 
+//     const { email, password } = formData;
+  
+//     // Validate email
+//     if (!validateEmail(email)) {
+//       setEmailError("Please enter a valid email address.");
+//       setPasswordError("");
+//     } else {
+//       // Email is valid, validate password
+//       if (!validatePassword(password)) {
+//         setPasswordError("Password must be at least 8 characters long.");
+//       } else {
+//         setPasswordError("");
+//       }
+  
+//       // If both email and password are valid, proceed with login
+//       if (validateEmail(email) && validatePassword(password)) {
+//         try {
+//           const response = await axios.post(
+//             "http://localhost:4000/api/login",
+//             formData
+//           );
+//           console.log(response.data); // Log the response from the backend
+//           navigate("/");
+//         } catch (error) {
+//           console.error("Error during login:", error);
+//           if (error.response && error.response.data && error.response.data.error) {
+//             if (error.response.data.error === "User not found") {
+//               setUserNotFound(true);
+//               setPasswordError("");
+//             } else if (error.response.data.error === "Incorrect password") {
+//               setPasswordError("Incorrect password");
+//               setUserNotFound(false);
+//             } else {
+//               setErrorMessage(error.response.data.error);
+//               setPasswordError("");
+//             }
+//           } else {
+//             setErrorMessage("An error occurred during login.");
+//             setPasswordError("");
+//           }
+//         }
+//       }
+//     }
+
   };
 
   return (
