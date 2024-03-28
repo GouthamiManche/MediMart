@@ -7,13 +7,15 @@ import OurProduct from '../Components/OurProduct'
 
 function Home() {
   return (
-    <div className='font-Akaya bg-gray-100'>
+    <div className=''>
        {/* <CircleMouseFollower /> */}
         <Navbar />
         <HomeImage />
         <OurProduct />
-        <Footer />
-    </div>
+     
+   <Footer/>
+   </div>
+  
   )
 }
 

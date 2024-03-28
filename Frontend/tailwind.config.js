@@ -8,6 +8,7 @@ export default {
     extend: {
       fontFamily:{
        "Akaya": ["Akaya Kanadaka", "system-ui"],
+       "Roboto": ["Roboto Slab", "serif"]
       }
     },
   },

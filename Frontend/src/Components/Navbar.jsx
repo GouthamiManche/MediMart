@@ -13,8 +13,8 @@ function Navbar() {
           <Link to="/" className="text-xl md:text-3xl font-bold transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500">
             MEDIMART
           </Link>
-          <nav className="hidden md:flex md:ml-[22rem]">
-            <div className="flex gap-10">
+          <nav className="hidden md:flex md:ml-[18vw]  ">
+            <div className="flex gap-10 ">
               <Link to="/" className="transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500">Home</Link>
               <Link to="/shop" className="transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500">Shop</Link>
               <Link to="/about" className="transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500">About</Link>
@@ -28,16 +28,17 @@ function Navbar() {
           </button>
         </div>
         <nav className="hidden md:flex items-center gap-4">
+         
+          <Link to="/cart" className="font-bold py-2 rounded flex items-center transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500">
+            <FaCartPlus className="text-xl" />
+            <span className="text-lg ml-1">Cart</span>
+          </Link>
           <Link className="py-2 px-4 font-bold text-lg transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500" to="/login">Login</Link>
           {user && (
             <div>
               <h3 className="font-bold py-2">{user.name}</h3>
             </div>
           )}
-          <Link to="/cart" className="font-bold py-2 rounded flex items-center transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500">
-            <FaCartPlus className="text-xl" />
-            <span className="text-lg ml-1">Cart</span>
-          </Link>
         </nav>
       </header>
       {mobileMenuOpen && (

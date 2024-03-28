@@ -89,9 +89,9 @@ function Login() {
   };
 
   return (
-    <div className="font-Akaya">
+    <div className="">
       <Navbar />
-      <div className="flex flex-col md:flex-row bg-gray-100 h-screen">
+      <div className="flex flex-col md:flex-row  h-screen">
         {/* 1st half */}
         <div className="w-full md:w-1/2 bg-gradient-to-r from-blue-200 to-blue-400 p-8 md:mt-20 md:ml-56 md:mb-16 drop-shadow-xl">
           <h1 className="text-white mt-7 ml-8 font-bold">MEDIMART</h1>
