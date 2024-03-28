@@ -15,7 +15,7 @@ function SearchBar() {
       try {
         const response = await axios.get('http://localhost:4000/api/data', {
           headers: {
-            // 'apikey':'123'
+            'apikey':'123'
           }
         });
         setData(response.data);
