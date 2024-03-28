@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 //const ObjectID = mongoose.Schema.Types.ObjectId
 const dataSchema = new mongoose.Schema({
+    Category:String,
     Medicine_Name: String,
     Composition: String,
     Uses: String,

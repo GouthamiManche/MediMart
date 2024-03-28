@@ -32,5 +32,6 @@ const checkAccess = (req, res, next) => {
     }
   }
   
-  module.exports = { checkAccess, getAllData };
+  
+  module.exports = { checkAccess, getAllData};
   

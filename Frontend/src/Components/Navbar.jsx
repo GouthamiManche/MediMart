@@ -13,7 +13,7 @@ function Navbar() {
           <Link to="/" className="text-xl md:text-3xl font-bold transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500">
             MEDIMART
           </Link>
-          <nav className="hidden md:flex md:ml-[22rem]">
+          <nav className="hidden md:flex md:ml-[18vw]">
             <div className="flex gap-10">
               <Link to="/" className="transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500">Home</Link>
               <Link to="/shop" className="transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500">Shop</Link>
