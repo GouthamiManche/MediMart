@@ -1,33 +1,10 @@
-import React, { useState,useEffect  } from "react";
-//import data from '../json/pharmacy.dataset.json';
+import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import axios from 'axios'
-
+import { BsCart3 } from "react-icons/bs";
 function SearchBar() {
-
   const [data, setData] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('http://localhost:4000/api/data',{
-          headers:{
-            'apikey':''
-          }
-        });
-        setData(response.data);
-        console.log("aamcha data",response.data)
-      } catch (error) {
-        if (axios.isAxiosError(error) && error.response && error.response.status === 403) {
-          console.error('You are not authorized to access this resource.');
-        } else {
-          console.error(error.message);
-       }
-      }
-    };    
-    fetchData();
-  }, []);
-
+  const [filteredData, setFilteredData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(20);
@@ -38,7 +15,7 @@ function SearchBar() {
       try {
         const response = await axios.get('http://localhost:4000/api/data', {
           headers: {
-            // 'apikey':'123'
+            'apikey':'123'
           }
         });
         setData(response.data);
@@ -89,6 +66,7 @@ function SearchBar() {
   };
 
   const goToPage = (pageNumber) => setCurrentPage(pageNumber);
+
   const getPageNumbers = () => {
     const pageNumbers = [];
     for (let i = visibleRange[0]; i <= visibleRange[1] && i <= totalPages; i++) {
@@ -109,31 +87,26 @@ function SearchBar() {
         />
       </div>
       <div className="flex flex-wrap justify-center">
-        {currentItems
-          .filter((val) => {
-            if (searchTerm === "") {
-              return val;
-            } else if (
-              val.Medicine_Name.toLowerCase().includes(searchTerm.toLowerCase())
-            ) {
-              return val;
-            }
-          })
-          .map((val) => {
-            return (
-              <Link
-                key={val._id.$oid}
-                to={`/singleproduct/${val._id.$oid}`}
-                state={val}
-                
-                className="bg-white m-6 p-4 rounded-md border border-black shadow-md flex flex-col items-center w-[16rem] h-[22rem] transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg hover:border-blue-500"
-              >
-                <img src={val.Image_URL} alt="" className="h-64" />
-                <h3 className="text-base font-bold mt-4">{val.Medicine_Name}</h3>
-                <h3 className="">{val.Price}</h3>
-              </Link>
-            );
-          })}
+        {currentItems.map((val) => {
+          return (
+            <Link
+              key={val._id.$oid}
+              to={`/singleproduct/${val._id.$oid}`}
+              state={val}
+              className="bg-white m-6 p-4 rounded-md  shadow-xl flex flex-col  w-[16rem] h-[22rem] transition duration-300 ease-in-out transform hover:-translate-y-1 ">
+              <div className="flex items-center justify-center">
+                <img src={val.Image_URL} alt="" className="h-52" />
+              </div>
+              <div className=" flex flex-col items-start mt-6">
+                <h3 className=" font-bold  h-[2rem]">{val.Medicine_Name}</h3>
+              </div>
+              <span className="flex   justify-between">
+                <h3 className="text-[1.4rem] font-bold mt-[1.8rem]">₹{val.Price}</h3>
+                <BsCart3  className="mt-[2rem] text-3xl  text-green-300" />
+              </span>
+            </Link>
+          )
+        })}
       </div>
       <div className="flex justify-center mt-6">
         {currentPage > 1 && (

@@ -1,7 +1,8 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import Navbar from '../Components/Navbar'
-
+import Footer from '../Components/Footer'
+import { useNavigate } from 'react-router-dom';
 export default function SingleProduct() {
   const location = useLocation();
   const product = location.state;
@@ -23,7 +24,7 @@ export default function SingleProduct() {
             className="w-full h-auto object-cover rounded-lg"
           />
         </div>
-        <div>
+        {/* <div>
           <h2 className="text-2xl md:text-3xl font-bold mb-4">
             {product.Medicine_Name}
           </h2>
@@ -51,10 +52,10 @@ export default function SingleProduct() {
               </span>
               <span className="text-red-500">{product['Poor Review %']}%</span>
              
-            </div>
-            <div>
+            </div> */}
+             {/* <div>
             <button className='mt-4 bg-black text-white rounded-md py-2 px-[3rem]'>Add to cart</button>
-            </div>
+            </div> */}
             <div className="mb-4">
               <h3 className="text-lg font-semibold mb-2">Composition</h3>
               <p>{product.Composition}</p>
@@ -78,13 +79,13 @@ export default function SingleProduct() {
                 </span>
                 <span className="text-red-500">{`Poor ${product.Poor_Review}`}%</span>
               </div>
-            </div>
-            <button
+            </div> 
+            {/* <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300 mb-[40%]"
               onClick={handleBackClick}
             >
               Back
-            </button>
+            </button> */}
 
           </div>
         </div>
