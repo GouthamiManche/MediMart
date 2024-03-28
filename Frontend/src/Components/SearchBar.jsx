@@ -1,8 +1,33 @@
-import React, { useState } from "react";
-import data from '../json/pharmacy.dataset.json';
+import React, { useState,useEffect  } from "react";
+//import data from '../json/pharmacy.dataset.json';
 import { Link } from 'react-router-dom';
+import axios from 'axios'
 
 function SearchBar() {
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:4000/api/data',{
+          headers:{
+            'apikey':''
+          }
+        });
+        setData(response.data);
+        console.log("aamcha data",response.data)
+      } catch (error) {
+        if (axios.isAxiosError(error) && error.response && error.response.status === 403) {
+          console.error('You are not authorized to access this resource.');
+        } else {
+          console.error(error.message);
+       }
+      }
+    };    
+    fetchData();
+  }, []);
+
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(20);
@@ -13,7 +38,6 @@ function SearchBar() {
   const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
   const totalItems = data.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
-
 
   const paginateNext = () => {
     setCurrentPage(currentPage + 1);
@@ -30,7 +54,6 @@ function SearchBar() {
   };
 
   const goToPage = (pageNumber) => setCurrentPage(pageNumber);
-
   const getPageNumbers = () => {
     const pageNumbers = [];
     for (let i = visibleRange[0]; i <= visibleRange[1] && i <= totalPages; i++) {
@@ -38,8 +61,6 @@ function SearchBar() {
     }
     return pageNumbers;
   };
-
-
 
   return (
     <div className="bg-gray-100 py-10 px-4">
@@ -74,6 +95,7 @@ function SearchBar() {
               >
                 <img src={val.Image_URL} alt="" className="h-64" />
                 <h3 className="text-base font-bold mt-4">{val.Medicine_Name}</h3>
+                <h3 className="">{val.Price}</h3>
               </Link>
             );
           })}

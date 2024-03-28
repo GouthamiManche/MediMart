@@ -1,7 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-
-
+import Navbar from '../Components/Navbar'
 
 export default function SingleProduct() {
   const location = useLocation();
@@ -10,9 +9,9 @@ export default function SingleProduct() {
     return <div className="text-center text-gray-600">Product not found</div>;
   }
 
-
-
   return (
+    <>
+      <Navbar/>
     <div className="container mx-auto mt-8 px-4">
     <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-8">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -50,6 +49,10 @@ export default function SingleProduct() {
                 {product['Average Review %']}%
               </span>
               <span className="text-red-500">{product['Poor Review %']}%</span>
+             
+            </div>
+            <div>
+            <button className='mt-4 bg-black text-white rounded-md py-2 px-[3rem]'>Add to cart</button>
             </div>
           </div>
           
@@ -57,6 +60,6 @@ export default function SingleProduct() {
       </div>
     </div>
   </div>
-
+  </>
   )
 }

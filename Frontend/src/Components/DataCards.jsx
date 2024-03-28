@@ -7,12 +7,20 @@ function DataCards() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/data');
+        const response = await axios.get('http://localhost:4000/api/data',{
+          headers:{
+            'apikey':'123'
+          }
+        });
         setData(response.data);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        if (axios.isAxiosError(error) && error.response && error.response.status === 403) {
+          console.error('Authorization error: You are not authorized to access this resource.');
+        } else {
+          console.error('Error fetching data:', error.message);
+       }
       }
-    };
+    };    
     fetchData();
   }, []);
   return (
@@ -24,6 +32,7 @@ function DataCards() {
           <h3>{item.Medicine_Name}</h3>
           <p>{item.Composition}</p>
           <p>{item.Uses}</p>
+          <img src={item.Image_URL}></img>
         </div>
       ))}
     </div>
