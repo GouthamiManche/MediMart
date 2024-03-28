@@ -1,5 +1,4 @@
 import React, { useState,useEffect  } from "react";
-//import data from '../json/pharmacy.dataset.json';
 import { Link } from 'react-router-dom';
 import axios from 'axios'
 
@@ -10,9 +9,9 @@ function SearchBar() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/data',{
+        const response = await axios.get('http://localhost:4000/api/medicine/soap',{
           headers:{
-            'apikey':''
+            'apikey':'123'
           }
         });
         setData(response.data);
@@ -64,7 +63,10 @@ function SearchBar() {
 
   return (
     <div className="bg-gray-100 py-10 px-4">
+      
       <div className="flex justify-center mb-6">
+      <div class="absolute top-14 left-4 flex items-center font-roboto-slab text-base font-normal bg-white border rounded-md">
+        <button class="flex-1 flex items-center justify-center w-80 h-14 text-white bg-black rounded-md cursor-pointer">All Products</button></div>
         <input
           id="searchInput"
           type="text"
@@ -73,6 +75,7 @@ function SearchBar() {
           className="px-4 py-3 w-[60%] rounded-md border-2 border-black transition duration-300 ease-in-out hover:border-blue-500"
         />
       </div>
+      
       <div className="flex flex-wrap justify-center">
         {currentItems
           .filter((val) => {
