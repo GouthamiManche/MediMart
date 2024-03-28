@@ -8,7 +8,7 @@ const { getAllUsers } = require('./controllers/Users');
 const { checkAccess, getAllData} = require('./controllers/Data');
 const cart = require('./models/cart.model')
 const { registerUser, loginUser } = require('./controllers/Login');
-const { getCapsule ,getTablet,getInjection} = require('./controllers/ByCategory');
+const { getCapsule ,getTablet,getInjection, getSoap, getLotion, getSyrup, getDrops, getShampoo, getCream} = require('./controllers/ByCategory');
 const app = express();
 const PORT = 4000;
 
@@ -28,9 +28,17 @@ app.post('/api/register', registerUser);
 app.post('/api/login', loginUser); 
 app.get('/api/users', getAllUsers);
 app.get('/api/data', checkAccess, getAllData);
+
 app.get('/api/medicine/capsule',getCapsule)
 app.get('/api/medicine/tablet',getTablet)
 app.get('/api/medicine/injection',getInjection)
+app.get('/api/medicine/soap',getSoap)
+app.get('/api/medicine/lotion',getLotion)
+app.get('/api/medicine/syrup',getSyrup)
+app.get('/api/medicine/drops',getDrops)
+app.get('/api/medicine/shampoo',getShampoo)
+app.get('/api/medicine/cream',getCream)
+
 
 app.get('/', (req, res) => {
     res.send('Hello, this is your Express API!');
