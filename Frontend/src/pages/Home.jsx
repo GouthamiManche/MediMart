@@ -2,7 +2,7 @@ import React from 'react'
 import Navbar from '../Components/Navbar'
 import Footer from '../Components/Footer'
 import HomeImage from '../Components/HomeImage'
-import CircleMouseFollower from '../Components/CircleMouseFollower'
+//import CircleMouseFollower from '../Components/CircleMouseFollower'
 import OurProduct from '../Components/OurProduct'
 
 function Home() {
