@@ -4,11 +4,12 @@ const Schema = require('./models/user.model')
 const data =require('./models/data.model')
 require('dotenv').config()
 const cors = require('cors'); 
-const { getAllUsers } = require('./controllers/Users'); 
-const { checkAccess, getAllData} = require('./controllers/Data');
+const { getAllUsers } = require('./APIS/Users'); 
+const { checkAccess, getAllData} = require('./APIS/Data');
 const cart = require('./models/cart.model')
-const { registerUser, loginUser } = require('./controllers/Login');
-const { getCapsule ,getTablet,getInjection, getSoap, getLotion, getSyrup, getDrops, getShampoo, getCream} = require('./controllers/ByCategory');
+const { registerUser, loginUser } = require('./APIS/Login');
+const { getCapsule ,getTablet,getInjection, getSoap, getLotion, getSyrup, getDrops, getShampoo, getCream} = require('./APIS/ByCategory');
+const { logoutUser } = require('./APIS/Login');
 const app = express();
 const PORT = 4000;
 
@@ -26,6 +27,7 @@ app.use(cors());
 //ROUTES
 app.post('/api/register', registerUser);
 app.post('/api/login', loginUser); 
+app.post('/api/logout', logoutUser);
 app.get('/api/users', getAllUsers);
 app.get('/api/data', checkAccess, getAllData);
 

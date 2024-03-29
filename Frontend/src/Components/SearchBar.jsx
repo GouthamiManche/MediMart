@@ -77,7 +77,10 @@ function SearchBar() {
 
   return (
     <div className="bg-white py-10 px-4">
+
       <div className="flex justify-center mb-6">
+      <div class="absolute top-14 left-4 flex items-center font-roboto-slab text-base font-normal bg-white border rounded-md">
+        <button class="flex-1 flex items-center justify-center w-80 h-14 text-white bg-black rounded-md cursor-pointer">All Products</button></div>
         <input
           id="searchInput"
           type="text"
@@ -86,6 +89,7 @@ function SearchBar() {
           className="px-4 py-3 w-[60%] rounded-md border-2 border-black shadow-xl"
         />
       </div>
+      
       <div className="flex flex-wrap justify-center">
         {currentItems.map((val) => {
           return (
