@@ -40,7 +40,7 @@ const loginUser = async (req, res) => {
     if (user.password !== password) {
       return res.status(401).json({ error: 'Incorrect password' });
     }
-
+    // req.session.userId = user._id;
     const token = generateToken(user._id);
     res.status(200).json({
         message: 'Login successful',
@@ -52,5 +52,24 @@ const loginUser = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+// const logoutUser = async(req,res)=>{
+//   try{
+//     if (req.session.userId) {
+//       req.session.destroy(err => {
+//         if (err) {
+//           res.status(500).json({ error: 'Logout failed' });
+//         } else {
+//           res.json({ message: 'Logout successful' });
+//         }
+//       });
+//     } else {
+//       res.status(401).json({ error: 'You are not logged in' });
+//     }
+//   }
+//   catch(error){
+//     console.error(error);
+//     res.status(500).json({ error: 'Internal server error' });
+//   }
+// }
 
-module.exports = { registerUser, loginUser };
+module.exports = { registerUser, loginUser, logoutUser};
