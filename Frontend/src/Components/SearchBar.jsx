@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import axios from 'axios'
@@ -77,6 +78,7 @@ function SearchBar() {
 
   return (
     <div className="bg-white py-10 px-4">
+
       <div className="flex justify-center mb-6">
       {/* <div class="absolute top-14 left-4 flex items-center font-roboto-slab text-base font-normal bg-white border rounded-md">
         <button class="flex-1 flex items-center justify-center w-80 h-14 text-white bg-black rounded-md cursor-pointer">All Products</button></div> */}
@@ -85,18 +87,18 @@ function SearchBar() {
           type="text"
           placeholder="Search here..."
           onChange={(event) => setSearchTerm(event.target.value)}
-          className="px-4 py-3 w-[60%] rounded-md border-2 border-black shadow-xl"
+          className="px-4 py-3 w-[60%] rounded-md border-2 border-black shadow-md"
         />
       </div>
       
       <div className="flex flex-wrap justify-center">
-        {currentItems.map((val,index) => {
+        {currentItems.map((val) => {
           return (
             <Link
-              key={index}
+              key={val._id.$oid}
               to={`/singleproduct/${val._id.$oid}`}
               state={val}
-              className="bg-white m-6 p-4 rounded-md  shadow-xl flex flex-col  w-[16rem] h-[22rem] transition duration-300 ease-in-out transform hover:-translate-y-1 ">
+              className="bg-white m-6 p-4 rounded-md shadow-md flex flex-col  w-[16rem] h-[22rem] transition duration-300 ease-in-out transform hover:-translate-y-1 ">
               <div className="flex items-center justify-center">
                 <img src={val.Image_URL} alt="" className="h-52" />
               </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Navbar from '../Components/Navbar'
 import Footer from '../Components/Footer'
 export default function SingleProduct() {
@@ -59,12 +59,18 @@ export default function SingleProduct() {
                 <span className="text-red-500">{`Poor ${product.Poor_Review}`}%</span>
               </div>
             </div>
+            <div className='space-x-4 '>
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300 mb-[40%]"
+              className="bg-black hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300 mb-[40%]"
               onClick={handleBackClick}
             >
               Back
             </button>
+            <Link to="/cart"><button
+              className="bg-black hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300 mb-[40%]">
+              Add to Card
+            </button></Link>
+            </div>
 
           </div>
         </div>

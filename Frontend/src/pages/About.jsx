@@ -3,7 +3,9 @@ import React from 'react'
 export default function About() {
   return (
     <div>
-      about
+      {/* <Navbar />
+      <h1>About</h1>
+      <Footer/> */}
     </div>
   )
 }
