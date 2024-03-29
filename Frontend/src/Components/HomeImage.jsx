@@ -4,7 +4,7 @@ function HomeImage() {
   return (
     <div className="relative ">
       <img
-        src="src/Images/BgBlue.jpg"
+        src="src/Images/home22.jpg"
         alt="Image 1"
         className="w-full h-[50vh] lg:h-[550px] object-cover "
       />
