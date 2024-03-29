@@ -27,7 +27,6 @@ app.use(cors());
 //ROUTES
 app.post('/api/register', registerUser);
 app.post('/api/login', loginUser); 
-app.post('/api/logout', logoutUser);
 app.get('/api/users', getAllUsers);
 app.get('/api/data', checkAccess, getAllData);
 

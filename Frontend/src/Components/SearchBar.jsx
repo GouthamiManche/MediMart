@@ -77,10 +77,9 @@ function SearchBar() {
 
   return (
     <div className="bg-white py-10 px-4">
-
       <div className="flex justify-center mb-6">
-      <div class="absolute top-14 left-4 flex items-center font-roboto-slab text-base font-normal bg-white border rounded-md">
-        <button class="flex-1 flex items-center justify-center w-80 h-14 text-white bg-black rounded-md cursor-pointer">All Products</button></div>
+      {/* <div class="absolute top-14 left-4 flex items-center font-roboto-slab text-base font-normal bg-white border rounded-md">
+        <button class="flex-1 flex items-center justify-center w-80 h-14 text-white bg-black rounded-md cursor-pointer">All Products</button></div> */}
         <input
           id="searchInput"
           type="text"
@@ -91,10 +90,10 @@ function SearchBar() {
       </div>
       
       <div className="flex flex-wrap justify-center">
-        {currentItems.map((val) => {
+        {currentItems.map((val,index) => {
           return (
             <Link
-              key={val._id.$oid}
+              key={index}
               to={`/singleproduct/${val._id.$oid}`}
               state={val}
               className="bg-white m-6 p-4 rounded-md  shadow-xl flex flex-col  w-[16rem] h-[22rem] transition duration-300 ease-in-out transform hover:-translate-y-1 ">
