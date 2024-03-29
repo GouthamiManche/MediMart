@@ -24,7 +24,7 @@ export default function SingleProduct() {
             className="w-full h-auto object-cover rounded-lg"
           />
         </div>
-        {/* <div>
+        <div>
           <h2 className="text-2xl md:text-3xl font-bold mb-4">
             {product.Medicine_Name}
           </h2>
@@ -52,11 +52,11 @@ export default function SingleProduct() {
               </span>
               <span className="text-red-500">{product['Poor Review %']}%</span>
              
-            </div> */}
+            </div>
              {/* <div>
             <button className='mt-4 bg-black text-white rounded-md py-2 px-[3rem]'>Add to cart</button>
             </div> */}
-            <div className="mb-4">
+            {/* <div className="mb-4">
               <h3 className="text-lg font-semibold mb-2">Composition</h3>
               <p>{product.Composition}</p>
             </div>
@@ -79,7 +79,7 @@ export default function SingleProduct() {
                 </span>
                 <span className="text-red-500">{`Poor ${product.Poor_Review}`}%</span>
               </div>
-            </div> 
+            </div>  */}
             {/* <button
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300 mb-[40%]"
               onClick={handleBackClick}
