@@ -6,7 +6,7 @@ import { FaLinkedin } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
 function Footer() {
   return (
-    <div>
+    <div className=''>
       <div className="bg-gray-900 text-white py-8">
       <div className="container mx-auto px-4">
         <div className="flex flex-wrap">

@@ -1,21 +1,18 @@
 import React from 'react';
 
-export default function OurProductCard({ imageSrc, title}) {
+export default function OurProductCard({ imageSrc, title }) {
   return (
-
-    <div className="w-full sm:w-1/3 overflow-hidden shadow-lg mt-[4rem] transition-transform duration-300 transform hover:scale-105 rounded-tl rounded-tr rounded-bl rounded-br  ">
-      <div className="h-56 sm:h-auto sm:w-full sm:flex-none">
-        <img
-          className="w-full h-full object-cover"
-          src={imageSrc}
-          alt="Product"
-        />
-      </div>
-      <div className="flex flex-col justify-evenly p-5 bg-white">
-        <h3 className="text-xl text-gray-900 font-bold">{title}</h3>
+    <div className="w-full md:w-1/2 lg:w-1/4 mt-[2vh] transition-transform duration-300 transform hover:scale-105">
+      <img
+        className="w-full h-56 md:h-64 lg:h-[48vh] object-contain lg:object-cover md:object-cove rounded-tl rounded-tr rounded-bl rounded-br"
+        src={imageSrc}
+        alt="Product"
+      />
+      <div className="p-4">
+        <h2 className="text-base md:text-lg lg:text-[2vw] font-semibold">
+          {title}
+        </h2>
       </div>
     </div>
-
-
   );
 }

@@ -4,9 +4,9 @@ import Footer from '../Components/Footer';
 
 const Contact = () => {
   return (
-    <div className='font-Akaya'>
+    <div className=''>
       <Navbar />
-      <section className="py-4 text-center bg-gray-100">
+      <section className="py-4 text-center ">
         <h2 className="text-3xl font-bold  transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500">Contact page</h2>
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3772.0819762387664!2d73.03754307442739!3d19.016109053851505!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c14ce39a43b3%3A0x729c8296be43f413!2sUnipolar%20Technologies%20Pvt%20Ltd!5e0!3m2!1sen!2sin!4v1711392952821!5m2!1sen!2sin"

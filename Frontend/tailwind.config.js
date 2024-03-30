@@ -8,8 +8,13 @@ export default {
     extend: {
       fontFamily:{
        "Akaya": ["Akaya Kanadaka", "system-ui"],
-      }
-    },
+       "Roboto": ["Roboto Slab", "serif"]
+      },
+        colors: {
+          skyblue: "#B6EADA",
+          darkblue:'#03001C'
+        },
+      },
   },
   plugins: [],
 }
