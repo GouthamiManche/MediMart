@@ -67,7 +67,6 @@ function SearchBar({ pg }) {
   }, [pg]);
 
   useEffect(() => {
-    // Update the URL to pg=1 whenever the component mounts or refreshes
     window.history.replaceState(null, null, `${location.pathname}`);
   }, []);
 
