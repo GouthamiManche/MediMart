@@ -42,9 +42,9 @@ export default function SingleProduct() {
       <Navbar />
       <div className="container mx-auto py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="relative">
+          <div className="">
             <button
-              className="absolute top-4 left-4 bg-white rounded-full p-2 transition-colors duration-300 hover:bg-gray-200"
+              className="  bg-white rounded-full p-2 transition-colors duration-300 hover:bg-gray-200"
               onClick={handleBackClick}
             >
               <svg
@@ -65,32 +65,32 @@ export default function SingleProduct() {
             <img
               src={product.Image_URL}
               alt={product.Medicine_Name}
-              className="max-w-full h-auto rounded-md transition-transform duration-300 hover:scale-105"
+              className="max-w-full h-auto mt-[5rem] ml-[5rem] rounded-md transition-transform duration-300 hover:scale-105"
             />
           </div>
           <div className="flex flex-col justify-between">
             <div>
               <h2 className="text-3xl font-bold mb-4 text-gray-800">{product.Medicine_Name}</h2>
-              <div className="mb-4 bg-white rounded-lg p-4 shadow-sm">
+              <div className="mb-4 bg-white rounded-lg p-4 ">
                 <h3 className="text-lg font-semibold mb-2 text-gray-700">Uses</h3>
                 <p className="text-gray-600">{product.Uses}</p>
               </div>
-              <div className="mb-4 bg-white rounded-lg p-4 shadow-sm">
+              <div className="mb-4 bg-white rounded-lg p-4 ">
                 <h3 className="text-lg font-semibold mb-2 text-gray-700">Composition</h3>
                 <p className="text-gray-600">{product.Composition}</p>
               </div>
-              <div className="mb-4 bg-white rounded-lg p-4 shadow-sm">
+              <div className="mb-4 bg-white rounded-lg p-4">
                 <h3 className="text-lg font-semibold mb-2 text-gray-700">Manufacturer</h3>
                 <p className="text-gray-600">{product.Manufacturer}</p>
               </div>
               <div className="mb-4">
-                <p className="text-2xl text-blue-600 font-semibold">{`₹${product.Price}`}</p>
+                <p className="text-4xl text-blue-600 font-semibold">{`₹${product.Price}`}</p>
               </div>
-              <div className="mb-4 bg-white rounded-lg p-4 shadow-sm">
+              <div className="mb-4 bg-white rounded-lg p-4 ">
                 <h3 className="text-lg font-semibold mb-2 text-gray-700">Quantity</h3>
-                <div className="flex items-center justify-between">
+                <div className="flex mt-[1rem]">
                   <button
-                    className="bg-gray-200 text-gray-600 hover:bg-gray-300 hover:text-gray-700 px-3 py-2 rounded-l transition-colors duration-300 focus:outline-none"
+                    className="bg-gray-200 text-gray-600 hover:bg-gray-300 hover:text-gray-700 px-4 py-2 rounded transition-colors duration-300 focus:outline-none"
                     onClick={() => handleQuantityChange(quantity - 1)}
                   >
                     -
@@ -99,10 +99,10 @@ export default function SingleProduct() {
                     type="number"
                     value={quantity}
                     onChange={(e) => handleQuantityChange(parseInt(e.target.value))}
-                    className="w-16 text-center text-gray-700 outline-none mx-2 border border-gray-300 rounded-none"
+                    className="w-8 text-center text-gray-700 ml-4 "
                   />
                   <button
-                    className="bg-gray-200 text-gray-600 hover:bg-gray-300 hover:text-gray-700 px-3 py-2 rounded-r transition-colors duration-300 focus:outline-none"
+                    className="bg-gray-200 text-gray-600 hover:bg-gray-300 hover:text-gray-700 px-4 py-2 rounded transition-colors duration-300 focus:outline-none"
                     onClick={() => handleQuantityChange(quantity + 1)}
                   >
                     +
@@ -110,7 +110,7 @@ export default function SingleProduct() {
                 </div>
               </div>
             </div>
-            <div className="bg-white rounded-lg p-4 shadow-sm">
+            <div className="bg-white rounded-lg p-4 ">
               <h3 className="text-lg font-semibold mb-2 text-gray-700">Reviews</h3>
               <div className="flex flex-wrap items-center justify-between mb-4">
                 {reviews.map((review, index) => (

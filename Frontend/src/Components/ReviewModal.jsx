@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-const ReviewModal = ({ product, onClose, onSubmit }) => {
+const ReviewModal = ({  onClose, onSubmit }) => {
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState('');
 
