@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import data from '../json/pharmacy.dataset.json';
 import { Link } from 'react-router-dom';
+import axios from 'axios'
 
 function SearchBar() {
+  
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(20);
@@ -69,7 +71,7 @@ function SearchBar() {
                 key={val._id.$oid}
                 to={`/singleproduct/${val._id.$oid}`}
                 state={val}
-                
+
                 className="bg-white m-6 p-4 rounded-md border border-black shadow-md flex flex-col items-center w-[16rem] h-[22rem] transition duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg hover:border-blue-500"
               >
                 <img src={val.Image_URL} alt="" className="h-64" />

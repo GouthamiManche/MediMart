@@ -3,11 +3,12 @@ const mongoose = require('mongoose');
 const Schema = require('./models/user.model')
 const data =require('./models/data.model')
 require('dotenv').config()
-const cors = require('cors'); 
-const { getAllUsers } = require('./controllers/Users'); 
+const cors = require('cors');
+const { getAllUsers } = require('./controllers/Users');
 const { checkAccess, getAllData } = require('./controllers/Data');
 
 const { registerUser, loginUser } = require('./controllers/Login');
+const { getCapsule, getTablet, getInjection, getShampoo, getSyrup, getCream, getLotion, getSoap} = require('./controllers/Category');
 const app = express();
 const PORT = 4000;
 
@@ -19,12 +20,22 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', () => console.log('Connected to MongoDB'));
 
 app.use(express.json());
-app.use(cors()); 
+app.use(cors());
 
 app.post('/api/register', registerUser);
-app.post('/api/login', loginUser); 
+app.post('/api/login', loginUser);
 app.get('/api/users', getAllUsers);
 app.get('/api/data', checkAccess, getAllData);
+
+app.get('/api/category/capsule', getCapsule);
+app.get('/api/category/tablet', getTablet);
+app.get('/api/category/shampoo', getShampoo);
+app.get('/api/category/syrup', getSyrup);
+app.get('/api/category/soap', getSoap);
+app.get('/api/category/cream', getCream);
+app.get('/api/category/lotion', getLotion);
+app.get('/api/category/injection', getInjection);
+
 
 app.get('/', (req, res) => {
     res.send('Hello, this is your Express API!');
