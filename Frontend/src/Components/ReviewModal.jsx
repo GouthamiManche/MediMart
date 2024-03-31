@@ -10,7 +10,7 @@ const ReviewModal = ({  onClose, onSubmit }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 mr-[1rem]">
       <div className="bg-white rounded-lg p-6 shadow-lg max-w-md mx-auto">
         <h2 className="text-xl font-bold mb-4 text-center">Write a Review</h2>
         <form onSubmit={handleSubmit}>
@@ -25,7 +25,7 @@ const ReviewModal = ({  onClose, onSubmit }) => {
                   className={`text-2xl cursor-pointer ${rating >= value ? 'text-yellow-500' : 'text-gray-300'}`}
                   onClick={() => setRating(value)}
                 >
-                  &#9733;
+                  &#9733; 
                 </span>
               ))}
             </div>

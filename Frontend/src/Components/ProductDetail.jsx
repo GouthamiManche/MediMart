@@ -1,4 +1,3 @@
-// SearchBar.js
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
@@ -6,7 +5,14 @@ import SearchInput from "./SearchInput";
 import Item from "./Item";
 import Pagination from "./Pagination";
 
-function SearchBar({ pg }) {
+function truncateString(str, num) {
+  if (str.length <= num) {
+    return str;
+  }
+  return str.slice(0, num) + "...";
+}
+
+function ProductDetail({ pg }) {
   const location = useLocation();
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
@@ -14,6 +20,7 @@ function SearchBar({ pg }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(20);
   const [visibleRange, setVisibleRange] = useState([1, 4]);
+  const [sortOption, setSortOption] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,10 +51,26 @@ function SearchBar({ pg }) {
         return val;
       }
     });
-    setFilteredData(filtered);
+    const sortedData = sortData(filtered);
+    setFilteredData(sortedData);
     setCurrentPage(1);
     updateVisibleRange(1);
-  }, [searchTerm, data]);
+  }, [searchTerm, data, sortOption]);
+
+  const sortData = (data) => {
+    switch (sortOption) {
+      case 'priceLowToHigh':
+        return data.sort((a, b) => a.Price - b.Price);
+      case 'priceHighToLow':
+        return data.sort((a, b) => b.Price - a.Price);
+      case 'nameAscending':
+        return data.sort((a, b) => a.Medicine_Name.localeCompare(b.Medicine_Name));
+      case 'nameDescending':
+        return data.sort((a, b) => b.Medicine_Name.localeCompare(a.Medicine_Name));
+      default:
+        return data;
+    }
+  };
 
   useEffect(() => {
     const handleBackNavigation = () => {
@@ -112,7 +135,12 @@ function SearchBar({ pg }) {
 
   return (
     <div className="bg-white py-10 px-4">
-      <SearchInput searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <SearchInput
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        sortOption={sortOption}
+        setSortOption={setSortOption}
+      />
       <div className="flex flex-wrap justify-center">
         {currentItems.map((item, index) => (
           <Item key={index} item={item} />
@@ -130,4 +158,4 @@ function SearchBar({ pg }) {
   );
 }
 
-export default SearchBar;
+export default ProductDetail;

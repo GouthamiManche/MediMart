@@ -2,7 +2,8 @@ import React from 'react'
 import { useParams } from 'react-router-dom';
 import Navbar from '../Components/Navbar'
 import Footer from '../Components/Footer'
-import SearchBar from '../Components/SearchBar'
+
+import ProductDetail from '../Components/ProductDetail';
 
 function Shop() {
   const { pg } = useParams();
@@ -10,7 +11,7 @@ function Shop() {
   return (
     <div className=''>
       <Navbar />
-      <SearchBar pg={pg} />
+      <ProductDetail pg={pg} />
       <Footer />
     </div>
   )
