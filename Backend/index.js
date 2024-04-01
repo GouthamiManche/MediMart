@@ -3,15 +3,9 @@ const mongoose = require('mongoose');
 const Schema = require('./models/user.model')
 const data =require('./models/data.model')
 require('dotenv').config()
-<<<<<<< HEAD
-const cors = require('cors');
-const { getAllUsers } = require('./APIS/Users');
-const { checkAccess, getAllData} = require('./APIS/Data');
-=======
 const cors = require('cors'); 
 const { getAllUsers } = require('./APIS/Users'); 
-const { checkAccess, getAllData, getAllDataCategory, getCombinedData} = require('./APIS/Data');
->>>>>>> 2c9d0cfc4c91bc5a17027392e3388d49692719b4
+const { checkAccess,getAllDataCategory, getCombinedData} = require('./APIS/Data');
 const cart = require('./models/cart.model')
 const { registerUser, loginUser } = require('./APIS/Login');
 const { getDataByCategory,getCapsule ,getTablet,getInjection, getSoap, getLotion, getSyrup, getDrops, getShampoo, getCream} = require('./APIS/ByCategory');
@@ -36,9 +30,7 @@ app.post('/api/register', registerUser);
 app.post('/api/login', loginUser); 
 app.get('/api/users', getAllUsers);
 app.get('/api/combined', checkAccess, getCombinedData);
-app.get('/api/data', checkAccess, getAllData);
 app.get('/api/datacat', checkAccess, getAllDataCategory);
-app.get('/categories', getCategory);
 app.get('/categories/baby-care', BabyCare);
 app.get('/categories/women-care', WomenCare);
 app.get('/categories/protein', Protein);
