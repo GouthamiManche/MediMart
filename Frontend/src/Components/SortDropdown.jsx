@@ -13,7 +13,7 @@ const SortDropdown = ({ sortOption, setSortOption }) => {
       <div className="relative">
         <select
           id="sortOptions"
-        //   value={sortOption}
+          // value={sortOption}
           value=""
           onChange={handleSortChange}
           className="appearance-none bg-black text-white px-4 sm:pl-10 py-2 sm:py-4 rounded w-full focus:outline-none transition duration-300 flex justify-between items-center hover:bg-gray-900"
