@@ -1,6 +1,6 @@
 const Data = require('../models/data.model');
 
-async function getDataByCategory(req, res, category) {
+async function getMedicineData(req, res, category) {
   try {
     const data = await Data.find({ Category: category });
     if (data.length === 0) {
@@ -8,15 +8,15 @@ async function getDataByCategory(req, res, category) {
     }
     res.status(200).json(data);
   } catch (error) {
-    console.error('Error fetching data:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error(error);
+    res.status(500).json({ error});
   }
 }
 
 
 const Category= require('../models/category.model');
 
-async function getCategory(req, res,category) {
+async function getCategoryData(req, res,category) {
   try {
       const categories = await Category.find({ Category: category });
       if (data.length === 0) {
@@ -30,21 +30,21 @@ async function getCategory(req, res,category) {
 }
 
 module.exports = {
-  getCapsule: async (req, res) => getDataByCategory(req, res, 'Capsule'),
-  getInjection: async (req, res) => getDataByCategory(req, res, 'Injection'),
-  getTablet: async (req, res) => getDataByCategory(req, res, 'Tablet'),
-  getCream: async (req, res) => getDataByCategory(req, res, 'Cream'),
-  getDrops: async (req, res) => getDataByCategory(req, res, 'Drops'),
-  getLotion: async (req, res) => getDataByCategory(req, res, 'Lotion'),
-  getShampoo: async (req, res) => getDataByCategory(req, res, 'Shampoo'),
-  getSoap: async (req, res) => getDataByCategory(req, res, 'Soap'),
-  getSyrup: async (req, res) => getDataByCategory(req, res, 'Syrup'),
-  getCategory,
-  BabyCare: async (req, res) =>  getCategory(req, res, 'BabyCare'),
-  WomenCare: async (req, res) =>  getCategory(req, res, 'WomenCare'),
-  Protein: async (req, res) =>  getCategory(req, res, 'Protein'),
-  Supplements: async (req, res) =>  getCategory(req, res, 'Supplements'),
-  SkinCare: async (req, res) =>  getCategory(req, res, 'SkinCare'),
-  HealthDevices: async (req, res) =>  getCategory(req, res, 'HealthDevices'),
-  PersonalCare: async (req, res) =>  getCategory(req, res, 'PersonalCare'),
+  getCapsule: async (req, res) => getMedicineData(req, res, 'Capsule'),
+  getInjection: async (req, res) => getMedicineData(req, res, 'Injection'),
+  getTablet: async (req, res) => getMedicineData(req, res, 'Tablet'),
+  getCream: async (req, res) => getMedicineData(req, res, 'Cream'),
+  getDrops: async (req, res) => getMedicineData(req, res, 'Drops'),
+  getLotion: async (req, res) => getMedicineData(req, res, 'Lotion'),
+  getShampoo: async (req, res) => getMedicineData(req, res, 'Shampoo'),
+  getSoap: async (req, res) => getMedicineData(req, res, 'Soap'),
+  getSyrup: async (req, res) => getMedicineData(req, res, 'Syrup'),
+  getCategoryData,
+  BabyCare: async (req, res) =>  getCategoryData(req, res, 'BabyCare'),
+  WomenCare: async (req, res) =>  getCategoryData(req, res, 'WomenCare'),
+  Protein: async (req, res) =>  getCategoryData(req, res, 'Protein'),
+  Supplements: async (req, res) =>  getCategoryData(req, res, 'Supplements'),
+  SkinCare: async (req, res) =>  getCategoryData(req, res, 'SkinCare'),
+  HealthDevices: async (req, res) =>  getCategoryData(req, res, 'HealthDevices'),
+  PersonalCare: async (req, res) =>  getCategoryData(req, res, 'PersonalCare'),
 };
