@@ -9,7 +9,7 @@ function SearchBar() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/api/medicine/soap',{
+        const response = await axios.get('http://localhost:4000/api/combined',{
           headers:{
             'apikey':'123'
           }

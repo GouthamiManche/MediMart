@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const Data = require('../models/data.model');
+const Category = require('../models/category.model');
 
 const checkAccess = (req, res, next) => {
     const { apikey, authorization } = req.headers;
@@ -23,7 +24,6 @@ const checkAccess = (req, res, next) => {
   
   async function getAllData(req, res) {
     try {
-      const { user } = req;
       const data = await Data.find();
       res.status(200).json(data);
     } catch (error) {
@@ -32,6 +32,34 @@ const checkAccess = (req, res, next) => {
     }
   }
   
+  async function getAllDataCategory(req, res) {
+    try {
+      const data = await Category.find();
+      res.status(200).json(data);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error });
+    }
+  }
   
-  module.exports = { checkAccess, getAllData};
+  async function getCombinedData(req, res) {
+    try {
+        const dataQuery = Data.find();
+        const categoryQuery = Category.find();
+
+        const [data, category] = await Promise.all([dataQuery, categoryQuery]);
+
+        const combinedData = {
+            data: data,
+            category: category
+        };
+
+        res.status(200).json(combinedData);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error });
+    }
+}
+
+  module.exports = { checkAccess, getAllData,getAllDataCategory,getCombinedData};
   
