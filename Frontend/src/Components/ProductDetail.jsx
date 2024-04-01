@@ -6,6 +6,9 @@ import Item from "./Item";
 import Pagination from "./Pagination";
 
 function truncateString(str, num) {
+  if (!str || !str.length) {
+    return ''; // Return an empty string if str is undefined, null, or has no length
+  }
   if (str.length <= num) {
     return str;
   }
@@ -25,7 +28,7 @@ function ProductDetail({ pg }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/api/data", {
+        const response = await axios.get("http://localhost:4000/api/combined", {
           headers: {
             apikey: "123",
           },
@@ -51,6 +54,7 @@ function ProductDetail({ pg }) {
         return val;
       }
     });
+    
     const sortedData = sortData(filtered);
     setFilteredData(sortedData);
     setCurrentPage(1);

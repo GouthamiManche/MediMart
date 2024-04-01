@@ -11,5 +11,5 @@ const CatSchema = new mongoose.Schema({
     Directions_for_Use: "String",
     Size: "String"
   })
-const Category = mongoose.model('Category', CatSchema);
+const Category = mongoose.model('product2', CatSchema);
 module.exports= Category;

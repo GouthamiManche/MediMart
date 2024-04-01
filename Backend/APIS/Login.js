@@ -42,6 +42,7 @@ const loginUser = async (req, res) => {
     }
     // req.session.userId = user._id;
     const token = generateToken(user._id);
+    res.setHeader('Authorization', `Bearer ${token}`);
     res.status(200).json({
         message: 'Login successful',
         user: { id: user._id, username: user.username, email: user.email },
@@ -52,24 +53,5 @@ const loginUser = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
-// const logoutUser = async(req,res)=>{
-//   try{
-//     if (req.session.userId) {
-//       req.session.destroy(err => {
-//         if (err) {
-//           res.status(500).json({ error: 'Logout failed' });
-//         } else {
-//           res.json({ message: 'Logout successful' });
-//         }
-//       });
-//     } else {
-//       res.status(401).json({ error: 'You are not logged in' });
-//     }
-//   }
-//   catch(error){
-//     console.error(error);
-//     res.status(500).json({ error: 'Internal server error' });
-//   }
-// }
 
 module.exports = { registerUser, loginUser};
