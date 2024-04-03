@@ -43,7 +43,7 @@ const loginUser = async (req, res) => {
     }
 
     const token = generateToken(user);
-    res.setHeader('Authorization', `Bearer ${token}`);
+    // res.setHeader('Authorization', `Bearer ${token}`);
 
     // Store the token in client-side localStorage
     res.status(200).json({

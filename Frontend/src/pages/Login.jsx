@@ -43,106 +43,49 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
+    const { email, password } = formData;
+  
+    // Validate email
+    if (!validateEmail(email)) {
+      setEmailError("Please enter a valid email address.");
+      setPasswordError("");
+      return; // Stop further execution
+    }
+  
+    // Validate password
+    if (!validatePassword(password)) {
+      setPasswordError("Password must be at least 8 characters long.");
+      return; // Stop further execution
+    }
+  
     try {
       const response = await axios.post(
         "http://localhost:4000/api/login",
         formData
       );
+      console.log(response.data); // Log the response from the backend
       const { token } = response.data;
       localStorage.setItem("token", token);
+      navigate("/");
     } catch (error) {
-      console.log(error)
-    }
-
-    const { email, password } = formData;
-
-    // Validate email
-    if (!validateEmail(email)) {
-      setEmailError("Please enter a valid email address.");
-      setPasswordError("");
-    } else {
-      // Email is valid, validate password
-      if (!validatePassword(password)) {
-        setPasswordError("Password must be at least 8 characters long.");
+      console.error("Error during login:", error);
+      if (error.response && error.response.data && error.response.data.error) {
+        if (error.response.data.error === "User not found") {
+          setUserNotFound(true);
+          setPasswordError("");
+        } else if (error.response.data.error === "Incorrect password") {
+          setPasswordError("Incorrect password");
+          setUserNotFound(false);
+        } else {
+          setErrorMessage(error.response.data.error);
+          setPasswordError("");
+        }
       } else {
+        setErrorMessage("An error occurred during login.");
         setPasswordError("");
       }
-
-      // If both email and password are valid, proceed with login
-      if (validateEmail(email) && validatePassword(password)) {
-        try {
-          const response = await axios.post(
-            "http://localhost:4000/api/login",
-            formData
-          );
-          console.log(response.data); // Log the response from the backend
-          navigate("/");
-        } catch (error) {
-          console.error("Error during login:", error);
-          if (error.response && error.response.data && error.response.data.error) {
-            if (error.response.data.error === "User not found") {
-              setUserNotFound(true);
-              setPasswordError("");
-            } else if (error.response.data.error === "Incorrect password") {
-              setPasswordError("Incorrect password");
-              setUserNotFound(false);
-            } else {
-              setErrorMessage(error.response.data.error);
-              setPasswordError("");
-            }
-          } else {
-            setErrorMessage("An error occurred during login.");
-            setPasswordError("");
-          }
-        }
-      }
     }
-
-// 
-//     const { email, password } = formData;
-  
-//     // Validate email
-//     if (!validateEmail(email)) {
-//       setEmailError("Please enter a valid email address.");
-//       setPasswordError("");
-//     } else {
-//       // Email is valid, validate password
-//       if (!validatePassword(password)) {
-//         setPasswordError("Password must be at least 8 characters long.");
-//       } else {
-//         setPasswordError("");
-//       }
-  
-//       // If both email and password are valid, proceed with login
-//       if (validateEmail(email) && validatePassword(password)) {
-//         try {
-//           const response = await axios.post(
-//             "http://localhost:4000/api/login",
-//             formData
-//           );
-//           console.log(response.data); // Log the response from the backend
-//           navigate("/");
-//         } catch (error) {
-//           console.error("Error during login:", error);
-//           if (error.response && error.response.data && error.response.data.error) {
-//             if (error.response.data.error === "User not found") {
-//               setUserNotFound(true);
-//               setPasswordError("");
-//             } else if (error.response.data.error === "Incorrect password") {
-//               setPasswordError("Incorrect password");
-//               setUserNotFound(false);
-//             } else {
-//               setErrorMessage(error.response.data.error);
-//               setPasswordError("");
-//             }
-//           } else {
-//             setErrorMessage("An error occurred during login.");
-//             setPasswordError("");
-//           }
-//         }
-//       }
-//     }
-
   };
 
   return (
@@ -151,21 +94,22 @@ function Login() {
       <div className="flex flex-col md:flex-row  h-screen">
         {/* 1st half */}
         <div className="w-full md:w-1/2 bg-gradient-to-r from-blue-200 to-blue-400 p-8 md:mt-20 md:ml-56 md:mb-16 drop-shadow-xl ">
-          
-          <h1 className="text-white mt-7 ml-8 font-bold">MEDIMART</h1>
+          {/* <h1 className="text-white mt-7 ml-8 font-bold">MEDIMART</h1> */}
+          <div className="text-center md:text-left">
           <h1 className="font-bold text-white text-5xl mt-10 pt-20 ml-8">
             Welcome
           </h1>
           <h1 className="font-bold text-white text-5xl mt-7 mb-[6rem] ml-8">Back!</h1>
         </div>
+        </div>
 
-        {/* 2nd Half */}
         <div className="w-full md:w-1/2 bg-white md:mt-20 md:mb-16 md:mr-56 drop-shadow-2xl p-8">
           <h1 className="text-black text-2xl font-bold mt-14">Login</h1>
+          
           <form onSubmit={handleSubmit}>
             {/* Email */}
             <h2 className="text-black text-sm font-semibold mt-5">
-              Email/Username
+              Email
             </h2>
             <input
               type="email"
@@ -230,8 +174,8 @@ function Login() {
           {/* ... */}
           <div className="flex mt-2">
             <h3 className="text-slate-400 mr-2">New User?</h3>
-            <Link to="/SignUp" style={{ color: "#90CCBA" }}>
-              Signup
+            <Link to="/Register" style={{ color: "#90CCBA" }}>
+              Register
             </Link>
           </div>
         </div>
