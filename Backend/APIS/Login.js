@@ -1,4 +1,4 @@
-const express = require('express');
+
 const User = require('../models/user.model');
 const jwt = require('jsonwebtoken');
 
@@ -24,7 +24,7 @@ const generateToken = (user) => {
     username: user.username,
     email: user.email,
   };
-  const token = jwt.sign(payload, process.env.JWT_KEY, { expiresIn: '1h' });
+  const token = jwt.sign(payload, process.env.JWT_KEY, { expiresIn: '600' });
   return token;
 };
 
@@ -43,13 +43,14 @@ const loginUser = async (req, res) => {
     }
 
     const token = generateToken(user);
-    // res.setHeader('Authorization', `Bearer ${token}`);
-
+    const decodedToken = jwt.decode(token);
+    const expiresIn = decodedToken.exp - Math.floor(Date.now() / 1000);
     // Store the token in client-side localStorage
     res.status(200).json({
       message: 'Login successful',
       user: { id: user._id, username: user.username, email: user.email },
       token,
+      expiresIn,
     });
 
   } catch (error) {
