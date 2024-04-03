@@ -21,7 +21,18 @@ const checkAccess = async (req, res, next) => {
   } else {
     return res.status(403).json({ error: 'Invalid API key or JWT token' });
   }
+}
 
+async function getAllData(req, res) {
+  try {
+    const { user } = req;
+    const data = await Data.find();
+    res.status(200).json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error });
+  }
+}
 
   module.exports = { checkAccess, getAllData};
 

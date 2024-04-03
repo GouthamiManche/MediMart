@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const Schema = require('./models/user.model')
+
+const cSchema = require('./models/category.model')
 const data =require('./models/data.model')
 require('dotenv').config()
 const cors = require('cors');
@@ -10,6 +12,7 @@ const cart = require('./models/cart.model')
 const { registerUser, loginUser } = require('./APIS/Login');
 const { getCapsule ,getTablet,getInjection, getSoap, getLotion, getSyrup, getDrops, getShampoo, getCream} = require('./APIS/ByCategory');
 const { logoutUser } = require('./APIS/Login');
+const {getCategpry, getCategory} =require('./APIS/Category')
 const app = express();
 const PORT = 4000;
 
@@ -29,7 +32,7 @@ app.post('/api/register', registerUser);
 app.post('/api/login', loginUser);
 app.get('/api/users', getAllUsers);
 app.get('/api/data', checkAccess, getAllData);
-
+app.get('/api/cat', getCategory);
 app.get('/api/medicine/capsule',getCapsule)
 app.get('/api/medicine/tablet',getTablet)
 app.get('/api/medicine/injection',getInjection)
