@@ -19,17 +19,18 @@ const registerUser = async (req, res) => {
 };
 
 const generateToken = (user) => {
-
-    const payload = {
-      userId: user._id,
-      username: user.username,
-      email: user.email,
-    };
-    const token = jwt.sign(payload,process.env.JWT_KEY, { expiresIn: '1h' });
-    return token;
+  const payload = {
+    userId: user._id,
+    username: user.username,
+    email: user.email,
   };
+  const token = jwt.sign(payload, process.env.JWT_KEY, { expiresIn: '600' });
+  return token;
+};
+
 
 const loginUser = async (req, res) => {
+
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
@@ -40,36 +41,21 @@ const loginUser = async (req, res) => {
     if (user.password !== password) {
       return res.status(401).json({ error: 'Incorrect password' });
     }
-    // req.session.userId = user._id;
-    const token = generateToken(user._id);
+
+    const token = generateToken(user);
+    const decodedToken = jwt.decode(token);
+    const expiresIn = decodedToken.exp - Math.floor(Date.now() / 1000);
+    // Store the token in client-side localStorage
     res.status(200).json({
-        message: 'Login successful',
-        user: { id: user._id, username: user.username, email: user.email },
-        token,
-      })
+      message: 'Login successful',
+      user: { id: user._id, username: user.username, email: user.email },
+      token,
+      expiresIn,
+    });
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
-// const logoutUser = async(req,res)=>{
-//   try{
-//     if (req.session.userId) {
-//       req.session.destroy(err => {
-//         if (err) {
-//           res.status(500).json({ error: 'Logout failed' });
-//         } else {
-//           res.json({ message: 'Logout successful' });
-//         }
-//       });
-//     } else {
-//       res.status(401).json({ error: 'You are not logged in' });
-//     }
-//   }
-//   catch(error){
-//     console.error(error);
-//     res.status(500).json({ error: 'Internal server error' });
-//   }
-// }
-
 module.exports = { registerUser, loginUser};

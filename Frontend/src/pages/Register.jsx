@@ -4,7 +4,7 @@ import Navbar from "../Components/Navbar";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 
-function SignUp() {
+function Register() {
   const initialValues = { username: "", email: "", password: "" };
   const [formData, setFormData] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
@@ -73,11 +73,11 @@ function SignUp() {
   };
 
   return (
-    <div className="">
+    <div className="bg-[#f5f5f5]">
       <Navbar />
       <div className="flex flex-col md:flex-row h-screen">
         <div className="w-full md:w-1/2 bg-gradient-to-r from-blue-200 to-blue-400 p-8 md:mt-20 md:ml-56 md:mb-16 drop-shadow-xl">
-          <h1 className="text-white mt-7 ml-8 font-bold">MEDIMART</h1>
+          {/* <h1 className="text-white mt-7 ml-8 font-bold">MEDIMART</h1> */}
           <div className="text-center md:text-left">
             <h1 className="font-bold text-white text-5xl md:text-5xl mt-10 pt-20">
               Welcome
@@ -89,8 +89,8 @@ function SignUp() {
         </div>
 
         <div className="w-full md:w-1/2 bg-white md:mt-20 md:mb-16 md:mr-56 drop-shadow-2xl p-8">
-          <h1 className="text-black text-2xl font-bold mt-4 md:mt-14 md:ml-8">
-            Sign up
+          <h1 className="text-black text-2xl font-bold mt-4 md:ml-8">
+             Register
           </h1>
           
           <form onSubmit={handleSubmit}>
@@ -142,7 +142,7 @@ function SignUp() {
             {errorMessage && <p className="text-red-500 mt-2 md:ml-8">{errorMessage}</p>}
 
             <button className="text-white font-bold w-full md:w-80 h-10 mt-4 md:ml-8 md:mb-4 md:mt-8 rounded bg-gradient-to-r from-blue-200 to-blue-400">
-              Sign up
+               Register
             </button>
           </form>
 
@@ -163,4 +163,4 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default Register;

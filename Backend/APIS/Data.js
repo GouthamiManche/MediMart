@@ -1,38 +1,61 @@
-const { verifyToken } = require('../Auth/tokenauth');
-const { checkApiKey } = require('../Auth/apikeyauth');
-const Data = require('../models/data.model');
+const jwt = require('jsonwebtoken');
+const Data = require('../models/product.model');
+const Category = require('../models/product2.model');
 
-const checkAccess = async (req, res, next) => {
-  const { apikey, authorization } = req.headers;
+const checkAccess = (req, res, next) => {
+    const { apikey, authorization } = req.headers;
 
-  if (checkApiKey(apikey)) {
-    next();
-  } else if (authorization && authorization.startsWith('Bearer ')) {
-    const token = authorization.split(' ')[1]; // Splitting the token using split(' ')[1]
+    if (apikey === "123") {
+      next();
+    } else if (authorization && authorization.startsWith('Bearer ')) {
+      const token = authorization.slice(7);
+      jwt.verify(token,process.env.JWT_KEY, (err, decoded) => {
+        if (err) {
+          return res.status(403).json({ error: 'Invalid JWT token' });
+        } else {
+          req.user = decoded;
+          next();
+        }
+      });
+    } else {
+      return res.status(403).json({ error: 'Invalid API key or JWT token' });
+    }
+  };
+
+  async function getMedicineData(req, res) {
     try {
-      const { user } = req;
       const data = await Data.find();
       res.status(200).json(data);
-      // console.log(data);
     } catch (error) {
       console.error(error);
       res.status(500).json({ error });
     }
-  } else {
-    return res.status(403).json({ error: 'Invalid API key or JWT token' });
+  }
+  async function getOtherData(req, res) {
+    try {
+      const data = await Category.find();
+      res.status(200).json(data);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error });
+    }
   }
 }
 
-async function getAllData(req, res) {
-  try {
-    const { user } = req;
-    const data = await Data.find();
-    res.status(200).json(data);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error });
-  }
+  async function getCombinedData(req, res) {
+    try {
+        const dataQuery = Data.find();
+        const categoryQuery = Category.find();
+
+        const [data, category] = await Promise.all([dataQuery, categoryQuery]);
+
+        const combinedData = [...data, ...category]; // Merge data from both queries into a single array
+
+        res.status(200).json(combinedData);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error });
+    }
 }
 
-  module.exports = { checkAccess, getAllData};
-
+  module.exports = { checkAccess,getMedicineData,getOtherData,getCombinedData};
