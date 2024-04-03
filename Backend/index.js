@@ -10,6 +10,8 @@ const cart = require('./models/cart.model')
 const { registerUser, loginUser } = require('./APIS/Login');
 const { getCapsule ,getTablet,getInjection, getSoap, getLotion, getSyrup, getDrops, getShampoo, getCream} = require('./APIS/ByCategory');
 const { BabyCare, WomenCare, Protein, Supplements, SkinCare, HealthDevices, PersonalCare } = require('./APIS/ByCategory');
+const cartSchema = require('./models/cart.model');
+const { getItem } = require('./cartroute');
 // const { logoutUser } = require('./APIS/Login');
 const app = express();
 const PORT = 4000;
@@ -25,6 +27,8 @@ app.use(express.json());
 app.use(cors());
 
 //ROUTES
+app.post('/api/cart',getItem);
+
 app.post('/api/register', registerUser);
 app.post('/api/login', loginUser); 
 app.get('/api/users', getAllUsers);
@@ -60,3 +64,5 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+

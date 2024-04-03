@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaCartPlus, FaBars, FaTimes } from 'react-icons/fa';
 
 function Navbar() {
+  
   const [user, setUser] = useState({});
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -34,11 +35,6 @@ function Navbar() {
             <span className="text-lg ml-1">Cart</span>
           </Link>
           <Link className="py-2 px-4 font-bold text-lg transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500" to="/login">Login</Link>
-          {user && (
-            <div>
-              <h3 className="font-bold py-2">{user.name}</h3>
-            </div>
-          )}
         </nav>
       </header>
       {mobileMenuOpen && (
