@@ -6,6 +6,9 @@ import Item from "./Item";
 import Pagination from "./Pagination";
 import FilterBar from "./FilterBar";
 function truncateString(str, num) {
+  if (!str || !str.length) {
+    return ''; // Return an empty string if str is undefined, null, or has no length
+  }
   if (str.length <= num) {
     return str;
   }

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaCartPlus, FaBars, FaTimes } from 'react-icons/fa';
 
 function Navbar() {
+  
   const [user, setUser] = useState({});
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 

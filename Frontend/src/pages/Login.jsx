@@ -43,6 +43,16 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/api/login",
+        formData
+      );
+      const { token } = response.data;
+      localStorage.setItem("token", token);
+    } catch (error) {
+      console.log(error)
+    }
 
     const { email, password } = formData;
 
@@ -140,7 +150,8 @@ function Login() {
       <Navbar />
       <div className="flex flex-col md:flex-row  h-screen">
         {/* 1st half */}
-        <div className="w-full md:w-1/2 bg-gradient-to-r from-blue-200 to-blue-400 p-8 md:mt-20 md:ml-56 md:mb-16 drop-shadow-xl">
+        <div className="w-full md:w-1/2 bg-gradient-to-r from-blue-200 to-blue-400 p-8 md:mt-20 md:ml-56 md:mb-16 drop-shadow-xl ">
+          
           <h1 className="text-white mt-7 ml-8 font-bold">MEDIMART</h1>
           <h1 className="font-bold text-white text-5xl mt-10 pt-20 ml-8">
             Welcome

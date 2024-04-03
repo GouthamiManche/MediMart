@@ -13,5 +13,5 @@ const dataSchema = new mongoose.Schema({
     Poor_Review:Number,
     Price:Number
 })
-const Data = mongoose.model('dataset', dataSchema);
+const Data = mongoose.model('product1', dataSchema);
 module.exports= Data;

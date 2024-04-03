@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
-const Data = require('../models/data.model');
-const Category = require('../models/category.model');
+const Data = require('../models/product.model');
+const Category = require('../models/product2.model');
 
 const checkAccess = (req, res, next) => {
     const { apikey, authorization } = req.headers;
@@ -22,9 +22,18 @@ const checkAccess = (req, res, next) => {
     }
   };
   
-  async function getAllDataCategory(req, res) {
+  async function getMedicineData(req, res) {
     try {
       const data = await Data.find();
+      res.status(200).json(data);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error });
+    }
+  }
+  async function getOtherData(req, res) {
+    try {
+      const data = await Category.find();
       res.status(200).json(data);
     } catch (error) {
       console.error(error);
@@ -48,5 +57,5 @@ const checkAccess = (req, res, next) => {
     }
 }
 
-  module.exports = { checkAccess,getAllDataCategory,getCombinedData};
+  module.exports = { checkAccess,getMedicineData,getOtherData,getCombinedData};
   

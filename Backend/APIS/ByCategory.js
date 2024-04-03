@@ -1,4 +1,4 @@
-const Data = require('../models/data.model');
+const Data = require('../models/product.model');
 
 async function getMedicineData(req, res, category) {
   try {
@@ -10,8 +10,7 @@ async function getMedicineData(req, res, category) {
   }
 }
 
-
-const Category= require('../models/category.model');
+const Category= require('../models/product2.model');
 
 async function getCategoryData(req, res,category) {
   try {
@@ -33,7 +32,6 @@ module.exports = {
   getShampoo: async (req, res) => getMedicineData(req, res, 'Shampoo'),
   getSoap: async (req, res) => getMedicineData(req, res, 'Soap'),
   getSyrup: async (req, res) => getMedicineData(req, res, 'Syrup'),
-  getCategoryData,
   BabyCare: async (req, res) =>  getCategoryData(req, res, 'BabyCare'),
   WomenCare: async (req, res) =>  getCategoryData(req, res, 'WomenCare'),
   Protein: async (req, res) =>  getCategoryData(req, res, 'Protein'),
