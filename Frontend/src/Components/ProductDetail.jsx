@@ -18,7 +18,7 @@ function ProductDetail({ pg }) {
   const [filteredData, setFilteredData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(18);
+  const [itemsPerPage] = useState(9);
   const [visibleRange, setVisibleRange] = useState([1, 4]);
   const [sortOption, setSortOption] = useState('');
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -166,25 +166,29 @@ function ProductDetail({ pg }) {
     setSelectedCategory("");
     setFilteredData(data);
   };
+ 
   return (
-    <div className="flex">
+    <div className="">
+       <img
+      src="src/Images/shopbgimg.jpg"
+      alt="Image 1"
+      className="w-full h-[50vh] lg:h-[260px] object-cover "
+    />
+    <div className="flex ">
      <FilterBar
         selectedCategory={selectedCategory}
         categories={categories}
         handleCategoryFilter={handleCategoryFilter}
         resetFilters={resetFilters}
       />
-
-
-
-
-    <div className="bg-white w-3/4 p-4 py-10 px-4 bg-[#f5f5f5] ">
+   <div className="bg-white w-3/4 p-4 py-10 px-4 bg-[#f5f5f5] ">
       <SearchInput
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         sortOption={sortOption}
         setSortOption={setSortOption}
       />
+    
       <div className="flex  flex-wrap justify-center">
         {currentItems.map((item, index) => (
           <Item key={index} item={item} />
@@ -198,6 +202,7 @@ function ProductDetail({ pg }) {
         goToPage={goToPage}
         getPageNumbers={getPageNumbers}
       />
+    </div>
     </div>
     </div>
   );

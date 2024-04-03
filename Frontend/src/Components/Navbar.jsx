@@ -7,7 +7,7 @@ function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className=" bg-white text-gray-900 ">
+    <div className=" bg-white text-gray-900 z-50 w-full">
       <header className="container mx-auto py-4 px-6 flex items-center justify-between ">
         <div className="flex items-center text-gray-900">
           <Link to="/" className="text-xl md:text-3xl font-bold transition duration-300 ease-in-out transform hover:scale-110 hover:text-black">
