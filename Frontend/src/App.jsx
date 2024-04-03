@@ -7,7 +7,7 @@ import Loader from './Components/Loader';
 const Home = lazy(() => import('./pages/Home'));
 const Shop = lazy(() => import('./pages/Shop'));
 const Login = lazy(() => import('./pages/Login'));
-const SignUp = lazy(() => import('./pages/SignUp'));
+const Register = lazy(() => import('./pages/Register'));
 const Cart = lazy(() => import('./pages/Cart'));
 const SingleProduct = lazy(()=>import( './pages/SingleProduct'));
 const About= lazy(()=>import('./pages/About'))
@@ -23,7 +23,7 @@ function App() {
           <Route exact path="/" element={<Home />} />
           <Route exact path="/Shop/:pg?" element={<Shop />} />
           <Route exact path="/Login" element={<Login />} />
-          <Route exact path="/Signup" element={<SignUp />} />
+          <Route exact path="/Register" element={<Register/>} />
           <Route exact path="/Singleproduct/:id" element={<SingleProduct />} />
           <Route exact path="/cart" element={<Cart />} />
           <Route exact path="/about" element={<About />} />
