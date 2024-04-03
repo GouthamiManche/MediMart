@@ -69,10 +69,10 @@ function FilterBar({ selectedCategory, categories, handleCategoryFilter, resetFi
       )}
 
       {/* Filter Bar for desktop view */}
-      <div className="hidden md:block bg-white p-4 rounded-lg shadow-lg">
-        <div className="flex justify-between items-center mb-4">
+      <span className="hidden md:block bg-gray-100 p-4 rounded-lg md:mt-[8.5rem] md:ml-[1rem] md:w-[16rem] shadow-lg">
+        <span className="flex justify-between items-center mb-4">
           <h2 className="font-bold text-xl">Filter by Category</h2>
-        </div>
+        </span>
         <ul className="space-y-2">
           <li
             className={`cursor-pointer text-gray-800 hover:text-blue-600 transition duration-300 ${
@@ -94,7 +94,7 @@ function FilterBar({ selectedCategory, categories, handleCategoryFilter, resetFi
             </li>
           ))}
         </ul>
-      </div>
+      </span>
     </div>
   );
 }

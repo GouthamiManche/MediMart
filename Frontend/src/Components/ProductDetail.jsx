@@ -18,7 +18,7 @@ function ProductDetail({ pg }) {
   const [filteredData, setFilteredData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(9);
+  const [itemsPerPage] = useState(12);
   const [visibleRange, setVisibleRange] = useState([1, 4]);
   const [sortOption, setSortOption] = useState('');
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -168,7 +168,7 @@ function ProductDetail({ pg }) {
   };
  
   return (
-    <div className="">
+    <div className="bg-blue-200">
        <img
       src="src/Images/shopbgimg.jpg"
       alt="Image 1"
@@ -181,7 +181,7 @@ function ProductDetail({ pg }) {
         handleCategoryFilter={handleCategoryFilter}
         resetFilters={resetFilters}
       />
-   <div className="bg-white w-3/4 p-4 py-10 px-4 bg-[#f5f5f5] ">
+   <div className="w-[100%] p-4 py-10 px-4  bg-blue-200">
       <SearchInput
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
@@ -189,7 +189,7 @@ function ProductDetail({ pg }) {
         setSortOption={setSortOption}
       />
     
-      <div className="flex  flex-wrap justify-center">
+      <div className="flex  flex-wrap ">
         {currentItems.map((item, index) => (
           <Item key={index} item={item} />
         ))}

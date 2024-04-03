@@ -6,7 +6,7 @@ function SearchInput({ searchTerm, setSearchTerm, sortOption, setSortOption }) {
   return (
    
  
-    <div className="flex flex-col sm:flex-row justify-center mb-6">
+    <div className="flex flex-col sm:flex-row justify-center item-center mb-[2rem]">
       <input
         id="searchInput"
         type="text"
