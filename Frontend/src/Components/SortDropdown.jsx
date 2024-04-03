@@ -1,4 +1,3 @@
-
 import React from "react";
 import { CgSortAz } from "react-icons/cg";
 
@@ -7,14 +6,13 @@ const SortDropdown = ({ sortOption, setSortOption }) => {
     setSortOption(e.target.value);
   };
   
-
   return (
     <div className="w-full sm:w-auto">
       <div className="relative">
         <select
           id="sortOptions"
-          // value={sortOption}
-          value=""
+         // value={sortOption}
+         value=""
           onChange={handleSortChange}
           className="appearance-none bg-black text-white px-4 sm:pl-10 py-2 sm:py-4 rounded w-full focus:outline-none transition duration-300 flex justify-between items-center hover:bg-gray-900"
         >

@@ -4,7 +4,7 @@ import Footer from '../Components/Footer'
 
 export default function Cart() {
   return (
-    <div>
+    <div className='bg-[#f5f5f5]'>
       <Navbar />
       <h1>no items</h1>
       <Footer/>

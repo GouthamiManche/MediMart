@@ -4,7 +4,7 @@ import axios from "axios";
 import SearchInput from "./SearchInput";
 import Item from "./Item";
 import Pagination from "./Pagination";
-
+import FilterBar from "./FilterBar";
 function truncateString(str, num) {
   if (str.length <= num) {
     return str;
@@ -18,58 +18,82 @@ function ProductDetail({ pg }) {
   const [filteredData, setFilteredData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(20);
+  const [itemsPerPage] = useState(18);
   const [visibleRange, setVisibleRange] = useState([1, 4]);
   const [sortOption, setSortOption] = useState('');
-
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [categories, setCategories] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/api/data", {
+        const response = await axios.get("http://localhost:4000/api/combined", {
           headers: {
             apikey: "123",
           },
         });
         setData(response.data);
         setFilteredData(response.data);
+        const uniqueCategories = [...new Set(response.data.map((item) => item.Category))];
+        setCategories(uniqueCategories);
       } catch (error) {
-        if (axios.isAxiosError(error) && error.response && error.response.status === 403) {
-          console.error("Authorization error: You are not authorized to access this resource.");
-        } else {
-          console.error("Error fetching data:", error.message);
-        }
+        console.error("Error fetching data:", error.message);
       }
     };
     fetchData();
   }, []);
 
+
   useEffect(() => {
-    const filtered = data.filter((val) => {
-      if (searchTerm === "") {
-        return val;
-      } else if (val.Medicine_Name.toLowerCase().includes(searchTerm.toLowerCase())) {
-        return val;
-      }
-    });
-    const sortedData = sortData(filtered);
-    setFilteredData(sortedData);
-    setCurrentPage(1);
-    updateVisibleRange(1);
+    if (Array.isArray(data)) {
+      const filtered = data.filter((val) => {
+        if (searchTerm === "") {
+          return val;
+        } else if (val.Medicine_Name && val.Medicine_Name.toLowerCase().includes(searchTerm.toLowerCase())) {
+        } else if (val.Name && val.Name.toLowerCase().includes(searchTerm.toLowerCase())) 
+        {
+          return val;
+        }
+      });
+      const sortedData = sortData(filtered);
+      setFilteredData(sortedData);
+      setCurrentPage(1);
+      updateVisibleRange(1);
+    }
   }, [searchTerm, data, sortOption]);
 
   const sortData = (data) => {
+    let sortedData = [...data];
     switch (sortOption) {
       case 'priceLowToHigh':
-        return data.sort((a, b) => a.Price - b.Price);
+        sortedData.sort((a, b) => a.Price - b.Price);
+        break;
       case 'priceHighToLow':
-        return data.sort((a, b) => b.Price - a.Price);
+        sortedData.sort((a, b) => b.Price - a.Price);
+        break;
+      // case 'averageReviewAscending':
+      //   sortedData.sort((a, b) => a.Average_Review - b.Average_Review);
+      //   break;
+      // case 'averageReviewDescending':
+      //   sortedData.sort((a, b) => b.Average_Review - a.Average_Review);
+      //   break;
       case 'nameAscending':
-        return data.sort((a, b) => a.Medicine_Name.localeCompare(b.Medicine_Name));
+        sortedData.sort((a, b) => {
+          const aName = a.Name || a.Medicine_Name;
+          const bName = b.Name || b.Medicine_Name;
+          return aName.localeCompare(bName);
+        });
+        break;
       case 'nameDescending':
-        return data.sort((a, b) => b.Medicine_Name.localeCompare(a.Medicine_Name));
+        sortedData.sort((a, b) => {
+          const aName = a.Name || a.Medicine_Name;
+          const bName = b.Name || b.Medicine_Name;
+          return bName.localeCompare(aName);
+        });
+        break;
       default:
-        return data;
+        break;
     }
+    return sortedData;
   };
 
   useEffect(() => {
@@ -95,7 +119,7 @@ function ProductDetail({ pg }) {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = filteredData.length > 0 ? filteredData.slice(indexOfFirstItem, indexOfLastItem) : [];
   const totalItems = filteredData.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
@@ -132,16 +156,36 @@ function ProductDetail({ pg }) {
     const end = Math.min(totalPages, start + 3);
     setVisibleRange([start, end]);
   };
+  const handleCategoryFilter = (category) => {
+    setSelectedCategory(category);
+    const filtered = data.filter((item) => item.Category === category);
+    setFilteredData(filtered);
+  };
 
+  const resetFilters = () => {
+    setSelectedCategory("");
+    setFilteredData(data);
+  };
   return (
-    <div className="bg-white py-10 px-4">
+    <div className="flex">
+     <FilterBar
+        selectedCategory={selectedCategory}
+        categories={categories}
+        handleCategoryFilter={handleCategoryFilter}
+        resetFilters={resetFilters}
+      />
+
+
+
+
+    <div className="bg-white w-3/4 p-4 py-10 px-4 bg-[#f5f5f5] ">
       <SearchInput
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         sortOption={sortOption}
         setSortOption={setSortOption}
       />
-      <div className="flex flex-wrap justify-center">
+      <div className="flex  flex-wrap justify-center">
         {currentItems.map((item, index) => (
           <Item key={index} item={item} />
         ))}
@@ -154,6 +198,7 @@ function ProductDetail({ pg }) {
         goToPage={goToPage}
         getPageNumbers={getPageNumbers}
       />
+    </div>
     </div>
   );
 }

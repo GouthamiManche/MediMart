@@ -39,10 +39,7 @@ const checkAccess = (req, res, next) => {
 
         const [data, category] = await Promise.all([dataQuery, categoryQuery]);
 
-        const combinedData = {
-            data: data,
-            category: category
-        };
+        const combinedData = [...data, ...category]; // Merge data from both queries into a single array
 
         res.status(200).json(combinedData);
     } catch (error) {

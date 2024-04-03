@@ -3,9 +3,6 @@ const Data = require('../models/data.model');
 async function getMedicineData(req, res, category) {
   try {
     const data = await Data.find({ Category: category });
-    if (data.length === 0) {
-      return res.status(404).json({ error: `No data found for the ${category} category.` });
-    }
     res.status(200).json(data);
   } catch (error) {
     console.error(error);
@@ -19,9 +16,6 @@ const Category= require('../models/category.model');
 async function getCategoryData(req, res,category) {
   try {
       const categories = await Category.find({ Category: category });
-      if (data.length === 0) {
-        return res.status(404).json({ error: `No data found for the ${category} category.` });
-      }
       res.status(200).json(categories);
   } catch (error) {
       console.error(error);

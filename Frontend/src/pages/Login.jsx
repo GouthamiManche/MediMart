@@ -136,7 +136,7 @@ function Login() {
   };
 
   return (
-    <div className="">
+    <div className="bg-[#f5f5f5]">
       <Navbar />
       <div className="flex flex-col md:flex-row  h-screen">
         {/* 1st half */}

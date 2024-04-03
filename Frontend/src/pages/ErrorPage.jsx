@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const ErrorPage = () => {
   return (
-    <div className="flex justify-center items-center min-h-screen ">
+    <div className="flex justify-center items-center min-h-screen bg-[#f5f5f5]">
       <div className="text-center">
         <h2 className="text-9xl font-bold text-gray-800 mb-4 md:text-[10rem]">404</h2>
         <h3 className="text-4xl font-bold text-gray-700 mb-6 md:text-[4.2rem]">UH OH! You're lost.</h3>
