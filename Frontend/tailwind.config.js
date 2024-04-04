@@ -8,7 +8,8 @@ export default {
     extend: {
       fontFamily:{
        "Akaya": ["Akaya Kanadaka", "system-ui"],
-       "Roboto": ["Roboto Slab", "serif"]
+       "Roboto": ["Roboto Slab", "serif"],
+       'fontFamily':['Poppins','sans-serif']
       },
         colors: {
           skyblue: "#B6EADA",

@@ -7,14 +7,14 @@ const SortDropdown = ({ sortOption, setSortOption }) => {
   };
   
   return (
-    <div className="w-full sm:w-auto">
+    <div className="w-full sm:w-auto mr-[3rem]">
       <div className="relative">
         <select
           id="sortOptions"
-         // value={sortOption}
-         value=""
+          // value={sortOption}
+          value=""
           onChange={handleSortChange}
-          className="appearance-none bg-black text-white px-4 sm:pl-10 py-2 sm:py-4 rounded w-full focus:outline-none transition duration-300 flex justify-between items-center hover:bg-gray-900"
+          className="appearance-none bg-black text-white px-2 py-2  md:px-4 py-1 md:py-4 rounded md:w-full focus:outline-none transition duration-300 flex justify-between items-center hover:bg-gray-900 text-sm sm:text-base"
         >
           <option value="">Sort by</option>
           <option value="priceLowToHigh">Price: Low-High</option>
@@ -22,8 +22,8 @@ const SortDropdown = ({ sortOption, setSortOption }) => {
           <option value="nameAscending">A-Z</option>
           <option value="nameDescending">Z-A</option>
         </select>
-        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-8 text-white">
-          <CgSortAz className="text-2xl sm:text-4xl" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4 sm:pr-8 text-white">
+          <CgSortAz className="text-lg sm:text-2xl" />
         </div>
       </div>
     </div>

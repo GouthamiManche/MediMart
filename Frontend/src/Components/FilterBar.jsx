@@ -11,7 +11,7 @@ function FilterBar({ selectedCategory, categories, handleCategoryFilter, resetFi
     <div className="relative">
       {/* Filter Button for mobile view */}
       <button
-        className="md:hidden fixed bottom-4 right-4 z-10 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg"
+        className="md:hidden   z-10 bg-black text-white px-[2rem] py-2 rounded-md shadow-lg"
         onClick={togglePopup}
       >
         Filter
@@ -43,7 +43,7 @@ function FilterBar({ selectedCategory, categories, handleCategoryFilter, resetFi
                 </svg>
               </button>
             </div>
-            <ul className="space-y-2">
+            <ul className="space-y-[1px]  ">
               <li
                 className={`cursor-pointer text-gray-800 hover:text-blue-600 transition duration-300 ${
                   selectedCategory === "" ? "font-semibold" : ""
@@ -55,7 +55,7 @@ function FilterBar({ selectedCategory, categories, handleCategoryFilter, resetFi
               {categories.map((category) => (
                 <li
                   key={category}
-                  className={`cursor-pointer text-gray-800 hover:text-blue-600 transition duration-300 ${
+                  className={`cursor-pointer  text-gray-800 hover:text-blue-600 transition duration-300 ${
                     selectedCategory === category ? "font-semibold" : ""
                   }`}
                   onClick={() => handleCategoryFilter(category)}
