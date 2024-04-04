@@ -29,8 +29,9 @@ const HorizontalCardScroll = ({ items }) => {
           <Item key={index} item={item} />
         ))}
       </div>
+      {/* Show left arrow button */}
       <button
-        className="absolute top-1/2 left-4 -translate-y-1/2 bg-gray-200 p-2 rounded-full hover:bg-gray-300 transition duration-300"
+        className="hidden md:block absolute top-1/2 left-4 -translate-y-1/2 bg-gray-200 p-2 rounded-full hover:bg-gray-300 transition duration-300"
         onClick={scrollLeft}
       >
         <svg
@@ -43,8 +44,9 @@ const HorizontalCardScroll = ({ items }) => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
       </button>
+      {/* Show right arrow button */}
       <button
-        className="absolute top-1/2 right-4 -translate-y-1/2 bg-gray-200 p-2 rounded-full hover:bg-gray-300 transition duration-300"
+        className="hidden md:block absolute top-1/2 right-4 -translate-y-1/2 bg-gray-200 p-2 rounded-full hover:bg-gray-300 transition duration-300"
         onClick={scrollRight}
       >
         <svg
