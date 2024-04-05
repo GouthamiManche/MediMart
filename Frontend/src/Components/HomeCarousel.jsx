@@ -36,20 +36,20 @@ const MedicalPharmacyCarousel = () => {
   ];
 
   return (
-    <div className="max-w-full mx-auto mt-8 px-5 mb-8 sm:px-18  sm:mt-10 sm:mb-10 bg">
+    <div className="max-w-full mx-auto mt-8 px-5 mb-8 sm:px-18  sm:mt-10 sm:mb-10 ">
       <p className='text-gray-700 text-lg md:text-2xl font-bold'>Customer Testimonials</p>
       <div className="relative overflow-hidden mt-[1rem] md:mt-[2rem]">
         <div
-          className="flex gap-8 h-56 w-[86rem] md:w-[120rem] transition-transform duration-500 ease-in-out sm:h-72"
-          style={{ transform: `translateX(-${isMobile ? (currentSlide * (112 / quotes.length)) : (currentSlide * (45 / quotes.length))}%)` }}
+          className="flex gap-8 h-56 w-[86rem] md:w-[110rem] transition-transform duration-500 ease-in-out sm:h-56"
+          style={{ transform: `translateX(-${isMobile ? (currentSlide * (112 / quotes.length)) : (currentSlide * (38 / quotes.length))}%)` }}
         >
           {quotes.map((quote, index) => (
             <div
               key={index}
-              className="carousel-item flex flex-col  items-center justify-center p-4 rounded-lg  bg-gradient-to-r from-blue-100 to-blue-300  sm:p-6"
+              className="carousel-item flex flex-col  items-center justify-center p-4 rounded-lg  bg-blue-100  sm:p-6"
               style={{ flex: `0 0 calc(100% / ${quotes.length})` }}
             >
-              <p className="text-base text-center sm:text-lg">{quote.text}</p>
+              <p className="text-base text-center md:text-[1.4vw]">{quote.text}</p>
               <p className="text-sm text-center mt-2">{quote.author}</p>
             </div>
           ))}

@@ -15,7 +15,7 @@ function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/api/combined", {
+        const response = await axios.get("http://localhost:4000/api/cat", {
           headers: {
             apikey: "123",
           },

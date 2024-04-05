@@ -1,7 +1,7 @@
 export default function DynamicBanner() {
   return (
-    <div className="flex flex-col md:flex-row border">
-      <div className="bg-blue-100 ml-2 md:ml-[1.5rem] mt-7 mb-7 p-7 border  w-[19rem] md:w-[30rem]">
+    <div className="flex flex-col md:flex-row border rounded-lg">
+      <div className="bg-blue-100 ml-2 md:ml-[1.5rem] mt-7 mb-7 p-7 border md:rounded-l-lg w-[19rem] md:w-[36rem]">
         <p className="text-2xl font-semibold">Get 15% off on Medicine Purchases</p>
         <p>and get 15% off on your order</p>
         <div className="flex md:h-[8rem] h-[4rem]">
@@ -12,22 +12,22 @@ export default function DynamicBanner() {
           />
         </div>
       </div>
-      <div className="bg-blue-200 w-full mr-7 mt-7 mb-7 p-7 border hidden md:block">
+      <div className="bg-white w-full mr-7 mt-7 mb-7 p-7 border md:rounded-r-lg hidden md:block">
         <div className="text-lg font-semibold">
           <p className="">How does this work?</p>
           <br />
           <div className="flex flex-wrap -mx-4">
             <div className="w-1/2 px-4">
-              <span>1.Add medicines to your cart</span>
+              <span>1. Add medicines to your cart</span>
               <br />
               <br />
-              <span>3.We will call you to confirm the medicines</span>
+              <span>3. We will call you to confirm the medicines</span>
             </div>
             <div className="w-1/2 px-2">
-              <span>2.Add delivery address and place the order</span>
+              <span>2. Add delivery address and place the order</span>
               <br />
               <br />
-              <span>4.Your medicines will get delivered at your doorstep</span>
+              <span>4. Your medicines will get delivered at your doorstep</span>
             </div>
           </div>
           <br />

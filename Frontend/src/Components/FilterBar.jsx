@@ -8,10 +8,10 @@ function FilterBar({ selectedCategory, categories, handleCategoryFilter, resetFi
   };
 
   return (
-    <div className="relative">
+    <div className="">
 
       <button
-        className="md:hidden   z-10 bg-black text-white px-[2rem] py-2 rounded-md shadow-lg"
+        className="md:hidden  ml-[2rem] z-10 bg-black text-white px-[2rem] py-2 rounded-md shadow-lg"
         onClick={togglePopup}
       >
         Filter
@@ -46,7 +46,7 @@ function FilterBar({ selectedCategory, categories, handleCategoryFilter, resetFi
             <div>
             <ul className="space-y-2">
               <li
-                className={`cursor-pointer text-gray-800 hover:text-blue-600 transition duration-300 ${
+                className={`cursor-pointer text-gray-800 hover:text-blue-600  transition duration-300 ${
                   selectedCategory === "" ? "font-semibold" : ""
                 }`}
                 onClick={resetFilters}

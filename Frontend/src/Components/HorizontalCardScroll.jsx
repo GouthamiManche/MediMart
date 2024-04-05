@@ -7,7 +7,7 @@ const HorizontalCardScroll = ({ items }) => {
   const scrollLeft = () => {
     if (scrollRef.current) {
       scrollRef.current.scrollBy({
-        left: -200,
+        left: -500,
         behavior: "smooth"
       });
     }
@@ -16,15 +16,15 @@ const HorizontalCardScroll = ({ items }) => {
   const scrollRight = () => {
     if (scrollRef.current) {
       scrollRef.current.scrollBy({
-        left: 200,
+        left: 500,
         behavior: "smooth"
       });
     }
   };
 
-  return (
-    <div className="relative">
-      <div className="flex overflow-x-auto space-x-4 p-4" ref={scrollRef}>
+  return (<> <p className='text-gray-700 text-lg md:ml-[2rem] md:text-3xl md:mt-[2rem] md:mb-[2rem] font-bold'>Our Products</p>
+    <div className="relative bg-blue-100">
+           <div className="flex overflow-x-auto space-x-4 p-4" ref={scrollRef}>
         {items.map((item, index) => (
           <Item key={index} item={item} />
         ))}
@@ -60,6 +60,7 @@ const HorizontalCardScroll = ({ items }) => {
         </svg>
       </button>
     </div>
+    </>
   );
 };
 
