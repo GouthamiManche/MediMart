@@ -40,7 +40,7 @@ const checkAccess = (req, res, next) => {
       res.status(500).json({ error });
     }
   }
-}
+
 
   async function getCombinedData(req, res) {
     try {
