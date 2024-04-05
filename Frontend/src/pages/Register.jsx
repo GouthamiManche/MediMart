@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
+
 
 function Register() {
   const initialValues = { username: "", email: "", password: "" };
@@ -20,11 +22,11 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmit(true);
-    
+
     // Perform validation
     const errors = validate(formData);
     setFormErrors(errors);
-    
+
     // Check if there are any errors
     if (Object.keys(errors).length === 0) {
       // No errors, proceed with form submission
@@ -45,6 +47,11 @@ function Register() {
         }
       }
     }
+    Swal.fire({
+      title: "Registered Successfully!",
+      text: "Please Login!",
+      icon: "success"
+    });
   };
 
   const validate = (values) => {
@@ -92,7 +99,7 @@ function Register() {
           <h1 className="text-black text-2xl font-bold mt-4 md:ml-8">
              Register
           </h1>
-          
+
           <form onSubmit={handleSubmit}>
             <div>
               <h2 className="text-black text-sm font-semibold mt-4 md:mt-5 md:ml-8">

@@ -11,9 +11,9 @@ export default function OurProduct() {
         <OurProductCard imageSrc="/src/Images/protein_supplements.jpg" title="Protein Powders" />
         <OurProductCard imageSrc="/src/Images/health_and_nutrition.jpg" title="Health Supplements" />
         <OurProductCard imageSrc="/src/Images/womencare.jpg" title="Women Care" />
-        <OurProductCard imageSrc="/src/Images/babycare.jpg" title="Baby Care" />    
+        <OurProductCard imageSrc="/src/Images/babycare.jpg" title="Baby Care" />
         <OurProductCard imageSrc="/src/Images/healthdevices.jpg" title="Health Devices" />
-        <OurProductCard imageSrc="/src/Images/medicines.jpg" title="Medicine" />    
+        <OurProductCard imageSrc="/src/Images/medicines.jpg" title="Medicine" />
       </div>
       {/* <p className="pt-8 md:pt-12 lg:pt-[4rem] text-xl md:text-2xl lg:text-3xl">And Many More ...</p> */}
     </div>
