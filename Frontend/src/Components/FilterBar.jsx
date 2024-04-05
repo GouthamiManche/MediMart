@@ -9,7 +9,7 @@ function FilterBar({ selectedCategory, categories, handleCategoryFilter, resetFi
 
   return (
     <div className="relative">
-      {/* Filter Button for mobile view */}
+     
       <button
         className="md:hidden   z-10 bg-black text-white px-[2rem] py-2 rounded-md shadow-lg"
         onClick={togglePopup}
@@ -17,7 +17,7 @@ function FilterBar({ selectedCategory, categories, handleCategoryFilter, resetFi
         Filter
       </button>
 
-      {/* Filter Popup */}
+
       {isPopupOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 z-20 flex justify-center items-center">
           <div className="bg-white p-4 rounded-lg shadow-lg">
@@ -68,8 +68,8 @@ function FilterBar({ selectedCategory, categories, handleCategoryFilter, resetFi
         </div>
       )}
 
-      {/* Filter Bar for desktop view */}
-      <span className="hidden md:block bg-gray-100 p-4 rounded-lg md:mt-[8.5rem] md:ml-[1rem] md:w-[16rem] shadow-lg">
+ 
+      <span className="hidden md:block bg-gray-100 p-4 rounded-lg md:ml-[1rem] md:w-[16rem] shadow-lg">
         <span className="flex justify-between items-center mb-4">
           <h2 className="font-bold text-xl">Filter by Category</h2>
         </span>

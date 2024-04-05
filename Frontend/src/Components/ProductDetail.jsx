@@ -171,43 +171,44 @@ function ProductDetail({ pg }) {
   };
  
   return (
-    <div className="bg-blue-200">
-       <img
-      src="src/Images/shopbgimg.jpg"
-      alt="Image 1"
-      className="w-full h-[50vh] lg:h-[260px] object-cover "
-    />
-    <div className="flex ">
-     <FilterBar
-        selectedCategory={selectedCategory}
-        categories={categories}
-        handleCategoryFilter={handleCategoryFilter}
-        resetFilters={resetFilters}
-      />
-   <div className="w-[100%] p-4 py-10 px-4  bg-blue-200">
-      <SearchInput
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        sortOption={sortOption}
-        setSortOption={setSortOption}
-      />
-    
-      <div className="flex  flex-wrap ">
-        {currentItems.map((item, index) => (
-          <Item key={index} item={item} />
-        ))}
-      </div>
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        paginatePrev={paginatePrev}
-        paginateNext={paginateNext}
-        goToPage={goToPage}
-        getPageNumbers={getPageNumbers}
-      />
-    </div>
-    </div>
-    </div>
+    <div className="bg-blue-100">
+    <img
+   src="src/Images/shopbgimg.jpg"
+   alt="Image 1"
+   className="w-full h-[50vh] lg:h-[260px] object-cover "
+ />
+ <div className="mt-9 mx-14">
+ <SearchInput
+     searchTerm={searchTerm}
+     setSearchTerm={setSearchTerm}
+     sortOption={sortOption}
+     setSortOption={setSortOption}
+   />
+ </div>
+ <div className="flex space-x-6">
+ <FilterBar
+     selectedCategory={selectedCategory}
+     categories={categories}
+     handleCategoryFilter={handleCategoryFilter}
+     resetFilters={resetFilters}
+   />
+   <div className="flex flex-wrap ">
+     {currentItems.map((item, index) => (
+       <Item key={index} item={item} />
+     ))}
+   </div>
+ </div>
+<div className="md:pb-[2rem]">
+   <Pagination 
+     currentPage={currentPage}
+     totalPages={totalPages}
+     paginatePrev={paginatePrev}
+     paginateNext={paginateNext}
+     goToPage={goToPage}
+     getPageNumbers={getPageNumbers}
+   />
+   </div>
+ </div>
   );
 }
 
