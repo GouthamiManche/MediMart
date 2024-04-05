@@ -3,9 +3,9 @@ import OurProductCard from './OurProductCard';
 
 export default function OurProduct() {
   return (
-    <div className="m-4 md:m-8 lg:m-[1px] text-center font-bold bg-[#f5f5f5] md:pb-[4rem]">
-      <h1 className='text-2xl md:text-3xl lg:mb-[2rem] lg:text-[3vw] md:pt-[2rem]'>Product Categories</h1>
-      <div className="flex flex-wrap justify-center gap-4 md:gap-6 lg:gap-8 mt-8">
+    <div className="m-4 md:mx-[6rem]  text-center font-semibold bg-gradient-to-r from-blue-100 to-blue-400  md:pb-[4rem]">
+      <h1 className='text-xl md:text-2xl lg:mb-[2rem] lg:text-[3vw] md:pt-[2rem]'>Product Categories</h1>
+      <div className="flex flex-wrap justify-center gap-4 md:gap-4  mt-8">
         <OurProductCard imageSrc="/src/Images/personalcare.jpg" title="Personal Care" />
         <OurProductCard imageSrc="/src/Images/skincare.jpg" title="Skin Care" />
         <OurProductCard imageSrc="/src/Images/protein_supplements.jpg" title="Protein Powders" />

@@ -17,7 +17,7 @@ function App() {
   return (
 
     <Router>
-      <div className='font-Roboto'>
+      <div className='font-Poppins'>
       <Suspense fallback={<Loader />}>
         <Routes>
           <Route exact path="/" element={<Home />} />

@@ -1,50 +1,45 @@
-import React from 'react'
-import Navbar from '../Components/Navbar'
-import Footer from '../Components/Footer'
-import HomeImage from '../Components/HomeImage'
-//import CircleMouseFollower from '../Components/CircleMouseFollower'
-import OurProduct from '../Components/OurProduct'
-import { RiNumber1 , RiNumber2,RiNumber3,RiNumber4} from "react-icons/ri";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Navbar from "../Components/Navbar";
+import HomeImage from "../Components/HomeImage";
+import OurProduct from "../Components/OurProduct";
+import Footer from "../Components/Footer";
+import DynamicBanner from "../Components/DynamicBanner";
+import HomeCarousel from "../Components/HomeCarousel";
+import HomeImageBottom from "../Components/HomeImageBottom";
+import HorizontalCardScroll from "../Components/HorizontalCardScroll";
 
 function Home() {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:4000/api/combined", {
+          headers: {
+            apikey: "123",
+          },
+        });
+        setItems(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error.message);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
-    <div className=''>
-      {/* <CircleMouseFollower /> */}
+    <div>
       <Navbar />
       <HomeImage />
       <OurProduct />
-
-      <div className="flex border">
-        <div className='bg-blue-100 ml-7 mt-7 mb-7 p-7 border  w-[30rem]'>
-          <p className='text-2xl font-semibold '>Get 15% off on Medicine Purchases</p>
-          <p>and get 15% off on your order</p>
-          <div className='flex'>
-            <p className='text-2xl font-semibold'>Order now</p>
-            <img src='https://images.apollo247.in/images/ui_revamp_Prescription_Pot.svg'></img>
-          </div>
-        </div>
-        <div className='bg-blue-200 w-full mr-7 mt-7 mb-7 p-7 border'>
-          <div className='text-lg font-semibold'>
-            <p className=''>How does this work?</p><br/>
-            <div className="flex flex-wrap -mx-4">
-              <div className="w-1/2 px-4">
-                <span>1.Add medicines to your cart</span><br></br><br></br>
-                <span>3.We will call you to confirm the medicines</span>
-              </div>
-              <div className="w-1/2 px-2">
-                <span>2.Add delivery address and place the order</span><br></br><br></br>
-                <span>4.Your medicines will get delivered at your doorstep</span>
-              </div>
-
-            </div>
-            <br/><p>Get 15% off on Medicine Purchases and get 15% off on your order. Order now</p>
-          </div>
-        </div>
-      </div>
+      <HorizontalCardScroll items={items} />
+      <DynamicBanner />
+      <HomeCarousel />
+      <HomeImageBottom />
       <Footer />
     </div>
-
-  )
+  );
 }
 
-export default Home
+export default Home;

@@ -10,7 +10,7 @@ export default function HomeImage() {
     />
     <div className="absolute inset-0 flex items-center justify-center px-4 ">
       <div className="text-center text-white mr-[34vw] ">
-        <h1 className=" text-2xl md:text-4xl lg:text-6xl font-extrabold text-gray-900 max-w-lg mx-auto ">
+        <h1 className=" text-2xl md:text-4xl lg:text-6xl font-bold text-gray-900 max-w-lg mx-auto ">
          MEDIMART
         </h1>
         <Link to = '/shop'>
