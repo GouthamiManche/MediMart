@@ -33,7 +33,7 @@ function Home() {
       <Navbar />
       <HomeImage />
       <OurProduct />
-      <HorizontalCardScroll items={items} />
+      <HorizontalCardScroll itemForHorizontalScroll={items} />
       <DynamicBanner />
       <HomeCarousel />
       <HomeImageBottom />

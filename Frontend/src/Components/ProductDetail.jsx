@@ -6,6 +6,7 @@ import Item from "./Item";
 import Pagination from "./Pagination";
 import FilterBar from "./FilterBar";
 import SortDropdown from "./SortDropdown";
+import ItemForHorizontalScroll from "./ItemForHorizontalScroll";
 function truncateString(str, num) {
   if (!str || !str.length) {
     return ''; // Return an empty string if str is undefined, null, or has no length
@@ -202,6 +203,11 @@ function ProductDetail({ pg }) {
             <Item key={index} item={item} />
           ))}
         </div>
+        {/* <div className="flex flex-wrap ">
+          {currentItems.map((item, index) => (
+            <ItemForHorizontalScroll key={index} ItemForHorizontalScroll={item} />
+          ))}
+        </div> */}
       </div>
 
       <Pagination

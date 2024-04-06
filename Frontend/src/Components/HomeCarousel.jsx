@@ -55,12 +55,12 @@ const MedicalPharmacyCarousel = () => {
           ))}
         </div>
         <button
-          className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-md z-20"
+          className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-blue-400 rounded-full p-2 shadow-md z-20"
           onClick={handlePrevSlide}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 text-gray-600"
+            className="h-6 w-6 text-white"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -69,12 +69,12 @@ const MedicalPharmacyCarousel = () => {
           </svg>
         </button>
         <button
-          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white rounded-full p-2 shadow-md z-20"
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-blue-400 rounded-full p-2 shadow-md z-20"
           onClick={handleNextSlide}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 text-gray-600"
+            className="h-6 w-6 text-white"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
