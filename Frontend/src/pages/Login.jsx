@@ -68,6 +68,7 @@ function Login() {
       console.log(response.data); // Log the response from the backend
       const { token } = response.data;
       localStorage.setItem("token", token);
+      console.log("Token stored in localStorage:", token);
       navigate("/");
     } catch (error) {
       console.error("Error during login:", error);

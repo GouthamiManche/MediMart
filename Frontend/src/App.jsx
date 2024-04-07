@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect ,useState} from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import Loader from './Components/Loader';
+import CategoryShop from './pages/CategoryShop';
 
 
 const Home = lazy(() => import('./pages/Home'));
@@ -14,6 +15,8 @@ const About= lazy(()=>import('./pages/About'))
 const Contact= lazy(()=>import('./pages/Contact'))
 const ErrorPage = lazy(()=>import('./pages/ErrorPage'))
 function App() {
+  // const [filteredData, setFilteredData] = useState([]);
+  //console.log('Filtered Data:', filteredData);
   return (
 
     <Router>
@@ -22,6 +25,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route exact path="/Shop/:pg?" element={<Shop />} />
+          <Route path="/category-shop" element={<CategoryShop />} />
           <Route exact path="/Login" element={<Login />} />
           <Route exact path="/Register" element={<Register/>} />
           <Route exact path="/Singleproduct/:id" element={<SingleProduct />} />
