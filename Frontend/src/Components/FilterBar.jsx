@@ -60,7 +60,7 @@ function FilterBar({ selectedCategory, categories, handleCategoryFilter, resetFi
         </div>
       )}
 
-      <div className="hidden md:block bg-white p-4 rounded-lg ml-4 w-64 shadow-lg border border-gray-300 max-h-[400px] overflow-auto custom-scrollbar">
+      <div className="hidden md:block bg-white p-4 rounded-lg ml-4 w-64 shadow-lg border border-gray-300 max-h-[500px] overflow-auto custom-scrollbar">
         <div className="flex justify-between items-center mb-4 pb-4 border-b border-gray-300">
           <h2 className="font-bold text-xl">Category</h2>
         </div>

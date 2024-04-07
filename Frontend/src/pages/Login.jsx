@@ -93,7 +93,7 @@ function Login() {
 
   return (
     <div className="bg-[#f5f5f5]">
-      <Navbar />
+
       <div className="flex flex-col md:flex-row  h-screen">
         {/* 1st half */}
         <div className="w-full   md:w-1/2 bg-gradient-to-r from-blue-200 to-blue-400 p-8 md:mt-20 md:ml-56 md:mb-16 drop-shadow-xl ">

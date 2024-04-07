@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Navbar from "../Components/Navbar";
 import HomeImage from "../Components/HomeImage";
 import OurProduct from "../Components/OurProduct";
-import Footer from "../Components/Footer";
 import DynamicBanner from "../Components/DynamicBanner";
 import HomeCarousel from "../Components/HomeCarousel";
 import HomeImageBottom from "../Components/HomeImageBottom";
 import HorizontalCardScroll from "../Components/HorizontalCardScroll";
-
 function Home() {
   const [items, setItems] = useState([]);
 
@@ -30,14 +27,14 @@ function Home() {
 
   return (
     <div >
-      <Navbar />
+  
       <HomeImage />
       <OurProduct />
       <HorizontalCardScroll itemForHorizontalScroll={items} />
       <DynamicBanner />
       <HomeCarousel />
       <HomeImageBottom />
-      <Footer />
+   
     </div>
   );
 }

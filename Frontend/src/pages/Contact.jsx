@@ -5,7 +5,7 @@ import Footer from '../Components/Footer';
 const Contact = () => {
   return (
     <div className='bg-[#f5f5f5]'>
-      <Navbar />
+   
       <section className="py-4 text-center ">
         <h2 className="text-3xl font-bold  transition duration-300 ease-in-out transform hover:scale-110 hover:text-blue-500">Contact page</h2>
         <iframe
@@ -59,7 +59,7 @@ const Contact = () => {
           </div>
         </div>
       </section>
-      <Footer />
+ 
     </div>
   );
 };
