@@ -1,9 +1,9 @@
-import React, { useState ,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import ReviewStars from '../Components/ReviewStars';
-import ReviewModal from '../Components/ReviewModal';
 import HorizontalCardScroll from '../Components/HorizontalCardScroll'
 import axios from "axios";
+import ReviewSection from '../Components/ReviewSection';
+import { BsCart3 } from "react-icons/bs";
 export default function SingleProduct() {
   const location = useLocation();
   const product = location.state;
@@ -58,7 +58,7 @@ export default function SingleProduct() {
     <div className="bg-white min-h-screen md:p-[1px] p-[1rem]">
 
       <div className="container mx-auto py-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1  md:grid-cols-2 gap-8">
           <div className="flex justify-center md:block">
             <button
               className="hidden md:block bg-white rounded-full p-2 transition-colors duration-300 hover:bg-gray-200"
@@ -83,12 +83,12 @@ export default function SingleProduct() {
             <img
               src={product.Image_URL}
               alt={isMedicine ? product.Medicine_Name : product.Name}
-              className="md:w-[34rem] md:max-h-[30rem] mt-4 md:mt-[2rem] rounded-md border border-2"
+              className="md:w-[26rem] md:max-h-[22rem] mt-4 md:mt-[3rem] rounded-md border border-2"
             />
           </div>
-          <div className="flex flex-col justify-between">
+          <div className="flex flex-col  justify-between">
             <div>
-              <h2 className="text-2xl md:text-3xl font-bold mt-[2rem] mb-[2rem] text-gray-800">
+              <h2 className="text-2xl md:text-3xl font-bold mt-[5rem] mb-[2rem] text-gray-800">
                 {isMedicine ? product.Medicine_Name : product.Name}
               </h2>
               <div className="bg-white rounded-lg mb-[0.5rem] ">
@@ -141,51 +141,25 @@ export default function SingleProduct() {
                   >
                     +
                   </button>
+                  <div className="md:ml-[12rem] ml-[2rem]">
+                    <button
+                      className="flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 md:px-8 px-[6px] rounded transition-colors duration-300"
+                      onClick={handleAddToCart}
+                    >
+                      <BsCart3 className="mr-2" />
+                      Add to Cart
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-            <div className="bg-white rounded-lg mb-[0.5rem]">
-              <h3 className="text-lg font-semibold mb-2 text-gray-700">Reviews</h3>
-              <div className="flex flex-wrap items-center justify-between mb-4">
-                {reviews.map((review, index) => (
-                  <div key={index} className="w-full md:w-1/2 lg:w-1/3 p-2">
-                    <div className="bg-gray-100 rounded-lg p-4">
-                      <div className="text-sm text-gray-600 mb-2">Review {index + 1}</div>
-                      <ReviewStars rating={review.rating} />
-                      <p className="text-gray-600 mt-2">{review.review}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <div className="flex flex-col md:flex-row px-[1rem] space-y-4 md:space-y-0 md:space-x-4">
-                <button
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300"
-                  onClick={handleAddToCart}
-                >
-                  Add to Cart
-                </button>
-                <button
-                  className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors duration-300"
-                  onClick={handleReviewClick}
-                >
-                  Write a Review
-                </button>
-              </div>
-            </div>
+
           </div>
         </div>
       </div>
-
-      {showReviewModal && (
-        <ReviewModal
-          product={product}
-          productName={isMedicine ? product.Medicine_Name : product.Name}
-          onClose={() => setShowReviewModal(false)}
-          onSubmit={handleSubmitReview}
-        />
-      )}
-      <div className='md:mt-[4rem]'>
-      <HorizontalCardScroll itemForHorizontalScroll={items} />
+      <div className='md:mt-[2rem]'>
+        <HorizontalCardScroll itemForHorizontalScroll={items} />
+        <ReviewSection />
       </div>
     </div>
   );
