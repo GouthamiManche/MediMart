@@ -40,7 +40,7 @@ function Navbar() {
         <div className="flex items-center ">
           <img className="size-12"src="/src/Images/logo.jpg"></img>
           <Link to="/" className="text-xl md:text-3xl font-bold ">
-          <span className="text-blue-900">MEDI</span><span className="text-green-600">MART</span> 
+          <span className="text-blue-900">MEDI</span><span className="text-lime-600">MART</span> 
           </Link>
           <nav className="hidden md:flex md:ml-[18vw]">
             <div className="flex gap-10 text-gray-900">

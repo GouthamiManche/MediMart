@@ -29,7 +29,7 @@ function Home() {
   }, []);
 
   return (
-    <div>
+    <div >
       <Navbar />
       <HomeImage />
       <OurProduct />

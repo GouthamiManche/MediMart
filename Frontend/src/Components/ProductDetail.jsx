@@ -6,7 +6,7 @@ import Item from "./Item";
 import Pagination from "./Pagination";
 import FilterBar from "./FilterBar";
 import SortDropdown from "./SortDropdown";
-import ItemForHorizontalScroll from "./ItemForHorizontalScroll";
+// import ItemForHorizontalScroll from "./ItemForHorizontalScroll";
 function truncateString(str, num) {
   if (!str || !str.length) {
     return ''; // Return an empty string if str is undefined, null, or has no length
@@ -172,7 +172,7 @@ function ProductDetail({ pg }) {
   };
 
   return (
-    <div className="bg-blue-100">
+    <div className="">
       <img
         src="src/Images/shopbgimg.jpg"
         alt="Image 1"

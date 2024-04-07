@@ -24,7 +24,7 @@ const HorizontalCardScroll = ({ itemForHorizontalScroll }) => {
 
   return (
     <div>
-      <div className="relative bg-blue-100">
+      <div className="relative bg-[#bcf5ff]">
         <div className="flex overflow-x-auto space-x-4 p-4" ref={scrollRef}>
           {itemForHorizontalScroll.map((item, index) => (
             <ItemForHorizontalScroll key={index} ItemForHorizontalScroll={item} />
