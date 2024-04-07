@@ -83,7 +83,7 @@ export default function SingleProduct() {
             <img
               src={product.Image_URL}
               alt={isMedicine ? product.Medicine_Name : product.Name}
-              className="md:w-[26rem] md:max-h-[22rem] mt-4 md:mt-[3rem] rounded-md border border-2"
+              className="md:w-[26rem] md:max-h-[22rem] md:ml-[4rem] mt-4 md:mt-[3rem] rounded-md border border-2"
             />
           </div>
           <div className="flex flex-col  justify-between">
