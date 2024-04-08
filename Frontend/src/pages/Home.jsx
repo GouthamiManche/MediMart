@@ -12,7 +12,7 @@ function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/api/cat", {
+        const response = await axios.get("http://localhost:4000/api/medicine", {
           headers: {
             apikey: "123",
           },

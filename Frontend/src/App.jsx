@@ -5,13 +5,13 @@ import Loader from './Components/Loader';
 import GotoTop from './Components/GotoTop';
 import Footer from './Components/Footer';
 import Navbar from './Components/Navbar';
+import Profile from './pages/Profile'
 const Home = lazy(() => import('./pages/Home'));
 const Shop = lazy(() => import('./pages/Shop'));
 const Login = lazy(() => import('./pages/Login'));
 const Register = lazy(() => import('./pages/Register'));
 const Cart = lazy(() => import('./pages/Cart'));
-const SingleProduct = lazy(() => import('./pages/SingleProduct'));
-const About = lazy(() => import('./pages/About'))
+const SingleProduct = lazy(() => import('./pages/SingleProduct'));const About = lazy(() => import('./pages/About'))
 const Contact = lazy(() => import('./pages/Contact'))
 const ErrorPage = lazy(() => import('./pages/ErrorPage'))
 function App() {
@@ -31,6 +31,8 @@ function App() {
             <Route exact path="/about" element={<About />} />
             <Route exact path="/contact" element={<Contact />} />
             <Route exact path="*" element={<ErrorPage />} />
+            <Route exact path="/profile" element={<Profile />} />
+
           </Routes>
           <GotoTop/>
           <Footer/>

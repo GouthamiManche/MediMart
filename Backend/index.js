@@ -5,7 +5,7 @@ const data =require('./models/product.model')
 require('dotenv').config()
 const cors = require('cors');
 const { getAllUsers } = require('./APIS/Users');
-const { checkAccess, getCombinedData, getMedicineData, getOtherData} = require('./APIS/Data');
+const { checkAccess, getMedicineData} = require('./APIS/Data');
 const cart = require('./models/cart.model')
 const { registerUser, loginUser } = require('./APIS/Login');
 const { getCapsule ,getTablet,getInjection, getSoap, getLotion, getSyrup, getDrops, getShampoo, getCream} = require('./APIS/ByCategory');
@@ -33,9 +33,9 @@ app.post('/api/register', registerUser);
 app.post('/api/login', loginUser);
 app.get('/api/users', getAllUsers);
 
-app.get('/api/combined', checkAccess, getCombinedData);
+// app.get('/api/combined', checkAccess, getCombinedData);
 app.get('/api/medicine', checkAccess, getMedicineData);
-app.get('/api/cat', checkAccess, getOtherData);
+// app.get('/api/cat', checkAccess, getOtherData);
 
 app.get('/categories/baby-care', BabyCare);
 app.get('/categories/women-care', WomenCare);
