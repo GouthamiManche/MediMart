@@ -26,7 +26,7 @@ function App() {
             <Route exact path="/Shop/:pg?" element={<Shop />} />
             <Route exact path="/Login" element={<Login />} />
             <Route exact path="/Register" element={<Register />} />
-            <Route exact path="/Singleproduct/:id" element={<SingleProduct />} />
+            <Route exact path="/:category/:id" element={<SingleProduct />} />
             <Route exact path="/cart" element={<Cart />} />
             <Route exact path="/about" element={<About />} />
             <Route exact path="/contact" element={<Contact />} />

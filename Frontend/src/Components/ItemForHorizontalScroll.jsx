@@ -25,13 +25,14 @@ function getItemDetails(item) {
 }
 
 function ItemForHorizontalScroll({ ItemForHorizontalScroll }) {
+  console.log(ItemForHorizontalScroll,"itemscroll");
   const truncatedName = truncateString(ItemForHorizontalScroll.Medicine_Name || ItemForHorizontalScroll.Name, 20);
   const { detail, detailLabel } = getItemDetails(ItemForHorizontalScroll);
 
   return (
     <div>
       <Link
-        to={`/singleproduct/${ItemForHorizontalScroll._id && ItemForHorizontalScroll._id.$oid}`}
+        to={`/${ItemForHorizontalScroll.Category}/${ItemForHorizontalScroll._id}`}
         state={ItemForHorizontalScroll}
         className="bg-white m-2 p-2 rounded-2xl shadow-md flex flex-col md:w-[15rem] md:h-[20rem] w-[12.4rem] h-[14rem]  overflow-hidden hover:shadow-xl transition duration-300"
       >
