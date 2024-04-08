@@ -17,8 +17,8 @@ export default function SingleProduct() {
     const fetchData = async () => {
       //setLoading (true)
       try {
-        
-        const response = await axios.get("http://localhost:4000/api/cat", {
+
+        const response = await axios.get("http://localhost:4000/api/products?category=Other", {
           headers: {
             apikey: "123",
           },
