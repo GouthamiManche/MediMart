@@ -11,20 +11,29 @@ function Navbar() {
   const [username, setUsername] = useState("");
   const [showLogin, setShowLogin] = useState(true);
   const navigate = useNavigate();
-  
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
-
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      // Decode the token to get user information
       const decodedToken = JSON.parse(atob(token.split(".")[1]));
-      setUsername(decodedToken.username);
-      setShowLogin(false);
+      const currentTime = Math.floor(Date.now() / 1000);
+      if (decodedToken.exp < currentTime) {
+        // Token expired, remove it from localStorage
+        localStorage.removeItem("token");
+        setShowLogin(true);
+      } else {
+        // Token still valid, set username and showLogin accordingly
+        setUsername(decodedToken.username);
+        setShowLogin(false);
+      }
+    } else {
+      // No token found, set showLogin to true
+      setShowLogin(true);
     }
   }, []);
 
@@ -81,7 +90,7 @@ function Navbar() {
           <CgProfile className="size-9 ml-2" />
           </button>
           </div>
-          
+
           {dropdownOpen && (
             // Dropdown menu
             <div className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
@@ -97,7 +106,7 @@ function Navbar() {
           )}
         </div>
       )}
-          
+
         </nav>
       </header>
       {mobileMenuOpen && (

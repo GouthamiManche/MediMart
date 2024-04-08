@@ -4,7 +4,7 @@ const Category = require('../models/product2.model');
 
 const checkAccess = (req, res, next) => {
     const { apikey, authorization } = req.headers;
-      
+
     if (apikey === "123") {
       next();
     } else if (authorization && authorization.startsWith('Bearer ')) {
@@ -14,14 +14,14 @@ const checkAccess = (req, res, next) => {
           return res.status(403).json({ error: 'Invalid JWT token' });
         } else {
           req.user = decoded;
-          next(); 
+          next();
         }
       });
     } else {
       return res.status(403).json({ error: 'Invalid API key or JWT token' });
     }
   };
-  
+
   async function getMedicineData(req, res) {
     try {
       const data = await Data.find();
@@ -41,6 +41,7 @@ const checkAccess = (req, res, next) => {
     }
   }
 
+
   async function getCombinedData(req, res) {
     try {
         const dataQuery = Data.find();
@@ -58,4 +59,3 @@ const checkAccess = (req, res, next) => {
 }
 
   module.exports = { checkAccess,getMedicineData,getOtherData,getCombinedData};
-  

@@ -3,13 +3,14 @@ const mongoose = require('mongoose');
 const Schema = require('./models/user.model')
 const data =require('./models/product.model')
 require('dotenv').config()
-const cors = require('cors'); 
-const { getAllUsers } = require('./APIS/Users'); 
+const cors = require('cors');
+const { getAllUsers } = require('./APIS/Users');
 const { checkAccess, getCombinedData, getMedicineData, getOtherData} = require('./APIS/Data');
 const cart = require('./models/cart.model')
 const { registerUser, loginUser } = require('./APIS/Login');
+const {getProducts} = require('./APIS/ByCategory');
 const { getCapsule ,getTablet,getInjection, getSoap, getLotion, getSyrup, getDrops, getShampoo, getCream} = require('./APIS/ByCategory');
-const { BabyCare, WomenCare, Protein, Supplements, SkinCare, HealthDevices, PersonalCare } = require('./APIS/ByCategory');
+const { BabyCare, WomenCare, Protein, Supplements, SkinCare, HealthDevices, PersonalCare} = require('./APIS/ByCategory');
 const cartSchema = require('./models/cart.model');
 const { getItem } = require('./cartroute');
 // const { logoutUser } = require('./APIS/Login');
@@ -29,32 +30,25 @@ app.use(cors());
 //ROUTES
 app.post('/api/cart',getItem);
 
+app.get('/api/', getProducts);
+
 app.post('/api/register', registerUser);
-app.post('/api/login', loginUser); 
+app.post('/api/login', loginUser);
 app.get('/api/users', getAllUsers);
 
 app.get('/api/combined', checkAccess, getCombinedData);
 app.get('/api/medicine', checkAccess, getMedicineData);
 app.get('/api/cat', checkAccess, getOtherData);
 
-app.get('/categories/baby-care', BabyCare);
-app.get('/categories/women-care', WomenCare);
-app.get('/categories/protein', Protein);
-app.get('/categories/supplements', Supplements);
-app.get('/categories/skin-care', SkinCare);
-app.get('/categories/health-devices', HealthDevices);
-app.get('/categories/personal-care', PersonalCare);
-
-app.get('medicine/capsule',getCapsule)
-app.get('medicine/tablet',getTablet)
-app.get('medicine/injection',getInjection)
-app.get('medicine/soap',getSoap)
-app.get('medicine/lotion',getLotion)
-app.get('medicine/syrup',getSyrup)
-app.get('medicine/drops',getDrops)
-app.get('medicine/shampoo',getShampoo)
-app.get('medicine/cream',getCream)
-
+// Example of Express route handler calling getProducts
+app.get('/api/products', async (req, res) => {
+  try {
+    await getProducts(req, res); // Call getProducts with req and res parameters
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 app.get('/', (req, res) => {
     res.send('Hello, this is your Express API!');

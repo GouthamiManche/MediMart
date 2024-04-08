@@ -5,6 +5,7 @@ import Navbar from "../Components/Navbar";
 //import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Swal from 'sweetalert2';
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -43,22 +44,22 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const { email, password } = formData;
-  
+
     // Validate email
     if (!validateEmail(email)) {
       setEmailError("Please enter a valid email address.");
       setPasswordError("");
       return; // Stop further execution
     }
-  
+
     // Validate password
     if (!validatePassword(password)) {
       setPasswordError("Password must be at least 8 characters long.");
       return; // Stop further execution
     }
-  
+
     try {
       const response = await axios.post(
         "http://localhost:4000/api/login",
@@ -67,6 +68,7 @@ function Login() {
       console.log(response.data); // Log the response from the backend
       const { token } = response.data;
       localStorage.setItem("token", token);
+      console.log("Token stored in localStorage:", token);
       navigate("/");
     } catch (error) {
       console.error("Error during login:", error);
@@ -86,6 +88,10 @@ function Login() {
         setPasswordError("");
       }
     }
+    Swal.fire({
+      title: "Login Successful!",
+      icon: "success"
+    });
   };
 
   return (
@@ -105,7 +111,7 @@ function Login() {
 
         <div className="w-full md:w-1/2 bg-white md:mt-20 md:mb-16 md:mr-56 drop-shadow-2xl p-8">
           <h1 className="text-black text-2xl font-bold mt-14">Login</h1>
-          
+
           <form onSubmit={handleSubmit}>
             {/* Email */}
             <h2 className="text-black text-sm font-semibold mt-5">
@@ -137,7 +143,7 @@ function Login() {
               <p className="text-red-500 mt-1">{passwordError}</p>
             )}
 
-          
+
 
             {/* Log in Button */}
             <button
