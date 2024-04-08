@@ -2,9 +2,6 @@ import React, { useEffect ,useState} from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import Loader from './Components/Loader';
-// import CategoryShop from './pages/CategoryShop';
-
-
 import GotoTop from './Components/GotoTop';
 import Footer from './Components/Footer';
 import Navbar from './Components/Navbar';

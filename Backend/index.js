@@ -5,15 +5,12 @@ const data =require('./models/product.model')
 require('dotenv').config()
 const cors = require('cors');
 const { getAllUsers } = require('./APIS/Users');
-const { checkAccess, getMedicineData} = require('./APIS/Data');
+const { checkAccess, getData} = require('./APIS/Data');
 const cart = require('./models/cart.model')
 const { registerUser, loginUser } = require('./APIS/Login');
 const {getProducts} = require('./APIS/ByCategory');
-const { getCapsule ,getTablet,getInjection, getSoap, getLotion, getSyrup, getDrops, getShampoo, getCream} = require('./APIS/ByCategory');
-const { BabyCare, WomenCare, Protein, Supplements, SkinCare, HealthDevices, PersonalCare} = require('./APIS/ByCategory');
 const cartSchema = require('./models/cart.model');
 const { getItem } = require('./cartroute');
-// const { logoutUser } = require('./APIS/Login');
 const app = express();
 const PORT = 4000;
 
@@ -29,21 +26,13 @@ app.use(cors());
 
 //ROUTES
 app.post('/api/cart',getItem);
-
-app.get('/api/', getProducts);
-
 app.post('/api/register', registerUser);
 app.post('/api/login', loginUser);
 app.get('/api/users', getAllUsers);
-
-// app.get('/api/combined', checkAccess, getCombinedData);
-app.get('/api/medicine', checkAccess, getMedicineData);
-// app.get('/api/cat', checkAccess, getOtherData);
-
-// Example of Express route handler calling getProducts
+app.get('/api/data', checkAccess, getData);
 app.get('/api/products', async (req, res) => {
   try {
-    await getProducts(req, res); // Call getProducts with req and res parameters
+    await getProducts(req, res);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -54,7 +43,6 @@ app.get('/', (req, res) => {
     res.send('Hello, this is your Express API!');
   });
 
-// Start the server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
