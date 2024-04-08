@@ -9,7 +9,7 @@ export default function OurProductCard({ imageSrc, title }) {
         alt="Product"
       />
       <div className="p-4">
-        <h2 className="text-base md:text-[1.5vw]  font-semibold">
+        <h2 className="text-base md:text-lg lg:text-[2vw] font-semibold">
           {title}
         </h2>
       </div>

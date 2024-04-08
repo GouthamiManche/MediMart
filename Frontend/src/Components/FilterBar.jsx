@@ -1,5 +1,18 @@
 import React, { useState } from "react";
 
+// Reusable CategoryItem component
+const CategoryItem = ({ category, selectedCategory, handleCategoryFilter, resetFilters }) => (
+  <li
+    className={`cursor-pointer text-gray-800 hover:text-blue-600 transition duration-300 ${
+      selectedCategory === category ? "font-semibold" : ""
+    }`}
+    onClick={() => handleCategoryFilter(category)}
+  >
+    {category}
+  </li>
+);
+
+
 function FilterBar({ selectedCategory, categories, handleCategoryFilter, resetFilters }) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
@@ -9,10 +22,7 @@ function FilterBar({ selectedCategory, categories, handleCategoryFilter, resetFi
 
   return (
     <div className="relative">
-      <button
-        className="md:hidden ml-8 z-10 bg-black text-white px-8 py-2 rounded-md shadow-lg"
-        onClick={togglePopup}
-      >
+      <button className="md:hidden ml-8 z-10 bg-black text-white px-8 py-2 rounded-md shadow-lg" onClick={togglePopup}>
         Filter
       </button>
 
@@ -44,15 +54,13 @@ function FilterBar({ selectedCategory, categories, handleCategoryFilter, resetFi
                   All
                 </li>
                 {categories.map((category) => (
-                  <li
+                  <CategoryItem
                     key={category}
-                    className={`cursor-pointer text-gray-800 hover:text-blue-600 transition duration-300 ${
-                      selectedCategory === category ? "font-semibold" : ""
-                    }`}
-                    onClick={() => handleCategoryFilter(category)}
-                  >
-                    {category}
-                  </li>
+                    category={category}
+                    selectedCategory={selectedCategory}
+                    handleCategoryFilter={handleCategoryFilter}
+                    resetFilters={resetFilters}
+                  />
                 ))}
               </ul>
             </div>
@@ -91,32 +99,13 @@ function FilterBar({ selectedCategory, categories, handleCategoryFilter, resetFi
             All
           </li>
           {categories.map((category) => (
-            <li
+            <CategoryItem
               key={category}
-              className={`cursor-pointer text-gray-800 hover:text-blue-600 transition duration-300 flex items-center ${
-                selectedCategory === category ? "font-semibold" : ""
-              }`}
-              onClick={() => handleCategoryFilter(category)}
-            >
-              <div
-                className={`w-4 h-4 mr-2 rounded border ${
-                  selectedCategory === category ? "bg-blue-500 border-blue-500" : "border-gray-400"
-                } flex justify-center items-center`}
-              >
-                {selectedCategory === category && (
-                  <svg
-                    className="w-3 h-3 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                  </svg>
-                )}
-              </div>
-              {category}
-            </li>
+              category={category}
+              selectedCategory={selectedCategory}
+              handleCategoryFilter={handleCategoryFilter}
+              resetFilters={resetFilters}
+            />
           ))}
         </ul>
       </div>
