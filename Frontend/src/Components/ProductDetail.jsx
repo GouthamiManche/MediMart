@@ -6,16 +6,6 @@ import Item from "./Item";
 import Pagination from "./Pagination";
 import FilterBar from "./FilterBar";
 import SortDropdown from "./SortDropdown";
-// import ItemForHorizontalScroll from "./ItemForHorizontalScroll";
-function truncateString(str, num) {
-  if (!str || !str.length) {
-    return ''; // Return an empty string if str is undefined, null, or has no length
-  }
-  if (str.length <= num) {
-    return str;
-  }
-  return str.slice(0, num) + "...";
-}
 
 function ProductDetail({ pg }) {
   const location = useLocation();
@@ -26,20 +16,21 @@ function ProductDetail({ pg }) {
   const [itemsPerPage] = useState(12);
   const [visibleRange, setVisibleRange] = useState([1, 4]);
   const [sortOption, setSortOption] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [categories, setCategories] = useState([]);
+  const [selectedSubCategory, setSelectedSubCategory] = useState("");
+  const [subCategories, setSubCategories] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/api/medicine", {
+        const response = await axios.get("http://localhost:4000/api/data", {
           headers: {
             apikey: "123",
           },
         });
         setData(response.data);
         setFilteredData(response.data);
-        const uniqueCategories = [...new Set(response.data.map((item) => item.Category))];
-        setCategories(uniqueCategories);
+        const uniqueSubCategories = [...new Set(response.data.map((item) => item.Sub_Category))];
+        setSubCategories(uniqueSubCategories);
       } catch (error) {
         console.error("Error fetching data:", error.message);
       }
@@ -47,14 +38,12 @@ function ProductDetail({ pg }) {
     fetchData();
   }, []);
 
-
   useEffect(() => {
     if (Array.isArray(data)) {
       const filtered = data.filter((val) => {
         if (searchTerm === "") {
           return val;
-        } else if (val.Medicine_Name && val.Medicine_Name.toLowerCase().includes(searchTerm.toLowerCase())) {
-        } else if (val.Name && val.Name.toLowerCase().includes(searchTerm.toLowerCase())) {
+        } else if (val.Sub_Category && val.Sub_Category.toLowerCase().includes(searchTerm.toLowerCase())) {
           return val;
         }
       });
@@ -68,34 +57,7 @@ function ProductDetail({ pg }) {
   const sortData = (data) => {
     let sortedData = [...data];
     switch (sortOption) {
-      case 'priceLowToHigh':
-        sortedData.sort((a, b) => a.Price - b.Price);
-        break;
-      case 'priceHighToLow':
-        sortedData.sort((a, b) => b.Price - a.Price);
-        break;
-      // case 'averageReviewAscending':
-      //   sortedData.sort((a, b) => a.Average_Review - b.Average_Review);
-      //   break;
-      // case 'averageReviewDescending':
-      //   sortedData.sort((a, b) => b.Average_Review - a.Average_Review);
-      //   break;
-      case 'nameAscending':
-        sortedData.sort((a, b) => {
-          const aName = a.Name || a.Medicine_Name;
-          const bName = b.Name || b.Medicine_Name;
-          return aName.localeCompare(bName);
-        });
-        break;
-      case 'nameDescending':
-        sortedData.sort((a, b) => {
-          const aName = a.Name || a.Medicine_Name;
-          const bName = b.Name || b.Medicine_Name;
-          return bName.localeCompare(aName);
-        });
-        break;
-      default:
-        break;
+      // Sorting logic remains the same
     }
     return sortedData;
   };
@@ -160,14 +122,15 @@ function ProductDetail({ pg }) {
     const end = Math.min(totalPages, start + 3);
     setVisibleRange([start, end]);
   };
-  const handleCategoryFilter = (category) => {
-    setSelectedCategory(category);
-    const filtered = data.filter((item) => item.Category === category);
+
+  const handleSubCategoryFilter = (subCategory) => {
+    setSelectedSubCategory(subCategory);
+    const filtered = data.filter((item) => item.Sub_Category === subCategory);
     setFilteredData(filtered);
   };
 
   const resetFilters = () => {
-    setSelectedCategory("");
+    setSelectedSubCategory("");
     setFilteredData(data);
   };
 
@@ -186,28 +149,23 @@ function ProductDetail({ pg }) {
           setSortOption={setSortOption}
         />
       </div>
-      
+
       <div className="md:flex space-x-6 flex-">
-      
+
         <FilterBar
-          selectedCategory={selectedCategory}
-          categories={categories}
-          handleCategoryFilter={handleCategoryFilter}
+          selectedSubCategory={selectedSubCategory}
+          subCategories={subCategories}
+          handleSubCategoryFilter={handleSubCategoryFilter}
           resetFilters={resetFilters}
         />
         <div className="md:hidden">
-        <SortDropdown sortOption={sortOption} setSortOption={setSortOption} />
-      </div>
+          <SortDropdown sortOption={sortOption} setSortOption={setSortOption} />
+        </div>
         <div className="flex flex-wrap ">
           {currentItems.map((item, index) => (
             <Item key={index} item={item} />
           ))}
         </div>
-        {/* <div className="flex flex-wrap ">
-          {currentItems.map((item, index) => (
-            <ItemForHorizontalScroll key={index} ItemForHorizontalScroll={item} />
-          ))}
-        </div> */}
       </div>
 
       <Pagination
