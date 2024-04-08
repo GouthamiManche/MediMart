@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReviewModal from './ReviewModal';
 import ReviewStars from './ReviewStars';
 import { PiPencilLine } from "react-icons/pi";
@@ -9,8 +9,18 @@ const ReviewSection = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const reviewsPerPage = 3;
 
+  useEffect(() => {
+    // Load reviews from localStorage on component mount
+    const storedReviews = localStorage.getItem('reviews');
+    if (storedReviews) {
+      setReviews(JSON.parse(storedReviews));
+    }
+  }, []);
+
   const handleSubmitReview = (review) => {
-    setReviews((prevReviews) => [...prevReviews, review]);
+    const updatedReviews = [...reviews, review];
+    setReviews(updatedReviews);
+    localStorage.setItem('reviews', JSON.stringify(updatedReviews));
     setShowReviewModal(false);
   };
 
@@ -25,12 +35,12 @@ const ReviewSection = () => {
 
   const totalReviews = reviews.length;
 
-  
+  // Logic to get current reviews for the current page
   const indexOfLastReview = currentPage * reviewsPerPage;
   const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
   const currentReviews = reviews.slice(indexOfFirstReview, indexOfLastReview);
 
-  
+  // Logic to paginate reviews
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -38,17 +48,20 @@ const ReviewSection = () => {
   const totalPages = Math.ceil(reviews.length / reviewsPerPage);
   const maxVisiblePages = 4;
   const pageNumbers = [];
+
+  // Determine the range of page numbers to display
   let startPage = Math.max(currentPage - 2, 1);
   let endPage = Math.min(startPage + maxVisiblePages - 1, totalPages);
 
   for (let i = startPage; i <= endPage; i++) {
     pageNumbers.push(i);
   }
+
   return (
-    <div className="bg-white p-6 rounded-md shadow-md relative mt-[4rem] h-screen">
+    <div className="bg-white p-6 rounded-md shadow-md relative">
       <div className='flex justify-between mb-4'>
-        <h2 className="text-5xl font-bold">Reviews</h2>
-        <div className="mt-[2rem] mr-[2rem]">
+        <h2 className="text-2xl font-bold">Reviews</h2>
+        <div className="mt-4 mr-[2rem]">
           <button
             className="flex item-center justif-center bg-white border border-blue-400 text-blue-400 font-bold py-2 px-4 rounded "
             onClick={handleReviewClick}
@@ -57,30 +70,32 @@ const ReviewSection = () => {
           </button>
         </div>
       </div>
-      <div className="flex items-center text-2xl mb-[2rem] mr-4">
-        <span className="font-semibold text-4xl  mr-2">
-          {reviews.length > 0
-            ? (
+      {reviews.length === 0 ? (
+        <div className="flex items-center justify-center text-2xl mb-[2rem] mr-4">
+          <span className="text-gray-600">No reviews yet.</span>
+        </div>
+      ) : (
+        <div className="flex items-center text-2xl mb-[2rem] mr-4">
+          <span className="font-semibold text-4xl  mr-2">
+            {(
               reviews.reduce((sum, review) => sum + review.rating, 0) /
               reviews.length
-            ).toFixed(1)
-            : 0}
-        </span>
-        <ReviewStars
-          rating={
-            reviews.length > 0
-              ? reviews.reduce((sum, review) => sum + review.rating, 0) /
-                reviews.length
-              : 0
-          }
-        />
-      </div>
+            ).toFixed(1)}
+          </span>
+          <ReviewStars
+            rating={
+              reviews.reduce((sum, review) => sum + review.rating, 0) /
+              reviews.length
+            }
+          />
+        </div>
+      )}
       <div className="flex">
-        <div className="w-[44%] pr-4">
+        <div className="w-[40%] pr-4">
           {[...Array(5)].map((_, index) => (
             <div key={index} className="flex items-center mb-2">
               <div className="w-10 flex items-center mr-2">
-                <span className="text-2xl">{5 - index} <span className='text-yellow-500 text-2xl'>&#9733; </span> </span>
+                <span className="text-2xl">{5 - index}</span>
               </div>
               <div className="w-[70%] bg-gray-200 rounded-full h-3">
                 <div
@@ -127,24 +142,27 @@ const ReviewSection = () => {
             {currentPage > 1 && (
               <button
                 onClick={() => paginate(currentPage - 1)}
-                className={`px-3 py-1 mr-2 bg-black text-white rounded focus:outline-none`}
+                className="px-3 py-1 mr-2 bg-black text-white rounded focus:outline-none"
               >
                 Prev
               </button>
             )}
             {pageNumbers.map((number) => (
               <button
-                key={number}
-                onClick={() => paginate(number)}
-                className={`px-3 py-1 mr-2 bg-gray-300 text-white rounded focus:outline-none ${currentPage === number ? 'bg-gray-900' : ''}`}
-              >
-                {number}
-              </button>
+              key={number}
+              onClick={() => paginate(number)}
+              className={`px-3 py-1 mr-2 bg-gray-300 text-white rounded focus:outline-none ${
+                currentPage === number ? 'bg-gray-900' : ''
+              }`}
+            >
+              {number}
+            </button>
+            
             ))}
             {currentPage < totalPages && (
               <button
                 onClick={() => paginate(currentPage + 1)}
-                className={`px-3 py-1 bg-black text-white rounded focus:outline-none`}
+                className="px-3 py-1 bg-black text-white rounded focus:outline-none"
               >
                 Next
               </button>

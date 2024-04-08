@@ -4,7 +4,7 @@ export default function HomeImage() {
   return (
     <div className="relative ">
     <img
-      src="src/Images/homebg3.jpg"
+      src="src/Images/homebg2.jpg"
       alt="Image 1"
       className="w-full h-[50vh] lg:h-[400px] object-cover "
     />
