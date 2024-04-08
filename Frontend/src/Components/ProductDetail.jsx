@@ -52,7 +52,7 @@ function ProductDetail({ pg }) {
         if (searchTerm === "") {
           return val;
         } else if (val.Medicine_Name && val.Medicine_Name.toLowerCase().includes(searchTerm.toLowerCase())) {
-        } else if (val.Name && val.Name.toLowerCase().includes(searchTerm.toLowerCase())) 
+        } else if (val.Name && val.Name.toLowerCase().includes(searchTerm.toLowerCase()))
         {
           return val;
         }
@@ -169,34 +169,36 @@ function ProductDetail({ pg }) {
     setSelectedCategory("");
     setFilteredData(data);
   };
- 
+
   return (
-    <div className="bg-blue-200">
+    <div className="bg-blue-100">
        <img
       src="src/Images/shopbgimg.jpg"
       alt="Image 1"
       className="w-full h-[50vh] lg:h-[260px] object-cover "
     />
-    <div className="flex ">
-     <FilterBar
-        selectedCategory={selectedCategory}
-        categories={categories}
-        handleCategoryFilter={handleCategoryFilter}
-        resetFilters={resetFilters}
-      />
-   <div className="w-[100%] p-4 py-10 px-4  bg-blue-200">
-      <SearchInput
+    <div className="mt-9 mx-14">
+    <SearchInput
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         sortOption={sortOption}
         setSortOption={setSortOption}
       />
-    
-      <div className="flex  flex-wrap ">
+    </div>
+    <div className="flex space-x-6">
+    <FilterBar
+        selectedCategory={selectedCategory}
+        categories={categories}
+        handleCategoryFilter={handleCategoryFilter}
+        resetFilters={resetFilters}
+      />
+      <div className="flex flex-wrap ">
         {currentItems.map((item, index) => (
           <Item key={index} item={item} />
         ))}
       </div>
+    </div>
+
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
@@ -205,8 +207,6 @@ function ProductDetail({ pg }) {
         goToPage={goToPage}
         getPageNumbers={getPageNumbers}
       />
-    </div>
-    </div>
     </div>
   );
 }

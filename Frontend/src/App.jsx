@@ -13,7 +13,7 @@ const Contact= lazy(()=>import('./pages/Contact'))
 const ErrorPage = lazy(()=>import('./pages/ErrorPage'))
 function App() {
   return (
-    
+
     <Router>
       <div className='font-Roboto'>
       <Suspense fallback={<Loader />}>
@@ -28,7 +28,7 @@ function App() {
           <Route exact path="/contact" element={<Contact />} />
           <Route exact path="*" element={<ErrorPage />} />
         </Routes>
-        
+
       </Suspense>
       </div>
     </Router>

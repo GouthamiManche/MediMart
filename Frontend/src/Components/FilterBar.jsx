@@ -43,6 +43,7 @@ function FilterBar({ selectedCategory, categories, handleCategoryFilter, resetFi
                 </svg>
               </button>
             </div>
+            <div>
             <ul className="space-y-2">
               <li
                 className={`cursor-pointer text-gray-800 hover:text-blue-600 transition duration-300 ${
@@ -64,16 +65,17 @@ function FilterBar({ selectedCategory, categories, handleCategoryFilter, resetFi
                 </li>
               ))}
             </ul>
+            </div>
           </div>
         </div>
       )}
 
       {/* Filter Bar for desktop view */}
-      <span className="hidden md:block bg-gray-100 p-4 rounded-lg md:mt-[8.5rem] md:ml-[1rem] md:w-[16rem] shadow-lg">
+      {/* <span className="hidden md:block bg-red-100 p-4 rounded-lg md:ml-[1rem] md:w-[16rem] shadow-lg">
         <span className="flex justify-between items-center mb-4">
           <h2 className="font-bold text-xl">Filter by Category</h2>
         </span>
-        <ul className="space-y-2">
+        <ul className="space-y-3">
           <li
             className={`cursor-pointer text-gray-800 hover:text-blue-600 transition duration-300 ${
               selectedCategory === "" ? "font-semibold" : ""
@@ -94,7 +96,36 @@ function FilterBar({ selectedCategory, categories, handleCategoryFilter, resetFi
             </li>
           ))}
         </ul>
-      </span>
+      </span> */}
+      <div className="hidden md:block bg-white p-4 rounded-lg md:ml-[1rem] md:w-[16rem] shadow-lg">
+  <div className="flex justify-between items-center mb-4">
+    <h2 className="font-bold text-xl">Filter by Category</h2>
+  </div>
+  <ul className="space-y-3">
+    <li
+      className={`cursor-pointer text-gray-800 hover:text-blue-600 transition duration-300 ${
+        selectedCategory === "" ? "font-semibold" : ""
+      }`}
+      onClick={resetFilters}
+    >
+      All
+    </li>
+    {categories.map((category) => (
+      <li
+        key={category}
+        className={`font-semibold cursor-pointer text-gray-800 hover:text-blue-600 transition duration-300 ${
+          selectedCategory === category ? "font-semibold" : ""
+        }`}
+        onClick={() => handleCategoryFilter(category)}
+      >
+        <hr className=" border border-black"/>
+        {category}
+      </li>
+    ))}
+  </ul>
+</div>
+
+
     </div>
   );
 }
