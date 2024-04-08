@@ -4,12 +4,12 @@ export default function HomeImage() {
   return (
     <div className="relative ">
     <img
-      src="src/Images/bgimg.jpg"
+      src="src/Images/homebg2.jpg"
       alt="Image 1"
-      className="w-full h-[50vh] lg:h-[450px] object-cover "
+      className="w-full h-[40vh] lg:h-[350px] object-cover "
     />
     <div className="absolute inset-0 flex items-center justify-center px-4 ">
-      <div className="text-center text-white mr-[34vw] ">
+      <div className="text-center text-white  ">
         <h1 className=" text-2xl md:text-4xl lg:text-6xl font-bold text-gray-900 max-w-lg mx-auto ">
          MEDIMART
         </h1>

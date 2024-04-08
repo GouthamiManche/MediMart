@@ -12,13 +12,13 @@ function truncateString(str, num) {
 }
 
 function getItemDetails(item) {
-  // Define logic to retrieve item details based on its category
+ 
   switch (item.Category) {
     case "Supplements":
       return { detail: item.Description, detailLabel: "Description" };
     case "Capsules":
       return { detail: item.Composition, detailLabel: "Composition" };
-    // Add cases for other categories as needed
+
     default:
       return { detail: "", detailLabel: "" };
   }

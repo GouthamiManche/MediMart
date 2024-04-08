@@ -7,7 +7,6 @@ import { CgProfile } from "react-icons/cg";
 export default function Cart() {
   return (
     <div className='bg-[#f5f5f5]'>
-      <Navbar />
       <div className='font-semibold text-4xl text-center'>
         <p>My Shopping Bag</p>
       </div>
@@ -40,7 +39,7 @@ export default function Cart() {
           </form>
         </div>
       </div>
-      <Footer />
+ 
     </div>
   )
 }

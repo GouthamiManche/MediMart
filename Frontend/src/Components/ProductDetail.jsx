@@ -5,6 +5,8 @@ import SearchInput from "./SearchInput";
 import Item from "./Item";
 import Pagination from "./Pagination";
 import FilterBar from "./FilterBar";
+import SortDropdown from "./SortDropdown";
+// import ItemForHorizontalScroll from "./ItemForHorizontalScroll";
 function truncateString(str, num) {
   if (!str || !str.length) {
     return ''; // Return an empty string if str is undefined, null, or has no length
@@ -29,7 +31,7 @@ function ProductDetail({ pg }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/api/combined", {
+        const response = await axios.get("http://localhost:4000/api/medicine", {
           headers: {
             apikey: "123",
           },
@@ -52,8 +54,7 @@ function ProductDetail({ pg }) {
         if (searchTerm === "") {
           return val;
         } else if (val.Medicine_Name && val.Medicine_Name.toLowerCase().includes(searchTerm.toLowerCase())) {
-        } else if (val.Name && val.Name.toLowerCase().includes(searchTerm.toLowerCase()))
-        {
+        } else if (val.Name && val.Name.toLowerCase().includes(searchTerm.toLowerCase())) {
           return val;
         }
       });
@@ -171,33 +172,43 @@ function ProductDetail({ pg }) {
   };
 
   return (
-    <div className="bg-blue-100">
-       <img
-      src="src/Images/shopbgimg.jpg"
-      alt="Image 1"
-      className="w-full h-[50vh] lg:h-[260px] object-cover "
-    />
-    <div className="mt-9 mx-14">
-    <SearchInput
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        sortOption={sortOption}
-        setSortOption={setSortOption}
+    <div className="">
+      <img
+        src="src/Images/shopbgimg.jpg"
+        alt="Image 1"
+        className="w-full h-[50vh] lg:h-[260px] object-cover "
       />
-    </div>
-    <div className="flex space-x-6">
-    <FilterBar
-        selectedCategory={selectedCategory}
-        categories={categories}
-        handleCategoryFilter={handleCategoryFilter}
-        resetFilters={resetFilters}
-      />
-      <div className="flex flex-wrap ">
-        {currentItems.map((item, index) => (
-          <Item key={index} item={item} />
-        ))}
+      <div className="mt-9 mx-14">
+        <SearchInput
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          sortOption={sortOption}
+          setSortOption={setSortOption}
+        />
       </div>
-    </div>
+      
+      <div className="md:flex space-x-6 flex-">
+      
+        <FilterBar
+          selectedCategory={selectedCategory}
+          categories={categories}
+          handleCategoryFilter={handleCategoryFilter}
+          resetFilters={resetFilters}
+        />
+        <div className="md:hidden">
+        <SortDropdown sortOption={sortOption} setSortOption={setSortOption} />
+      </div>
+        <div className="flex flex-wrap ">
+          {currentItems.map((item, index) => (
+            <Item key={index} item={item} />
+          ))}
+        </div>
+        {/* <div className="flex flex-wrap ">
+          {currentItems.map((item, index) => (
+            <ItemForHorizontalScroll key={index} ItemForHorizontalScroll={item} />
+          ))}
+        </div> */}
+      </div>
 
       <Pagination
         currentPage={currentPage}

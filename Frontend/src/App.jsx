@@ -5,15 +5,18 @@ import Loader from './Components/Loader';
 import CategoryShop from './pages/CategoryShop';
 
 
+import GotoTop from './Components/GotoTop';
+import Footer from './Components/Footer';
+import Navbar from './Components/Navbar';
+import Profile from './pages/Profile'
 const Home = lazy(() => import('./pages/Home'));
 const Shop = lazy(() => import('./pages/Shop'));
 const Login = lazy(() => import('./pages/Login'));
 const Register = lazy(() => import('./pages/Register'));
 const Cart = lazy(() => import('./pages/Cart'));
-const SingleProduct = lazy(()=>import( './pages/SingleProduct'));
-const About= lazy(()=>import('./pages/About'))
-const Contact= lazy(()=>import('./pages/Contact'))
-const ErrorPage = lazy(()=>import('./pages/ErrorPage'))
+const SingleProduct = lazy(() => import('./pages/SingleProduct'));const About = lazy(() => import('./pages/About'))
+const Contact = lazy(() => import('./pages/Contact'))
+const ErrorPage = lazy(() => import('./pages/ErrorPage'))
 function App() {
   // const [filteredData, setFilteredData] = useState([]);
   //console.log('Filtered Data:', filteredData);
@@ -21,21 +24,24 @@ function App() {
 
     <Router>
       <div className='font-Poppins'>
-      <Suspense fallback={<Loader />}>
-        <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route exact path="/Shop/:pg?" element={<Shop />} />
-          <Route path="/category-shop" element={<CategoryShop />} />
-          <Route exact path="/Login" element={<Login />} />
-          <Route exact path="/Register" element={<Register/>} />
-          <Route exact path="/Singleproduct/:id" element={<SingleProduct />} />
-          <Route exact path="/cart" element={<Cart />} />
-          <Route exact path="/about" element={<About />} />
-          <Route exact path="/contact" element={<Contact />} />
-          <Route exact path="*" element={<ErrorPage />} />
-        </Routes>
+        <Suspense fallback={<Loader />}>
+          <Navbar/>
+          <Routes>
+            <Route exact path="/" element={<Home />} />
+            <Route exact path="/Shop/:pg?" element={<Shop />} />
+            <Route exact path="/Login" element={<Login />} />
+            <Route exact path="/Register" element={<Register />} />
+            <Route exact path="/Singleproduct/:id" element={<SingleProduct />} />
+            <Route exact path="/cart" element={<Cart />} />
+            <Route exact path="/about" element={<About />} />
+            <Route exact path="/contact" element={<Contact />} />
+            <Route exact path="*" element={<ErrorPage />} />
+            <Route exact path="/profile" element={<Profile />} />
 
-      </Suspense>
+          </Routes>
+          <GotoTop/>
+          <Footer/>
+        </Suspense>
       </div>
     </Router>
   );

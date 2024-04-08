@@ -5,7 +5,7 @@ function Pagination({ currentPage, totalPages, paginatePrev, paginateNext, goToP
   const pageNumbers = getPageNumbers();
 
   return (
-    <div className="flex justify-center mt-6">
+    <div className="flex justify-center mt-6 pb-[2rem]">
       {currentPage > 1 && (
         <button
           className="bg-black text-white px-2 py-1 sm:px-4 sm:py-2 rounded-md mr-1 sm:mr-4"

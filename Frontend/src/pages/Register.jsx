@@ -61,7 +61,7 @@ function Register() {
     if (!values.username.trim()) {
       errors.username = "Username is required";
     } else if (values.username.length < 6 || values.username.length > 15) {
-      errors.username = "Username must be at least 6 characters long";
+      errors.username = "Username must be between 6 and 15 characters long";
     }
 
     if (!values.email.trim()) {
@@ -81,10 +81,9 @@ function Register() {
 
   return (
     <div className="bg-[#f5f5f5]">
-      <Navbar />
+ 
       <div className="flex flex-col md:flex-row h-screen">
         <div className="w-full md:w-1/2 bg-gradient-to-r from-blue-200 to-blue-400 p-8 md:mt-20 md:ml-56 md:mb-16 drop-shadow-xl">
-          {/* <h1 className="text-white mt-7 ml-8 font-bold">MEDIMART</h1> */}
           <div className="text-center md:text-left">
             <h1 className="font-bold text-white text-5xl md:text-5xl mt-10 pt-20">
               Welcome
@@ -95,14 +94,14 @@ function Register() {
           </div>
         </div>
 
-        <div className="w-full md:w-1/2 bg-white md:mt-20 md:mb-16 md:mr-56 drop-shadow-2xl p-8">
-          <h1 className="text-black text-2xl font-bold mt-4 md:ml-8">
+        <div className="w-full md:w-1/2 bg-white md:mt-20 md:mb-16 md:mr-56 drop-shadow-2xl pl-8">
+          <h1 className="text-black text-2xl font-bold mt-[3rem] md:ml-8">
              Register
           </h1>
 
           <form onSubmit={handleSubmit}>
-            <div>
-              <h2 className="text-black text-sm font-semibold mt-4 md:mt-5 md:ml-8">
+            <div className="mt-6 md:mt-5 md:ml-8">
+              <h2 className="text-black text-sm font-semibold">
                 Username
               </h2>
               <input
@@ -111,13 +110,13 @@ function Register() {
                 value={formData.username}
                 onChange={handleChange}
                 required
-                className={`border border-slate-500 w-full md:w-80 h-8 mt-2 md:mt-3 md:ml-8 rounded ${formErrors.username && isSubmit ? 'border-red-500' : ''}`}
+                className={`border border-slate-500 w-full md:w-80 h-10 mt-3 rounded px-3 ${formErrors.username && isSubmit ? 'border-red-500' : ''}`}
               />
-              {isSubmit && formErrors.username && <p className="text-red-500 mt-1 md:ml-8">{formErrors.username}</p>}
+              {isSubmit && formErrors.username && <p className="text-red-500 text-xs mt-2 md:ml-0">{formErrors.username}</p>}
             </div>
 
-            <div>
-              <h2 className="text-black text-sm font-semibold mt-4 md:mt-5 md:ml-8">
+            <div className="mt-6 md:mt-5 md:ml-8">
+              <h2 className="text-black text-sm font-semibold">
                 Email
               </h2>
               <input
@@ -126,13 +125,13 @@ function Register() {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className={`border border-slate-500 w-full md:w-80 h-8 mt-2 md:mt-3 md:ml-8 rounded ${formErrors.email && isSubmit ? 'border-red-500' : ''}`}
+                className={`border border-slate-500 w-full md:w-80 h-10 mt-3 rounded px-3 ${formErrors.email && isSubmit ? 'border-red-500' : ''}`}
               />
-              {isSubmit && formErrors.email && <p className="text-red-500 mt-1 md:ml-8">{formErrors.email}</p>}
+              {isSubmit && formErrors.email && <p className="text-red-500 text-xs mt-2 md:ml-0">{formErrors.email}</p>}
             </div>
 
-            <div>
-              <h2 className="text-black text-sm font-semibold mt-4 md:mt-5 md:ml-8">
+            <div className="mt-6 md:mt-5 md:ml-8">
+              <h2 className="text-black text-sm font-semibold">
                 Password
               </h2>
               <input
@@ -141,19 +140,19 @@ function Register() {
                 value={formData.password}
                 onChange={handleChange}
                 required
-                className={`border border-slate-500 w-full md:w-80 h-8 mt-2 md:mt-3 md:ml-8 rounded ${formErrors.password && isSubmit ? 'border-red-500' : ''}`}
+                className={`border border-slate-500 w-full md:w-80 h-10 mt-3 rounded px-3 ${formErrors.password && isSubmit ? 'border-red-500' : ''}`}
               />
-              {isSubmit && formErrors.password && <p className="text-red-500 mt-1 md:ml-8">{formErrors.password}</p>}
+              {isSubmit && formErrors.password && <p className="text-red-500 text-xs mt-2 md:ml-0">{formErrors.password}</p>}
             </div>
 
-            {errorMessage && <p className="text-red-500 mt-2 md:ml-8">{errorMessage}</p>}
+            {errorMessage && <p className="text-red-500 text-sm mt-4 md:ml-8">{errorMessage}</p>}
 
-            <button className="text-white font-bold w-full md:w-80 h-10 mt-4 md:ml-8 md:mb-4 md:mt-8 rounded bg-gradient-to-r from-blue-200 to-blue-400">
+            <button className="text-white font-bold w-full md:w-80 h-10 mt-6 md:ml-8 md:mb-6 md:mt-8 rounded bg-gradient-to-r from-blue-200 to-blue-400">
                Register
             </button>
           </form>
 
-          <div className="flex mt-2 md:ml-8">
+          <div className="flex  md:ml-8">
             <p className="text-slate-400 mr-2">
               Already have an account?{" "}
             </p>

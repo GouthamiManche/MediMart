@@ -12,9 +12,9 @@ function Shop() {
 
   return (
     <div className=''>
-      <Navbar />
+    
       <ProductDetail category={category} pg={pg} />
-      <Footer />
+
     </div>
   )
 }
