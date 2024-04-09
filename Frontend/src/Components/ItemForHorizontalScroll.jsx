@@ -25,7 +25,7 @@ function getItemDetails(item) {
 }
 
 function ItemForHorizontalScroll({ ItemForHorizontalScroll }) {
-  console.log(ItemForHorizontalScroll,"itemscroll");
+  //console.log(ItemForHorizontalScroll,"itemscroll");
   const truncatedName = truncateString(ItemForHorizontalScroll.Medicine_Name || ItemForHorizontalScroll.Name, 20);
   const { detail, detailLabel } = getItemDetails(ItemForHorizontalScroll);
 

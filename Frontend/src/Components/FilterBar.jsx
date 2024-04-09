@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-// Reusable SubCategoryItem component
 const SubCategoryItem = ({ subCategory, selectedSubCategory, handleSubCategoryFilter, resetFilters }) => (
   <li
     className={`cursor-pointer text-gray-800 hover:text-blue-600 transition duration-300 ${

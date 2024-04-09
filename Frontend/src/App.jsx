@@ -6,6 +6,7 @@ import GotoTop from './Components/GotoTop';
 import Footer from './Components/Footer';
 import Navbar from './Components/Navbar';
 import Profile from './pages/Profile'
+import { AuthProvider } from './Components/AuthProvider';
 const Home = lazy(() => import('./pages/Home'));
 const Shop = lazy(() => import('./pages/Shop'));
 const Login = lazy(() => import('./pages/Login'));
@@ -18,7 +19,7 @@ function App() {
   // const [filteredData, setFilteredData] = useState([]);
   //console.log('Filtered Data:', filteredData);
   return (
-
+<AuthProvider>
     <Router>
       <div className='font-Poppins'>
         <Suspense fallback={<Loader />}>
@@ -41,6 +42,7 @@ function App() {
         </Suspense>
       </div>
     </Router>
+  </AuthProvider>
   );
 }
 
