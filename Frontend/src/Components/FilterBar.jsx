@@ -72,7 +72,7 @@ function FilterBar({ selectedCategory, categories, handleCategoryFilter, resetFi
             onClick={resetFilters}
           >
             <div
-              className={`w-4 h-4 mr-2 rounded border ${
+              className={`w-4 h-4 mr-2 rounded border rounded-full ${
                 selectedCategory === "" ? "bg-blue-500 border-blue-500" : "border-gray-400"
               } flex justify-center items-center`}
             >
@@ -99,7 +99,7 @@ function FilterBar({ selectedCategory, categories, handleCategoryFilter, resetFi
               onClick={() => handleCategoryFilter(category)}
             >
               <div
-                className={`w-4 h-4 mr-2 rounded border ${
+                className={`w-4 h-4 mr-2 rounded border rounded-full ${
                   selectedCategory === category ? "bg-blue-500 border-blue-500" : "border-gray-400"
                 } flex justify-center items-center`}
               >
