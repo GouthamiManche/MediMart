@@ -98,6 +98,7 @@ function FilterBar({ selectedCategory, categories, handleCategoryFilter, resetFi
             </div>
             All
           </li>
+          
           {categories.map((category) => (
             <CategoryItem
               key={category}
