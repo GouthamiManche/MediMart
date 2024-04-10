@@ -1,10 +1,10 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { jwtDecode } from "jwt-decode"
+import jwtDecode from "jwt-decode";
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [isAuthenticate, setAuthenticate] = useState(null);
+  const [isAuthenticated, setAuthenticated] = useState(null);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
 
@@ -12,44 +12,40 @@ const AuthProvider = ({ children }) => {
     const storedToken = localStorage.getItem('token');
 
     if (storedToken) {
-      const decodeToken = jwtDecode(storedToken);
-      const expireTime = decodeToken.exp;
-      const expirationDate = new Date(expireTime * 1000);
+      const decodedToken = jwtDecode(storedToken);
+      const expireTime = decodedToken.exp * 1000;
       const currentTime = Date.now();
 
-      if (expirationDate < currentTime) {
-        console.log('Token is expired!');
+      if (expireTime < currentTime) {
+        console.log('Token has expired!');
         logout();
       } else {
-        // Token is valid
         console.log('Token is valid');
-        setAuthenticate(true);
-        setUser(decodeToken); // Assuming user is stored in the token
+        setAuthenticated(true);
+        setUser(decodedToken);
         setToken(storedToken);
       }
+    } else {
+      console.log('No token found');
     }
-  }, []);
+  }, [token]); // Update the effect whenever token changes
 
   const login = (data) => {
-    setAuthenticate(true);
+    setAuthenticated(true);
     setUser(data.user);
     setToken(data.token);
-    localStorage.setItem("token", data.token);
+    localStorage.setItem('token', data.token);
   };
 
   const logout = () => {
-    setAuthenticate(false);
+    setAuthenticated(false);
     setUser(null);
     setToken(null);
-    localStorage.removeItem("token");
+    localStorage.removeItem('token');
   };
 
-  useEffect(()=>{
-    //console.log("user",user);
-  })
-
   return (
-    <AuthContext.Provider value={{ isAuthenticate, user, token, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, token, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
