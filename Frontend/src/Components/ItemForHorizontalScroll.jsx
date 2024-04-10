@@ -32,7 +32,7 @@ function ItemForHorizontalScroll({ ItemForHorizontalScroll }) {
   return (
     <div>
       <Link
-        to={`/${ItemForHorizontalScroll.Category}/${ItemForHorizontalScroll._id}`}
+        to={`/${ItemForHorizontalScroll.Sub_Category}/${ItemForHorizontalScroll.Name}`}
         state={ItemForHorizontalScroll}
         className="bg-white m-2 p-2 rounded-2xl shadow-md flex flex-col md:w-[15rem] md:h-[20rem] w-[12.4rem] h-[14rem]  overflow-hidden hover:shadow-xl transition duration-300"
       >

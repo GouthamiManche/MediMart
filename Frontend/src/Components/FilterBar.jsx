@@ -7,6 +7,12 @@ const SubCategoryItem = ({ subCategory, selectedSubCategory, handleSubCategoryFi
     }`}
     onClick={() => handleSubCategoryFilter(subCategory)}
   >
+    <input
+      type="checkbox"
+      className="mr-2"
+      checked={selectedSubCategory === subCategory}
+      onChange={() => handleSubCategoryFilter(subCategory)}
+    />
     {subCategory}
   </li>
 );
@@ -49,6 +55,12 @@ function FilterBar({ selectedSubCategory, subCategories, handleSubCategoryFilter
                   }`}
                   onClick={resetFilters}
                 >
+                  <input
+                    type="checkbox"
+                    className="mr-2"
+                    checked={selectedSubCategory === ""}
+                    onChange={resetFilters}
+                  />
                   All
                 </li>
                 {subCategories.map((subCategory) => (
@@ -68,7 +80,7 @@ function FilterBar({ selectedSubCategory, subCategories, handleSubCategoryFilter
 
       <div className="hidden md:block bg-white p-4 rounded-lg ml-4 w-64 shadow-lg border border-gray-300 max-h-[500px] overflow-auto custom-scrollbar">
         <div className="flex justify-between items-center mb-4 pb-4 border-b border-gray-300">
-          <h2 className="font-bold text-xl">Sub Category</h2>
+          <h2 className="font-bold text-xl">Category</h2>
         </div>
         <ul className="space-y-3">
           <li
@@ -77,23 +89,12 @@ function FilterBar({ selectedSubCategory, subCategories, handleSubCategoryFilter
             }`}
             onClick={resetFilters}
           >
-            <div
-              className={`w-4 h-4 mr-2 rounded border ${
-                selectedSubCategory === "" ? "bg-blue-500 border-blue-500" : "border-gray-400"
-              } flex justify-center items-center`}
-            >
-              {selectedSubCategory === "" && (
-                <svg
-                  className="w-3 h-3 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                </svg>
-              )}
-            </div>
+            <input
+              type="checkbox"
+              className="mr-2"
+              checked={selectedSubCategory === ""}
+              onChange={resetFilters}
+            />
             All
           </li>
           {subCategories.map((subCategory) => (
