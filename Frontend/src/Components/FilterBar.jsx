@@ -1,19 +1,17 @@
 import React, { useState } from "react";
 
-// Reusable CategoryItem component
-const CategoryItem = ({ category, selectedCategory, handleCategoryFilter, resetFilters }) => (
+const SubCategoryItem = ({ subCategory, selectedSubCategory, handleSubCategoryFilter, resetFilters }) => (
   <li
     className={`cursor-pointer text-gray-800 hover:text-blue-600 transition duration-300 ${
-      selectedCategory === category ? "font-semibold" : ""
+      selectedSubCategory === subCategory ? "font-semibold" : ""
     }`}
-    onClick={() => handleCategoryFilter(category)}
+    onClick={() => handleSubCategoryFilter(subCategory)}
   >
-    {category}
+    {subCategory}
   </li>
 );
 
-
-function FilterBar({ selectedCategory, categories, handleCategoryFilter, resetFilters }) {
+function FilterBar({ selectedSubCategory, subCategories, handleSubCategoryFilter, resetFilters }) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const togglePopup = () => {
@@ -47,18 +45,18 @@ function FilterBar({ selectedCategory, categories, handleCategoryFilter, resetFi
               <ul className="space-y-1">
                 <li
                   className={`cursor-pointer text-gray-800 hover:text-blue-600 transition duration-300 ${
-                    selectedCategory === "" ? "font-semibold" : ""
+                    selectedSubCategory === "" ? "font-semibold" : ""
                   }`}
                   onClick={resetFilters}
                 >
                   All
                 </li>
-                {categories.map((category) => (
-                  <CategoryItem
-                    key={category}
-                    category={category}
-                    selectedCategory={selectedCategory}
-                    handleCategoryFilter={handleCategoryFilter}
+                {subCategories.map((subCategory) => (
+                  <SubCategoryItem
+                    key={subCategory}
+                    subCategory={subCategory}
+                    selectedSubCategory={selectedSubCategory}
+                    handleSubCategoryFilter={handleSubCategoryFilter}
                     resetFilters={resetFilters}
                   />
                 ))}
@@ -70,21 +68,21 @@ function FilterBar({ selectedCategory, categories, handleCategoryFilter, resetFi
 
       <div className="hidden md:block bg-white p-4 rounded-lg ml-4 w-64 shadow-lg border border-gray-300 max-h-[500px] overflow-auto custom-scrollbar">
         <div className="flex justify-between items-center mb-4 pb-4 border-b border-gray-300">
-          <h2 className="font-bold text-xl">Category</h2>
+          <h2 className="font-bold text-xl">Sub Category</h2>
         </div>
         <ul className="space-y-3">
           <li
             className={`cursor-pointer text-gray-800 hover:text-blue-600 transition duration-300 flex items-center ${
-              selectedCategory === "" ? "font-semibold" : ""
+              selectedSubCategory === "" ? "font-semibold" : ""
             }`}
             onClick={resetFilters}
           >
             <div
               className={`w-4 h-4 mr-2 rounded border ${
-                selectedCategory === "" ? "bg-blue-500 border-blue-500" : "border-gray-400"
+                selectedSubCategory === "" ? "bg-blue-500 border-blue-500" : "border-gray-400"
               } flex justify-center items-center`}
             >
-              {selectedCategory === "" && (
+              {selectedSubCategory === "" && (
                 <svg
                   className="w-3 h-3 text-white"
                   fill="none"
@@ -98,13 +96,12 @@ function FilterBar({ selectedCategory, categories, handleCategoryFilter, resetFi
             </div>
             All
           </li>
-          
-          {categories.map((category) => (
-            <CategoryItem
-              key={category}
-              category={category}
-              selectedCategory={selectedCategory}
-              handleCategoryFilter={handleCategoryFilter}
+          {subCategories.map((subCategory) => (
+            <SubCategoryItem
+              key={subCategory}
+              subCategory={subCategory}
+              selectedSubCategory={selectedSubCategory}
+              handleSubCategoryFilter={handleSubCategoryFilter}
               resetFilters={resetFilters}
             />
           ))}

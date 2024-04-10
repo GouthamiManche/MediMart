@@ -22,7 +22,7 @@ const checkAccess = (req, res, next) => {
     }
   };
 
-  async function getMedicineData(req, res) {
+  async function getData(req, res) {
     try {
       const data = await Data.find();
       res.status(200).json(data);
@@ -31,31 +31,4 @@ const checkAccess = (req, res, next) => {
       res.status(500).json({ error });
     }
   }
-//   async function getOtherData(req, res) {
-//     try {
-//       const data = await Category.find();
-//       res.status(200).json(data);
-//     } catch (error) {
-//       console.error(error);
-//       res.status(500).json({ error });
-//     }
-//   }
-
-
-//   async function getCombinedData(req, res) {
-//     try {
-//         const dataQuery = Data.find();
-//         const categoryQuery = Category.find();
-
-//         const [data, category] = await Promise.all([dataQuery, categoryQuery]);
-
-//         const combinedData = [...data, ...category]; // Merge data from both queries into a single array
-
-//         res.status(200).json(combinedData);
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({ error });
-//     }
-// }
-
-  module.exports = { checkAccess,getMedicineData};
+  module.exports = { checkAccess,getData};
