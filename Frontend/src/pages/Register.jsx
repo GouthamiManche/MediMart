@@ -100,7 +100,7 @@ function Register() {
           </h1>
 
           <form onSubmit={handleSubmit}>
-            <div className="mt-6 md:mt-7 md:ml-8">
+            <div className="mt-6 md:mt-5 md:ml-8">
               <h2 className="text-black text-sm font-semibold">
                 Username
               </h2>
@@ -115,7 +115,7 @@ function Register() {
               {isSubmit && formErrors.username && <p className="text-red-500 text-xs mt-2 md:ml-0">{formErrors.username}</p>}
             </div>
 
-            <div className="mt-6 md:mt-7 md:ml-8">
+            <div className="mt-6 md:mt-5 md:ml-8">
               <h2 className="text-black text-sm font-semibold">
                 Email
               </h2>
@@ -130,7 +130,7 @@ function Register() {
               {isSubmit && formErrors.email && <p className="text-red-500 text-xs mt-2 md:ml-0">{formErrors.email}</p>}
             </div>
 
-            <div className="mt-6 md:mt-7 md:ml-8">
+            <div className="mt-6 md:mt-5 md:ml-8">
               <h2 className="text-black text-sm font-semibold">
                 Password
               </h2>

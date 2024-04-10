@@ -12,7 +12,7 @@ function truncateString(str, num) {
 }
 
 function getItemDetails(item) {
- 
+
   switch (item.Category) {
     case "Supplements":
       return { detail: item.Description, detailLabel: "Description" };
@@ -27,15 +27,16 @@ function getItemDetails(item) {
 function Item({ item }) {
   const truncatedName = truncateString(item.Medicine_Name || item.Name, 20);
   const { detail, detailLabel } = getItemDetails(item);
-console.log(item.Medicine_Name)
-console.log(item.Name)
-console.log()
+// console.log(item.Medicine_Name)
+// console.log(item.Name)
+// console.log()
+
   return (
     <div>
       <Link
         to={`/singleproduct/${item._id.$oid}`}
         state={item}
-        className="bg-white m-2 p-2 rounded-2xl shadow-md flex flex-col w-[15rem] h-[22rem] overflow-hidden hover:shadow-xl transition duration-300"
+        className="bg-white m-2 p-4 rounded-2xl shadow-md flex flex-col w-[16rem] h-[22rem] overflow-hidden hover:shadow-xl transition duration-300"
       >
         <div className="relative h-56 overflow-hidden rounded-lg flex items-center justify-center">
           <img

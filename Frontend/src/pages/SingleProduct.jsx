@@ -15,8 +15,10 @@ export default function SingleProduct() {
 
   useEffect(() => {
     const fetchData = async () => {
+      //setLoading (true)
       try {
-        const response = await axios.get("http://localhost:4000/api/cat", {
+
+        const response = await axios.get("http://localhost:4000/api/products?category=Other", {
           headers: {
             apikey: "123",
           },
@@ -24,7 +26,9 @@ export default function SingleProduct() {
         setItems(response.data);
       } catch (error) {
         console.error("Error fetching data:", error.message);
-      }
+      }//finally{
+       // setLoaing(false)
+     // }
     };
     fetchData();
   }, []);
@@ -55,6 +59,7 @@ export default function SingleProduct() {
   };
 
   return (
+
     <div className="bg-white min-h-screen md:p-[1px] p-[1rem]">
 
       <div className="container mx-auto py-8">

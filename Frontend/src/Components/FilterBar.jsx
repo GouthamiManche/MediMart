@@ -1,6 +1,23 @@
 import React, { useState } from "react";
 
-function FilterBar({ selectedCategory, categories, handleCategoryFilter, resetFilters }) {
+const SubCategoryItem = ({ subCategory, selectedSubCategory, handleSubCategoryFilter, resetFilters }) => (
+  <li
+    className={`cursor-pointer text-gray-800 hover:text-blue-600 transition duration-300 ${
+      selectedSubCategory === subCategory ? "font-semibold" : ""
+    }`}
+    onClick={() => handleSubCategoryFilter(subCategory)}
+  >
+    <input
+      type="checkbox"
+      className="mr-2"
+      checked={selectedSubCategory === subCategory}
+      onChange={() => handleSubCategoryFilter(subCategory)}
+    />
+    {subCategory}
+  </li>
+);
+
+function FilterBar({ selectedSubCategory, subCategories, handleSubCategoryFilter, resetFilters }) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const togglePopup = () => {
@@ -9,10 +26,7 @@ function FilterBar({ selectedCategory, categories, handleCategoryFilter, resetFi
 
   return (
     <div className="relative">
-      <button
-        className="md:hidden ml-8 z-10 bg-black text-white px-8 py-2 rounded-md shadow-lg"
-        onClick={togglePopup}
-      >
+      <button className="md:hidden ml-8 z-10 bg-black text-white px-8 py-2 rounded-md shadow-lg" onClick={togglePopup}>
         Filter
       </button>
 
@@ -37,22 +51,26 @@ function FilterBar({ selectedCategory, categories, handleCategoryFilter, resetFi
               <ul className="space-y-1">
                 <li
                   className={`cursor-pointer text-gray-800 hover:text-blue-600 transition duration-300 ${
-                    selectedCategory === "" ? "font-semibold" : ""
+                    selectedSubCategory === "" ? "font-semibold" : ""
                   }`}
                   onClick={resetFilters}
                 >
+                  <input
+                    type="checkbox"
+                    className="mr-2"
+                    checked={selectedSubCategory === ""}
+                    onChange={resetFilters}
+                  />
                   All
                 </li>
-                {categories.map((category) => (
-                  <li
-                    key={category}
-                    className={`cursor-pointer text-gray-800 hover:text-blue-600 transition duration-300 ${
-                      selectedCategory === category ? "font-semibold" : ""
-                    }`}
-                    onClick={() => handleCategoryFilter(category)}
-                  >
-                    {category}
-                  </li>
+                {subCategories.map((subCategory) => (
+                  <SubCategoryItem
+                    key={subCategory}
+                    subCategory={subCategory}
+                    selectedSubCategory={selectedSubCategory}
+                    handleSubCategoryFilter={handleSubCategoryFilter}
+                    resetFilters={resetFilters}
+                  />
                 ))}
               </ul>
             </div>
@@ -67,56 +85,26 @@ function FilterBar({ selectedCategory, categories, handleCategoryFilter, resetFi
         <ul className="space-y-3">
           <li
             className={`cursor-pointer text-gray-800 hover:text-blue-600 transition duration-300 flex items-center ${
-              selectedCategory === "" ? "font-semibold" : ""
+              selectedSubCategory === "" ? "font-semibold" : ""
             }`}
             onClick={resetFilters}
           >
-            <div
-              className={`w-4 h-4 mr-2 rounded border rounded-full ${
-                selectedCategory === "" ? "bg-blue-500 border-blue-500" : "border-gray-400"
-              } flex justify-center items-center`}
-            >
-              {selectedCategory === "" && (
-                <svg
-                  className="w-3 h-3 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                </svg>
-              )}
-            </div>
+            <input
+              type="checkbox"
+              className="mr-2"
+              checked={selectedSubCategory === ""}
+              onChange={resetFilters}
+            />
             All
           </li>
-          {categories.map((category) => (
-            <li
-              key={category}
-              className={`cursor-pointer text-gray-800 hover:text-blue-600 transition duration-300 flex items-center ${
-                selectedCategory === category ? "font-semibold" : ""
-              }`}
-              onClick={() => handleCategoryFilter(category)}
-            >
-              <div
-                className={`w-4 h-4 mr-2 rounded border rounded-full ${
-                  selectedCategory === category ? "bg-blue-500 border-blue-500" : "border-gray-400"
-                } flex justify-center items-center`}
-              >
-                {selectedCategory === category && (
-                  <svg
-                    className="w-3 h-3 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                  </svg>
-                )}
-              </div>
-              {category}
-            </li>
+          {subCategories.map((subCategory) => (
+            <SubCategoryItem
+              key={subCategory}
+              subCategory={subCategory}
+              selectedSubCategory={selectedSubCategory}
+              handleSubCategoryFilter={handleSubCategoryFilter}
+              resetFilters={resetFilters}
+            />
           ))}
         </ul>
       </div>

@@ -12,7 +12,7 @@ function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/api/cat", {
+        const response = await axios.get("http://localhost:4000/api/products?category=Other", {
           headers: {
             apikey: "123",
           },
@@ -27,14 +27,14 @@ function Home() {
 
   return (
     <div >
-  
+
       <HomeImage />
       <OurProduct />
       <HorizontalCardScroll itemForHorizontalScroll={items} />
       <DynamicBanner />
       <HomeCarousel />
       <HomeImageBottom />
-   
+
     </div>
   );
 }
