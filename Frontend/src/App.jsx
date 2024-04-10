@@ -12,7 +12,7 @@ const Shop = lazy(() => import('./pages/Shop'));
 const Login = lazy(() => import('./pages/Login'));
 const Register = lazy(() => import('./pages/Register'));
 const Cart = lazy(() => import('./pages/Cart'));
-const SingleProduct = lazy(() => import('./pages/SingleProduct'));const About = lazy(() => import('./pages/About'))
+const Category = lazy(() => import('./pages/Category'));const About = lazy(() => import('./pages/About'))
 const Contact = lazy(() => import('./pages/Contact'))
 const ErrorPage = lazy(() => import('./pages/ErrorPage'))
 function App() {
@@ -29,13 +29,12 @@ function App() {
             <Route exact path="/Shop/:pg?" element={<Shop />} />
             <Route exact path="/Login" element={<Login />} />
             <Route exact path="/Register" element={<Register />} />
-            <Route exact path="/:category/:id" element={<SingleProduct />} />
+            <Route exact path="/:category/:id" element={<Category />} />
             <Route exact path="/cart" element={<Cart />} />
             <Route exact path="/about" element={<About />} />
             <Route exact path="/contact" element={<Contact />} />
             <Route exact path="*" element={<ErrorPage />} />
             <Route exact path="/profile" element={<Profile />} />
-
           </Routes>
           <GotoTop/>
           <Footer/>

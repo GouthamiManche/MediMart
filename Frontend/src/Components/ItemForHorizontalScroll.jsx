@@ -30,6 +30,7 @@ function ItemForHorizontalScroll({ ItemForHorizontalScroll }) {
   const { detail, detailLabel } = getItemDetails(ItemForHorizontalScroll);
 
   return (
+    
     <div>
       <Link
         to={`/${ItemForHorizontalScroll.Sub_Category}/${ItemForHorizontalScroll.Name}`}
