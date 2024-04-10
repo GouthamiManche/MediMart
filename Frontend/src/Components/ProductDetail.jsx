@@ -136,11 +136,11 @@ function ProductDetail({ pg }) {
 
   return (
     <div className="">
-      <img
+      {/* <img
         src="src/Images/shopbgimg.jpg"
         alt="Image 1"
         className="w-full h-[50vh] lg:h-[260px] object-cover "
-      />
+      /> */}
       <div className="mt-9 mx-14">
         <SearchInput
           searchTerm={searchTerm}
