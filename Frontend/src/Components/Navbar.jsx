@@ -8,7 +8,7 @@ function Navbar() {
   const { user, logout } = useContext(AuthContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
+console.log(user);
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
