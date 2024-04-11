@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import Navbar from "../Components/Navbar";
+import { AuthContext } from '../Components/AuthProvider';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from 'sweetalert2';
 
 function Login() {
+  const { login, isAuthenticated } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -47,50 +48,55 @@ function Login() {
 
     // Validate email
     if (!validateEmail(email)) {
-      setEmailError("Please enter a valid email address.");
-      setPasswordError("");
+      setEmailError('Please enter a valid email address.');
+      setPasswordError('');
       return; // Stop further execution
     }
 
     // Validate password
     if (!validatePassword(password)) {
-      setPasswordError("Password must be at least 8 characters long.");
+      setPasswordError('Password must be at least 8 characters long.');
       return; // Stop further execution
     }
 
     try {
-      const response = await axios.post(
-        "http://localhost:4000/api/login",
-        formData
-      );
-      console.log(response.data); // Log the response from the backend
-      const { token } = response.data;
-      localStorage.setItem("token", token);
-      console.log("Token stored in localStorage:", token);
-      navigate("/");
+      const response = await axios.post('http://localhost:4000/api/login', formData);
+      const { token, user } = response.data;
+      localStorage.setItem('token', token);
+      login({ user, token }); // Update context state with user data
     } catch (error) {
-      console.error("Error during login:", error);
+      console.error('Error during login:', error);
       if (error.response && error.response.data && error.response.data.error) {
-        if (error.response.data.error === "User not found") {
+        if (error.response.data.error === 'User not found') {
           setUserNotFound(true);
-          setPasswordError("");
-        } else if (error.response.data.error === "Incorrect password") {
-          setPasswordError("Incorrect password");
+          setPasswordError('');
+        } else if (error.response.data.error === 'Incorrect password') {
+          setPasswordError('Incorrect password');
           setUserNotFound(false);
         } else {
           setErrorMessage(error.response.data.error);
-          setPasswordError("");
+          setPasswordError('');
         }
       } else {
-        setErrorMessage("An error occurred during login.");
-        setPasswordError("");
+        setErrorMessage('An error occurred during login.');
+        setPasswordError('');
       }
     }
-    Swal.fire({
-      title: "Login Successful!",
-      icon: "success"
-    });
+
+    const handleAddToCart = (product, quantity) => {
+      if (!isAuthenticated) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Please Log In',
+          text: 'You need to be logged in to add items to your cart.',
+        });
+        navigate('/login'); // Redirect to login page
+        return;
+      }}
+
   };
+
+  
 
   return (
     <div className="bg-[#f5f5f5]">

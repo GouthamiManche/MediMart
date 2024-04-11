@@ -144,13 +144,46 @@ function Navbar() {
             >
               About Us
             </Link>
-            <Link
+            {/* <Link
               to="/login"
               className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition duration-300"
               onClick={() => setMobileMenuOpen(false)}
             >
               Login
-            </Link>
+            </Link> */}
+            {user ? (
+        
+        <div className="relative inline-block text-left">
+          <div className="flex items-center">
+            <p className="py-2 px-3 font-semibold text-base">{user.username}</p>  
+          </div>
+          <div>
+                <Link
+                  to="/profile"
+                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition duration-300"
+                  role="menuitem"
+                  tabIndex="-1"
+                  id="menu-item-0"
+                >
+                  Profile
+                </Link>
+                <button
+                  onClick={logout}
+                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition duration-300"
+                  role="menuitem"
+                  tabIndex="-1"
+                  id="menu-item-3"
+                >
+                  Sign out
+                </button>
+              </div>
+        </div>
+      ) : (
+      
+        <Link onClick={() => setMobileMenuOpen(false)} to="/login" className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition duration-300">
+          Login
+        </Link>
+      )}
             <Link
               to="/cart"
               className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition duration-300"

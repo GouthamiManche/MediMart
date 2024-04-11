@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const Data = require('../models/product.model');
-const Category = require('../models/product2.model');
 
 const checkAccess = (req, res, next) => {
     const { apikey, authorization } = req.headers;
