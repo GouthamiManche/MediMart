@@ -40,7 +40,6 @@ console.log(user);
             <FaCartPlus className="text-xl" />
             <span className="text-lg ml-1">Cart</span>
           </Link>
-
           {user ? (
             // Show the username and profile button
             <div className="relative inline-block text-left">

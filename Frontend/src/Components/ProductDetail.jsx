@@ -57,7 +57,34 @@ function ProductDetail({ pg }) {
   const sortData = (data) => {
     let sortedData = [...data];
     switch (sortOption) {
-      // Sorting logic remains the same
+      case 'priceLowToHigh':
+        sortedData.sort((a, b) => a.Price - b.Price);
+        break;
+      case 'priceHighToLow':
+        sortedData.sort((a, b) => b.Price - a.Price);
+        break;
+      // case 'averageReviewAscending':
+      //   sortedData.sort((a, b) => a.Average_Review - b.Average_Review);
+      //   break;
+      // case 'averageReviewDescending':
+      //   sortedData.sort((a, b) => b.Average_Review - a.Average_Review);
+      //   break;
+      case 'nameAscending':
+        sortedData.sort((a, b) => {
+          const aName = a.Name || a.Medicine_Name;
+          const bName = b.Name || b.Medicine_Name;
+          return aName.localeCompare(bName);
+        });
+        break;
+      case 'nameDescending':
+        sortedData.sort((a, b) => {
+          const aName = a.Name || a.Medicine_Name;
+          const bName = b.Name || b.Medicine_Name;
+          return bName.localeCompare(aName);
+        });
+        break;
+      default:
+        break;
     }
     return sortedData;
   };
