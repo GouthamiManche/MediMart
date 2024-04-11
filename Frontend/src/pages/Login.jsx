@@ -83,20 +83,20 @@ function Login() {
       }
     }
 
-    const handleAddToCart = (product, quantity) => {
-      if (!isAuthenticated) {
-        Swal.fire({
-          icon: 'warning',
-          title: 'Please Log In',
-          text: 'You need to be logged in to add items to your cart.',
-        });
-        navigate('/login'); // Redirect to login page
-        return;
-      }}
+    // const handleAddToCart = (product, quantity) => {
+    //   if (!isAuthenticated) {
+    //     Swal.fire({
+    //       icon: 'warning',
+    //       title: 'Please Log In',
+    //       text: 'You need to be logged in to add items to your cart.',
+    //     });
+    //     navigate('/login'); // Redirect to login page
+    //     return;
+    //   }}
 
   };
 
-  
+
 
   return (
     <div className="bg-[#f5f5f5]">
