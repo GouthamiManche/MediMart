@@ -3,10 +3,11 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import HorizontalCardScroll from '../Components/HorizontalCardScroll';
 import axios from "axios";
 import ReviewSection from '../Components/ReviewSection';
-import { BsCart3 } from "react-icons/bs";import { AuthContext } from '../Components/AuthProvider';
+import { BsCart3 } from "react-icons/bs";
+import { AuthContext } from '../Components/AuthProvider';
 import { toast } from 'react-toastify';
-import checkUserLoggedIn from '../Components/UseAuth'
-import { useAuth } from '../Components/UseAuth';
+// import checkUserLoggedIn from '../Components/UseAuth'
+// import { useAuth } from '../Components/UseAuth';
 
 const Category = () => {
   const location = useLocation();
@@ -17,7 +18,7 @@ const Category = () => {
   const [reviews, setReviews] = useState([]);
   const [items, setItems] = useState([]);
   const [cartItems, setCartItems] = useState([]);
-const isLoggedIn = checkUserLoggedIn(isAuthenticated);
+//const isLoggedIn = checkUserLoggedIn(isAuthenticated);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,33 +57,9 @@ const isLoggedIn = checkUserLoggedIn(isAuthenticated);
     setQuantity(Math.max(1, value));
   };
 
-  // const handleAddToCart = (product, quantity) => {
-  //   const cartItem = {
-  //     ...product,
-  //     quantity,
-  //     isMedicine: !!product.Medicine_Name,
-  //   };
-
-  //   // Update cart items state
-  //   setCartItems((prevCartItems) => {
-  //     const updatedCartItems = [...prevCartItems, cartItem];
-  //     // Update local storage with the updated cart items
-  //     localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
-  //     return updatedCartItems;
-  //   });
-  // };
-  const { isAuthenticated } = useContext(AuthContext);
+  //const { isAuthenticated } = useContext(AuthContext);
   const handleAddToCart = (product, quantity) => {
-    // Check if the user is logged in (you need to implement this logic)
-    const isLoggedIn = checkUserLoggedIn(); // Implement this function
-
-    if (!isAuthenticated) {
-      // If the user is not logged in, navigate to the login page
-      navigate('/Login');
-      return;
-    }
-
-    // If the user is logged in, proceed with adding the item to the cart
+    
     const cartItem = {
       ...product,
       quantity,

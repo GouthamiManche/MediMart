@@ -32,7 +32,7 @@ const AuthProvider = ({ children }) => {
   const login = (data) => {
     setAuthenticated(true);
     setUser(data.user);
-    setToken(data.token);
+    setToken(data.token);     
     localStorage.setItem('token', data.token);
   };
 
