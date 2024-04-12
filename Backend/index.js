@@ -14,9 +14,7 @@ const app = express();
 const PORT = 4000;
 //const transporter = require('./APIS/email');
 const nodemailer = require('nodemailer');
-
-const URI = `mongodb+srv://mancheg19:0Pq7ouruMJz2Q9o1@cluster0.e8cib3z.mongodb.net/`
-// Connect to MongoDB
+const URI = `mongodb+srv://mancheg19:0Pq7ouruMJz2Q9o1@cluster0.e8cib3z.mongodb.net/MediDB`
 mongoose.connect(URI, {
 });
 const db = mongoose.connection;
