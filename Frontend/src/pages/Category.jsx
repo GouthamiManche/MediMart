@@ -1,4 +1,3 @@
-// Category.js
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import HorizontalCardScroll from '../Components/HorizontalCardScroll';
@@ -49,14 +48,6 @@ export default function Category({ handleAddToCart }) {
     handleAddToCart(product, quantity);
   };
 
-  // const handleReviewClick = () => {
-  //   setShowReviewModal(true);
-  // };
-
-  // const handleSubmitReview = (review) => {
-  //   setReviews((prevReviews) => [...prevReviews, review]);
-  // };
-
   return (
     <div>
       <div className="bg-white min-h-screen md:p-[1px] p-[1rem]">
@@ -96,25 +87,30 @@ export default function Category({ handleAddToCart }) {
                 <div className="bg-white rounded-lg mb-[0.5rem]">
                   <p className="text-gray-600"><span className='text-lg font-semibold text-gray-700'> Manufacturer :</span> {product.Manufacturer}</p>
                 </div>
-                {isMedicine ? (
-                  <>
-                    <div className=" bg-white rounded-lg mb-[0.5rem]">
-                      <p className="text-gray-600"><span className="text-lg font-semibold  text-gray-700">Composition :</span> {product.Composition}</p>
-                    </div>
-                    <div className="bg-white rounded-lg mb-[0.5rem]">
-                      <p className="text-gray-600"><span className="text-lg font-semibold  text-gray-700">Uses :</span> {product.Uses}</p>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className=" bg-white rounded-lg mb-[0.5rem]">
-                      <p className="text-gray-600"><span className="text-lg font-semibold text-gray-700">Description :</span> {product.Description}</p>
-                    </div>
-                    <div className=" bg-white rounded-lg mb-[0.5rem]">
-                      <h3 ></h3>
-                      <p className="text-gray-600"><span className="text-lg font-semibold  text-gray-700">Directions for Use :</span> {product['Directions for Use']}</p>
-                    </div>
-                  </>
+                {/* Render Composition if available */}
+                {product.Composition && (
+                  <div className=" bg-white rounded-lg mb-[0.5rem]">
+                    <p className="text-gray-600"><span className="text-lg font-semibold  text-gray-700">Composition :</span> {product.Composition}</p>
+                  </div>
+                )}
+                {/* Render Uses if available */}
+                {product.Uses && (
+                  <div className="bg-white rounded-lg mb-[0.5rem]">
+                    <p className="text-gray-600"><span className="text-lg font-semibold  text-gray-700">Uses :</span> {product.Uses}</p>
+                  </div>
+                )}
+                {/* Render Description if available */}
+                {product.Description && (
+                  <div className=" bg-white rounded-lg mb-[0.5rem]">
+                    <p className="text-gray-600"><span className="text-lg font-semibold text-gray-700">Description :</span> {product.Description}</p>
+                  </div>
+                )}
+                {/* Render Directions for Use if available */}
+                {product['Directions for Use'] && (
+                  <div className=" bg-white rounded-lg mb-[0.5rem]">
+                    <h3 ></h3>
+                    <p className="text-gray-600"><span className="text-lg font-semibold  text-gray-700">Directions for Use :</span> {product['Directions for Use']}</p>
+                  </div>
                 )}
                 <div className="mb-4">
                   <p className="text-3xl md:text-4xl text-blue-800 font-semibold">{`₹${product.Price}`}</p>

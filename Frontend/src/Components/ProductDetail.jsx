@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSearchParams } from 'react-router-dom';
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import SearchInput from "./SearchInput";
@@ -9,6 +10,9 @@ import SortDropdown from "./SortDropdown";
 
 function ProductDetail({ pg }) {
   const location = useLocation();
+  const [searchParams] = useSearchParams();
+  const subCategory = searchParams.get('subCategory');
+  const Category = searchParams.get('Category');
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -18,7 +22,6 @@ function ProductDetail({ pg }) {
   const [sortOption, setSortOption] = useState('');
   const [selectedSubCategory, setSelectedSubCategory] = useState("");
   const [subCategories, setSubCategories] = useState([]);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,16 +30,27 @@ function ProductDetail({ pg }) {
             apikey: "123",
           },
         });
-        setData(response.data);
-        setFilteredData(response.data);
-        const uniqueSubCategories = [...new Set(response.data.map((item) => item.Sub_Category))];
+        let filteredData = response.data;
+        if (subCategory) {
+          filteredData = filteredData.filter((item) => item.Sub_Category === subCategory);
+        }
+        if (Category) {
+          filteredData = filteredData.filter((item) => item.Category === Category);
+        }
+        setData(filteredData);
+        setFilteredData(filteredData);
+        
+        const uniqueSubCategories = [...new Set(filteredData.map((item) => item.Sub_Category))];
         setSubCategories(uniqueSubCategories);
+        
+        const uniqueCategories = [...new Set(filteredData.map((item) => item.Category))];
+        setCategories(uniqueCategories);
       } catch (error) {
         console.error("Error fetching data:", error.message);
       }
     };
     fetchData();
-  }, []);
+  }, [subCategory, Category]);
 
   useEffect(() => {
     if (Array.isArray(data)) {
