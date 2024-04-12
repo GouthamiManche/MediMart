@@ -13,5 +13,5 @@ const dataSchema = new mongoose.Schema({
     Return_Policy:String,
     Directions_for_Use:String
 })
-const Data = mongoose.model('product1', dataSchema);
+const Data = mongoose.model('Product', dataSchema);
 module.exports= Data;
