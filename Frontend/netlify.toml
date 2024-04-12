@@ -1,0 +1,11 @@
+# Redirects
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Additional Settings
+[build]
+  command = "npm run build" 
+  publish = "dist"
+  
