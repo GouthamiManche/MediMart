@@ -30,7 +30,7 @@ app.use(cors());
 app.post('/api/register', registerUser);
 app.post('/api/login', loginUser);
 app.get('/api/users', getAllUsers);
-app.get('/api/data', checkAccess, getData);
+app.get('/api/data', getData);
 
 
 app.get('/api/products', async (req, res) => {
