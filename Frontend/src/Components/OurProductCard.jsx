@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-
 export function OurProductCard({ imageSrc, title, subCategory, Category }) {
   return (
     <Link to={`/shop?subCategory=${subCategory || ''}&Category=${Category || ''}`}>

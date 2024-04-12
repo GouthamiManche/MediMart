@@ -22,6 +22,7 @@ function ProductDetail({ pg }) {
   const [sortOption, setSortOption] = useState('');
   const [selectedSubCategory, setSelectedSubCategory] = useState("");
   const [subCategories, setSubCategories] = useState([]);
+  // const [categories, setCategories] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {

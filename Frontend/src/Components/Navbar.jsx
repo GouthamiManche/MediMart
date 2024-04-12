@@ -17,8 +17,8 @@ function Navbar() {
     <div className="bg-white text-gray-900 z-50 w-full">
       <header className="container mx-auto py-4 px-6 flex items-center justify-between">
         <div className="flex items-center">
-        <img className="size-12"src="src/assets/logo.jpg"></img>
-          <Link to="/" className="text-xl md:text-3xl font-bold">
+          <img className="h-12" src="src/assets/logo.jpg" alt="Logo" />
+          <Link to="/" className="text-xl md:text-3xl font-bold ml-4">
             MEDIMART
           </Link>
           <nav className="hidden md:flex md:ml-[18vw]">
@@ -39,7 +39,10 @@ function Navbar() {
           </nav>
         </div>
         <div className="md:hidden text-gray-900">
-          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="focus:outline-none"
+          >
             {mobileMenuOpen ? (
               <FaTimes className="text-xl" />
             ) : (
@@ -50,22 +53,28 @@ function Navbar() {
         <nav className="hidden md:flex items-center gap-4">
           {user ? (
             <div className="relative inline-block text-left">
-
               <div className="flex items-center">
-              <Link
-                to="/cart"
-                className="font-bold py-2 rounded flex items-center"
-              >
-                <FaCartPlus className="text-xl" />
-                <span className="text-lg ml-1">Cart</span>
-              </Link>
-                <p className="py-2 px-4 font-bold text-lg">{user.username}</p>
-                <button onClick={toggleDropdown} className="">
-                  <CgProfile className="size-9 ml-2" />
+                <Link
+                  to="/cart"
+                  className="font-bold py-2 rounded flex items-center"
+                >
+                  <FaCartPlus className="text-xl" />
+                  <span className="text-lg ml-1">Cart</span>
+                </Link>
+                {/* <div className="bg-black rounded-full w-12 h-12 flex items-center justify-center text-white font-bold text-xl ml-4">
+                  {user.username.charAt(0)}
+                </div> */}
+                <p className="py-2 px-4 font-bold text-lg ml-2">
+                  {user.username}
+                </p>
+                <button
+                  onClick={toggleDropdown}
+                  className="focus:outline-none ml-2"
+                >
+                  <CgProfile className="h-9" />
                 </button>
               </div>
               {dropdownOpen && (
-
                 <div
                   className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                   role="menu"
@@ -83,6 +92,7 @@ function Navbar() {
                     >
                       Profile
                     </Link>
+                    <br/>
                     <button
                       onClick={logout}
                       className="text-gray-700 block w-full px-4 py-2 text-left text-sm"
@@ -97,7 +107,6 @@ function Navbar() {
               )}
             </div>
           ) : (
-
             <Link to="/login" className="py-2 px-4 font-bold text-lg">
               Login
             </Link>
@@ -105,21 +114,31 @@ function Navbar() {
         </nav>
       </header>
 
-
       <div
-        className={`fixed inset-0 z-50 overflow-hidden transition-transform duration-300 ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
-          }`}
+        className={`fixed inset-0 z-50 overflow-hidden transition-transform duration-300 ${
+          mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+        }`}
       >
         <div
-          className={`absolute inset-0 bg-gray-900 opacity-50 transition-opacity duration-300 ${mobileMenuOpen ? "opacity-50" : "opacity-0"
-            }`}
+          className={`absolute inset-0 bg-gray-900 opacity-50 transition-opacity duration-300 ${
+            mobileMenuOpen ? "opacity-50" : "opacity-0"
+          }`}
           onClick={() => setMobileMenuOpen(false)}
         ></div>
         <div
-          className={`absolute left-0 w-3/4 max-w-xs h-screen bg-white shadow-lg transition-transform duration-300 ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
-            }`}
+          className={`absolute left-0 w-3/4 max-w-xs h-screen bg-white shadow-lg transition-transform duration-300 ${
+            mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
         >
           <div className="px-4 py-6 space-y-2">
+            <Link to="/profile">
+            <div className="flex items-center mb-4">
+              <div className="bg-gray-800 rounded-full w-12 h-12 flex items-center justify-center text-white font-semibold text-[8vw] pb-[1vw] mr-4">
+                {user?.username?.charAt(0)}
+              </div>
+              <p className="font-bold text-base">{user?.username}</p>
+            </div>
+            </Link>
             <Link
               to="/"
               className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition duration-300"
@@ -141,29 +160,21 @@ function Navbar() {
             >
               About Us
             </Link>
-            {/* <Link
-              to="/login"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition duration-300"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Login
-            </Link> */}
             {user ? (
-
-              <div className="relative inline-block text-left">
-                <div className="flex items-center">
-                  <p className="py-2 px-3 font-semibold text-base">{user.username}</p>
-                </div>
-                <div>
-                  <Link
-                    to="/profile"
-                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition duration-300"
-                    role="menuitem"
-                    tabIndex="-1"
-                    id="menu-item-0"
-                  >
-                    Profile
-                  </Link>
+              // <div className="relative inline-block text-left">
+              //   <div className="flex items-center">
+              //     <p className="py-2 px-3 font-semibold text-base">{user.username}</p>
+              //   </div>
+              //   <div>
+              //     <Link
+              //       to="/profile"
+              //       className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition duration-300"
+              //       role="menuitem"
+              //       tabIndex="-1"
+              //       id="menu-item-0"
+              //     >
+              //       Profile
+              //     </Link>
                   <button
                     onClick={logout}
                     className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition duration-300"
@@ -173,11 +184,14 @@ function Navbar() {
                   >
                     Sign out
                   </button>
-                </div>
-              </div>
+              //   </div>
+              // </div>
             ) : (
-
-              <Link onClick={() => setMobileMenuOpen(false)} to="/login" className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition duration-300">
+              <Link
+                onClick={() => setMobileMenuOpen(false)}
+                to="/login"
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition duration-300"
+              >
                 Login
               </Link>
             )}
