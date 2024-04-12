@@ -17,6 +17,7 @@ function Navbar() {
     <div className="bg-white text-gray-900 z-50 w-full">
       <header className="container mx-auto py-4 px-6 flex items-center justify-between">
         <div className="flex items-center">
+        <img className="size-12"src="src/assets/logo.jpg"></img>
           <Link to="/" className="text-xl md:text-3xl font-bold">
             MEDIMART
           </Link>

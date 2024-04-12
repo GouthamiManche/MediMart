@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import axios from 'axios';
-import { useNavigate } from "react-router-dom";c
+import Swal from 'sweetalert2';
+import { useNavigate } from "react-router-dom";
 
 
 function Register() {
@@ -38,7 +39,9 @@ function Register() {
         Swal.fire({
           title: "Registered Successfully!",
           text: "Please Login!",
-          icon: "success"
+          icon: "success",
+          timer: 2000, // Close the alert after 2 seconds
+          timerProgressBar: true
         });
         // Redirect to login page
         navigate("/login");
@@ -96,7 +99,7 @@ function Register() {
 
         <div className="w-full md:w-1/2 bg-white md:mt-20 md:mb-16 md:mr-56 drop-shadow-2xl pl-8">
           <h1 className="text-black text-2xl font-bold mt-[3rem] md:ml-8">
-             Register
+            Register
           </h1>
 
           <form onSubmit={handleSubmit}>
@@ -148,7 +151,7 @@ function Register() {
             {errorMessage && <p className="text-red-500 text-sm mt-4 md:ml-8">{errorMessage}</p>}
 
             <button className="text-white font-bold w-full md:w-80 h-10 mt-6 md:ml-8 md:mb-6 md:mt-8 rounded bg-gradient-to-r from-blue-200 to-blue-400">
-               Register
+              Register
             </button>
           </form>
 

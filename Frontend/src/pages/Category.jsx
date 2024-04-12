@@ -21,7 +21,7 @@ const Category = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("https://medicine-website-two.vercel.app/api/products?category=Other", {
+        const response = await axios.get(`https://medicine-website-two.vercel.app/api/products?sub_category=${product.Sub_Category}`, {
           headers: {
             apikey: "123",
           },

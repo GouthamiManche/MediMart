@@ -67,7 +67,9 @@ function Login() {
       Swal.fire({
         title: "Login Done Successfully!",
         text: "Please Shop",
-        icon: "success"
+        icon: "success",
+        timer: 2000,
+      timerProgressBar: true
       });
       navigate('/')
       // Update context state with user data
