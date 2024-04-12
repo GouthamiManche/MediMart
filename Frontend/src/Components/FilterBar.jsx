@@ -91,7 +91,7 @@ function FilterBar({ selectedSubCategory, subCategories, handleSubCategoryFilter
           >
             <input
               type="checkbox"
-              className="mr-2"
+              className="mr-2 rounded-full "
               checked={selectedSubCategory === ""}
               onChange={resetFilters}
             />

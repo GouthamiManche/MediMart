@@ -33,7 +33,6 @@ function Categoryshop() {
   return (
     <div>
         <div>
-      <Navbar />
       <h1>{category} Products</h1>
       <div className="flex flex-wrap">
         {products.map((product, index) => (

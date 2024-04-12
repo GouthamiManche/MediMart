@@ -34,7 +34,7 @@ function Item({ item }) {
   return (
     <div>
       <Link
-        to={`/singleproduct/${item._id.$oid}`}
+        to={`/${item.Sub_Category}/${item.Name}`}
         state={item}
         className="bg-white m-2 p-4 rounded-2xl shadow-md flex flex-col w-[16rem] h-[22rem] overflow-hidden hover:shadow-xl transition duration-300"
       >
