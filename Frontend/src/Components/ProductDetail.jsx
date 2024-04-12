@@ -22,7 +22,7 @@ function ProductDetail({ pg }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/api/data", {
+        const response = await axios.get("https://medicine-website-two.vercel.app/api/data", {
           headers: {
             apikey: "123",
           },

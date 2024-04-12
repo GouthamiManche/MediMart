@@ -30,6 +30,8 @@ app.post('/api/register', registerUser);
 app.post('/api/login', loginUser);
 app.get('/api/users', getAllUsers);
 app.get('/api/data', checkAccess, getData);
+
+
 app.get('/api/products', async (req, res) => {
   try {
     await getProducts(req, res);
@@ -122,7 +124,7 @@ async function sendPasswordResetEmail(email) {
 // });
 
 app.get('/', (req, res) => {
-  res.send('Hello, this is your Express API!');
+  res.json('Hello, this is your Express API!');
 });
 
 // app.listen(PORT, () => {
