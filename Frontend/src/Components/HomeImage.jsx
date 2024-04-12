@@ -1,10 +1,11 @@
 import React from 'react'
+import homeimage from '../assets/homebg2.jpg'
 import { Link } from 'react-router-dom'
 export default function HomeImage() {
   return (
     <div className="relative ">
     <img
-      src="src/Images/homebg2.jpg"
+      src={homeimage}
       alt="Image 1"
       className="w-full h-[40vh] lg:h-[350px] object-cover "
     />

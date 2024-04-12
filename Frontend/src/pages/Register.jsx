@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import axios from 'axios';
-import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
+import { useNavigate } from "react-router-dom";
 
 
 function Register() {
@@ -32,10 +32,17 @@ function Register() {
       // No errors, proceed with form submission
       try {
         const response = await axios.post(
-          "http://localhost:4000/api/register",
+          "https://medicine-website-two.vercel.app/api/register",
           formData
         );
         console.log(response.data);
+        Swal.fire({
+          title: "Registered Successfully!",
+          text: "Please Login!",
+          icon: "success",
+          timer: 2000, // Close the alert after 2 seconds
+          timerProgressBar: true
+        });
         // Redirect to login page
         navigate("/login");
       } catch (error) {
@@ -47,11 +54,7 @@ function Register() {
         }
       }
     }
-    Swal.fire({
-      title: "Registered Successfully!",
-      text: "Please Login!",
-      icon: "success"
-    });
+
   };
 
   const validate = (values) => {
@@ -81,7 +84,7 @@ function Register() {
 
   return (
     <div className="bg-[#f5f5f5]">
- 
+
       <div className="flex flex-col md:flex-row h-screen">
         <div className="w-full md:w-1/2 bg-gradient-to-r from-blue-200 to-blue-400 p-8 md:mt-20 md:ml-56 md:mb-16 drop-shadow-xl">
           <div className="text-center md:text-left">
@@ -96,7 +99,7 @@ function Register() {
 
         <div className="w-full md:w-1/2 bg-white md:mt-20 md:mb-16 md:mr-56 drop-shadow-2xl pl-8">
           <h1 className="text-black text-2xl font-bold mt-[3rem] md:ml-8">
-             Register
+            Register
           </h1>
 
           <form onSubmit={handleSubmit}>
@@ -148,7 +151,7 @@ function Register() {
             {errorMessage && <p className="text-red-500 text-sm mt-4 md:ml-8">{errorMessage}</p>}
 
             <button className="text-white font-bold w-full md:w-80 h-10 mt-6 md:ml-8 md:mb-6 md:mt-8 rounded bg-gradient-to-r from-blue-200 to-blue-400">
-               Register
+              Register
             </button>
           </form>
 

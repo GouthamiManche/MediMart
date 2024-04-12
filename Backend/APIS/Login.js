@@ -1,6 +1,7 @@
 
 const User = require('../models/user.model');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 const registerUser = async (req, res) => {
   try {
@@ -9,7 +10,8 @@ const registerUser = async (req, res) => {
     if (existingUser) {
       return res.status(400).json({ error: 'Username or email already exists' });
     }
-    const newUser = new User({ username, email, password });
+    const hashedPassword = await bcrypt.hash(password, 10); // Hash the password with a salt round of 10
+    const newUser = new User({ username, email, password: hashedPassword });
     await newUser.save();
     res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
@@ -38,7 +40,8 @@ const loginUser = async (req, res) => {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    if (user.password !== password) {
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
       return res.status(401).json({ error: 'Incorrect password' });
     }
 
@@ -58,4 +61,5 @@ const loginUser = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
 module.exports = { registerUser, loginUser};
