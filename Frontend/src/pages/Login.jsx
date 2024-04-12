@@ -63,7 +63,14 @@ function Login() {
       const response = await axios.post('https://medicine-website-two.vercel.app/api/login', formData);
       const { token, user } = response.data;
       localStorage.setItem('token', token);
-      login({ user, token }); // Update context state with user data
+      login({ user, token });
+      Swal.fire({
+        title: "Login Done Successfully!",
+        text: "Please Shop",
+        icon: "success"
+      });
+      navigate('/')
+      // Update context state with user data
     } catch (error) {
       console.error('Error during login:', error);
       if (error.response && error.response.data && error.response.data.error) {
@@ -106,11 +113,11 @@ function Login() {
         <div className="w-full   md:w-1/2 bg-gradient-to-r from-blue-200 to-blue-400 p-8 md:mt-20 md:ml-56 md:mb-16 drop-shadow-xl ">
           {/* <h1 className="text-white mt-7 ml-8 font-bold">MEDIMART</h1> */}
           <div className="text-center md:text-left">
-          <h1 className="font-bold text-white text-5xl mt-10 pt-20 ml-8">
-            Welcome
-          </h1>
-          <h1 className="font-bold text-white text-5xl mt-7 mb-[6rem] ml-8">Back!</h1>
-        </div>
+            <h1 className="font-bold text-white text-5xl mt-10 pt-20 ml-8">
+              Welcome
+            </h1>
+            <h1 className="font-bold text-white text-5xl mt-7 mb-[6rem] ml-8">Back!</h1>
+          </div>
         </div>
 
         <div className="w-full md:w-1/2 bg-white md:mt-20 md:mb-16 md:mr-56 drop-shadow-2xl pl-8">

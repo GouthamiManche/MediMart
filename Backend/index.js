@@ -28,16 +28,7 @@ app.post('/api/register', registerUser);
 app.post('/api/login', loginUser);
 app.get('/api/users', getAllUsers);
 app.get('/api/data', getData);
-
-
-app.get('/api/products', async (req, res) => {
-  try {
-    await getProducts(req, res);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
+app.get('/api/products',getProducts);
 
 app.get('/', (req, res) => {
   res.json('Hello, this is your Express API!');

@@ -1,13 +1,11 @@
-import React, { useState, useEffect ,useContext} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import HorizontalCardScroll from '../Components/HorizontalCardScroll';
 import axios from "axios";
 import ReviewSection from '../Components/ReviewSection';
 import { BsCart3 } from "react-icons/bs";
-import { AuthContext } from '../Components/AuthProvider';
+import Swal from 'sweetalert2';
 import { toast } from 'react-toastify';
-// import checkUserLoggedIn from '../Components/UseAuth'
-// import { useAuth } from '../Components/UseAuth';
 
 const Category = () => {
   const location = useLocation();
@@ -18,7 +16,7 @@ const Category = () => {
   const [reviews, setReviews] = useState([]);
   const [items, setItems] = useState([]);
   const [cartItems, setCartItems] = useState([]);
-//const isLoggedIn = checkUserLoggedIn(isAuthenticated);
+  const [itemAddedToCart, setItemAddedToCart] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,23 +55,32 @@ const Category = () => {
     setQuantity(Math.max(1, value));
   };
 
-  //const { isAuthenticated } = useContext(AuthContext);
   const handleAddToCart = (product, quantity) => {
-    
     const cartItem = {
       ...product,
       quantity,
       isMedicine: !!product.Medicine_Name,
     };
-
     setCartItems((prevCartItems) => {
       const updatedCartItems = [...prevCartItems, cartItem];
       localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+      setItemAddedToCart(true); // Set the state to indicate item added to cart
       return updatedCartItems;
     });
   };
 
-
+  // If item added to cart, display success message and navigate to cart
+  if (itemAddedToCart) {
+    Swal.fire({
+      title: "Item added to cart!",
+      icon: "success",
+      timer: 2000, // Close the alert after 2 seconds
+      timerProgressBar: true,
+      showConfirmButton: false // Hide the OK button
+    }).then(() => {
+      navigate("/cart"); // Navigate to cart after alert is closed
+    });
+  }
 
   // const handleReviewClick = () => {
   //   setShowReviewModal(true);

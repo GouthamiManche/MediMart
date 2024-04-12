@@ -12,7 +12,7 @@ function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:4000/api/products?category=Other", {
+        const response = await axios.get("https://medicine-website-two.vercel.app/api/products?category=Other", {
           headers: {
             apikey: "123",
           },
