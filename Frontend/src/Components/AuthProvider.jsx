@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import jwtDecode from "jwt-decode";
-
+import { jwtDecode } from 'jwt-decode';
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
@@ -43,6 +42,8 @@ const AuthProvider = ({ children }) => {
     setToken(null);
     localStorage.removeItem('token');
   };
+  
+
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, user, token, login, logout }}>
@@ -51,4 +52,4 @@ const AuthProvider = ({ children }) => {
   );
 };
 
-export { AuthContext, AuthProvider };
+export { AuthContext, AuthProvider};

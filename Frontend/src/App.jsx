@@ -6,6 +6,8 @@ import GotoTop from './Components/GotoTop';
 import Footer from './Components/Footer';
 import Navbar from './Components/Navbar';
 import Profile from './pages/Profile'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { AuthProvider } from './Components/AuthProvider';
 const Home = lazy(() => import('./pages/Home'));
 const Shop = lazy(() => import('./pages/Shop'));
@@ -25,6 +27,7 @@ function App() {
         <Suspense fallback={<Loader />}>
           <Navbar/>
           <Routes>
+
             <Route exact path="/" element={<Home />} />
             <Route exact path="/Shop/:pg?" element={<Shop />} />
             <Route exact path="/Login" element={<Login />} />
@@ -41,6 +44,7 @@ function App() {
         </Suspense>
       </div>
     </Router>
+    <ToastContainer />
   </AuthProvider>
   );
 }

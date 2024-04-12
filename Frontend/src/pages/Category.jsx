@@ -1,12 +1,14 @@
-// Category.js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,useContext} from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import HorizontalCardScroll from '../Components/HorizontalCardScroll';
 import axios from "axios";
 import ReviewSection from '../Components/ReviewSection';
-import { BsCart3 } from "react-icons/bs";
+import { BsCart3 } from "react-icons/bs";import { AuthContext } from '../Components/AuthProvider';
+import { toast } from 'react-toastify';
+import checkUserLoggedIn from '../Components/UseAuth'
+import { useAuth } from '../Components/UseAuth';
 
-export default function Category({ handleAddToCart }) {
+const Category = () => {
   const location = useLocation();
   const product = location.state;
   const navigate = useNavigate();
@@ -14,6 +16,8 @@ export default function Category({ handleAddToCart }) {
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [reviews, setReviews] = useState([]);
   const [items, setItems] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
+const isLoggedIn = checkUserLoggedIn(isAuthenticated);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,6 +32,13 @@ export default function Category({ handleAddToCart }) {
         console.error("Error fetching data:", error.message);
       }
     };
+
+    // Retrieve existing cart items from local storage once during initial mount
+    const storedCartItems = localStorage.getItem('cartItems');
+    if (storedCartItems) {
+      setCartItems(JSON.parse(storedCartItems));
+    }
+
     fetchData();
   }, []);
 
@@ -45,9 +56,47 @@ export default function Category({ handleAddToCart }) {
     setQuantity(Math.max(1, value));
   };
 
-  const handleAddToCartClick = () => {
-    handleAddToCart(product, quantity);
+  // const handleAddToCart = (product, quantity) => {
+  //   const cartItem = {
+  //     ...product,
+  //     quantity,
+  //     isMedicine: !!product.Medicine_Name,
+  //   };
+
+  //   // Update cart items state
+  //   setCartItems((prevCartItems) => {
+  //     const updatedCartItems = [...prevCartItems, cartItem];
+  //     // Update local storage with the updated cart items
+  //     localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
+  //     return updatedCartItems;
+  //   });
+  // };
+  const { isAuthenticated } = useContext(AuthContext);
+  const handleAddToCart = (product, quantity) => {
+    // Check if the user is logged in (you need to implement this logic)
+    const isLoggedIn = checkUserLoggedIn(); // Implement this function
+
+    if (!isAuthenticated) {
+      // If the user is not logged in, navigate to the login page
+      navigate('/Login');
+      return;
+    }
+
+    // If the user is logged in, proceed with adding the item to the cart
+    const cartItem = {
+      ...product,
+      quantity,
+      isMedicine: !!product.Medicine_Name,
+    };
+
+    setCartItems((prevCartItems) => {
+      const updatedCartItems = [...prevCartItems, cartItem];
+      localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+      return updatedCartItems;
+    });
   };
+
+
 
   // const handleReviewClick = () => {
   //   setShowReviewModal(true);
@@ -143,7 +192,7 @@ export default function Category({ handleAddToCart }) {
                     <div className="md:ml-[12rem] ml-[2rem]">
                       <button
                         className="flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 md:px-8 px-[6px] rounded transition-colors duration-300"
-                        onClick={handleAddToCartClick}
+                        onClick={() => handleAddToCart(product, quantity)}
                       >
                         <BsCart3 className="mr-2" />
                         Add to Cart
@@ -162,4 +211,6 @@ export default function Category({ handleAddToCart }) {
       </div>
     </div>
   );
-}
+};
+
+export default Category;
