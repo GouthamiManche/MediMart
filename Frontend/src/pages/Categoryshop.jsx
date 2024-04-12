@@ -17,7 +17,7 @@ function Categoryshop() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/api/data?sub_category=${category}`, {
+        const response = await axios.get(`https://medicine-website-two.vercel.app/api/data?sub_category=${category}`, {
           headers: {
             apikey: '123',
           },

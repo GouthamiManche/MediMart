@@ -32,7 +32,7 @@ function Register() {
       // No errors, proceed with form submission
       try {
         const response = await axios.post(
-          "http://localhost:4000/api/register",
+          "https://medicine-website-two.vercel.app/api/register",
           formData
         );
         console.log(response.data);

@@ -60,7 +60,7 @@ function Login() {
     }
 
     try {
-      const response = await axios.post('http://localhost:4000/api/login', formData);
+      const response = await axios.post('https://medicine-website-two.vercel.app/api/login', formData);
       const { token, user } = response.data;
       localStorage.setItem('token', token);
       login({ user, token }); // Update context state with user data

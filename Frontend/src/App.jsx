@@ -14,7 +14,8 @@ const Shop = lazy(() => import('./pages/Shop'));
 const Login = lazy(() => import('./pages/Login'));
 const Register = lazy(() => import('./pages/Register'));
 const Cart = lazy(() => import('./pages/Cart'));
-const Category = lazy(() => import('./pages/Category'));const About = lazy(() => import('./pages/About'))
+const Category = lazy(() => import('./pages/Category'));
+const About = lazy(() => import('./pages/About'))
 const Contact = lazy(() => import('./pages/Contact'))
 const ErrorPage = lazy(() => import('./pages/ErrorPage'))
 function App() {
@@ -27,7 +28,6 @@ function App() {
         <Suspense fallback={<Loader />}>
           <Navbar/>
           <Routes>
-
             <Route exact path="/" element={<Home />} />
             <Route exact path="/Shop/:pg?" element={<Shop />} />
             <Route exact path="/Login" element={<Login />} />
