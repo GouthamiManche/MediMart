@@ -199,10 +199,12 @@ function ProductDetail({ pg }) {
           subCategories={subCategories}
           handleSubCategoryFilter={handleSubCategoryFilter}
           resetFilters={resetFilters}
+          sortOption={sortOption}
+          setSortOption={setSortOption}
         />
-        <div className="md:hidden">
+        {/* <div className="md:hidden">
           <SortDropdown sortOption={sortOption} setSortOption={setSortOption} />
-        </div>
+        </div> */}
         <div className="flex flex-wrap ">
           {currentItems.map((item, index) => (
             <Item key={index} item={item} />

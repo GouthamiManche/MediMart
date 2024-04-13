@@ -1,15 +1,20 @@
 import React, { useState } from "react";
-
-const SubCategoryItem = ({ subCategory, selectedSubCategory, handleSubCategoryFilter, resetFilters }) => (
+import SortDropdown from "./SortDropdown"; 
+const SubCategoryItem = ({
+  subCategory,
+  selectedSubCategory,
+  handleSubCategoryFilter,
+  resetFilters,
+}) => (
   <li
-    className={`cursor-pointer text-gray-800 hover:text-blue-600 transition duration-300 ${
+    className={`cursor-pointer text-gray-800 hover:text-blue-600 transition duration-300 flex items-center ${
       selectedSubCategory === subCategory ? "font-semibold" : ""
     }`}
     onClick={() => handleSubCategoryFilter(subCategory)}
   >
     <input
       type="checkbox"
-      className="mr-2"
+      className="mr-2 rounded-full"
       checked={selectedSubCategory === subCategory}
       onChange={() => handleSubCategoryFilter(subCategory)}
     />
@@ -17,7 +22,14 @@ const SubCategoryItem = ({ subCategory, selectedSubCategory, handleSubCategoryFi
   </li>
 );
 
-function FilterBar({ selectedSubCategory, subCategories, handleSubCategoryFilter, resetFilters }) {
+function FilterBar({
+  selectedSubCategory,
+  subCategories,
+  handleSubCategoryFilter,
+  resetFilters,
+  sortOption,
+  setSortOption,
+}) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const togglePopup = () => {
@@ -25,13 +37,21 @@ function FilterBar({ selectedSubCategory, subCategories, handleSubCategoryFilter
   };
 
   return (
-    <div className="relative">
-      <button className="md:hidden ml-8 z-10 bg-black text-white px-8 py-2 rounded-md shadow-lg" onClick={togglePopup}>
-        Filter
-      </button>
+    <div className="relative ">
+      <div className="ml-[3.5rem] flex  items-center mb-4">
+        <button
+          className="block md:hidden bg-[#125872] text-white px-6 py-3 rounded-md text-center flex items-center"
+          onClick={togglePopup}
+        >
+          <i className="fas fa-filter mr-2"></i> Filter
+        </button>
+        <div className="md:hidden items-center">
+          <SortDropdown sortOption={sortOption} setSortOption={setSortOption} />
+        </div>
+      </div>
 
       {isPopupOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-20 flex justify-center items-center">
+        <div className="fixed inset-0  bg-opacity-50 z-20 flex justify-center items-center">
           <div className="bg-white p-4 rounded-lg shadow-lg w-full max-w-md">
             <div className="flex justify-between items-center mb-4">
               <h2 className="font-bold text-xl">Category</h2>
@@ -50,14 +70,14 @@ function FilterBar({ selectedSubCategory, subCategories, handleSubCategoryFilter
             <div className="max-h-[400px] overflow-auto custom-scrollbar">
               <ul className="space-y-1">
                 <li
-                  className={`cursor-pointer text-gray-800 hover:text-blue-600 transition duration-300 ${
+                  className={`cursor-pointer text-gray-800 hover:text-blue-600 transition duration-300 flex items-center ${
                     selectedSubCategory === "" ? "font-semibold" : ""
                   }`}
                   onClick={resetFilters}
                 >
                   <input
                     type="checkbox"
-                    className="mr-2"
+                    className="mr-2 rounded-full"
                     checked={selectedSubCategory === ""}
                     onChange={resetFilters}
                   />
@@ -91,7 +111,7 @@ function FilterBar({ selectedSubCategory, subCategories, handleSubCategoryFilter
           >
             <input
               type="checkbox"
-              className="mr-2 rounded-full "
+              className="mr-2 rounded-full"
               checked={selectedSubCategory === ""}
               onChange={resetFilters}
             />

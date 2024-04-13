@@ -9,7 +9,7 @@ export default function OurProduct() {
         <OurProductCard imageSrc="/src/assets/protein_supplements.jpg" title="Protein Powders" subCategory="Protein" />
         <OurProductCard imageSrc="/src/assets/health_and_nutrition.jpg" title="Health Supplements" subCategory="Supplements" />
         <OurProductCard imageSrc="/src/assets/womencare.jpg" title="Women Care" subCategory="Women Care" />
-        <OurProductCard imageSrc="/src/assets/babycare.jpg" title="Baby Care" subCategory="babycare" />
+        <OurProductCard imageSrc="/src/assets/babycare.jpg" title="Baby Care" subCategory="Baby Care" />
         <OurProductCard imageSrc="/src/assets/healthdevices.jpg" title="Health Devices" subCategory="Health Devices" />
         <OurProductCard imageSrc="/src/assets/medicines.jpg" title="Medicine" Category="Medicine" />
       </div>
