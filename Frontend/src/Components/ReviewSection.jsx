@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import ReviewModal from './ReviewModal';
 import ReviewStars from './ReviewStars';
 import { PiPencilLine } from "react-icons/pi";
-
+import { IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowForward } from "react-icons/io";
 const ReviewSection = () => {
   const [reviews, setReviews] = useState([]);
   const [showReviewModal, setShowReviewModal] = useState(false);
@@ -42,7 +43,7 @@ const ReviewSection = () => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-md shadow-md relative mt-[4rem] h-screen">
+    <div className="bg-white p-6 rounded-md shadow-md relative mt-[4rem] max-h-screen">
       <h2 className="text-5xl font-bold mb-4">Reviews</h2>
       <div className="mb-4 flex justify-end">
         <button
@@ -117,20 +118,20 @@ const ReviewSection = () => {
               ))
             )}
           </div>
-          <div className="mt-4 flex justify-center items-end">
+          <div className="mt-[5rem] flex justify-center items-end">
             {currentPage > 1 && (
               <button
                 onClick={() => paginate(currentPage - 1)}
-                className="px-3 py-1 mr-2 bg-black text-white rounded focus:outline-none"
+                className="px-3 py-1 mr-2  text-gray-500 rounded focus:outline-none"
               >
-                Prev
+               <IoIosArrowBack className='text-2xl '/>
               </button>
             )}
             {pageNumbers.map((number) => (
               <button
                 key={number}
                 onClick={() => paginate(number)}
-                className={`px-3 py-1 mr-2 bg-gray-300 text-white rounded focus:outline-none ${currentPage === number ? 'bg-gray-900' : ''}`}
+                className={`px-3 py-1 mr-2 bg-transparent text-gray-500 rounded-full focus:outline-none ${currentPage === number ? 'text-[#125872] border border-[#125872]' : ''}`}
               >
                 {number}
               </button>
@@ -138,9 +139,9 @@ const ReviewSection = () => {
             {currentPage < totalPages && (
               <button
                 onClick={() => paginate(currentPage + 1)}
-                className="px-3 py-1 bg-black text-white rounded focus:outline-none"
+                className="px-3 py-1  text-gray-500 rounded focus:outline-none"
               >
-                Next
+            <IoIosArrowForward className='text-2xl'/>
               </button>
             )}
           </div>

@@ -1,62 +1,106 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
-const MedicalPharmacyCarousel = () => {
+const CustomerTestimonialCarousel = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const isMobile = window.innerWidth <= 768; 
+  const carouselRef = useRef(null);
 
-  const handlePrevSlide = () => {
-    setCurrentSlide(currentSlide === 0 ? quotes.length - 1 : currentSlide - 1);
-  };
-
-  const handleNextSlide = () => {
-    setCurrentSlide(currentSlide === quotes.length - 1 ? 0 : currentSlide + 1);
-  };
-
-  const quotes = [
+  const testimonials = [
     {
-      text: 'The pharmacy staff is very knowledgeable and helpful. They always go above and beyond to assist me with my prescriptions.',
-      author: '- Sarah M.',
+      text: "The doctors are very professional and customer-friendly. I fall more in love with this app the more I use it.",
+      author: "- Subhash Sehgal"
     },
     {
-      text: 'I love how convenient it is to refill my prescriptions online. The process is seamless and saves me a lot of time.',
-      author: '- Michael R.',
+      text: "Excellent app. I have used this regularly and found it very easy to use. All info is readily available, and the response after order placement for validation of medicines required was prompt.",
+      author: "- Snehal Shah"
     },
     {
-      text: 'I am impressed by the professionalism and efficiency of the pharmacy staff. They make getting my medications a breeze.',
-      author: '- Samantha W.'
+      text: "Best, very customer-friendly app by nature. TrueMeds is the best... during the Lockdown, this app does not reduce the discount and shows the customer-friendly nature of the TrueMeds. Thank You!",
+      author: "- Laksh Kankariya"
     },
     {
-      text: 'The convenience of ordering prescriptions online from this pharmacy has made my life so much easier. Thank you!',
-      author: '- James T.'
+      text: "I am impressed by the professionalism and efficiency of the pharmacy staff. They make getting my medications a breeze.",
+      author: "- Samantha W."
     },
     {
-      text: 'I appreciate the personalized service I receive every time I visit this pharmacy. They truly care about their customers.',
-      author: '- Rebecca S.'
+      text: "The convenience of ordering prescriptions online from this pharmacy has made my life so much easier. Thank you!",
+      author: "- James T."
+    },
+    {
+      text: "I appreciate the personalized service I receive every time I visit this pharmacy. They truly care about their customers.",
+      author: "- Rebecca S."
     }
   ];
 
+  const handlePrevSlide = () => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({
+        left: -carouselRef.current.offsetWidth / 2.5,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  const handleNextSlide = () => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({
+        left: carouselRef.current.offsetWidth / 2.5,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (carouselRef.current) {
+        const carousel = carouselRef.current;
+        const slideWidth = carousel.offsetWidth / 3;
+        const maxScrollLeft = carousel.scrollWidth - carousel.offsetWidth;
+        const currentScrollLeft = carousel.scrollLeft;
+
+        if (currentScrollLeft === 0) {
+          setCurrentSlide(0);
+        } else if (currentScrollLeft >= maxScrollLeft - slideWidth) {
+          setCurrentSlide(testimonials.length - 3);
+        } else {
+          setCurrentSlide(Math.round(currentScrollLeft / slideWidth));
+        }
+      }
+    };
+
+    const carousel = carouselRef.current;
+    if (carousel) {
+      carousel.addEventListener('scroll', handleScroll);
+    }
+
+    return () => {
+      if (carousel) {
+        carousel.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, [testimonials.length]);
+
   return (
-    <div className="max-w-full mx-auto mt-8 px-5 mb-8 sm:px-18  sm:mt-10 sm:mb-10 ">
-      <p className='text-gray-700 text-lg md:text-2xl font-bold'>Customer Testimonials</p>
-      <div className="relative overflow-hidden mt-[1rem] md:mt-[2rem]">
+    <div className="max-w-full mx-auto mt-8 px-5 mb-8 sm:px-18 sm:mt-10 sm:mb-10">
+      <h2 className="text-gray-700 text-lg md:text-2xl font-bold mb-4">Customer Testimonials</h2>
+      <div className="relative overflow-x-hidden">
         <div
-          className="flex gap-8 h-56 w-[86rem] md:w-[110rem] transition-transform duration-500 ease-in-out sm:h-56"
-          style={{ transform: `translateX(-${isMobile ? (currentSlide * (112 / quotes.length)) : (currentSlide * (38 / quotes.length))}%)` }}
+          ref={carouselRef}
+          className="carousel flex gap-8 h-64 w-full transition-transform duration-500 ease-in-out overflow-x-scroll scrollbar-hide"
         >
-          {quotes.map((quote, index) => (
+          {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className="carousel-item flex flex-col  items-center justify-center p-4 rounded-lg  bg-blue-100  sm:p-6"
-              style={{ flex: `0 0 calc(100% / ${quotes.length})` }}
+              className="carousel-item flex flex-col justify-center p-6 rounded-lg bg-blue-100 w-full md:w-1/3 shrink-0"
             >
-              <p className="text-base text-center md:text-[1.4vw]">{quote.text}</p>
-              <p className="text-sm text-center mt-2">{quote.author}</p>
+              <p className="text-base text-center md:text-lg">{testimonial.text}</p>
+              <p className="text-sm text-center mt-2">{testimonial.author}</p>
             </div>
           ))}
         </div>
         <button
-          className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-blue-400 rounded-full p-2 shadow-md z-20"
+          className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-blue-400 rounded-full p-2 shadow-md z-20 md:block hidden"
           onClick={handlePrevSlide}
+          aria-label="Previous slide"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -69,8 +113,9 @@ const MedicalPharmacyCarousel = () => {
           </svg>
         </button>
         <button
-          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-blue-400 rounded-full p-2 shadow-md z-20"
+          className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-blue-400 rounded-full p-2 shadow-md z-20 md:block hidden"
           onClick={handleNextSlide}
+          aria-label="Next slide"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -87,4 +132,4 @@ const MedicalPharmacyCarousel = () => {
   );
 };
 
-export default MedicalPharmacyCarousel;
+export default CustomerTestimonialCarousel;
