@@ -25,7 +25,7 @@ export default {
           width: '4px',
         },
         '.custom-scrollbar::-webkit-scrollbar-track': {
-          backgroundColor: '#f1f1f1',
+          backgroundColor: '#f1f1f1',  
         },
         '.custom-scrollbar::-webkit-scrollbar-thumb': {
           backgroundColor: '#888',

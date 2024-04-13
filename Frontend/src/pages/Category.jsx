@@ -92,10 +92,10 @@ const Category = () => {
 
   return (
     <div>
-      <div className="bg-white min-h-screen md:p-[1px] p-[1rem]">
+      <div className="bg-white min-h-screen md:p-[1px] p-[1rem] ">
         <div className="container mx-auto py-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="flex justify-center md:block">
+            <div className="flex justify-center md:block ">
               <button
                 className="hidden md:block bg-white rounded-full p-2 transition-colors duration-300 hover:bg-gray-200"
                 onClick={handleBackClick}
@@ -118,7 +118,7 @@ const Category = () => {
               <img
                 src={product.Image_URL}
                 alt={isMedicine ? product.Medicine_Name : product.Name}
-                className="md:w-[26rem] md:max-h-[22rem] md:ml-[4rem] mt-4 md:mt-[3rem] rounded-md border border-2"
+                className="md:max-w-[26rem] md:max-h-[22rem] md:ml-[4rem] mt-4 md:mt-[3rem] rounded-md border border-2 "
               />
             </div>
             <div className="flex flex-col justify-between">

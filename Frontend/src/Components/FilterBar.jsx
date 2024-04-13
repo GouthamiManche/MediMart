@@ -40,7 +40,7 @@ function FilterBar({
     <div className="relative ">
       <div className="ml-[3.5rem] flex  items-center mb-4">
         <button
-          className="block md:hidden bg-[#125872] text-white px-6 py-3 rounded-md text-center flex items-center"
+          className="block md:hidden bg-[#125872] text-white px-6 py-[10px] rounded-md text-center flex items-center"
           onClick={togglePopup}
         >
           <i className="fas fa-filter mr-2"></i> Filter
@@ -51,7 +51,7 @@ function FilterBar({
       </div>
 
       {isPopupOpen && (
-        <div className="fixed inset-0  bg-opacity-50 z-20 flex justify-center items-center">
+        <div className="fixed inset-0 w-[50%] bg-opacity-50 z-20 flex justify-center items-center">
           <div className="bg-white p-4 rounded-lg shadow-lg w-full max-w-md">
             <div className="flex justify-between items-center mb-4">
               <h2 className="font-bold text-xl">Category</h2>

@@ -42,7 +42,7 @@ function Footer() {
             </p>
             <div className='flex gap-2 mt-[1rem]'>
             <FaTwitter className='text-blue-400'/>
-            <FaFacebook className='text-blue-800'/>
+            <FaFacebook className='text-blue-950'/>
             <FaLinkedin className='text-purple-300'/>
             <FaYoutube className='text-red-600'/>
             </div>
