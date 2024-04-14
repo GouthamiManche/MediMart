@@ -36,7 +36,7 @@ function Item({ item }) {
       <Link
         to={`/${item.Sub_Category}/${item.Name}`}
         state={item}
-        className="bg-white m-2 p-4 rounded-2xl shadow-md flex flex-col w-[16rem] h-[22rem] overflow-hidden hover:shadow-xl transition duration-300"
+        className="bg-white m-2 p-4 rounded-xl shadow-md flex flex-col md:w-[16rem] w-[16rem] md:h-[22rem] h-[22rem] overflow-hidden hover:shadow-xl transition duration-300"
       >
         <div className="relative h-56 overflow-hidden rounded-lg flex items-center justify-center">
           <img
@@ -58,8 +58,8 @@ function Item({ item }) {
           )}
           <div className="flex justify-between items-center mt-2">
             <h3 className="text-2xl font-bold text-[#323743FF]">₹{item.Price}</h3>
-            <button className="flex items-center justify-center bg-white text-[#3EBDE0FF] rounded-full border border-[#3EBDE0FF] py-2 px-2 text-sm hover:bg-[#3EBDE0FF] hover:text-white transition duration-300">
-              <BsCart3 className="text-lg mr-1" />
+            <button className="flex items-center justify-center  text-[#125872] rounded-md font-bold border border-[#125872] py-1.5 px-8 text-sm  bg-blue-100 transition duration-300">
+             Add
             </button>
           </div>
         </div>

@@ -161,7 +161,7 @@ const Category = () => {
                   <h3 className="text-lg font-semibold mb-2 text-gray-700">Quantity</h3>
                   <div className="flex mt-[1rem]">
                     <button
-                      className="bg-gray-200 text-gray-600 hover:bg-gray-300 hover:text-gray-700 px-4 py-2 rounded transition-colors duration-300 focus:outline-none"
+                      className="bg-gray-200 text-gray-600  px-4 py-2 rounded transition-colors duration-300 focus:outline-none"
                       onClick={() => handleQuantityChange(quantity - 1)}
                     >
                       -
@@ -173,14 +173,14 @@ const Category = () => {
                       className="w-8 text-center text-gray-700 ml-4"
                     />
                     <button
-                      className="bg-gray-200 text-gray-600 hover:bg-gray-300 hover:text-gray-700 px-4 py-2 rounded transition-colors duration-300 focus:outline-none"
+                      className="bg-gray-200 text-gray-600  px-4 py-2 rounded transition-colors duration-300 focus:outline-none"
                       onClick={() => handleQuantityChange(quantity + 1)}
                     >
                       +
                     </button>
                     <div className="md:ml-[12rem] ml-[2rem]">
                       <button
-                        className="flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 md:px-8 px-[6px] rounded transition-colors duration-300"
+                        className="flex items-center justify-center bg-[#125872] text-white font-bold py-2 md:px-8 px-[6px] rounded transition-colors duration-300"
                         onClick={() => handleAddToCart(product, quantity)}
                       >
                         <BsCart3 className="mr-2" />

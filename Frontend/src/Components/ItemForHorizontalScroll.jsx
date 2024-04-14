@@ -35,7 +35,7 @@ function ItemForHorizontalScroll({ ItemForHorizontalScroll }) {
       <Link
         to={`/${ItemForHorizontalScroll.Sub_Category}/${ItemForHorizontalScroll.Name}`}
         state={ItemForHorizontalScroll}
-        className="bg-white m-2 p-2 rounded-2xl shadow-md flex flex-col md:w-[15rem] md:h-[20rem] w-[12.4rem] h-[14rem]  overflow-hidden hover:shadow-xl transition duration-300"
+        className="bg-white m-2 p-2 rounded-xl shadow-md flex flex-col md:w-[16rem] md:h-[22rem] w-[12.4rem] h-[14rem]  overflow-hidden hover:shadow-xl transition duration-300"
       >
         <div className="relative h-56 overflow-hidden rounded-lg flex items-center justify-center">
           <img
@@ -57,8 +57,8 @@ function ItemForHorizontalScroll({ ItemForHorizontalScroll }) {
           )}
           <div className="flex justify-between items-center md:mt-2">
             <h3 className="md:text-2xl text-lg font-bold text-[#323743FF]">₹{ItemForHorizontalScroll.Price}</h3>
-            <button className="flex items-center justify-center bg-white text-[#3EBDE0FF] rounded-full border border-[#3EBDE0FF] py-2 px-2 text-sm hover:bg-[#3EBDE0FF] hover:text-white transition duration-300">
-              <BsCart3 className="text-lg mr-1" />
+            <button className="flex items-center justify-center  text-[#125872] rounded-md font-bold border border-[#125872] py-1.5 px-8 text-sm  bg-blue-100 transition duration-300">
+             Add
             </button>
           </div>
         </div>

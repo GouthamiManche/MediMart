@@ -109,7 +109,7 @@ function Navbar() {
               )}
             </div>
           ) : (
-            <Link to="/login" className="py-2 px-4 font-bold text-lg">
+            <Link to="/login" >
               Login
             </Link>
           )}
