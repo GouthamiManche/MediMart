@@ -24,6 +24,7 @@ const getProducts = async (req, res) => {
     let products = await Data.find(query);
     console.log('Category:', lowerCaseCategory || upperCaseCategory);
     console.log('Sub Category:', lowerCaseSubCategory || upperCaseSubCategory);
+    
     if (products.length === 0) {
       return res.status(404).json({ message: 'No data found for the given category and sub-category' });
     }

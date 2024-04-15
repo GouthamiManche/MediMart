@@ -23,9 +23,9 @@ function ProductDetail({ pg }) {
     const fetchData = async () => {
       try {
         const response = await axios.get("https://medicine-website-two.vercel.app/api/data", {
-          headers: {
-            apikey: "123",
-          },
+          // headers: {
+          //   apikey: "123",
+          // },
         });
         setData(response.data);
         setFilteredData(response.data);
