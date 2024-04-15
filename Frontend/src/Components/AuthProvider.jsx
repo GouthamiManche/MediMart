@@ -24,11 +24,6 @@ const AuthProvider = ({ children }) => {
         setAuthenticated(true);
         setUser(decodedToken);
         setToken(storedToken);
-
-        // Load user-specific cart items here (e.g., from local storage or server)
-        const userCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-        const filteredCartItems = userCartItems.filter(item => item.userId === decodedToken.id);
-        console.log('User-specific cart items:', filteredCartItems);
       }
     } else {
       console.log('No token found');

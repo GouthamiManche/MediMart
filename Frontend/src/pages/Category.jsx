@@ -6,7 +6,6 @@ import ReviewSection from '../Components/ReviewSection';
 import { BsCart3 } from "react-icons/bs";
 import Swal from 'sweetalert2';
 import { AuthContext } from '../Components/AuthProvider'; 
-import { toast } from 'react-toastify';
 
 const Category = () => {
   const location = useLocation();
@@ -38,12 +37,12 @@ const Category = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const storedCartItems = localStorage.getItem('cartItems');
-    if (storedCartItems) {
-      setCartItems(JSON.parse(storedCartItems));
-    }
-  }, []);
+  // useEffect(() => {
+  //   const storedCartItems = localStorage.getItem('cartItems');
+  //   if (storedCartItems) {
+  //     setCartItems(JSON.parse(storedCartItems));
+  //   }
+  // }, []);
 
   if (!product) {
     return <div className="text-center text-gray-600">Product not found</div>;
@@ -79,17 +78,17 @@ const Category = () => {
     return;
   }
 
-    const cartItem = {
-      ...product,
-      quantity,
-      isMedicine: !!product.Medicine_Name,
-      userId:user.id,
-    };
-    const updatedCartItems = [...cartItems, cartItem];
-    setCartItems(updatedCartItems);
-    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
-    setItemAddedToCart(true); // Set the state to indicate item added to cart
-    console.log('Product added to cart:', cartItem);
+    // const cartItem = {
+    //   ...product,
+    //   quantity,
+    //   isMedicine: !!product.Medicine_Name,
+    //   userId:user.id,
+    // };
+    // const updatedCartItems = [...cartItems, cartItem];
+    // setCartItems(updatedCartItems);
+    // localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+    // setItemAddedToCart(true); // Set the state to indicate item added to cart
+    // console.log('Product added to cart:', cartItem);
   };
 
   // If item added to cart, display success message and navigate to cart
