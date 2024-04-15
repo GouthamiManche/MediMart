@@ -58,7 +58,7 @@ function Item({ item }) {
           )}
           <div className="flex justify-between items-center mt-2">
             <h3 className="text-2xl font-bold text-[#323743FF]">₹{item.Price}</h3>
-            <button className="flex items-center justify-center  text-[#125872] rounded-md font-bold border border-[#125872] py-1.5 px-8 text-sm  bg-blue-100 transition duration-300">
+            <button className="flex items-center justify-center  text-white rounded-md font-bold border  py-1.5 px-8 text-sm  bg-[#125872] transition duration-300">
              Add
             </button>
           </div>

@@ -43,7 +43,7 @@ const Cart = () => {
                   <img
                     src={item.Image_URL}
                     alt={item.isMedicine ? item.Medicine_Name : item.Name}
-                    className="w-20 h-20 object-cover rounded-md"
+                    className="w-20 h-20  rounded-md"
                   />
                   <div className="ml-4">
                     <h3 className="text-lg font-semibold">

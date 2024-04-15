@@ -113,7 +113,7 @@ function Register() {
                 value={formData.username}
                 onChange={handleChange}
                 required
-                className={`border border-slate-500 w-full md:w-80 h-10 mt-3 rounded px-3 ${formErrors.username && isSubmit ? 'border-red-500' : ''}`}
+                className={`border border-slate-500 w-[80%] md:w-80 h-10 mt-3 rounded px-3 ${formErrors.username && isSubmit ? 'border-red-500' : ''}`}
               />
               {isSubmit && formErrors.username && <p className="text-red-500 text-xs mt-2 md:ml-0">{formErrors.username}</p>}
             </div>
@@ -128,7 +128,7 @@ function Register() {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className={`border border-slate-500 w-full md:w-80 h-10 mt-3 rounded px-3 ${formErrors.email && isSubmit ? 'border-red-500' : ''}`}
+                className={`border border-slate-500 w-[80%] md:w-80 h-10 mt-3 rounded px-3 ${formErrors.email && isSubmit ? 'border-red-500' : ''}`}
               />
               {isSubmit && formErrors.email && <p className="text-red-500 text-xs mt-2 md:ml-0">{formErrors.email}</p>}
             </div>
@@ -143,14 +143,14 @@ function Register() {
                 value={formData.password}
                 onChange={handleChange}
                 required
-                className={`border border-slate-500 w-full md:w-80 h-10 mt-3 rounded px-3 ${formErrors.password && isSubmit ? 'border-red-500' : ''}`}
+                className={`border border-slate-500 w-[80%] md:w-80 h-10 mt-3 rounded px-3 ${formErrors.password && isSubmit ? 'border-red-500' : ''}`}
               />
               {isSubmit && formErrors.password && <p className="text-red-500 text-xs mt-2 md:ml-0">{formErrors.password}</p>}
             </div>
 
             {errorMessage && <p className="text-red-500 text-sm mt-4 md:ml-8">{errorMessage}</p>}
 
-            <button className="text-white font-bold w-full md:w-80 h-10 mt-6 md:ml-8 md:mb-6 md:mt-8 rounded bg-gradient-to-r from-blue-200 to-blue-400">
+            <button className="text-white font-bold w-[80%] md:w-80 h-10 mt-6 md:ml-8 md:mb-6 md:mt-8 rounded bg-gradient-to-r from-blue-200 to-blue-400">
               Register
             </button>
           </form>
