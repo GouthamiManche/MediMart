@@ -112,7 +112,7 @@ function Login() {
 
       <div className="flex flex-col md:flex-row  h-screen">
         {/* 1st half */}
-        <div className="w-full   md:w-1/2 bg-gradient-to-r from-blue-200 to-blue-400 p-8 md:mt-20 md:ml-56 md:mb-16 drop-shadow-xl ">
+        <div className="w-full md:max-h-full md:w-1/2 bg-gradient-to-r from-blue-200 to-blue-400 p-8 md:mt-20 md:ml-56 md:mb-16 drop-shadow-xl ">
           {/* <h1 className="text-white mt-7 ml-8 font-bold">MEDIMART</h1> */}
           <div className="text-center md:text-left">
             <h1 className="font-bold text-white text-5xl mt-10 pt-20 ml-8">
@@ -136,7 +136,7 @@ function Login() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="border border-slate-500 w-full md:w-80 h-10 mt-2 rounded px-3"
+                className="border border-slate-500 w-[80%] md:w-80 h-10 mt-2 rounded px-3"
                 required
               />
               {emailError && (
@@ -152,7 +152,7 @@ function Login() {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                className="border border-slate-500 md:w-80 w-full h-10 mt-2 rounded px-3"
+                className="border border-slate-500 md:w-80 w-[80%] h-10 mt-2 rounded px-3"
                 required
               />
               {passwordError && (
@@ -163,7 +163,7 @@ function Login() {
             {/* Log in Button */}
             <button
               type="submit"
-              className="text-white font-bold w-full md:w-80 h-10 mt-8 md:ml-8 rounded bg-gradient-to-r from-blue-200 to-blue-400"
+              className="text-white font-bold w-[80%] md:w-80 h-10 mt-8 md:ml-8 rounded bg-gradient-to-r from-blue-200 to-blue-400"
               disabled={!formData.email || !formData.password}
             >
               Log in

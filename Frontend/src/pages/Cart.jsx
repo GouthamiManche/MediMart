@@ -36,14 +36,14 @@ const Cart = () => {
         {/* Order Summary */}
         <div className="w-3/5">
           <h2 className="text-2xl font-bold mb-4">Order Summary</h2>
-          <div className="bg-white rounded-lg shadow-md p-4">
+          <div className="bg-white rounded-md shadow-md p-4">
             {cartItems.map((item, index) => (
               <div key={index} className="flex items-center justify-between mb-4">
                 <div className="flex items-center">
                   <img
                     src={item.Image_URL}
                     alt={item.isMedicine ? item.Medicine_Name : item.Name}
-                    className="w-20 h-20 object-cover rounded-md"
+                    className="w-20 h-20  rounded-md"
                   />
                   <div className="ml-4">
                     <h3 className="text-lg font-semibold">

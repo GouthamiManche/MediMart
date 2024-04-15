@@ -1,23 +1,51 @@
 import React, { useState } from "react";
+import SortDropdown from "./SortDropdown";
 
-const SubCategoryItem = ({ subCategory, selectedSubCategory, handleSubCategoryFilter, resetFilters }) => (
+const SubCategoryItem = ({
+  subCategory,
+  selectedSubCategory,
+  handleSubCategoryFilter,
+  resetFilters,
+}) => (
   <li
-    className={`cursor-pointer text-gray-800 hover:text-blue-600 transition duration-300 ${
-      selectedSubCategory === subCategory ? "font-semibold" : ""
+    className={`cursor-pointer flex items-center ${
+      selectedSubCategory === subCategory ? "font-semibold" : "text-gray-800"
     }`}
     onClick={() => handleSubCategoryFilter(subCategory)}
   >
-    <input
-      type="checkbox"
-      className="mr-2"
-      checked={selectedSubCategory === subCategory}
-      onChange={() => handleSubCategoryFilter(subCategory)}
-    />
+    <div
+      className={`mr-2 rounded-full w-5 h-5 flex justify-center items-center border ${
+        selectedSubCategory === subCategory
+          ? "bg-[#125872] border-[#125872] "
+          : "border-gray-400"
+      }`}
+    >
+      {selectedSubCategory === subCategory && (
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="white"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="w-4 h-4"
+        >
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      )}
+    </div>
     {subCategory}
   </li>
 );
 
-function FilterBar({ selectedSubCategory, subCategories, handleSubCategoryFilter, resetFilters }) {
+function FilterBar({
+  selectedSubCategory,
+  subCategories,
+  handleSubCategoryFilter,
+  resetFilters,
+  sortOption,
+  setSortOption,
+}) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const togglePopup = () => {
@@ -26,16 +54,27 @@ function FilterBar({ selectedSubCategory, subCategories, handleSubCategoryFilter
 
   return (
     <div className="relative">
-      <button className="md:hidden ml-8 z-10 bg-black text-white px-8 py-2 rounded-md shadow-lg" onClick={togglePopup}>
-        Filter
-      </button>
+      <div className="ml-[3.5rem] flex items-center mb-4">
+        <button
+          className="block md:hidden bg-[#125872] text-white px-6 py-[10px] rounded-md text-center flex items-center"
+          onClick={togglePopup}
+        >
+          <i className="fas fa-filter mr-2"></i> Filter
+        </button>
+        <div className="md:hidden items-center">
+          <SortDropdown sortOption={sortOption} setSortOption={setSortOption} />
+        </div>
+      </div>
 
       {isPopupOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-20 flex justify-center items-center">
+        <div className="fixed inset-0 w-[54%] bg-opacity-50 z-20 flex justify-center items-center">
           <div className="bg-white p-4 rounded-lg shadow-lg w-full max-w-md">
             <div className="flex justify-between items-center mb-4">
               <h2 className="font-bold text-xl">Category</h2>
-              <button className="text-gray-500 hover:text-gray-700" onClick={togglePopup}>
+              <button
+                className="text-gray-500 hover:text-gray-700"
+                onClick={togglePopup}
+              >
                 <svg
                   className="w-6 h-6"
                   fill="none"
@@ -43,27 +82,18 @@ function FilterBar({ selectedSubCategory, subCategories, handleSubCategoryFilter
                   viewBox="0 0 24 24"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </button>
             </div>
             <div className="max-h-[400px] overflow-auto custom-scrollbar">
               <ul className="space-y-1">
-                <li
-                  className={`cursor-pointer text-gray-800 hover:text-blue-600 transition duration-300 ${
-                    selectedSubCategory === "" ? "font-semibold" : ""
-                  }`}
-                  onClick={resetFilters}
-                >
-                  <input
-                    type="checkbox"
-                    className="mr-2"
-                    checked={selectedSubCategory === ""}
-                    onChange={resetFilters}
-                  />
-                  All
-                </li>
-                {subCategories.map((subCategory) => (
+                 {subCategories.map((subCategory) => (
                   <SubCategoryItem
                     key={subCategory}
                     subCategory={subCategory}
@@ -81,22 +111,11 @@ function FilterBar({ selectedSubCategory, subCategories, handleSubCategoryFilter
       <div className="hidden md:block bg-white p-4 rounded-lg ml-4 w-64 shadow-lg border border-gray-300 max-h-[500px] overflow-auto custom-scrollbar">
         <div className="flex justify-between items-center mb-4 pb-4 border-b border-gray-300">
           <h2 className="font-bold text-xl">Category</h2>
+          <button className="text-[#125872] font-semibold mr-[0.5rem]" onClick={resetFilters}>
+            clear
+          </button>
         </div>
         <ul className="space-y-3">
-          <li
-            className={`cursor-pointer text-gray-800 hover:text-blue-600 transition duration-300 flex items-center ${
-              selectedSubCategory === "" ? "font-semibold" : ""
-            }`}
-            onClick={resetFilters}
-          >
-            <input
-              type="checkbox"
-              className="mr-2 rounded-full "
-              checked={selectedSubCategory === ""}
-              onChange={resetFilters}
-            />
-            All
-          </li>
           {subCategories.map((subCategory) => (
             <SubCategoryItem
               key={subCategory}

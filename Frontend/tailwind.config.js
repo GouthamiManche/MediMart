@@ -1,4 +1,3 @@
-/**/
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -7,14 +6,15 @@ export default {
   ],
   theme: {
     extend: {
-      fontFamily:{
+      fontFamily: {
         "Akaya": ["Akaya Kanadaka", "system-ui"],
         "Roboto": ["Roboto Slab", "serif"],
-        'fontFamily':['Poppins','sans-serif']
+        "fontFamily": ['Poppins', 'sans-serif'],
+        "PlayFair":["Playfair Display", "serif"]
       },
       colors: {
         skyblue: "#B6EADA",
-        darkblue:'#03001C'
+        darkblue: '#03001C'
       },
     },
   },
@@ -22,19 +22,25 @@ export default {
     function ({ addBase, addComponents, addUtilities }) {
       addBase({
         '.custom-scrollbar::-webkit-scrollbar': {
-          width: '6px',
+          width: '4px',
         },
         '.custom-scrollbar::-webkit-scrollbar-track': {
-          backgroundColor: '#f1f1f1',
+          backgroundColor: '#f1f1f1',  
         },
         '.custom-scrollbar::-webkit-scrollbar-thumb': {
           backgroundColor: '#888',
-          borderRadius: '4px',
+          borderRadius: '2px',
         },
         '.custom-scrollbar::-webkit-scrollbar-thumb:hover': {
           backgroundColor: '#555',
         },
-      })
-    }
+      });
+      addUtilities({
+        '.scrollbar-hide': {
+          '-ms-overflow-style': 'none',
+          'scrollbar-width': 'none',
+        },
+      });
+    },
   ],
 }

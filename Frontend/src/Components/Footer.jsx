@@ -7,7 +7,7 @@ import { FaYoutube } from "react-icons/fa";
 function Footer() {
   return (
     <div className=''>
-      <div className="bg-[#121521] text-white py-8">
+      <div className="bg-[#125872] text-white py-8">
       <div className="container mx-auto px-4">
         <div className="flex flex-wrap">
           <div className="w-full md:w-1/4 text-center md:text-left">
@@ -42,7 +42,7 @@ function Footer() {
             </p>
             <div className='flex gap-2 mt-[1rem]'>
             <FaTwitter className='text-blue-400'/>
-            <FaFacebook className='text-blue-800'/>
+            <FaFacebook className='text-blue-950'/>
             <FaLinkedin className='text-purple-300'/>
             <FaYoutube className='text-red-600'/>
             </div>

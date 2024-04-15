@@ -1,25 +1,28 @@
 import React from "react";
+import { GoSearch } from "react-icons/go";
 import SortDropdown from "./SortDropdown";
 
 function SearchInput({ searchTerm, setSearchTerm, sortOption, setSortOption }) {
   
   return (
-   
- 
-    <div className="flex flex-col sm:flex-row justify-center item-center md:mb-[2rem]">
-      <input
-        id="searchInput"
-        type="text"
-        placeholder="Search here..."
-        value={searchTerm}
-        onChange={(event) => setSearchTerm(event.target.value)}
-        className="px-4 py-3 w-full sm:w-[70%] rounded border-2 border-black focus:outline-none mb-2 sm:mb-0 sm:mr-2"
-      />
-      <div className="hidden md:block">
-      <SortDropdown sortOption={sortOption} setSortOption={setSortOption} />
+    <div className="flex flex-col sm:flex-row justify-center items-center md:mb-[2rem]">
+      <div className="relative w-full sm:w-[70%]">
+        <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <GoSearch className="text-[#125872]" />
+        </span>
+        <input 
+          id="searchInput"
+          type="text"
+          placeholder="Search here..."
+          value={searchTerm}
+          onChange={(event) => setSearchTerm(event.target.value)}
+          className="pl-10 pr-4 py-4 w-full rounded-md border-[1px] border-[#125872] focus:outline-none mb-2 sm:mb-0 sm:mr-4" 
+        />
+      </div>
+      <div className="hidden md:block ml-[1rem]">
+        <SortDropdown sortOption={sortOption} setSortOption={setSortOption} />
       </div>
     </div>
-   
   );
 }
 

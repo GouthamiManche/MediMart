@@ -1,7 +1,7 @@
 export default function DynamicBanner() {
   return (
-    <div className="flex flex-col md:flex-row border rounded-lg">
-      <div className="bg-blue-50 ml-2 md:ml-[1.5rem] mt-7 mb-7 p-7 border md:rounded-l-lg w-[18rem] md:w-[36rem]">
+    <div className="flex flex-col md:flex-row border rounded-md">
+      <div className="bg-blue-50 ml-2 md:ml-[1.5rem] mt-7 mb-7 p-7 border md:rounded-l-md w-[18rem] md:w-[36rem]">
         <p className="text-2xl font-semibold">Get 15% off on Medicine Purchases</p>
         <p>and get 15% off on your order</p>
         <div className="flex md:h-[8rem] h-[4rem]">
@@ -12,7 +12,7 @@ export default function DynamicBanner() {
           />
         </div>
       </div>
-      <div className="bg-white w-full mr-7 mt-7 mb-7 p-7 border md:rounded-r-lg hidden md:block">
+      <div className="bg-white w-full mr-7 mt-7 mb-7 p-7 border md:rounded-r-md hidden md:block">
         <div className="text-lg font-semibold">
           <p className="">How does this work?</p>
           <br />

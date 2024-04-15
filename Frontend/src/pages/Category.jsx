@@ -115,10 +115,10 @@ const Category = () => {
 
   return (
     <div>
-      <div className="bg-white min-h-screen md:p-[1px] p-[1rem]">
+      <div className="bg-white min-h-screen md:p-[1px] p-[1rem] ">
         <div className="container mx-auto py-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="flex justify-center md:block">
+            <div className="flex justify-center md:block ">
               <button
                 className="hidden md:block bg-white rounded-full p-2 transition-colors duration-300 hover:bg-gray-200"
                 onClick={handleBackClick}
@@ -141,7 +141,7 @@ const Category = () => {
               <img
                 src={product.Image_URL}
                 alt={isMedicine ? product.Medicine_Name : product.Name}
-                className="md:w-[26rem] md:max-h-[22rem] md:ml-[4rem] mt-4 md:mt-[3rem] rounded-md border border-2"
+                className="md:max-w-[26rem] md:max-h-[22rem] md:ml-[4rem] mt-4 md:mt-[3rem] rounded-md border border-2 "
               />
             </div>
             <div className="flex flex-col justify-between">
@@ -152,25 +152,30 @@ const Category = () => {
                 <div className="bg-white rounded-lg mb-[0.5rem]">
                   <p className="text-gray-600"><span className='text-lg font-semibold text-gray-700'> Manufacturer :</span> {product.Manufacturer}</p>
                 </div>
-                {isMedicine ? (
-                  <>
-                    <div className=" bg-white rounded-lg mb-[0.5rem]">
-                      <p className="text-gray-600"><span className="text-lg font-semibold  text-gray-700">Composition :</span> {product.Composition}</p>
-                    </div>
-                    <div className="bg-white rounded-lg mb-[0.5rem]">
-                      <p className="text-gray-600"><span className="text-lg font-semibold  text-gray-700">Uses :</span> {product.Uses}</p>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className=" bg-white rounded-lg mb-[0.5rem]">
-                      <p className="text-gray-600"><span className="text-lg font-semibold text-gray-700">Description :</span> {product.Description}</p>
-                    </div>
-                    <div className=" bg-white rounded-lg mb-[0.5rem]">
-                      <h3 ></h3>
-                      <p className="text-gray-600"><span className="text-lg font-semibold  text-gray-700">Directions for Use :</span> {product['Directions for Use']}</p>
-                    </div>
-                  </>
+                {/* Render Composition if available */}
+                {product.Composition && (
+                  <div className=" bg-white rounded-lg mb-[0.5rem]">
+                    <p className="text-gray-600"><span className="text-lg font-semibold  text-gray-700">Composition :</span> {product.Composition}</p>
+                  </div>
+                )}
+                {/* Render Uses if available */}
+                {product.Uses && (
+                  <div className="bg-white rounded-lg mb-[0.5rem]">
+                    <p className="text-gray-600"><span className="text-lg font-semibold  text-gray-700">Uses :</span> {product.Uses}</p>
+                  </div>
+                )}
+                {/* Render Description if available */}
+                {product.Description && (
+                  <div className=" bg-white rounded-lg mb-[0.5rem]">
+                    <p className="text-gray-600"><span className="text-lg font-semibold text-gray-700">Description :</span> {product.Description}</p>
+                  </div>
+                )}
+                {/* Render Directions for Use if available */}
+                {product['Directions for Use'] && (
+                  <div className=" bg-white rounded-lg mb-[0.5rem]">
+                    <h3 ></h3>
+                    <p className="text-gray-600"><span className="text-lg font-semibold  text-gray-700">Directions for Use :</span> {product['Directions for Use']}</p>
+                  </div>
                 )}
                 <div className="mb-4">
                   <p className="text-3xl md:text-4xl text-blue-800 font-semibold">{`₹${product.Price}`}</p>
@@ -179,7 +184,7 @@ const Category = () => {
                   <h3 className="text-lg font-semibold mb-2 text-gray-700">Quantity</h3>
                   <div className="flex mt-[1rem]">
                     <button
-                      className="bg-gray-200 text-gray-600 hover:bg-gray-300 hover:text-gray-700 px-4 py-2 rounded transition-colors duration-300 focus:outline-none"
+                      className="bg-gray-200 text-gray-600  px-4 py-2 rounded transition-colors duration-300 focus:outline-none"
                       onClick={() => handleQuantityChange(quantity - 1)}
                     >
                       -
@@ -191,14 +196,14 @@ const Category = () => {
                       className="w-8 text-center text-gray-700 ml-4"
                     />
                     <button
-                      className="bg-gray-200 text-gray-600 hover:bg-gray-300 hover:text-gray-700 px-4 py-2 rounded transition-colors duration-300 focus:outline-none"
+                      className="bg-gray-200 text-gray-600  px-4 py-2 rounded transition-colors duration-300 focus:outline-none"
                       onClick={() => handleQuantityChange(quantity + 1)}
                     >
                       +
                     </button>
                     <div className="md:ml-[12rem] ml-[2rem]">
                       <button
-                        className="flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 md:px-8 px-[6px] rounded transition-colors duration-300"
+                        className="flex items-center justify-center bg-[#125872] text-white font-bold py-2 md:px-8 px-[6px] rounded transition-colors duration-300"
                         onClick={() => handleAddToCart(product, quantity)}
                       >
                         <BsCart3 className="mr-2" />
