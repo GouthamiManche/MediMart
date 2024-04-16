@@ -1,5 +1,5 @@
 import React from 'react'
-import homeimage from '../assets/bgimgfinal.jpg'
+import homeimage from '../../assets/bgimgfinal.jpg'
 import { Link } from 'react-router-dom'
 export default function HomeImage() {
   return (
