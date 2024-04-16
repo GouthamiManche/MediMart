@@ -5,7 +5,7 @@ const data = require('./models/product.model')
 require('dotenv').config()
 const cors = require('cors');
 const { getAllUsers } = require('./APIS/Users');
-const { checkAccess, getData } = require('./APIS/Data');
+const { getData } = require('./APIS/Data');
 const cart = require('./models/cart.model')
 const { registerUser, loginUser } = require('./APIS/Login');
 const {getProductsByCategory } = require('./APIS/ByCategory');
