@@ -6,8 +6,6 @@ import SearchInput from "./SearchInput";
 import Item from "./Item";
 import Pagination from "./Pagination";
 import FilterBar from "./FilterBar";
-import SortDropdown from "./SortDropdown";
-
 function ProductDetail({ pg }) {
   const location = useLocation();
   const [searchParams] = useSearchParams();
