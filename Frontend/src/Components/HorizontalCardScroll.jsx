@@ -24,7 +24,7 @@ const HorizontalCardScroll = ({ itemForHorizontalScroll }) => {
 
   return (
     <div>
-      <p className='text-gray-700 text-lg md:text-3xl font-bold ml-[1rem] mb-[2rem]'>Related Products</p>
+      <p className='text-gray-700 text-lg md:text-3xl font-bold ml-[1rem] mb-[2rem]'>Our Products</p>
       <div className="relative bg-blue-50">
         <div className="flex overflow-x-auto space-x-4 p-4" ref={scrollRef}>
           {itemForHorizontalScroll.map((item, index) => (
