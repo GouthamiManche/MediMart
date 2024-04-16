@@ -36,9 +36,9 @@ const Cart = () => {
         {/* Order Summary */}
         <div className="w-3/5">
           <h2 className="text-2xl font-bold mb-4">Order Summary</h2>
-          <div className="bg-white rounded-md shadow-md p-4">
+          <div className="bg-white p-4">
             {cartItems.map((item, index) => (
-              <div key={index} className="flex items-center justify-between mb-4">
+              <div key={index} className="flex items-center  mb-4">
                 <div className="flex items-center">
                   <img
                     src={item.Image_URL}
@@ -56,7 +56,7 @@ const Cart = () => {
                 </div>
                 <div>
                   <p className="text-lg font-semibold">{`₹${item.Price}`}</p>
-                  <div className="flex items-center justify-between mt-2">
+                  <div className="flex items-center  mt-2">
                     <div className="flex items-center border rounded-md px-2 py-1">
                       <button
                         className="text-gray-500 hover:text-gray-800"
@@ -87,9 +87,9 @@ const Cart = () => {
         </div>
 
         {/* Payment and Summary */}
-        <div className="w-2/5 ml-8">
+        <div className="w-[30%] p-[1rem]  border border-[#125872] rounded-md">
           <h2 className="text-2xl font-bold mb-4">Order Total</h2>
-          <div className="bg-white rounded-lg shadow-md p-4">
+          <div className="bg-white   p-4">
             <div className="flex justify-between mb-2">
               <p className="text-gray-500">Subtotal</p>
               <p className="font-semibold">
@@ -110,7 +110,7 @@ const Cart = () => {
                 {`₹${cartItems.reduce((total, item) => total + item.Price * item.quantity, 0)}`}
               </p>
             </div>
-            <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold w-full py-3 rounded-md mt-4">
+            <button className="bg-[#125872]  text-white font-semibold w-full py-3 rounded-md mt-4">
               Proceed to payment
             </button>
           </div>
