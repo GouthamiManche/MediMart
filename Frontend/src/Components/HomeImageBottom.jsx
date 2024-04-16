@@ -1,5 +1,5 @@
 import React from 'react'
-import homebottomimage from '../../assets/beforefooter.jpg'
+import homebottomimage from '../assets/beforefooter.jpg'
 
 export default function HomeImageBottom() {
   return (

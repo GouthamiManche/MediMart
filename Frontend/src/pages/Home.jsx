@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import HomeImage from "../../Components/HomeImage";
-import OurProduct from "../../Components/OurProduct";
-import DynamicBanner from "../../Components/DynamicBanner";
-import HomeCarousel from "../../Components/HomeCarousel";
-import HomeImageBottom from "../../Components/HomeImageBottom";
+import HomeImage from "../Components/HomeImage";
+import OurProduct from "../Components/OurProduct";
+import DynamicBanner from "../Components/DynamicBanner";
+import HomeCarousel from "../Components/HomeCarousel";
+import HomeImageBottom from "../Components/HomeImageBottom";
 import HorizontalCardScroll from "../Components/HorizontalCardScroll";
 function Home() {
   const [items, setItems] = useState([]);
