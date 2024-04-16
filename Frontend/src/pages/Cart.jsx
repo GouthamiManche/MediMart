@@ -31,21 +31,23 @@ const Cart = () => {
   };
 
   return (
-    <div>
-      <div className="flex justify-between mx-auto max-w-7xl py-8">
+    <div className=''>
+      <div className="flex justify-between mx-auto max-w-7xl py-8 ">
         {/* Order Summary */}
         <div className="w-3/5">
           <h2 className="text-2xl font-bold mb-4">Order Summary</h2>
-          <div className="bg-white p-4">
+          <div className="bg-white p-4 ">
             {cartItems.map((item, index) => (
-              <div key={index} className="flex items-center  mb-4">
-                <div className="flex items-center">
+              <div key={index} className="flex items-center border rounded-md border-gray-300 mb-4">
+                <div className="flex  ml-[2rem] items-center justify-center w-24 h-24 border border-gray-300 my-[1rem]">
                   <img
                     src={item.Image_URL}
                     alt={item.isMedicine ? item.Medicine_Name : item.Name}
-                    className="w-20 h-20  rounded-md"
+                    className="max-w-full h-24 "
                   />
-                  <div className="ml-4">
+                </div>
+                <div className='ml-[2rem]'>
+                  <div>
                     <h3 className="text-lg font-semibold">
                       {item.isMedicine ? item.Medicine_Name : item.Name}
                     </h3>
@@ -53,43 +55,44 @@ const Cart = () => {
                       <option value="">Test</option>
                     </select> */}
                   </div>
+
+                  <p className=''>{item.Manufacturer}</p>
+                  <p className="text-lg  font-semibold">{`₹${item.Price}`}</p>
                 </div>
-                <div>
-                  <p className="text-lg font-semibold">{`₹${item.Price}`}</p>
-                  <div className="flex items-center  mt-2">
-                    <div className="flex items-center border rounded-md px-2 py-1">
-                      <button
-                        className="text-gray-500 hover:text-gray-800"
-                        onClick={() => handleQuantityChange(index, item.quantity - 1)}
-                      >
-                        -
-                      </button>
-                      <span className="mx-2">{item.quantity}</span>
-                      <button
-                        className="text-gray-500 hover:text-gray-800"
-                        onClick={() => handleQuantityChange(index, item.quantity + 1)}
-                      >
-                        +
-                      </button>
-                    </div>
-                    <p className="ml-4 font-semibold">{`₹${item.Price * item.quantity}`}</p>
+                <div className="flex items-center mr-[2rem] ml-auto mt-2 gap-2">
+                  <div className="flex items-center border rounded-md px-2  py-1">
                     <button
-                      className="ml-4 text-gray-500 hover:text-gray-800"
-                      onClick={() => handleRemoveFromCart(index)}
+                      className="text-gray-500 hover:text-gray-800"
+                      onClick={() => handleQuantityChange(index, item.quantity - 1)}
                     >
-                      <BsTrash className="text-lg" />
+                      -
+                    </button>
+                    <span className="mx-2">{item.quantity}</span>
+                    <button
+                      className="text-gray-500 hover:text-gray-800"
+                      onClick={() => handleQuantityChange(index, item.quantity + 1)}
+                    >
+                      +
                     </button>
                   </div>
+                  <p className="ml-4 font-semibold">{`₹${item.Price * item.quantity}`}</p>
+                  <button
+                    className="ml-4 text-red-400 hover:text-red-600"
+                    onClick={() => handleRemoveFromCart(index)}
+                  >
+                    <BsTrash className="text-lg" />
+                  </button>
                 </div>
+
               </div>
             ))}
           </div>
         </div>
 
         {/* Payment and Summary */}
-        <div className="w-[30%] p-[1rem]  border border-[#125872] rounded-md">
+        <div className="w-[30%] p-[2rem]  border border-gray-300 rounded-md">
           <h2 className="text-2xl font-bold mb-4">Order Total</h2>
-          <div className="bg-white   p-4">
+          <div className="bg-white">
             <div className="flex justify-between mb-2">
               <p className="text-gray-500">Subtotal</p>
               <p className="font-semibold">

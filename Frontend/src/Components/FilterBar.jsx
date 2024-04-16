@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import SortDropdown from "../SortDropdown";
+import SortDropdown from "./SortDropdown";
 
 const SubCategoryItem = ({
   subCategory,
