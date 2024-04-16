@@ -2,6 +2,7 @@
 const User = require('../models/user.model');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const { v4: uuidv4 } = require('uuid'); 
 
 const registerUser = async (req, res) => {
   try {
@@ -10,8 +11,10 @@ const registerUser = async (req, res) => {
     if (existingUser) {
       return res.status(400).json({ error: 'Username or email already exists' });
     }
+
+    const userId = uuidv4(); // Generate a random UUID for the user ID
     const hashedPassword = await bcrypt.hash(password, 10); // Hash the password with a salt round of 10
-    const newUser = new User({ username, email, password: hashedPassword });
+    const newUser = new User({ userId, username, email, password: hashedPassword });
     await newUser.save();
     res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
