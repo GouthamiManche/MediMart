@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
+    customerId:{
+      type:String,
+    },
     username: {
       type: String,
       required: true,
@@ -20,7 +23,7 @@ const userSchema = new mongoose.Schema({
       type: String,
       required: true,
       minlength: 7,
-    },
+    }
   });
 
   const User = mongoose.model('User', userSchema);

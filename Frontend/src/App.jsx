@@ -6,8 +6,6 @@ import GotoTop from './Components/GotoTop';
 import Footer from './Components/Footer';
 import Navbar from './Components/Navbar';
 import Profile from './pages/Profile'
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { AuthProvider } from './Components/AuthProvider';
 const Home = lazy(() => import('./pages/Home'));
 const Shop = lazy(() => import('./pages/Shop'));
@@ -44,7 +42,6 @@ function App() {
         </Suspense>
       </div>
     </Router>
-    <ToastContainer />
   </AuthProvider>
   );
 }

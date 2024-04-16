@@ -1,6 +1,6 @@
 const Data = require('../models/product.model');
 
-const getProducts = async (req, res) => {
+const getProductsByCategory = async (req, res) => {
   const { category, sub_category } = req.query || {};
   try {
     if (!category && !sub_category) {
@@ -35,4 +35,4 @@ const getProducts = async (req, res) => {
   }
 };
 
-module.exports = { getProducts };
+module.exports = { getProductsByCategory };

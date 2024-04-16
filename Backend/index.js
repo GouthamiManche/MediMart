@@ -5,17 +5,17 @@ const data = require('./models/product.model')
 require('dotenv').config()
 const cors = require('cors');
 const { getAllUsers } = require('./APIS/Users');
-const { checkAccess, getData } = require('./APIS/Data');
+const { getData } = require('./APIS/Data');
 const cart = require('./models/cart.model')
 const { registerUser, loginUser } = require('./APIS/Login');
-const { getProducts } = require('./APIS/ByCategory');
+const {getProductsByCategory } = require('./APIS/ByCategory');
 const cartSchema = require('./models/cart.model');
 const app = express();
 const PORT = 4000;
 //const transporter = require('./APIS/email');
 //const nodemailer = require('nodemailer');
 const URI = `mongodb+srv://mancheg19:0Pq7ouruMJz2Q9o1@cluster0.e8cib3z.mongodb.net/MediDB`
-mongoose.connect(URI,{});
+mongoose.connect(URI);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', () => console.log('Connected to MongoDB'));
@@ -28,7 +28,7 @@ app.post('/api/register', registerUser);
 app.post('/api/login', loginUser);
 app.get('/api/users', getAllUsers);
 app.get('/api/data', getData);
-app.get('/api/products',getProducts);
+app.get('/api/products',getProductsByCategory);
 
 app.get('/', (req, res) => {
   res.json('Hello, this is your Express API!');
