@@ -8,7 +8,7 @@ const { getAllUsers } = require('./APIS/Users');
 const { checkAccess, getData } = require('./APIS/Data');
 const cart = require('./models/cart.model')
 const { registerUser, loginUser } = require('./APIS/Login');
-const { getProducts } = require('./APIS/ByCategory');
+const {getProductsByCategory } = require('./APIS/ByCategory');
 const cartSchema = require('./models/cart.model');
 const app = express();
 const PORT = 4000;
@@ -28,7 +28,7 @@ app.post('/api/register', registerUser);
 app.post('/api/login', loginUser);
 app.get('/api/users', getAllUsers);
 app.get('/api/data', getData);
-app.get('/api/products',getProducts);
+app.get('/api/products',getProductsByCategory);
 
 app.get('/', (req, res) => {
   res.json('Hello, this is your Express API!');

@@ -1,33 +1,14 @@
 const jwt = require('jsonwebtoken');
 const Data = require('../models/product.model');
 
-const checkAccess = (req, res, next) => {
-    const { apikey, authorization } = req.headers;
-
-    if (apikey === "123") {
-      next();
-    } else if (authorization && authorization.startsWith('Bearer ')) {
-      const token = authorization.slice(7);
-      jwt.verify(token,process.env.JWT_KEY, (err, decoded) => {
-        if (err) {
-          return res.status(403).json({ error: 'Invalid JWT token' });
-        } else {
-          req.user = decoded;
-          next();
-        }
-      });
-    } else {
-      return res.status(403).json({ error: 'Invalid API key or JWT token' });
-    }
-  };
-
-  async function getData(req, res) {
-    try {
-      const data = await Data.find();
-      res.status(200).json(data);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error });
-    }
+const getData = async (req, res) => {
+  try {
+    const data = await Data.find();
+    res.status(200).json(data);
+  } catch (error) {
+    console.error(error); // Log the actual error for debugging purposes
+    res.status(500).json({ error: 'Internal server error' });
   }
-  module.exports = { checkAccess,getData};
+};
+
+module.exports = { getData };
