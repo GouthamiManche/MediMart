@@ -47,7 +47,7 @@ const ReviewSection = () => {
       <h2 className="text-5xl font-bold mb-4">Reviews</h2>
       <div className="mb-4 flex justify-end">
         <button
-          className="flex item-center justify-center bg-white border border-blue-400 text-blue-400 font-bold py-2 px-4 rounded"
+          className="flex item-center justify-center bg-[#125872] text-white font-bold py-2 px-4 rounded"
           onClick={handleReviewClick}
         >
           <PiPencilLine className='mr-2 text-xl'/> Write a Review

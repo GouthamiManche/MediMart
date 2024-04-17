@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { FaCartPlus, FaBars, FaTimes } from "react-icons/fa";
 import { AuthContext } from "./AuthProvider";
-
+import Logo from '/src/assets/logo.jpg'
 function Navbar() {
   const { user, logout } = useContext(AuthContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -18,7 +18,7 @@ function Navbar() {
       <header className="container mx-auto py-4 px-6 flex items-center justify-between">
         <div className="flex items-center">
           <Link to='/'>
-          <img className="h-12" src="src/assets/logo.jpg" alt="Logo" />
+            <img className="h-12" src={Logo} alt="Logo" />
           </Link>
           <Link to="/" className="md:block hidden text-xl md:text-3xl font-bold ml-1  font-PlayFair">
             MediMart
@@ -94,7 +94,7 @@ function Navbar() {
                     >
                       Profile
                     </Link>
-                    <br/>
+                    <br />
                     <button
                       onClick={logout}
                       className="text-gray-700 block w-full px-4 py-2 text-left text-sm"
@@ -110,36 +110,36 @@ function Navbar() {
             </div>
           ) : (
             <Link to="/login" >
-              Login
+              <button
+                className="flex items-center justify-center bg-[#125872] text-white font-bold py-2 md:px-8 px-[6px] rounded transition-colors duration-300">                
+               Login
+              </button>
             </Link>
           )}
         </nav>
       </header>
 
       <div
-        className={`fixed inset-0 z-50 overflow-hidden transition-transform duration-300 ${
-          mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        className={`fixed inset-0 z-50 overflow-hidden transition-transform duration-300 ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
       >
         <div
-          className={`absolute inset-0 bg-gray-900 opacity-50 transition-opacity duration-300 ${
-            mobileMenuOpen ? "opacity-50" : "opacity-0"
-          }`}
+          className={`absolute inset-0 bg-gray-900 opacity-50 transition-opacity duration-300 ${mobileMenuOpen ? "opacity-50" : "opacity-0"
+            }`}
           onClick={() => setMobileMenuOpen(false)}
         ></div>
         <div
-          className={`absolute left-0 w-3/4 max-w-xs h-screen bg-white shadow-lg transition-transform duration-300 ${
-            mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
-          }`}
+          className={`absolute left-0 w-3/4 max-w-xs h-screen bg-white shadow-lg transition-transform duration-300 ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+            }`}
         >
           <div className="px-4 py-6 space-y-2">
             <Link to="/profile">
-            <div className="flex items-center mb-4">
-              <div className="bg-gray-800 rounded-full w-12 h-12 flex items-center justify-center text-white font-semibold text-[8vw] pb-[1vw] mr-4">
-                {user?.username?.charAt(0)}
+              <div className="flex items-center mb-4">
+                <div className="bg-gray-800 rounded-full w-12 h-12 flex items-center justify-center text-white font-semibold text-[8vw] pb-[1vw] mr-4">
+                  {user?.username?.charAt(0)}
+                </div>
+                <p className="font-bold text-base">{user?.username}</p>
               </div>
-              <p className="font-bold text-base">{user?.username}</p>
-            </div>
             </Link>
             <Link
               to="/"
@@ -177,15 +177,15 @@ function Navbar() {
               //     >
               //       Profile
               //     </Link>
-                  <button
-                    onClick={logout}
-                    className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition duration-300"
-                    role="menuitem"
-                    tabIndex="-1"
-                    id="menu-item-3"
-                  >
-                    Sign out
-                  </button>
+              <button
+                onClick={logout}
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition duration-300"
+                role="menuitem"
+                tabIndex="-1"
+                id="menu-item-3"
+              >
+                Sign out
+              </button>
               //   </div>
               // </div>
             ) : (

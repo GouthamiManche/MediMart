@@ -6,7 +6,7 @@ import SearchInput from "./SearchInput";
 import Item from "./Item";
 import Pagination from "./Pagination";
 import FilterBar from "./FilterBar";
-import SortDropdown from "./SortDropdown";
+import LoadingGif from "./LoadingGif";
 
 function ProductDetail({ pg }) {
   const location = useLocation();
@@ -22,8 +22,11 @@ function ProductDetail({ pg }) {
   const [sortOption, setSortOption] = useState('');
   const [selectedSubCategory, setSelectedSubCategory] = useState("");
   const [subCategories, setSubCategories] = useState([]);
-  // const [categories, setCategories] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [categories, setCategories] = useState([]);
+
   useEffect(() => {
+    setIsLoading(true);
     const fetchData = async () => {
       try {
         const response = await axios.get("https://medicine-website-two.vercel.app/api/data", {
@@ -40,15 +43,19 @@ function ProductDetail({ pg }) {
         }
         setData(filteredData);
         setFilteredData(filteredData);
-        
+
         const uniqueSubCategories = [...new Set(filteredData.map((item) => item.Sub_Category))];
         setSubCategories(uniqueSubCategories);
-        
+
         const uniqueCategories = [...new Set(filteredData.map((item) => item.Category))];
         setCategories(uniqueCategories);
       } catch (error) {
         console.error("Error fetching data:", error.message);
       }
+      finally {
+        setIsLoading(false); // Set loading to false after fetching (even on errors)
+      }
+
     };
     fetchData();
   }, [subCategory, Category]);
@@ -72,34 +79,34 @@ function ProductDetail({ pg }) {
   const sortData = (data) => {
     let sortedData = [...data];
     switch (sortOption) {
-          case 'priceLowToHigh':
-          sortedData.sort((a, b) => a.Price - b.Price);
-          break;
-        case 'priceHighToLow':
-          sortedData.sort((a, b) => b.Price - a.Price);
-          break;
-        // case 'averageReviewAscending':
-        //   sortedData.sort((a, b) => a.Average_Review - b.Average_Review);
-        //   break;
-        // case 'averageReviewDescending':
-        //   sortedData.sort((a, b) => b.Average_Review - a.Average_Review);
-        //   break;
-        case 'nameAscending':
-          sortedData.sort((a, b) => {
-            const aName = a.Name || a.Medicine_Name;
-            const bName = b.Name || b.Medicine_Name;
-            return aName.localeCompare(bName);
-          });
-          break;
-        case 'nameDescending':
-          sortedData.sort((a, b) => {
-            const aName = a.Name || a.Medicine_Name;
-            const bName = b.Name || b.Medicine_Name;
-            return bName.localeCompare(aName);
-          });
-          break;
-        default:
-          break;
+      case 'priceLowToHigh':
+        sortedData.sort((a, b) => a.Price - b.Price);
+        break;
+      case 'priceHighToLow':
+        sortedData.sort((a, b) => b.Price - a.Price);
+        break;
+      // case 'averageReviewAscending':
+      //   sortedData.sort((a, b) => a.Average_Review - b.Average_Review);
+      //   break;
+      // case 'averageReviewDescending':
+      //   sortedData.sort((a, b) => b.Average_Review - a.Average_Review);
+      //   break;
+      case 'nameAscending':
+        sortedData.sort((a, b) => {
+          const aName = a.Name || a.Medicine_Name;
+          const bName = b.Name || b.Medicine_Name;
+          return aName.localeCompare(bName);
+        });
+        break;
+      case 'nameDescending':
+        sortedData.sort((a, b) => {
+          const aName = a.Name || a.Medicine_Name;
+          const bName = b.Name || b.Medicine_Name;
+          return bName.localeCompare(aName);
+        });
+        break;
+      default:
+        break;
     }
     return sortedData;
   };
@@ -175,7 +182,7 @@ function ProductDetail({ pg }) {
     setSelectedSubCategory("");
     setFilteredData(data);
   };
-
+  //const loadingGif = ""
   return (
     <div className="">
       {/* <img
@@ -191,26 +198,29 @@ function ProductDetail({ pg }) {
           setSortOption={setSortOption}
         />
       </div>
-
-      <div className="md:flex space-x-6 flex-">
-
-        <FilterBar
-          selectedSubCategory={selectedSubCategory}
-          subCategories={subCategories}
-          handleSubCategoryFilter={handleSubCategoryFilter}
-          resetFilters={resetFilters}
-          sortOption={sortOption}
-          setSortOption={setSortOption}
-        />
-        {/* <div className="md:hidden">
-          <SortDropdown sortOption={sortOption} setSortOption={setSortOption} />
-        </div> */}
-        <div className="flex flex-wrap ">
-          {currentItems.map((item, index) => (
-            <Item key={index} item={item} />
-          ))}
+        <div>
+          {isLoading ? (
+            <LoadingGif />
+          ) : (
+            <div className="md:flex space-x-6 flex-">
+            <div>
+            <FilterBar
+                      selectedSubCategory={selectedSubCategory}
+                      subCategories={subCategories}
+                      handleSubCategoryFilter={handleSubCategoryFilter}
+                      resetFilters={resetFilters}
+                      sortOption={sortOption}
+                      setSortOption={setSortOption}/>
+            </div>
+            <div className="flex flex-wrap ">
+                          {currentItems.map((item, index) => (
+                            <Item key={index} item={item} />
+                          ))}
+                        </div>
+            </div> 
+          )}
         </div>
-      </div>
+
 
       <Pagination
         currentPage={currentPage}

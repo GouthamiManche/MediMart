@@ -112,7 +112,7 @@ function FilterBar({
         <div className="flex justify-between items-center mb-4 pb-4 border-b border-gray-300">
           <h2 className="font-bold text-xl">Category</h2>
           <button className="text-[#125872] font-semibold mr-[0.5rem]" onClick={resetFilters}>
-            clear
+            Clear
           </button>
         </div>
         <ul className="space-y-3">

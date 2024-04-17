@@ -7,6 +7,7 @@ import { BsCart3 } from "react-icons/bs";
 import Swal from 'sweetalert2';
 import { AuthContext } from '../Components/AuthProvider'; 
 import { toast } from 'react-toastify';
+import LoadingGif from "../Components/LoadingGif";
 
 const Category = () => {
   const location = useLocation();
@@ -18,9 +19,11 @@ const Category = () => {
   const [items, setItems] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [itemAddedToCart, setItemAddedToCart] = useState(false);
-  const userId = localStorage.getItem('userId');
+  //const userId = localStorage.getItem('userId');
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchData = async () => {
       try {
         const response = await axios.get(`https://medicine-website-two.vercel.app/api/products?sub_category=${product.Sub_Category}`, {
@@ -31,6 +34,9 @@ const Category = () => {
         setItems(response.data);
       } catch (error) {
         console.error("Error fetching data:", error.message);
+      }
+       finally {
+        setIsLoading(false); // Set loading to false after fetching (even on errors)
       }
     };
 
@@ -215,10 +221,17 @@ const Category = () => {
             </div>
           </div>
         </div>
+<div>
+          {isLoading ? (
+            <LoadingGif />
+          ) : (
         <div className='md:mt-[2rem]'>
           <HorizontalCardScroll itemForHorizontalScroll={items} />
           <ReviewSection />
         </div>
+)}
+</div>
+
       </div>
     </div>
   );
