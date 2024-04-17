@@ -1,6 +1,12 @@
 const User = require('../models/user.model');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const uuid = require('uuid');
+
+// Function to generate a unique customerId
+const generateCustomerId = () => {
+  return uuid.v4(); // Generate a random UUID
+};
 
 const registerUser = async (req, res) => {
   try {
@@ -13,7 +19,13 @@ const registerUser = async (req, res) => {
     }
 
     // Create a new user instance
-    const newUser = new User({ username, email, password });
+    const newUser = new User({
+      username,
+      email,
+      password,
+      // Generate a unique customerId
+      customerId: generateCustomerId(),
+    });
 
     // Save the new user to the database
     await newUser.save();

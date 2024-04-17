@@ -21,7 +21,10 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', () => console.log('Connected to MongoDB'));
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: ['https://medicine-website-two.vercel.app', 'http://localhost:5173'],
+  credentials: true
+}));
 
 //ROUTES
 app.post('/api/register', registerUser);
