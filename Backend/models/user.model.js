@@ -1,8 +1,5 @@
 const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
-    customerId:{
-      type:String,
-    },
     username: {
       type: String,
       required: true,
@@ -14,7 +11,7 @@ const userSchema = new mongoose.Schema({
       validate: {
         validator: (value) => {
           // Regular expression to validate email format
-          return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);  
+          return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
         },
         message: 'Invalid email format',
       },

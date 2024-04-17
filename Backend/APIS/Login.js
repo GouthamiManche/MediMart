@@ -1,9 +1,6 @@
-
 const User = require('../models/user.model');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const { v4: uuidv4 } = require('uuid'); 
-
 const registerUser = async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -12,9 +9,8 @@ const registerUser = async (req, res) => {
       return res.status(400).json({ error: 'Username or email already exists' });
     }
 
-    const userId = uuidv4(); // Generate a random UUID for the user ID
     const hashedPassword = await bcrypt.hash(password, 10); // Hash the password with a salt round of 10
-    const newUser = new User({ userId, username, email, password: hashedPassword });
+    const newUser = new User({ username, email, password: hashedPassword });
     await newUser.save();
     res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
@@ -29,13 +25,11 @@ const generateToken = (user) => {
     username: user.username,
     email: user.email,
   };
-  const token = jwt.sign(payload, process.env.JWT_KEY, { expiresIn: '1hr' });
+  const token = jwt.sign(payload, "SecretKey", { expiresIn: '1hr' }); // Fix the syntax error here
   return token;
 };
 
-
 const loginUser = async (req, res) => {
-
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
@@ -65,4 +59,4 @@ const loginUser = async (req, res) => {
   }
 };
 
-module.exports = { registerUser, loginUser};
+module.exports = { registerUser, loginUser };
