@@ -34,7 +34,7 @@ function ItemForHorizontalScroll({ ItemForHorizontalScroll }) {
       <Link
         to={`/${ItemForHorizontalScroll.Sub_Category}/${ItemForHorizontalScroll.Name}`}
         state={ItemForHorizontalScroll}
-        className="bg-white m-2 p-2 rounded-xl shadow-md flex flex-col md:w-[16rem] md:h-[22rem] w-[12.4rem] h-[14rem]  overflow-hidden hover:shadow-xl transition duration-300"
+        className="bg-white m-2 p-2 rounded-xl  border border-gray-200 flex flex-col md:w-[16rem] md:h-[22rem] w-[12.4rem] h-[14rem]  overflow-hidden hover:shadow-xl transition duration-300"
       >
         <div className="relative h-56 overflow-hidden rounded-lg flex items-center justify-center">
           <img
