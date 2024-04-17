@@ -18,7 +18,6 @@ function Register() {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmit(true);
@@ -32,7 +31,7 @@ function Register() {
       // No errors, proceed with form submission
       try {
         const response = await axios.post(
-          "https://medicine-website-two.vercel.app/api/register",
+          "https://medicine-website-two.vercel.app/api/register", // Assuming your frontend is served from the same origin
           formData
         );
         console.log(response.data);
