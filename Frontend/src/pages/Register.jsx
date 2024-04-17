@@ -33,9 +33,9 @@ function Register() {
     if (Object.keys(errors).length === 0) {
       // No errors, proceed with form submission
       try {
-        const response = await axios.post(
+        await axios.post(
           "https://medicine-website-two.vercel.app/api/register", formData);
-        console.log("Response:", response);
+
         // Registration successful, show success message and redirect to login page
         Swal.fire({
           title: "Registered Successfully!",

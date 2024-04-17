@@ -18,14 +18,20 @@ const registerUser = async (req, res) => {
       return res.status(400).json({ error: 'Username or email already exists' });
     }
 
-    // Create a new user instance
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(password, 10); // 10 is the saltRounds
+    console.log('Hashed Password:', hashedPassword);
+
+    // Create a new user instance with hashed password
     const newUser = new User({
       username,
       email,
-      password,
+      password: hashedPassword,
       // Generate a unique customerId
       customerId: generateCustomerId(),
     });
+
+    console.log('New User Object:', newUser); // Check if password is hashed in newUser object
 
     // Save the new user to the database
     await newUser.save();
@@ -38,9 +44,6 @@ const registerUser = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
-
-module.exports = { registerUser };
-
 
 const generateToken = (user) => {
   const payload = {
@@ -60,15 +63,18 @@ const loginUser = async (req, res) => {
       return res.status(404).json({ error: 'User not found' });
     }
 
+    // Check if the provided password matches the hashed password in the database
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
       return res.status(401).json({ error: 'Incorrect password' });
     }
 
+    // Password is correct, generate JWT token
     const token = generateToken(user);
     const decodedToken = jwt.decode(token);
     const expiresIn = decodedToken.exp - Math.floor(Date.now() / 1000);
-    // Store the token in client-side localStorage
+
+    // Send the token along with user details
     res.status(200).json({
       message: 'Login successful',
       user: { id: user._id, username: user.username, email: user.email },
