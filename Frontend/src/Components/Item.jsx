@@ -30,11 +30,11 @@ function Item({ item }) {
 // console.log()
 
   return (
-    <div>
+    <div className="">
       <Link
         to={`/${item.Sub_Category}/${item.Name}`}
         state={item}
-        className="bg-white m-2 p-4 rounded-xl border border-gray-200   flex flex-col md:w-[16rem] w-[16rem] md:h-[22rem] h-[22rem] overflow-hidden hover:shadow-xl transition duration-300"
+        className="bg-white m-2 p-4 rounded-xl border border-gray-200   flex flex-col md:w-[16rem] w-[90%] md:h-[22rem] h-[22rem] overflow-hidden hover:shadow-xl transition duration-300"
       >
         <div className="relative h-56 overflow-hidden rounded-lg flex items-center justify-center">
           <img
