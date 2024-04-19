@@ -1,11 +1,11 @@
-import React, { useState, useEffect,useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import HorizontalCardScroll from '../Components/HorizontalCardScroll';
 import axios from "axios";
 import ReviewSection from '../Components/ReviewSection';
 import { BsCart3 } from "react-icons/bs";
 import Swal from 'sweetalert2';
-import { AuthContext } from '../Components/AuthProvider'; 
+import { AuthContext } from '../Components/AuthProvider';
 import { toast } from 'react-toastify';
 import LoadingGif from "../Components/LoadingGif";
 
@@ -35,7 +35,7 @@ const Category = () => {
       } catch (error) {
         console.error("Error fetching data:", error.message);
       }
-       finally {
+      finally {
         setIsLoading(false); // Set loading to false after fetching (even on errors)
       }
     };
@@ -55,7 +55,7 @@ const Category = () => {
     return <div className="text-center text-gray-600">Product not found</div>;
   }
 
- const isMedicine = !!product.Medicine_Name;
+  const isMedicine = !!product.Medicine_Name;
 
   const handleBackClick = () => {
     navigate(-1);
@@ -65,25 +65,25 @@ const Category = () => {
     setQuantity(Math.max(1, value));
   };
 
-  const { isAuthenticated ,user} = useContext(AuthContext);
+  const { isAuthenticated, user } = useContext(AuthContext);
 
-  
+
   const handleAddToCart = (product, quantity) => {
 
-  // if (!isAuthenticated) {
-  //   Swal.fire({
-  //     title: "Please Login",
-  //     timer: 2000, // Close the alert after 2 seconds
-  //     icon: "warning",
-  //     timerProgressBar: true,
-  //     showConfirmButton: false // Hide the OK button
-  //   }).then(() => {
-  //     navigate("/login"); // Navigate to cart after alert is closed
-  //   });
-  //   // Handle case when user is not logged in
-  //   console.log('User is not logged in. Please log in to add items to the cart.');
-  //   return;
-  // }
+    // if (!isAuthenticated) {
+    //   Swal.fire({
+    //     title: "Please Login",
+    //     timer: 2000, // Close the alert after 2 seconds
+    //     icon: "warning",
+    //     timerProgressBar: true,
+    //     showConfirmButton: false // Hide the OK button
+    //   }).then(() => {
+    //     navigate("/login"); // Navigate to cart after alert is closed
+    //   });
+    //   // Handle case when user is not logged in
+    //   console.log('User is not logged in. Please log in to add items to the cart.');
+    //   return;
+    // }
 
     const cartItem = {
       ...product,
@@ -221,16 +221,16 @@ const Category = () => {
             </div>
           </div>
         </div>
-<div>
+        <div>
           {isLoading ? (
             <LoadingGif />
           ) : (
-        <div className='md:mt-[2rem]'>
-          <HorizontalCardScroll itemForHorizontalScroll={items} />
-          <ReviewSection />
+            <div className='md:mt-[2rem]'>
+              <HorizontalCardScroll itemForHorizontalScroll={items} />
+              <ReviewSection />
+            </div>
+          )}
         </div>
-)}
-</div>
 
       </div>
     </div>

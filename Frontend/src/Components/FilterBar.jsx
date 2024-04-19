@@ -53,10 +53,10 @@ function FilterBar({
   };
 
   return (
-    <div className="relative">
+    <div className="relative sticky top-10">
       <div className="ml-[3.5rem] flex items-center mb-4">
         <button
-          className="block md:hidden bg-[#125872] text-white px-6 py-[10px] rounded-md text-center flex items-center"
+          className="block md:hidden bg-[#125872] text-white px-6 py-[10px] rounded-xl text-center flex items-center"
           onClick={togglePopup}
         >
           <i className="fas fa-filter mr-2"></i> Filter
@@ -108,8 +108,8 @@ function FilterBar({
         </div>
       )}
 
-      <div className="hidden md:block bg-white p-4 rounded-lg ml-4 w-64 shadow-lg border border-gray-300 max-h-[500px] overflow-auto custom-scrollbar">
-        <div className="flex justify-between items-center mb-4 pb-4 border-b border-gray-300">
+      <div className="hidden md:block bg-white p-4 rounded-lg ml-4 w-64 shadow-lg border border-gray-300 max-h-[500px] overflow-auto custom-scrollbar ">
+        <div className="flex justify-between items-center mb-4 pb-4 border-b border-gray-300 ">
           <h2 className="font-bold text-xl">Category</h2>
           <button className="text-[#125872] font-semibold mr-[0.5rem]" onClick={resetFilters}>
             Clear
