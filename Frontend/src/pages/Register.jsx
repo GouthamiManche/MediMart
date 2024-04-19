@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Navbar from "../Components/Navbar";
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useNavigate } from "react-router-dom";
@@ -13,7 +12,7 @@ function Register() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmit, setIsSubmit] = useState(false);
   const navigate = useNavigate();
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   // Handle input change in the form fields
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,8 +32,7 @@ function Register() {
     if (Object.keys(errors).length === 0) {
       // No errors, proceed with form submission
       try {
-        await axios.post(
-          "https://medicine-website-two.vercel.app/api/register", formData);
+        await axios.post(`${apiUrl}/register`, formData);
 
         // Registration successful, show success message and redirect to login page
         Swal.fire({

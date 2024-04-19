@@ -11,14 +11,16 @@ import LoadingGif from "../Components/LoadingGif";
 function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [items, setItems] = useState([]);
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const apiKey = import.meta.env.VITE_API_KEY;
 
   useEffect(() => {
     setIsLoading(true);
     const fetchData = async () => {
       try {
-        const response = await axios.get("https://medicine-website-two.vercel.app/api/products?category=Other", {
+        const response = await axios.get(`${apiUrl}/products?category=Other`, {
           headers: {
-            apikey: "123",
+            apikey: apiKey,
           },
         });
         setItems(response.data);

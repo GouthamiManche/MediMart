@@ -6,7 +6,7 @@ const getData = async (req, res) => {
     const data = await Data.find();
     res.status(200).json(data);
   } catch (error) {
-    console.error(error); // Log the actual error for debugging purposes
+    console.error(error); 
     res.status(500).json({ error: 'Internal server error' });
   }
 };

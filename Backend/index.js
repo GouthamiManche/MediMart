@@ -1,21 +1,22 @@
 const express = require('express');
 const mongoose = require('mongoose');
+
 const Schema = require('./models/user.model')
 const data = require('./models/product.model')
-const Address = require ('./models/address.model')
+const address = require ('./models/address.model')
+
 require('dotenv').config()
+
 const cors = require('cors');
 const { getAllUsers } = require('./APIS/Users');
 const { getData } = require('./APIS/Data');
-const cart = require('./models/cart.model')
 const { registerUser, loginUser } = require('./APIS/Login');
 const {getProductsByCategory } = require('./APIS/ByCategory');
-const cartSchema = require('./models/cart.model');
+const { createAddress } = require('./APIS/Address');
+
 const app = express();
-const PORT = 4000;
-//const transporter = require('./APIS/email');
-//const nodemailer = require('nodemailer');
-const URI = `mongodb+srv://mancheg19:0Pq7ouruMJz2Q9o1@cluster0.e8cib3z.mongodb.net/MediDB`
+
+const URI = process.env.MONGO_URL
 mongoose.connect(URI);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
@@ -27,24 +28,16 @@ app.use(cors());
 //ROUTES
 app.post('/api/register', registerUser);
 app.post('/api/login', loginUser);
+app.post('/api/address', createAddress);
+
 app.get('/api/users', getAllUsers);
 app.get('/api/data', getData);
 app.get('/api/products',getProductsByCategory);
-
-app.post('/api/address', async (req, res) => {
-  try {
-    const address = new Address(req.body);
-    await address.save();
-    res.status(201).send(address);
-  } catch (err) {
-    res.status(400).send(err.message);
-  }
-});
 
 app.get('/', (req, res) => {
   res.json('Hello, this is your Express API!');
 });
 
-app.listen((4000, () => {
-  console.log(`Server is running`);
-}));
+app.listen(4000, () => {
+  console.log('Server is running');
+});

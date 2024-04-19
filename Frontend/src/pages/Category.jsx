@@ -21,14 +21,16 @@ const Category = () => {
   const [itemAddedToCart, setItemAddedToCart] = useState(false);
   //const userId = localStorage.getItem('userId');
   const [isLoading, setIsLoading] = useState(true);
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const apiKey = import.meta.env.VITE_API_KEY;
 
   useEffect(() => {
     setIsLoading(true);
     const fetchData = async () => {
       try {
-        const response = await axios.get(`https://medicine-website-two.vercel.app/api/products?sub_category=${product.Sub_Category}`, {
+        const response = await axios.get(`${apiUrl}/products?sub_category=${product.Sub_Category}`, {
           headers: {
-            apikey: "123",
+            apikey: apiKey,
           },
         });
         setItems(response.data);

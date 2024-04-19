@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from "axios";
 import { BsTrash } from 'react-icons/bs';
 import HorizontalCardScroll from '../Components/HorizontalCardScroll';
 import LoadingGif from "../Components/LoadingGif";
+
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -11,14 +12,19 @@ const Cart = () => {
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
   const product = location.state;
+  const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const apiKey = import.meta.env.VITE_API_KEY;
 
   useEffect(() => {
     setIsLoading(true);
     const fetchData = async () => {
       try {
-        const response = await axios.get("https://medicine-website-two.vercel.app/api/products?category=Other", {
+        //console.log(apiUrl);
+        const response = await axios.get(`${apiUrl}/products?category=Other`, 
+        {
           headers: {
-            apikey: "123",
+            apikey: apiKey,
           },
         });
         setItems(response.data);
@@ -56,6 +62,9 @@ const Cart = () => {
     return cartItems.reduce((total, item) => total + item.Price * item.quantity, 0);
   };
 
+  const handleSubmit = () =>{
+    navigate("/address");
+  }
   return (
     <div className=''>
       {/* Desktop View */}
@@ -141,7 +150,7 @@ const Cart = () => {
                   {`₹${cartItems.reduce((total, item) => total + item.Price * item.quantity, 0)}`}
                 </p>
               </div>
-              <button className="bg-[#125872]  text-white font-semibold w-full py-3 rounded-md mt-4">
+              <button onClick={handleSubmit} className="bg-[#125872]  text-white font-semibold w-full py-3 rounded-md mt-4">
                 Checkout
               </button>
             </div>
@@ -214,7 +223,7 @@ const Cart = () => {
                   {`₹${getCartTotal()}`}
                 </p>
               </div>
-              <button className="bg-[#125872] text-white font-semibold w-full   py-3 rounded-md">
+              <button  className="bg-[#125872] text-white font-semibold w-full   py-3 rounded-md">
                 Checkout
               </button>
             </div>

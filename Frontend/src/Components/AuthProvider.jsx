@@ -51,7 +51,9 @@ const AuthProvider = ({ children }) => {
     window.location.reload();
   };
 
-
+useEffect(()=>{
+  console.log("user",user);
+})
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, user, token, login, logout }}>

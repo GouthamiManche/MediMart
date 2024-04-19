@@ -18,6 +18,8 @@ function Login() {
   const [passwordError, setPasswordError] = useState("");
   const [userNotFound, setUserNotFound] = useState(false);
 
+  const apiUrl = import.meta.env.VITE_API_URL;
+
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     const inputValue = type === "checkbox" ? checked : value;
@@ -60,7 +62,7 @@ function Login() {
     }
 
     try {
-      const response = await axios.post('https://medicine-website-two.vercel.app/api/login', formData);
+      const response = await axios.post(`${apiUrl}/login`, formData);
       const { token, user } = response.data;
       localStorage.setItem('token', token);
       login({ user, token });
