@@ -142,7 +142,7 @@ const Cart = () => {
                 </p>
               </div>
               <button className="bg-[#125872]  text-white font-semibold w-full py-3 rounded-md mt-4">
-                Proceed to payment
+                Checkout
               </button>
             </div>
           </div>
@@ -215,7 +215,7 @@ const Cart = () => {
                 </p>
               </div>
               <button className="bg-[#125872] text-white font-semibold w-full   py-3 rounded-md">
-                Proceed to payment
+                Checkout
               </button>
             </div>
           )}

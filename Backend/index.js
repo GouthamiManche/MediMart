@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const Schema = require('./models/user.model')
 const data = require('./models/product.model')
+const Address = require ('./models/address.model')
 require('dotenv').config()
 const cors = require('cors');
 const { getAllUsers } = require('./APIS/Users');
@@ -30,8 +31,20 @@ app.get('/api/users', getAllUsers);
 app.get('/api/data', getData);
 app.get('/api/products',getProductsByCategory);
 
+app.post('/api/address', async (req, res) => {
+  try {
+    const address = new Address(req.body);
+    await address.save();
+    res.status(201).send(address);
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+});
+
 app.get('/', (req, res) => {
   res.json('Hello, this is your Express API!');
 });
 
-app.listen();
+app.listen((4000, () => {
+  console.log(`Server is running`);
+}));
