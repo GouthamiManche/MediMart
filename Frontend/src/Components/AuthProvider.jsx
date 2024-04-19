@@ -6,7 +6,7 @@ const AuthProvider = ({ children }) => {
   const [isAuthenticated, setAuthenticated] = useState(null);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
-  
+
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
@@ -27,8 +27,8 @@ const AuthProvider = ({ children }) => {
 
         // Load user-specific cart items here (e.g., from local storage or server)
         const userCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-        const filteredCartItems = userCartItems.filter(item => item.userId === decodedToken.id);
-        console.log('User-specific cart items:', filteredCartItems);
+        // No need to filter by userId
+        console.log('Cart items:', userCartItems);
       }
     } else {
       console.log('No token found');
@@ -38,9 +38,8 @@ const AuthProvider = ({ children }) => {
   const login = (data) => {
     setAuthenticated(true);
     setUser(data.user);
-    setToken(data.token);     
+    setToken(data.token);
     localStorage.setItem('token', data.token);
-    localStorage.setItem('userId', data.user.id);
   };
 
   const logout = () => {
@@ -48,9 +47,10 @@ const AuthProvider = ({ children }) => {
     setUser(null);
     setToken(null);
     localStorage.removeItem('token');
-     localStorage.removeItem('userId');
+    localStorage.removeItem('cartItems');
+    window.location.reload();
   };
-  
+
 
 
   return (
@@ -60,4 +60,4 @@ const AuthProvider = ({ children }) => {
   );
 };
 
-export { AuthContext, AuthProvider};
+export { AuthContext, AuthProvider };

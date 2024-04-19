@@ -14,11 +14,13 @@ function Register() {
   const [isSubmit, setIsSubmit] = useState(false);
   const navigate = useNavigate();
 
+  // Handle input change in the form fields
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmit(true);
@@ -31,21 +33,20 @@ function Register() {
     if (Object.keys(errors).length === 0) {
       // No errors, proceed with form submission
       try {
-        const response = await axios.post(
-          "https://medicine-website-two.vercel.app/api/register",
-          formData
-        );
-        console.log(response.data);
+        await axios.post(
+          "https://medicine-website-two.vercel.app/api/register", formData);
+
+        // Registration successful, show success message and redirect to login page
         Swal.fire({
           title: "Registered Successfully!",
           text: "Please Login!",
           icon: "success",
-          timer: 2000, // Close the alert after 2 seconds
+          timer: 2000,
           timerProgressBar: true
         });
-        // Redirect to login page
-        navigate("/login");
+        navigate("/login"); // Redirect to login page
       } catch (error) {
+        // Error occurred during registration, handle error
         console.error(error);
         if (error.response && error.response.data && error.response.data.error) {
           setErrorMessage(error.response.data.error);
@@ -54,9 +55,9 @@ function Register() {
         }
       }
     }
-
   };
 
+  // Validate form input fields
   const validate = (values) => {
     const errors = {};
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
