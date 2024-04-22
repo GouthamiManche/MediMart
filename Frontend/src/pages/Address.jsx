@@ -15,7 +15,7 @@ const stateData = [
   { name: 'Karnataka', cities: ['Bengaluru', 'Mysuru', 'Hubli-Dharwad', 'Mangaluru', 'Belagavi', 'Shivamogga', 'Kalaburagi', 'Tumakuru', 'Davangere', 'Vijayapura'] },
   { name: 'Kerala', cities: ['Thiruvananthapuram', 'Kochi', 'Kozhikode', 'Thrissur', 'Kollam', 'Alappuzha', 'Kottayam', 'Malappuram', 'Palakkad', 'Kasaragod'] },
   { name: 'Madhya Pradesh', cities: ['Bhopal', 'Indore', 'Jabalpur', 'Gwalior', 'Ujjain', 'Sagar', 'Rewa', 'Satna', 'Ratlam', 'Mandsaur'] },
-  { name: 'Maharashtra', cities: ['Mumbai', 'Pune', 'Nagpur', 'Thane', 'Nashik', 'Aurangabad', 'Navi Mumbai', 'Solapur', 'Amravati', 'Kolhapur'] },
+  { name: 'Maharashtra', cities: ['Mumbai', 'Pune', 'Nagpur', 'Thane', 'Nashik', 'Aurangabad', 'Navi Mumbai', 'Solapur', 'Amravati', 'Kolhapur, Panvel'] },
   { name: 'Manipur', cities: ['Imphal', 'Thoubal', 'Kakching', 'Lilong', 'Mayang Imphal', 'Bishnupur', 'Moirang', 'Wangoi', 'Ningthoukhong', 'Jiribam'] },
   { name: 'Meghalaya', cities: ['Shillong', 'Tura', 'Jowai', 'Nongstoin', 'Williamnagar', 'Baghmara', 'Resubelpara', 'Sohra', 'Mairang', 'Nongpoh'] },
   { name: 'Mizoram', cities: ['Aizawl', 'Lunglei', 'Champhai', 'Kolasib', 'Saiha', 'Serchhip', 'Lawngtlai', 'Mamit', 'Khawzawl', 'Hnahthial'] },
