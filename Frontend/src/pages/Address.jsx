@@ -61,32 +61,6 @@ const AddressForm = () => {
         />
       </div>
       <div className="mb-4">
-        <label htmlFor="apartment" className="block text-sm font-medium text-gray-700">
-          Apartment:
-        </label>
-        <input
-          type="text"
-          id="apartment"
-          name="apartment"
-          value={formData.apartment}
-          onChange={handleChange}
-          className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-        />
-      </div>
-      <div className="mb-4">
-        <label htmlFor="locality" className="block text-sm font-medium text-gray-700">
-          Locality:
-        </label>
-        <input
-          type="text"
-          id="locality"
-          name="locality"
-          value={formData.locality}
-          onChange={handleChange}
-          className="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-        />
-      </div>
-      <div className="mb-4">
         <label htmlFor="city" className="block text-sm font-medium text-gray-700">
           City:
         </label>

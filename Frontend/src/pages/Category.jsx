@@ -71,22 +71,6 @@ const Category = () => {
 
 
   const handleAddToCart = (product, quantity) => {
-
-    // if (!isAuthenticated) {
-    //   Swal.fire({
-    //     title: "Please Login",
-    //     timer: 2000, // Close the alert after 2 seconds
-    //     icon: "warning",
-    //     timerProgressBar: true,
-    //     showConfirmButton: false // Hide the OK button
-    //   }).then(() => {
-    //     navigate("/login"); // Navigate to cart after alert is closed
-    //   });
-    //   // Handle case when user is not logged in
-    //   console.log('User is not logged in. Please log in to add items to the cart.');
-    //   return;
-    // }
-
     const cartItem = {
       ...product,
       quantity,

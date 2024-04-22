@@ -52,7 +52,7 @@ const AuthProvider = ({ children }) => {
   };
 
 useEffect(()=>{
-  console.log("user",user);
+  console.log("User : ",user);
 })
 
   return (

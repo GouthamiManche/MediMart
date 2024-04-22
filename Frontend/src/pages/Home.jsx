@@ -18,7 +18,7 @@ function Home() {
     setIsLoading(true);
     const fetchData = async () => {
       try {
-        console.log(apiUrl)
+        //console.log(apiUrl)
         const response = await axios.get(`${apiUrl}/products?category=Other`, {
           headers: {
             apikey: apiKey,
