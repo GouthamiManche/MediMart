@@ -27,12 +27,11 @@ function ProductDetail({ pg }) {
 
   const apiUrl = import.meta.env.VITE_API_URL;
   const apiKey = import.meta.env.VITE_API_KEY;
-
   useEffect(() => {
     setIsLoading(true);
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/data  `, {
+        const response = await axios.get(`${apiUrl}/data`, {
           headers: {
             apikey: "123",
           },
