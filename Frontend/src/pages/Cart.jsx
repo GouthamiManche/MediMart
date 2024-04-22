@@ -256,8 +256,6 @@ const Cart = () => {
           )}
         </div>
       </div>
-
-      
       {isLoading ? (
             <LoadingGif />
           ) : (
