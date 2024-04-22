@@ -73,7 +73,7 @@ return (
       <h2 className="text-2xl font-bold mb-4">Shipping Address</h2>
       <div className="md:flex md:mb-[2rem]">
         <div className="w-full md:w-1/2 md:mr-2 mb-4 md:mb-0">
-          <label htmlFor="fullName" className="text-sm font-medium text-gray-700">
+          <label placeholder="Enter weight…" htmlFor="fullName" className="text-sm font-medium text-gray-700">
             Full Name
           </label>
           <input
@@ -173,8 +173,8 @@ return (
       <div className="mb-[2rem] flex items-center justify-between">
         <div className="flex items-center">
           <input
-            id="default-checkbox"
-            type="checkbox"
+            type="radio"
+            checked="checked"
             className="w-4 h-4 py-3 text-blue-600 bg-gray-100 rounded border-gray-300"
           />
           <label htmlFor="default-checkbox" className="ml-2 flex items-center text-lg font-medium text-fuchsia-900">
@@ -185,6 +185,7 @@ return (
       </div>
       <button
         type="submit"
+        onClick={handleSubmit}
         className="bg-[#125872] text-white font-bold py-3 px-[50%] rounded w-full md:w-auto"
       >
         Pay

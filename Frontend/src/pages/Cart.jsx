@@ -249,7 +249,7 @@ const Cart = () => {
                   {`₹${getCartTotal()}`}
                 </p>
               </div>
-              <button  className="bg-[#125872] text-white font-semibold w-full   py-3 rounded-md">
+              <button   onClick={handleSubmit} className="bg-[#125872] text-white font-semibold w-full   py-3 rounded-md">
                 Checkout
               </button>
             </div>
