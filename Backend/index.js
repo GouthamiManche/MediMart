@@ -3,8 +3,6 @@ const mongoose = require('mongoose');
 
 const Schema = require('./models/user.model')
 const data = require('./models/product.model')
-const address = require ('./models/address.model')
-
 require('dotenv').config()
 
 const cors = require('cors');
@@ -38,6 +36,4 @@ app.get('/', (req, res) => {
   res.json('Hello, this is your Express API!');
 });
 
-app.listen(4000, () => {
-  console.log('Server is running');
-});
+app.listen();

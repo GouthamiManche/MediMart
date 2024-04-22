@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect , useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from "axios";
+import Swal from 'sweetalert2';
 import { BsTrash } from 'react-icons/bs';
 import HorizontalCardScroll from '../Components/HorizontalCardScroll';
 import LoadingGif from "../Components/LoadingGif";
-
+import { AuthContext } from '../Components/AuthProvider';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const location = useLocation();
+  const { isAuthenticated, user } = useContext(AuthContext);
   const product = location.state;
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -20,7 +22,6 @@ const Cart = () => {
     setIsLoading(true);
     const fetchData = async () => {
       try {
-        //console.log(apiUrl);
         const response = await axios.get(`${apiUrl}/products?category=Other`, 
         {
           headers: {
@@ -31,7 +32,7 @@ const Cart = () => {
       } catch (error) {
         console.error("Error fetching data:", error.message);
       } finally {
-        setIsLoading(false); // Set loading to false after fetching (even on errors)
+        setIsLoading(false);
       }
     };
     fetchData();
@@ -63,6 +64,31 @@ const Cart = () => {
   };
 
   const handleSubmit = () =>{
+    if (cartItems.length === 0) {
+      Swal.fire({
+        title: "Please Shop Products",
+        timer: 2000,
+        icon: "warning",
+        timerProgressBar: true,
+        showConfirmButton: false
+      });
+      return navigate("/shop");
+    }
+    
+    if (!isAuthenticated) {
+      Swal.fire({
+        title: "Please Login",
+        timer: 2000, // Close the alert after 2 seconds
+        icon: "warning",
+        timerProgressBar: true,
+        showConfirmButton: false // Hide the OK button
+      }).then(() => {
+        navigate("/login"); // Navigate to cart after alert is closed
+      });
+      // Handle case when user is not logged in
+      console.log('User is not logged in. Please log in to add items to the cart.');
+      return ;
+    }
     navigate("/address");
   }
   return (
@@ -223,7 +249,7 @@ const Cart = () => {
                   {`₹${getCartTotal()}`}
                 </p>
               </div>
-              <button  className="bg-[#125872] text-white font-semibold w-full   py-3 rounded-md">
+              <button   onClick={handleSubmit} className="bg-[#125872] text-white font-semibold w-full   py-3 rounded-md">
                 Checkout
               </button>
             </div>

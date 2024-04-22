@@ -24,10 +24,7 @@ const AuthProvider = ({ children }) => {
         setAuthenticated(true);
         setUser(decodedToken);
         setToken(storedToken);
-
-        // Load user-specific cart items here (e.g., from local storage or server)
         const userCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-        // No need to filter by userId
         console.log('Cart items:', userCartItems);
       }
     } else {
@@ -52,7 +49,7 @@ const AuthProvider = ({ children }) => {
   };
 
 useEffect(()=>{
-  console.log("user",user);
+  console.log("User : ",user);
 })
 
   return (
