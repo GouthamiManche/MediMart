@@ -80,6 +80,7 @@ const loginUser = async (req, res) => {
       user: { id: user._id, username: user.username, email: user.email },
       token,
       expiresIn,
+      customerId: user.customerId,
     });
 
   } catch (error) {
