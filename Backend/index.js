@@ -16,9 +16,8 @@ const { createAddress } = require('./APIS/Address');
 
 const app = express();
 
-const URL = process.env.MONGO_URL
-console.log(URL)
-mongoose.connect(URL);
+const URI = process.env.MONGO_URL
+mongoose.connect(URI);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once('open', () => console.log('Connected to MongoDB'));
@@ -39,4 +38,6 @@ app.get('/', (req, res) => {
   res.json('Hello, this is your Express API!');
 });
 
-app.listen();
+app.listen(4000, () => {
+  console.log('Server is running');
+});
