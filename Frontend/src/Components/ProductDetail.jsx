@@ -25,12 +25,12 @@ function ProductDetail({ pg }) {
   const [isLoading, setIsLoading] = useState(true);
   const [categories, setCategories] = useState([]);
   const apiUrl = import.meta.env.VITE_API_URL;
-
+  const apiKey = import.meta.env.VITE_API_KEY;
   useEffect(() => {
     setIsLoading(true);
     const fetchData = async () => {
       try {
-        const response = await axios.get("https://medicine-website-two.vercel.app/api/data", {
+        const response = await axios.get(`${apiUrl}/data`, {
           headers: {
             apikey: "123",
           },
