@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { FaCartPlus, FaBars, FaTimes } from "react-icons/fa";
 import { AuthContext } from "./AuthProvider";
+import { FaSearchPlus } from "react-icons/fa";
 import Logo from '/src/assets/logo.jpg'
 function Navbar() {
   const { user, logout } = useContext(AuthContext);
@@ -15,31 +16,15 @@ function Navbar() {
 
   return (
     <div className="bg-white text-gray-900 z-50 w-full">
-      <header className="container mx-auto py-4 px-6 flex items-center justify-between">
+      <header className=" py-4 mx-8  flex items-center justify-between">
         <div className="flex items-center">
           <Link to='/'>
             <img className="h-12" src={Logo} alt="Logo" />
           </Link>
           <Link to="/" className="md:block hidden text-xl md:text-3xl font-bold ml-1  font-PlayFair">
-            MediMart
+           <span className="text-[#14496b]">Medi</span><span className="text-[#8ccf28]">Mart</span> 
           </Link>
-          <nav className="hidden md:flex md:ml-[18vw]">
-            <div className="flex gap-10 text-gray-900">
-              <Link to="/" className="">
-                Home
-              </Link>
-              <Link to="/shop" className="">
-                Shop
-              </Link>
-              <Link to="/about" className="">
-                About
-              </Link>
-              <Link to="/contact" className="">
-                Contact
-              </Link>
-            </div>
-          </nav>
-        </div>
+          </div>
         <div className="md:hidden text-gray-900">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -53,6 +38,15 @@ function Navbar() {
           </button>
         </div>
         <nav className="hidden md:flex items-center gap-4">
+        <nav className="hidden md:flex md:ml-[18vw]">
+            <div className="flex gap-10 text-gray-900">
+              
+              <Link to="/shop" className="">
+              <FaSearchPlus className="text-xl"/>
+              </Link>
+             
+            </div>
+          </nav>
         <Link
                   to="/cart"
                   className="font-bold py-2 rounded flex items-center"
@@ -67,38 +61,38 @@ function Navbar() {
                 {/* <div className="bg-black rounded-full w-12 h-12 flex items-center justify-center text-white font-bold text-xl ml-4">
                   {user.username.charAt(0)}
                 </div> */}
-                <p className="py-2 px-4 font-bold text-lg ml-2">
-                  {user.username}
-                </p>
+                
                 <button
                   onClick={toggleDropdown}
                   className="focus:outline-none ml-2"
                 >
-                  <CgProfile className="h-9" />
+                  <CgProfile className="h-[2rem] w-[2rem]" />
                 </button>
               </div>
               {dropdownOpen && (
+                
                 <div
-                  className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  className="absolute right-0 z-10  w-48  rounded-md bg-white shadow-lg"
                   role="menu"
                   aria-orientation="vertical"
                   aria-labelledby="menu-button"
                   tabIndex="-1"
                 >
+              
                   <div>
                     <Link
                       to="/profile"
-                      className="text-gray-700 block px-4 py-2 text-sm"
+                      className="text-gray-700  px-4 py-2  text-sm"
                       role="menuitem"
                       tabIndex="-1"
                       id="menu-item-0"
                     >
-                      Profile
+                     {user.username}
                     </Link>
                     <br />
                     <button
                       onClick={logout}
-                      className="text-gray-700 block w-full px-4 py-2 text-left text-sm"
+                      className="text-gray-700  w-full px-4 py-2  text-left text-sm"
                       role="menuitem"
                       tabIndex="-1"
                       id="menu-item-3"

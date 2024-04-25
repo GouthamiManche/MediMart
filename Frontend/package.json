@@ -28,9 +28,11 @@
     "react-hot-toast": "^2.4.1",
     "react-icons": "^5.0.1",
     "react-router-dom": "^6.22.3",
+    "react-slick": "^0.30.2",
     "react-social-login-buttons": "^4.1.0",
     "react-toastify": "^10.0.5",
     "reactstrap": "^9.2.2",
+    "slick-carousel": "^1.8.1",
     "sweetalert2": "^11.10.7"
   },
   "devDependencies": {
