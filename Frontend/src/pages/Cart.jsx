@@ -105,7 +105,7 @@ const Cart = () => {
               ) : (
                 cartItems.map((item, index) => (
                   <div key={index} className="flex items-center border rounded-md border-gray-300 mb-4">
-                    <div className="flex  ml-[2rem] items-center justify-center w-24 h-24 border border-gray-300 my-[1rem]">
+                    <div className="flex  ml-[2rem] items-center justify-center w-24 h-24  my-[1rem]">
                       <img
                         src={item.Image_URL}
                         alt={item.isMedicine ? item.Medicine_Name : item.Name}
