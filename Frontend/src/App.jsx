@@ -1,4 +1,3 @@
-import React, { useEffect ,useState} from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import Loader from './Components/Loader';
@@ -7,7 +6,7 @@ import Footer from './Components/Footer';
 import Navbar from './Components/Navbar';
 import Profile from './pages/Profile'
 import { AuthProvider } from './Components/AuthProvider';
-import Address from './pages/Address';
+const Address = lazy(()=> import('./pages/Address')) ;
 const Home = lazy(() => import('./pages/Home'));
 const Shop = lazy(() => import('./pages/Shop'));
 const Login = lazy(() => import('./pages/Login'));
@@ -16,6 +15,7 @@ const Cart = lazy(() => import('./pages/Cart'));
 const Category = lazy(() => import('./pages/Category'));
 const About = lazy(() => import('./pages/About'))
 const Contact = lazy(() => import('./pages/Contact'))
+const OrderPlaced = lazy(() => import('./pages/OrderPlaced'))
 const ErrorPage = lazy(() => import('./pages/ErrorPage'))
 function App() {
   // const [filteredData, setFilteredData] = useState([]);
@@ -38,6 +38,7 @@ function App() {
             <Route exact path="*" element={<ErrorPage />} />
             <Route exact path="/profile" element={<Profile />} />
             <Route exact path="/address" element={<Address />} />
+            <Route exact path="/orderplaced" element={<OrderPlaced />} />
           </Routes>
           <GotoTop/>
           <Footer/>
