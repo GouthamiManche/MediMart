@@ -4,10 +4,10 @@ import HorizontalCardScroll from '../Components/HorizontalCardScroll';
 import axios from "axios";
 import ReviewSection from '../Components/ReviewSection';
 import { BsCart3 } from "react-icons/bs";
-import Swal from 'sweetalert2';
 import { AuthContext } from '../Components/AuthProvider';
-import { toast } from 'react-toastify';
 import LoadingGif from "../Components/LoadingGif";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Category = () => {
   const location = useLocation();
@@ -19,7 +19,6 @@ const Category = () => {
   const [items, setItems] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [itemAddedToCart, setItemAddedToCart] = useState(false);
-  //const userId = localStorage.getItem('userId');
   const [isLoading, setIsLoading] = useState(true);
   const apiUrl = import.meta.env.VITE_API_URL;
   const apiKey = import.meta.env.VITE_API_KEY;
@@ -80,21 +79,11 @@ const Category = () => {
     setCartItems(updatedCartItems);
     localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
     setItemAddedToCart(true); // Set the state to indicate item added to cart
-    console.log('Product added to cart:', cartItem);
+    toast.success('Added To Cart', { autoClose: 2000 });
+    navigate("/cart");
+    //console.log('Product added to cart:', cartItem);
   };
 
-  // If item added to cart, display success message and navigate to cart
-  if (itemAddedToCart) {
-    Swal.fire({
-      title: "Item added to cart!",
-      icon: "success",
-      timer: 2000, // Close the alert after 2 seconds
-      timerProgressBar: true,
-      showConfirmButton: false // Hide the OK button
-    }).then(() => {
-      navigate("/cart"); // Navigate to cart after alert is closed
-    });
-  }
 
   // const handleReviewClick = () => {
   //   setShowReviewModal(true);

@@ -6,6 +6,8 @@ import { BsTrash } from 'react-icons/bs';
 import HorizontalCardScroll from '../Components/HorizontalCardScroll';
 import LoadingGif from "../Components/LoadingGif";
 import { AuthContext } from '../Components/AuthProvider';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -49,7 +51,7 @@ const Cart = () => {
     const updatedCartItems = [...cartItems];
     updatedCartItems.splice(index, 1);
     setCartItems(updatedCartItems);
-    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems)); // Update local storage
   };
 
   const handleQuantityChange = (index, value) => {
@@ -65,29 +67,15 @@ const Cart = () => {
 
   const handleSubmit = () =>{
     if (cartItems.length === 0) {
-      Swal.fire({
-        title: "Please Shop Products",
-        timer: 2000,
-        icon: "warning",
-        timerProgressBar: true,
-        showConfirmButton: false
-      });
-      return navigate("/shop");
+      toast.warning('Please shop products', { autoClose: 2000 });
+      return navigate('/shop');
     }
     
     if (!isAuthenticated) {
-      Swal.fire({
-        title: "Please Login",
-        timer: 2000, // Close the alert after 2 seconds
-        icon: "warning",
-        timerProgressBar: true,
-        showConfirmButton: false // Hide the OK button
-      }).then(() => {
-        navigate("/login"); // Navigate to cart after alert is closed
-      });
-      // Handle case when user is not logged in
+      toast.warning('Please login', { autoClose: 2000 });
+      navigate('/login');
       console.log('User is not logged in. Please log in to add items to the cart.');
-      return ;
+      return;
     }
     navigate("/address");
   }
@@ -151,7 +139,6 @@ const Cart = () => {
               )}
             </div>
           </div>
-
           {/* Payment and Summary */}
           <div className="w-[30%] p-[2rem] h-full  border border-gray-300 sticky top-10 rounded-md">
             <h2 className="text-2xl font-bold mb-4">Order Total</h2>

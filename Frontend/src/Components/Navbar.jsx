@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { FaCartPlus, FaBars, FaTimes } from "react-icons/fa";
 import { AuthContext } from "./AuthProvider";
-import { FaSearchPlus } from "react-icons/fa";
 import Logo from '/src/assets/logo.jpg'
+import { ImSearch } from "react-icons/im";
 function Navbar() {
   const { user, logout } = useContext(AuthContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -42,7 +42,8 @@ function Navbar() {
             <div className="flex gap-10 text-gray-900">
               
               <Link to="/shop" className="">
-              <FaSearchPlus className="text-xl"/>
+              {/* <FaSearchPlus className="text-xl"/> */}
+              <ImSearch className="text-2xl" />
               </Link>
              
             </div>

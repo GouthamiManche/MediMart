@@ -35,13 +35,7 @@ function Register() {
         await axios.post(`${apiUrl}/register`, formData);
 
         // Registration successful, show success message and redirect to login page
-        Swal.fire({
-          title: "Registered Successfully!",
-          text: "Please Login!",
-          icon: "success",
-          timer: 2000,
-          timerProgressBar: true
-        });
+        toast.success('Registered Successfully', { autoClose: 2000 });
         navigate("/login"); // Redirect to login page
       } catch (error) {
         // Error occurred during registration, handle error

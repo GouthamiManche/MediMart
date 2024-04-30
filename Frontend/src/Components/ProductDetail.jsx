@@ -33,7 +33,7 @@ function ProductDetail({ pg }) {
       try {
         const response = await axios.get(`${apiUrl}/data`, {
           headers: {
-            apikey: "123",
+            apikey: apiKey,
           },
         });
         let filteredData = response.data;
@@ -214,7 +214,7 @@ function ProductDetail({ pg }) {
                       sortOption={sortOption}
                       setSortOption={setSortOption}/>
             </div>
-            <div className="flex flex-wrap ">
+            <div className="flex flex-wrap">
                           {currentItems.map((item, index) => (
                             <Item key={index} item={item} />
                           ))}
@@ -222,8 +222,6 @@ function ProductDetail({ pg }) {
             </div> 
           )}
         </div>
-
-
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}

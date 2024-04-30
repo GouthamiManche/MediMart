@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { AuthContext } from '../Components/AuthProvider';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
   const { login, isAuthenticated } = useContext(AuthContext);
@@ -66,13 +67,7 @@ function Login() {
       const { token, user } = response.data;
       localStorage.setItem('token', token);
       login({ user, token });
-      Swal.fire({
-        title: "Login Done Successfully!",
-        text: "Please Shop",
-        icon: "success",
-        timer: 2000,
-      timerProgressBar: true
-      });
+      toast.success('Login Success', { autoClose: 2000 });
       navigate('/')
       // Update context state with user data
     } catch (error) {
