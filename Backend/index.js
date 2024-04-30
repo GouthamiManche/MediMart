@@ -10,7 +10,7 @@ const { getAllUsers } = require('./APIS/Users');
 const { getData } = require('./APIS/Data');
 const { registerUser, loginUser } = require('./APIS/Login');
 const {getProductsByCategory } = require('./APIS/ByCategory');
-const { createAddress } = require('./APIS/Address');
+const { CreateOrder } = require('./APIS/CreateOrder');
 
 const app = express();
 
@@ -26,7 +26,7 @@ app.use(cors());
 //ROUTES
 app.post('/api/register', registerUser);
 app.post('/api/login', loginUser);
-app.post('/api/address', createAddress);
+app.post('/api/createorder', CreateOrder);
 
 app.get('/api/users', getAllUsers);
 app.get('/api/data', getData);

@@ -51,7 +51,7 @@ const generateToken = (user) => {
     username: user.username,
     email: user.email,
   };
-  const token = jwt.sign(payload, process.env.Secret_Key, { expiresIn: '1hr' }); // Fix the syntax error here
+  const token = jwt.sign(payload, process.env.Secret_Key, { expiresIn: '3hr' }); 
   return token;
 };
 

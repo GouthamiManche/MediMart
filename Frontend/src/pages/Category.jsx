@@ -79,8 +79,8 @@ const Category = () => {
     setCartItems(updatedCartItems);
     localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
     setItemAddedToCart(true); // Set the state to indicate item added to cart
-    toast.success('Added To Cart', { autoClose: 2000 });
-    navigate("/cart");
+    toast.success('Item Added To Cart', { autoClose: 2000 });
+    //navigate("/cart");
     //console.log('Product added to cart:', cartItem);
   };
 

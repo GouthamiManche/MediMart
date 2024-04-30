@@ -6,7 +6,7 @@ import Footer from './Components/Footer';
 import Navbar from './Components/Navbar';
 import Profile from './pages/Profile'
 import { AuthProvider } from './Components/AuthProvider';
-const Address = lazy(()=> import('./pages/Address')) ;
+const Checkout = lazy(()=> import('./pages/Checkout')) ;
 const Home = lazy(() => import('./pages/Home'));
 const Shop = lazy(() => import('./pages/Shop'));
 const Login = lazy(() => import('./pages/Login'));
@@ -37,7 +37,7 @@ function App() {
             <Route exact path="/contact" element={<Contact />} />
             <Route exact path="*" element={<ErrorPage />} />
             <Route exact path="/profile" element={<Profile />} />
-            <Route exact path="/address" element={<Address />} />
+            <Route exact path="/checkout" element={<Checkout />} />
             <Route exact path="/orderplaced" element={<OrderPlaced />} />
           </Routes>
           <GotoTop/>

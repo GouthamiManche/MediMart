@@ -77,7 +77,7 @@ const Cart = () => {
       console.log('User is not logged in. Please log in to add items to the cart.');
       return;
     }
-    navigate("/address");
+    navigate("/checkout");
   }
   return (
     <div className=''>

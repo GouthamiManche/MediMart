@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect,useContext } from 'react';
 import { SiPhonepe } from "react-icons/si";
 import axios from 'axios';
+import { AuthContext } from '../Components/AuthProvider'; 
 const stateData = [
   { name: 'Andhra Pradesh', cities: ['Visakhapatnam', 'Vijayawada', 'Guntur', 'Nellore', 'Kurnool', 'Kadapa', 'Anantapur', 'Kakinada', 'Tirupati', 'Chittoor'] },
   { name: 'Arunachal Pradesh', cities: ['Itanagar', 'Ziro', 'Tawang', 'Bomdila', 'Roing', 'Tezu', 'Namsai', 'Pasighat', 'Aalo', 'Daporijo'] },
@@ -26,25 +27,24 @@ const stateData = [
   { name: 'Sikkim', cities: ['Gangtok', 'Namchi', 'Mangan', 'Gyalshing', 'Singtam', 'Rangpo', 'Jorethang', 'Nayabazar', 'Rabongla', 'Rongli'] },
   { name: 'Tamil Nadu', cities: ['Chennai', 'Coimbatore', 'Madurai', 'Tiruchirappalli', 'Salem', 'Tirunelveli', 'Erode', 'Thanjavur', 'Vellore', 'Tiruppur'] },
   { name: 'Telangana', cities: ['Hyderabad', 'Warangal', 'Nizamabad', 'Khammam', 'Karimnagar', 'Ramagundam', 'Mahbubnagar', 'Adilabad', 'Nalgonda', 'Suryapet'] },
-  // Add more states and cities here
 ];
 
 const AddressForm = () => {
+
   const apiUrl = import.meta.env.VITE_API_URL;
   const [formData, setFormData] = useState({
     fullName: '',
     address: '',
-    apartment: '',
-    locality: '',
     city: '',
     state: '',
     pincode: '',
     contactNo: '',
-    saveAs: 'home',
+    total: 0,
   });
-
+  const [cartItems, setCartItems] = useState([]);
   const [cities, setCities] = useState([]);
 
+  //const [authUser, setAuthUser] = useState(null); //user details
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -55,19 +55,39 @@ const AddressForm = () => {
     }
   };
 
+  const { user } = useContext(AuthContext); // Use useContext inside the functional component
+
+  // Function to get user details from Auth context API
+  const getUserDetailsFromContext = () => {
+    return user ? {
+      email: user.email,
+    } : null;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${apiUrl}/address`, formData);
+      
+      const res = await axios.post(`${apiUrl}/createorder`, {
+        ...formData,
+        total: getTotalPriceFromLocalStorage(),
+        userDetails: getUserDetailsFromContext(),
+      });
       console.log(res.data);
     } catch (err) {
       console.error(err);
     }
   };
 
+  useEffect(() => {
+    const storedCartItems = localStorage.getItem('cartItems');
+    if (storedCartItems) {
+      setCartItems(JSON.parse(storedCartItems));
+    }
+  }, []);
 
 return (
-  <div className="flex flex-col items-center min-h-screen">
+  <div className="flex  items-center min-h-full mx-[4vw]">
     <div className="bg-white p-6 max-w-2xl w-full md:mt-[2rem] mx-auto">
      
       <h2 className="text-2xl font-bold mb-4">Shipping Address</h2>
@@ -174,7 +194,7 @@ return (
         <div className="flex items-center">
           <input
             type="radio"
-            checked="checked"
+           
             className="w-4 h-4 py-3 text-blue-600 bg-gray-100 rounded border-gray-300"
           />
           <label htmlFor="default-checkbox" className="ml-2 flex items-center text-lg font-medium text-fuchsia-900">
@@ -183,14 +203,43 @@ return (
           </label>
         </div>
       </div>
-      <button
+      {/* <button
         type="submit"
         onClick={handleSubmit}
         className="bg-[#125872] text-white font-bold py-3 px-[50%] rounded w-full md:w-auto"
       >
         Pay
-      </button>
+      </button> */}
     </div>
+    <div className="w-[30%] p-[2rem]   border border-gray-300 sticky top-2 rounded-md">
+            <h2 className="text-2xl font-bold mb-4">Order Total</h2>
+            <div className="bg-white">
+              <div className="flex justify-between mb-2">
+                <p className="text-gray-500">Subtotal</p>
+                <p className="font-semibold">
+                  {`₹${cartItems.reduce((total, item) => total + item.Price * item.quantity, 0)}`}
+                </p>
+              </div>
+              <div className="flex justify-between mb-2">
+                <p className="text-gray-500">Discount</p>
+                <p className="font-semibold">-₹0</p>
+              </div>
+              <div className="flex justify-between mb-2">
+                <p className="text-gray-500">Delivery Fee</p>
+                <p className="font-semibold">₹0</p>
+              </div>
+              <div className="border-t border-gray-300 pt-4 flex justify-between">
+                <p className="font-bold">Total</p>
+                <p className="font-bold">
+                  {`₹${cartItems.reduce((total, item) => total + item.Price * item.quantity, 0)}`}
+                </p>
+              </div>
+              <button onClick={handleSubmit} className="bg-[#125872]  text-white font-semibold w-full py-3 rounded-md mt-4">
+                Proceed To Pay
+              </button>
+            </div>
+          </div>
+          
   </div>
 );
 };
