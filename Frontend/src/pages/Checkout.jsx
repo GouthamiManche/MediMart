@@ -65,6 +65,13 @@ const AddressForm = () => {
         throw new Error("Total price is not a valid number");
       }
 
+      const orderItems = cartItems.map(item => ({
+        _id: item._id,
+        name: item.name, // Make sure 'name' property exists
+        quantity: item.quantity,
+        Price: item.Price
+      }));
+
       const orderData = {
         fullName: formData.fullName,
         address: formData.address,
@@ -74,7 +81,7 @@ const AddressForm = () => {
         contactNo: formData.contactNo,
         total: totalPrice,
         userDetails: null,
-        cartItems: cartItems,
+        cartItems: orderItems, // Use modified orderItems array
       };
 
       const res = await axios.post(`${apiUrl}/createorder`, orderData);
