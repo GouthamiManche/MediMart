@@ -58,6 +58,7 @@ const AddressForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
       const res = await axios.post(`${apiUrl}/createorder`, {
         fullName: formData.fullName,
         address: formData.address,
@@ -65,7 +66,7 @@ const AddressForm = () => {
         state: formData.state,
         pincode: formData.pincode,
         contactNo: formData.contactNo,
-        total: formData.total, // Make sure this is being sent from your form data
+        total: totalPrice, // Calculate total price correctly
         userDetails: null, // You can add user details here if available
         cartItems: cartItems,
       });
