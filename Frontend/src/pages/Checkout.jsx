@@ -69,10 +69,10 @@ const AddressForm = () => {
       }
 
       const orderItems = cartItemsArray.map(item => ({
-        productId: item._id, // Make sure 'productId' is set
-        name: item.Name, // Make sure 'name' is set
+        productId: item.Product_id, // Use 'Product_id' as productId
+        name: item.Name, // Use 'Name' as name
         quantity: item.quantity,
-        price: item.Price // Make sure 'price' is set
+        price: item.Price // Use 'Price' as price
       }));
 
       const orderData = {
@@ -93,7 +93,6 @@ const AddressForm = () => {
       console.error(err);
     }
   };
-
 
   useEffect(() => {
     const storedCartItems = localStorage.getItem('cartItems');
@@ -219,13 +218,6 @@ const AddressForm = () => {
             </label>
           </div>
         </div>
-        {/* <button
-        type="submit"
-        onClick={handleSubmit}
-        className="bg-[#125872] text-white font-bold py-3 px-[50%] rounded w-full md:w-auto"
-      >
-        Pay
-      </button> */}
       </div>
       <div className="w-[30%] p-[2rem]   border border-gray-300 sticky top-2 rounded-md">
         <h2 className="text-2xl font-bold mb-4">Order Total</h2>
