@@ -8,6 +8,13 @@ const CreateOrder = async (req, res) => {
       throw new Error("Total is not a valid number");
     }
 
+    const orderItems = cartItems.map(item => ({
+      productId: item._id,
+      name: item.name,
+      quantity: item.quantity,
+      price: item.Price
+    }));
+
     const newOrder = new Order({
       fullName,
       address,
@@ -17,7 +24,7 @@ const CreateOrder = async (req, res) => {
       contactNo,
       total,
       userDetails,
-      cartItems,
+      items: orderItems, // Assigning order items to the 'items' field
     });
 
     await newOrder.validate();
@@ -27,5 +34,6 @@ const CreateOrder = async (req, res) => {
     res.status(400).send(err.message);
   }
 };
+
 
 module.exports = { CreateOrder };

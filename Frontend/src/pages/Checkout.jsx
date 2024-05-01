@@ -58,38 +58,25 @@ const AddressForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Calculate total price of cart items
-      const totalPrice = cartItems.reduce((total, item) => total + (item.Price * item.quantity), 0);
+      const orderData = {
+        fullName: formData.fullName,
+        address: formData.address,
+        city: formData.city,
+        state: formData.state,
+        pincode: formData.pincode,
+        contactNo: formData.contactNo,
+        total: totalPrice,
+        userDetails: null,
+        items: cartItems.map(item => ({
+          productId: item._id,
+          name: item.name,
+          quantity: item.quantity,
+          price: item.Price
+        }))
+      };
 
-      if (isNaN(totalPrice)) {
-        throw new Error("Total price is not a valid number");
-      }
-
-      // Create an array to store individual order items
-      const orderItems = cartItems.map((item) => ({
-        productId: item._id,
-        name: item.name, // Assuming you have a 'name' property for each item
-        price: item.Price,
-        quantity: item.quantity,
-      }));
-
-      // Create a separate record for each item in the cart
-      for (const item of orderItems) {
-        const orderData = {
-          fullName: formData.fullName,
-          address: formData.address,
-          city: formData.city,
-          state: formData.state,
-          pincode: formData.pincode,
-          contactNo: formData.contactNo,
-          total: totalPrice,
-          userDetails: null,
-          cartItem: item,
-        };
-
-        const res = await axios.post(`${apiUrl}/createorder`, orderData);
-        console.log(res.data);
-      }
+      const res = await axios.post(`${apiUrl}/createorder`, orderData);
+      console.log(res.data);
     } catch (err) {
       console.error(err);
     }
