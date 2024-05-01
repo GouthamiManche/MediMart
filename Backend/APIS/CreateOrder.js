@@ -4,7 +4,6 @@ const CreateOrder = async (req, res) => {
   try {
     const { fullName, address, city, state, pincode, contactNo, total, userDetails, cartItems } = req.body;
 
-    // Validate if total is a valid number
     if (isNaN(total)) {
       throw new Error("Total is not a valid number");
     }

@@ -61,6 +61,10 @@ const AddressForm = () => {
       // Calculate total price of cart items
       const totalPrice = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
 
+      if (isNaN(totalPrice)) {
+        throw new Error("Total price is not a valid number");
+      }
+
       const orderData = {
         fullName: formData.fullName,
         address: formData.address,
@@ -68,8 +72,8 @@ const AddressForm = () => {
         state: formData.state,
         pincode: formData.pincode,
         contactNo: formData.contactNo,
-        total: totalPrice, // Ensure total price is a valid number
-        userDetails: null, // You can add user details here if available
+        total: totalPrice,
+        userDetails: null,
         cartItems: cartItems,
       };
 
