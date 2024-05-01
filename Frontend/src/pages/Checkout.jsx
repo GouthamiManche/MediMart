@@ -65,9 +65,10 @@ const AddressForm = () => {
         throw new Error("Total price is not a valid number");
       }
 
+      // Make sure 'name' property exists for each item
       const orderItems = cartItems.map(item => ({
         _id: item._id,
-        name: item.name, // Make sure 'name' property exists
+        name: item.name,
         quantity: item.quantity,
         Price: item.Price
       }));
@@ -81,7 +82,7 @@ const AddressForm = () => {
         contactNo: formData.contactNo,
         total: totalPrice,
         userDetails: null,
-        cartItems: orderItems, // Use modified orderItems array
+        cartItems: orderItems,
       };
 
       const res = await axios.post(`${apiUrl}/createorder`, orderData);
@@ -90,7 +91,7 @@ const AddressForm = () => {
       console.error(err);
     }
   };
-  
+
   useEffect(() => {
     const storedCartItems = localStorage.getItem('cartItems');
     if (storedCartItems) {
