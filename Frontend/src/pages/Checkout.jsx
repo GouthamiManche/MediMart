@@ -75,6 +75,12 @@ const AddressForm = () => {
         price: item.Price // Use 'Price' as price
       }));
 
+      // Check if any item in orderItems is missing productId or price
+      const invalidItem = orderItems.find(item => !item.productId || !item.price);
+      if (invalidItem) {
+        throw new Error(`Product ID or price is missing for item: ${invalidItem.name}`);
+      }
+
       const orderData = {
         fullName: formData.fullName,
         address: formData.address,
@@ -93,6 +99,7 @@ const AddressForm = () => {
       console.error(err);
     }
   };
+
 
   useEffect(() => {
     const storedCartItems = localStorage.getItem('cartItems');
