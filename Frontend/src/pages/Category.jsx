@@ -70,28 +70,21 @@ const Category = () => {
 
 
   const handleAddToCart = (product, quantity) => {
+    const { _id, Name, Price, Image_URL,Product_id } = product;
     const cartItem = {
-      ...product,
+      _id,
+      Name,
+      Price,
+      Image_URL,
       quantity,
-      isMedicine: !!product.Medicine_Name,
+      Product_id
     };
     const updatedCartItems = [...cartItems, cartItem];
     setCartItems(updatedCartItems);
     localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
     setItemAddedToCart(true); // Set the state to indicate item added to cart
     toast.success('Item Added To Cart', { autoClose: 2000 });
-    //navigate("/cart");
-    //console.log('Product added to cart:', cartItem);
   };
-
-
-  // const handleReviewClick = () => {
-  //   setShowReviewModal(true);
-  // };
-
-  // const handleSubmitReview = (review) => {
-  //   setReviews((prevReviews) => [...prevReviews, review]);
-  // };
 
   return (
     <div>
