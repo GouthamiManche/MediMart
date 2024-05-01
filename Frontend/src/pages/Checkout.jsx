@@ -59,26 +59,37 @@ const AddressForm = () => {
     e.preventDefault();
     try {
       // Calculate total price of cart items
-      const totalPrice = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+      const totalPrice = cartItems.reduce((total, item) => total + (item.Price * item.quantity), 0);
 
       if (isNaN(totalPrice)) {
         throw new Error("Total price is not a valid number");
       }
 
-      const orderData = {
-        fullName: formData.fullName,
-        address: formData.address,
-        city: formData.city,
-        state: formData.state,
-        pincode: formData.pincode,
-        contactNo: formData.contactNo,
-        total: totalPrice,
-        userDetails: null,
-        cartItems: cartItems,
-      };
+      // Create an array to store individual order items
+      const orderItems = cartItems.map((item) => ({
+        productId: item._id,
+        name: item.name, // Assuming you have a 'name' property for each item
+        price: item.Price,
+        quantity: item.quantity,
+      }));
 
-      const res = await axios.post(`${apiUrl}/createorder`, orderData);
-      console.log(res.data);
+      // Create a separate record for each item in the cart
+      for (const item of orderItems) {
+        const orderData = {
+          fullName: formData.fullName,
+          address: formData.address,
+          city: formData.city,
+          state: formData.state,
+          pincode: formData.pincode,
+          contactNo: formData.contactNo,
+          total: totalPrice,
+          userDetails: null,
+          cartItem: item,
+        };
+
+        const res = await axios.post(`${apiUrl}/createorder`, orderData);
+        console.log(res.data);
+      }
     } catch (err) {
       console.error(err);
     }
@@ -222,7 +233,7 @@ return (
               <div className="flex justify-between mb-2">
                 <p className="text-gray-500">Subtotal</p>
                 <p className="font-semibold">
-                  {`₹${cartItems.reduce((total, item) => total + item.Price * item.quantity, 0)}`}
+                ₹{cartItems.reduce((total, item) => total + item.Price * item.quantity, 0)}
                 </p>
               </div>
               <div className="flex justify-between mb-2">
