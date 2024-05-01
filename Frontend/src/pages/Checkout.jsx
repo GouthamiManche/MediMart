@@ -58,18 +58,22 @@ const AddressForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
-      const res = await axios.post(`${apiUrl}/createorder`, {
+      // Calculate total price of cart items
+      const totalPrice = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+
+      const orderData = {
         fullName: formData.fullName,
         address: formData.address,
         city: formData.city,
         state: formData.state,
         pincode: formData.pincode,
         contactNo: formData.contactNo,
-        total: totalPrice, // Calculate total price correctly
+        total: totalPrice, // Ensure total price is a valid number
         userDetails: null, // You can add user details here if available
         cartItems: cartItems,
-      });
+      };
+
+      const res = await axios.post(`${apiUrl}/createorder`, orderData);
       console.log(res.data);
     } catch (err) {
       console.error(err);

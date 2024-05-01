@@ -3,7 +3,11 @@ const Order = require('../models/orderdetails.model');
 const CreateOrder = async (req, res) => {
   try {
     const { fullName, address, city, state, pincode, contactNo, total, userDetails, cartItems } = req.body;
-    const calculatedTotal = total ? total : cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
+    // Validate if total is a valid number
+    if (isNaN(total)) {
+      throw new Error("Total is not a valid number");
+    }
 
     const newOrder = new Order({
       fullName,
@@ -12,7 +16,7 @@ const CreateOrder = async (req, res) => {
       state,
       pincode,
       contactNo,
-      total: calculatedTotal,
+      total,
       userDetails,
       cartItems,
     });

@@ -6,9 +6,10 @@ const orderSchema = new mongoose.Schema({
     state: { type: String, required: true },
     pincode: { type: String, required: true },
     contactNo: { type: String, required: true },
-    total: { type: Number, required: true },
+    total: { type: Number, required: true }, // Ensure total is defined as a number
     userDetails: { type: Object },
     cartItems: [{ productId: String, name: String, quantity: Number, price: Number }],
   });
+
 const Order = mongoose.model('Order_Detail', orderSchema);
 module.exports = Order;
