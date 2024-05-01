@@ -59,8 +59,15 @@ const AddressForm = () => {
     e.preventDefault();
     try {
       const res = await axios.post(`${apiUrl}/createorder`, {
-        address: formData,
-        cartItems,
+        fullName: formData.fullName,
+        address: formData.address,
+        city: formData.city,
+        state: formData.state,
+        pincode: formData.pincode,
+        contactNo: formData.contactNo,
+        total: formData.total, // Make sure this is being sent from your form data
+        userDetails: null, // You can add user details here if available
+        cartItems: cartItems,
       });
       console.log(res.data);
     } catch (err) {

@@ -2,12 +2,19 @@ const Order = require('../models/orderdetails.model');
 
 const CreateOrder = async (req, res) => {
   try {
-    const { address, cartItems } = req.body;
-    const total = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    const { fullName, address, city, state, pincode, contactNo, total, userDetails, cartItems } = req.body;
+    const calculatedTotal = total ? total : cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
     const newOrder = new Order({
-      ...address,
+      fullName,
+      address,
+      city,
+      state,
+      pincode,
+      contactNo,
+      total: calculatedTotal,
+      userDetails,
       cartItems,
-      total,
     });
 
     await newOrder.validate();
