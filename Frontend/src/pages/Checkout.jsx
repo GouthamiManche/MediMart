@@ -58,6 +58,13 @@ const AddressForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Calculate total price of cart items
+      const totalPrice = cartItems.reduce((total, item) => total + (item.Price * item.quantity), 0);
+
+      if (isNaN(totalPrice)) {
+        throw new Error("Total price is not a valid number");
+      }
+
       const orderData = {
         fullName: formData.fullName,
         address: formData.address,
@@ -67,12 +74,7 @@ const AddressForm = () => {
         contactNo: formData.contactNo,
         total: totalPrice,
         userDetails: null,
-        items: cartItems.map(item => ({
-          productId: item._id,
-          name: item.name,
-          quantity: item.quantity,
-          price: item.Price
-        }))
+        cartItems: cartItems,
       };
 
       const res = await axios.post(`${apiUrl}/createorder`, orderData);
@@ -81,7 +83,7 @@ const AddressForm = () => {
       console.error(err);
     }
   };
-
+  
   useEffect(() => {
     const storedCartItems = localStorage.getItem('cartItems');
     if (storedCartItems) {
