@@ -58,18 +58,21 @@ const AddressForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Convert the object of cart items into an array
+      const cartItemsArray = Object.values(cartItems);
+
       // Calculate total price of cart items
-      const totalPrice = cartItems.reduce((total, item) => total + (item.Price * item.quantity), 0);
+      const totalPrice = cartItemsArray.reduce((total, item) => total + (item.Price * item.quantity), 0);
 
       if (isNaN(totalPrice)) {
         throw new Error("Total price is not a valid number");
       }
 
-      const orderItems = cartItems.map(item => ({
-        productId: item._id,
-        name: item.name, // Ensure 'name' property is set
+      const orderItems = cartItemsArray.map(item => ({
+        productId: item._id, // Make sure 'productId' is set
+        name: item.Name, // Make sure 'name' is set
         quantity: item.quantity,
-        price: item.Price
+        price: item.Price // Make sure 'price' is set
       }));
 
       const orderData = {
@@ -90,6 +93,7 @@ const AddressForm = () => {
       console.error(err);
     }
   };
+
 
   useEffect(() => {
     const storedCartItems = localStorage.getItem('cartItems');
