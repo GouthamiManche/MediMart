@@ -3,13 +3,17 @@ import { Link } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { FaCartPlus, FaBars, FaTimes } from "react-icons/fa";
 import { AuthContext } from "./AuthProvider";
-import Logo from '/src/assets/logo.jpg'
+import Logo from '/src/assets/logo.jpg';
 import { ImSearch } from "react-icons/im";
 import { FaCartShopping } from "react-icons/fa6";
+
 function Navbar() {
   const { user, logout } = useContext(AuthContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  // Assuming you have access to the cart state and can get the number of items in the cart
+  const cartItemsCount = 5; // Replace 5 with the actual number of items in the cart
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -23,9 +27,9 @@ function Navbar() {
             <img className="h-12" src={Logo} alt="Logo" />
           </Link>
           <Link to="/" className="md:block hidden text-xl md:text-3xl font-bold ml-1  font-PlayFair">
-           <span className="text-[#14496b]">Medi</span><span className="text-[#8ccf28]">Mart</span> 
+            <span className="text-[#14496b]">Medi</span><span className="text-[#8ccf28]">Mart</span>
           </Link>
-          </div>
+        </div>
         <div className="md:hidden text-gray-900">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -39,31 +43,23 @@ function Navbar() {
           </button>
         </div>
         <nav className="hidden md:flex items-center gap-4">
-        <nav className="hidden md:flex md:ml-[18vw]">
+          <nav className="hidden md:flex md:ml-[18vw]">
             <div className="flex gap-10 text-gray-900">
-              
               <Link to="/shop" className="">
-              {/* <FaSearchPlus className="text-xl"/> */}
-              <ImSearch className="text-xl" />
+                <ImSearch className="text-xl" />
               </Link>
-             
             </div>
           </nav>
-        <Link
-                  to="/cart"
-                  className="font-bold py-2 rounded flex items-center"
-                >
-                 <FaCartShopping className="text-xl"/>
-                  <span className="text-lg ml-1">Cart</span>
-                </Link>
+          <Link
+            to="/cart"
+            className="font-bold py-2 rounded flex items-center"
+          >
+            <FaCartShopping className="text-xl" />
+            <span className="text-lg ml-1">Cart ({cartItemsCount})</span>
+          </Link>
           {user ? (
             <div className="relative inline-block text-left">
               <div className="flex items-center">
-                
-                {/* <div className="bg-black rounded-full w-12 h-12 flex items-center justify-center text-white font-bold text-xl ml-4">
-                  {user.username.charAt(0)}
-                </div> */}
-                
                 <button
                   onClick={toggleDropdown}
                   className="focus:outline-none ml-2"
@@ -72,7 +68,6 @@ function Navbar() {
                 </button>
               </div>
               {dropdownOpen && (
-                
                 <div
                   className="absolute right-0 z-10  w-48  rounded-md bg-white shadow-lg"
                   role="menu"
@@ -80,7 +75,6 @@ function Navbar() {
                   aria-labelledby="menu-button"
                   tabIndex="-1"
                 >
-              
                   <div>
                     <Link
                       to="/profile"

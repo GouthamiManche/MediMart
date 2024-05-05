@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from "axios";
 import { BsTrash } from 'react-icons/bs';
+import { FaCartShopping } from 'react-icons/fa6'; // Import the cart icon
+
 import HorizontalCardScroll from '../Components/HorizontalCardScroll';
 import LoadingGif from "../Components/LoadingGif";
 import { AuthContext } from '../Components/AuthProvider';
@@ -45,6 +47,9 @@ const Cart = () => {
       setCartItems(JSON.parse(storedCartItems));
     }
   }, []);
+  
+  // Calculate total number of items in the cart
+  const totalItemsInCart = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   const handleRemoveFromCart = (index) => {
     const updatedCartItems = [...cartItems];
@@ -130,6 +135,10 @@ const Cart = () => {
 
   return (
     <div className=''>
+       <div>
+        <FaCartShopping className="text-xl" />
+        {totalItemsInCart > 0 && <span className="text-sm">{totalItemsInCart}</span>}
+      </div>
       <div className="hidden md:block">
         <div className="flex justify-between mx-auto max-w-7xl py-8 ">
           {/* Order Summary */}
