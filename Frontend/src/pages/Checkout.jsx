@@ -56,33 +56,33 @@ const AddressForm = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const orderData = {
-        fullName: formData.fullName,
-        address: formData.address,
-        city: formData.city,
-        state: formData.state,
-        pincode: formData.pincode,
-        contactNo: formData.contactNo,
-      };
+    // e.preventDefault();
+    // try {
+    //   const orderData = {
+    //     fullName: formData.fullName,
+    //     address: formData.address,
+    //     city: formData.city,
+    //     state: formData.state,
+    //     pincode: formData.pincode,
+    //     contactNo: formData.contactNo,
+    //   };
 
-      const res = await axios.post(`${apiUrl}/createorder`, orderData);
-      console.log(res.data);
-      // Clear form fields after successful submission
-      setFormData({
-        fullName: '',
-        address: '',
-        city: '',
-        state: '',
-        pincode: '',
-        contactNo: '',
-      });
-      // You may also clear the cart items if required
-      // setCartItems([]);
-    } catch (err) {
-      console.error(err);
-    }
+    //   const res = await axios.post(`${apiUrl}/createorder`, orderData);
+    //   console.log(res.data);
+    //   // Clear form fields after successful submission
+    //   setFormData({
+    //     fullName: '',
+    //     address: '',
+    //     city: '',
+    //     state: '',
+    //     pincode: '',
+    //     contactNo: '',
+    //   });
+    //   // You may also clear the cart items if required
+    //   // setCartItems([]);
+    // } catch (err) {
+    //   console.error(err);
+    // }
   };
 
 
