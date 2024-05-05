@@ -1,7 +1,6 @@
-import React, { useState, useEffect , useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from "axios";
-import Swal from 'sweetalert2';
 import { BsTrash } from 'react-icons/bs';
 import HorizontalCardScroll from '../Components/HorizontalCardScroll';
 import LoadingGif from "../Components/LoadingGif";
@@ -13,9 +12,10 @@ const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [coupon, setCoupon] = useState('');
+  const [discountPercentage, setDiscountPercentage] = useState(0);
   const location = useLocation();
   const { isAuthenticated, user } = useContext(AuthContext);
-  const product = location.state;
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL;
   const apiKey = import.meta.env.VITE_API_KEY;
@@ -24,8 +24,7 @@ const Cart = () => {
     setIsLoading(true);
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/products?category=Other`, 
-        {
+        const response = await axios.get(`${apiUrl}/products?category=Other`, {
           headers: {
             apikey: apiKey,
           },
@@ -65,12 +64,16 @@ const Cart = () => {
     return cartItems.reduce((total, item) => total + item.Price * item.quantity, 0);
   };
 
-  const handleSubmit = () =>{
+  const calculateDiscount = () => {
+    return (getCartTotal() * discountPercentage) / 100;
+  };
+
+  const handleSubmit = () => {
     if (cartItems.length === 0) {
       toast.warning('Please shop products', { autoClose: 2000 });
       return navigate('/shop');
     }
-    
+
     if (!isAuthenticated) {
       toast.warning('Please login', { autoClose: 2000 });
       navigate('/login');
@@ -78,10 +81,55 @@ const Cart = () => {
       return;
     }
     navigate("/checkout");
-  }
+  };
+
+  const handleApplyCoupon = () => {
+
+    const validCoupons = ['SAVE10', 'GET20', 'DISCOUNT30','FIRST50']; 
+
+
+    if (!coupon) {
+
+      setDiscountPercentage(0);
+      toast.error('Coupon removed', { autoClose: 2000 });
+      return;
+    }
+
+
+    if (validCoupons.includes(coupon)) {
+
+      let discountPercentage = 0;
+      switch (coupon) {
+        case 'SAVE10':
+          discountPercentage = 10;
+          break;
+        case 'GET20':
+          discountPercentage = 20;
+          break;
+        case 'DISCOUNT30':
+          discountPercentage = 30;
+          break;
+          case 'FIRST50':
+            discountPercentage = 50;
+            break;
+
+        default:
+          discountPercentage = 0;
+          break;
+      }
+
+
+      setDiscountPercentage(discountPercentage);
+      toast.success('Coupon applied successfully', { autoClose: 2000 });
+    } else {
+      toast.error('Invalid coupon', { autoClose: 2000 });
+    }
+  };
+
+
+
   return (
     <div className=''>
-      {/* Desktop View */}
       <div className="hidden md:block">
         <div className="flex justify-between mx-auto max-w-7xl py-8 ">
           {/* Order Summary */}
@@ -151,7 +199,7 @@ const Cart = () => {
               </div>
               <div className="flex justify-between mb-2">
                 <p className="text-gray-500">Discount</p>
-                <p className="font-semibold">-₹0</p>
+                <p className="font-semibold">{`-₹${calculateDiscount()}`}</p>
               </div>
               <div className="flex justify-between mb-2">
                 <p className="text-gray-500">Delivery Fee</p>
@@ -160,10 +208,25 @@ const Cart = () => {
               <div className="border-t border-gray-300 pt-4 flex justify-between">
                 <p className="font-bold">Total</p>
                 <p className="font-bold">
-                  {`₹${cartItems.reduce((total, item) => total + item.Price * item.quantity, 0)}`}
+                  {`₹${cartItems.reduce((total, item) => total + item.Price * item.quantity, 0) - calculateDiscount()}`}
                 </p>
               </div>
-              <button onClick={handleSubmit} className="bg-[#125872]  text-white font-semibold w-full py-3 rounded-md mt-4">
+              <div className="mt-4">
+                <input
+                  type="text"
+                  placeholder="Apply Coupon"
+                  value={coupon}
+                  onChange={(e) => setCoupon(e.target.value)}
+                  className="border border-gray-300 rounded-md px-2 py-1 w-full"
+                />
+                <button
+                  onClick={handleApplyCoupon}
+                  className="bg-[#125872] text-white font-semibold w-full py-2 mt-2 rounded-md"
+                >
+                  Apply Coupon
+                </button>
+              </div>
+              <button onClick={handleSubmit} className="bg-[#125872] text-white font-semibold w-full py-3 rounded-md mt-4">
                 Checkout
               </button>
             </div>
@@ -236,7 +299,22 @@ const Cart = () => {
                   {`₹${getCartTotal()}`}
                 </p>
               </div>
-              <button   onClick={handleSubmit} className="bg-[#125872] text-white font-semibold w-full   py-3 rounded-md">
+              <div className="mt-4">
+                <input
+                  type="text"
+                  placeholder="Apply Coupon"
+                  value={coupon}
+                  onChange={(e) => setCoupon(e.target.value)}
+                  className="border border-gray-300 rounded-md px-2 py-1 w-full"
+                />
+                <button
+                  onClick={handleApplyCoupon}
+                  className="bg-[#125872] text-white font-semibold w-full py-2 mt-2 rounded-md"
+                >
+                  Apply Coupon
+                </button>
+              </div>
+              <button onClick={handleSubmit} className="bg-[#125872] text-white font-semibold w-full   py-3 rounded-md mt-4">
                 Checkout
               </button>
             </div>
@@ -244,15 +322,16 @@ const Cart = () => {
         </div>
       </div>
       {isLoading ? (
-            <LoadingGif />
-          ) : (
-            <div className='md:mt-[2rem]'>
-              <HorizontalCardScroll itemForHorizontalScroll={items} />
-            
-            </div>
-          )}
+        <LoadingGif />
+      ) : (
+        <div className='md:mt-[2rem]'>
+          <HorizontalCardScroll itemForHorizontalScroll={items} />
+
+        </div>
+      )}
     </div>
   );
+
 };
 
 export default Cart;
