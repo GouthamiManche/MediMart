@@ -116,15 +116,16 @@ const Category = () => {
       alt: isMedicine ? product.Medicine_Name : product.Name,
       isFluidWidth: true,
       src: product.Image_URL,
+      sizes: '(max-width: 480px) 100vw, (max-width: 1200px) 30vw, 360px'
     },
     largeImage: {
       src: product.Image_URL,
-      width: 1200,
-      height: 1800,
+      width: 1440,
+      height: 975,
     },
     shouldUsePositiveSpaceLens: true,
-    className: "md:max-w-[26rem] md:max-h-[22rem]",
-    enlargedImageContainerDimensions: { width: '200%', height: '200%' },
+    className: "md:max-w-[24rem] md:max-h-[24rem] hover:bg-white",
+    enlargedImageContainerDimensions: { width: '200%', height: '150%' },
     enlargedImagePosition: 'beside',
     isHintEnabled: true,
     shouldHideHintAfterFirstBigViewOpened: true,
@@ -137,6 +138,8 @@ const Category = () => {
     },
   }}
 />
+
+
 </div>
             </div>
             <div className="flex flex-col justify-between">
