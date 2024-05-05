@@ -5,6 +5,7 @@ import { FaCartPlus, FaBars, FaTimes } from "react-icons/fa";
 import { AuthContext } from "./AuthProvider";
 import Logo from '/src/assets/logo.jpg'
 import { ImSearch } from "react-icons/im";
+import { FaCartShopping } from "react-icons/fa6";
 function Navbar() {
   const { user, logout } = useContext(AuthContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -43,7 +44,7 @@ function Navbar() {
               
               <Link to="/shop" className="">
               {/* <FaSearchPlus className="text-xl"/> */}
-              <ImSearch className="text-2xl" />
+              <ImSearch className="text-xl" />
               </Link>
              
             </div>
@@ -52,7 +53,7 @@ function Navbar() {
                   to="/cart"
                   className="font-bold py-2 rounded flex items-center"
                 >
-                  <FaCartPlus className="text-xl" />
+                 <FaCartShopping className="text-xl"/>
                   <span className="text-lg ml-1">Cart</span>
                 </Link>
           {user ? (
@@ -67,7 +68,7 @@ function Navbar() {
                   onClick={toggleDropdown}
                   className="focus:outline-none ml-2"
                 >
-                  <CgProfile className="h-[2rem] w-[2rem]" />
+                  <CgProfile className="text-2xl" />
                 </button>
               </div>
               {dropdownOpen && (
