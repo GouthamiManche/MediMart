@@ -69,6 +69,17 @@ const AddressForm = () => {
 
       const res = await axios.post(`${apiUrl}/createorder`, orderData);
       console.log(res.data);
+      // Clear form fields after successful submission
+      setFormData({
+        fullName: '',
+        address: '',
+        city: '',
+        state: '',
+        pincode: '',
+        contactNo: '',
+      });
+      // You may also clear the cart items if required
+      // setCartItems([]);
     } catch (err) {
       console.error(err);
     }

@@ -1,52 +1,29 @@
-// const Order = require('../models/orderdetails.model');
+const Order = require('../models/orderdetails.model');
 
-// const CreateOrder = async (req, res) => {
-//   try {
-//     const { fullName, address, city, state, pincode, contactNo } = req.body;
+const CreateOrder = async (req, res) => {
+  try {
+    const { fullName, address, city, state, pincode, contactNo } = req.body;
 
-//     // if (isNaN(total)) {
-//     //   throw new Error("Total is not a valid number");
-//     // }
+    // Validate input fields
+    if (!fullName || !address || !city || !state || !pincode || !contactNo) {
+      throw new Error("All fields are required");
+    }
 
-//     // if (!cartItems || cartItems.length === 0) {
-//     //   throw new Error("Cart items are required");
-//     // }
+    const newOrder = new Order({
+      fullName,
+      address,
+      city,
+      state,
+      pincode,
+      contactNo,
+    });
 
-//     // Validate each item in the cartItems array
-//     // const validatedCartItems = cartItems.filter(item => {
-//     //   if (!item.Product_id || !item.Price) {
-//     //     console.error("Invalid cart item:", item);
-//     //     return false;
-//     //   }
-//     //   return true;
-//     // });
+    await newOrder.validate();
+    const savedOrder = await newOrder.save();
+    res.status(201).send("Order Added Successfully");
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
+};
 
-//     // if (validatedCartItems.length === 0) {
-//     //   throw new Error("No valid cart items found");
-//     // }
-
-//     // const orderItems = validatedCartItems.map(item => ({
-//     //   product_id: item.Product_id,
-//     //   name: item.Name,
-//     //   quantity: item.quantity,
-//     //   price: parseFloat(item.Price)
-//     // }));
-
-//     const newOrder = new Order({
-//       fullName,
-//       address,
-//       city,
-//       state,
-//       pincode,
-//       contactNo,
-//     });
-
-//     await newOrder.validate();
-//     const savedOrder = await newOrder.save();
-//     res.status(201).send("Order Added Successfully");
-//   } catch (err) {
-//     res.status(400).send(err.message);
-//   }
-// };
-
-// module.exports = { CreateOrder };
+module.exports = { CreateOrder };
