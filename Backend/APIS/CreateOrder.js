@@ -2,18 +2,35 @@ const Order = require('../models/orderdetails.model');
 
 const CreateOrder = async (req, res) => {
   try {
-    const { fullName, address, city, state, pincode, contactNo, total, userDetails, cartItems } = req.body;
+    const { fullName, address, city, state, pincode, contactNo } = req.body;
 
-    if (isNaN(total)) {
-      throw new Error("Total is not a valid number");
-    }
+    // if (isNaN(total)) {
+    //   throw new Error("Total is not a valid number");
+    // }
 
-    const orderItems = cartItems.map(item => ({
-      productId: item._id,
-      name: item.name,
-      quantity: item.quantity,
-      price: item.Price
-    }));
+    // if (!cartItems || cartItems.length === 0) {
+    //   throw new Error("Cart items are required");
+    // }
+
+    // Validate each item in the cartItems array
+    // const validatedCartItems = cartItems.filter(item => {
+    //   if (!item.Product_id || !item.Price) {
+    //     console.error("Invalid cart item:", item);
+    //     return false;
+    //   }
+    //   return true;
+    // });
+
+    // if (validatedCartItems.length === 0) {
+    //   throw new Error("No valid cart items found");
+    // }
+
+    // const orderItems = validatedCartItems.map(item => ({
+    //   product_id: item.Product_id,
+    //   name: item.Name,
+    //   quantity: item.quantity,
+    //   price: parseFloat(item.Price)
+    // }));
 
     const newOrder = new Order({
       fullName,
@@ -22,9 +39,6 @@ const CreateOrder = async (req, res) => {
       state,
       pincode,
       contactNo,
-      total,
-      userDetails,
-      items: orderItems, // Assigning order items to the 'items' field
     });
 
     await newOrder.validate();
@@ -34,6 +48,5 @@ const CreateOrder = async (req, res) => {
     res.status(400).send(err.message);
   }
 };
-
 
 module.exports = { CreateOrder };

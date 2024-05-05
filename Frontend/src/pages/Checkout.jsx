@@ -58,29 +58,6 @@ const AddressForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Convert the object of cart items into an array
-      const cartItemsArray = Object.values(cartItems);
-
-      // Calculate total price of cart items
-      const totalPrice = cartItemsArray.reduce((total, item) => total + (item.Price * item.quantity), 0);
-
-      if (isNaN(totalPrice)) {
-        throw new Error("Total price is not a valid number");
-      }
-
-      const orderItems = cartItemsArray.map(item => ({
-        productId: item.Product_id, // Use 'Product_id' as productId
-        name: item.Name, // Use 'Name' as name
-        quantity: item.quantity,
-        price: item.Price // Use 'Price' as price
-      }));
-
-      // Check if any item in orderItems is missing productId or price
-      const invalidItem = orderItems.find(item => !item.productId || !item.price);
-      if (invalidItem) {
-        throw new Error(`Product ID or price is missing for item: ${invalidItem.name}`);
-      }
-
       const orderData = {
         fullName: formData.fullName,
         address: formData.address,
@@ -88,9 +65,6 @@ const AddressForm = () => {
         state: formData.state,
         pincode: formData.pincode,
         contactNo: formData.contactNo,
-        total: totalPrice,
-        userDetails: null,
-        cartItems: orderItems,
       };
 
       const res = await axios.post(`${apiUrl}/createorder`, orderData);
