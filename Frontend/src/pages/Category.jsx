@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import HorizontalCardScroll from '../Components/HorizontalCardScroll';
 import axios from "axios";
 import ReviewSection from '../Components/ReviewSection';
@@ -8,14 +8,13 @@ import { AuthContext } from '../Components/AuthProvider';
 import LoadingGif from "../Components/LoadingGif";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ReactImageMagnify from 'react-image-magnify';
 
 const Category = () => {
   const location = useLocation();
   const product = location.state;
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
-  const [showReviewModal, setShowReviewModal] = useState(false);
-  const [reviews, setReviews] = useState([]);
   const [items, setItems] = useState([]);
   const [cartItems, setCartItems] = useState([]);
   const [itemAddedToCart, setItemAddedToCart] = useState(false);
@@ -68,9 +67,8 @@ const Category = () => {
 
   const { isAuthenticated, user } = useContext(AuthContext);
 
-
   const handleAddToCart = (product, quantity) => {
-    const { _id, Name, Price, Image_URL,Product_id } = product;
+    const { _id, Name, Price, Image_URL, Product_id } = product;
     const cartItem = {
       _id,
       Name,
@@ -111,11 +109,38 @@ const Category = () => {
                   />
                 </svg>
               </button>
-              <img
-                src={product.Image_URL}
-                alt={isMedicine ? product.Medicine_Name : product.Name}
-                className="md:max-w-[26rem] md:max-h-[22rem] md:ml-[4rem] mt-4 md:mt-[3rem] rounded-md border border-2 "
-              />
+              <div className="flex justify-center items-center">
+              <ReactImageMagnify
+  {...{
+    smallImage: {
+      alt: isMedicine ? product.Medicine_Name : product.Name,
+      isFluidWidth: true,
+      src: product.Image_URL,
+      sizes: '(max-width: 480px) 100vw, (max-width: 1200px) 30vw, 360px'
+    },
+    largeImage: {
+      src: product.Image_URL,
+      width: 1440,
+      height: 975,
+    },
+    shouldUsePositiveSpaceLens: true,
+    className: "md:max-w-[24rem] md:max-h-[24rem] hover:bg-white",
+    enlargedImageContainerDimensions: { width: '200%', height: '150%' },
+    enlargedImagePosition: 'beside',
+    isHintEnabled: true,
+    shouldHideHintAfterFirstBigViewOpened: true,
+    isEnlargedImagePortalEnabledForTouch: true,
+    lensStyle: {
+      lensStyle: {
+        background: 'rgba(77, 144, 254, 0.3)', // Blue tinted background
+        border: '1px solid #4d90fe', // Blue border
+      },
+    },
+  }}
+/>
+
+
+</div>
             </div>
             <div className="flex flex-col justify-between">
               <div>
