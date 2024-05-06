@@ -1,4 +1,4 @@
-import React, { useState, useContext,useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { FaCartPlus, FaBars, FaTimes } from "react-icons/fa";
@@ -8,13 +8,17 @@ import { ImSearch } from "react-icons/im";
 import { FaCartShopping } from "react-icons/fa6";
 
 function Navbar() {
-  const { user, logout} = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
+
+  const totalItemsInCart = useMemo(() => {
+    return cartItems.reduce((total, item) => total + item.quantity, 0);
+  }, [cartItems]);
 
   return (
     <div className="bg-white text-gray-900 z-50 w-full">
@@ -52,7 +56,7 @@ function Navbar() {
             className="font-bold py-2 rounded flex items-center"
           >
             <FaCartShopping className="text-xl" />
-            <span className="text-lg ml-1">Cart ({0})</span>
+            <span className="text-lg ml-1">Cart ({cartItemsCount})</span>
           </Link>
           {user ? (
             <div className="relative inline-block text-left">

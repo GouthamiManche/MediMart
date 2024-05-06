@@ -152,7 +152,7 @@ const Cart = () => {
 
   return (
     <div className=''>
-      {/* <div>
+       {/* <div>
         <FaCartShopping className="text-xl" />
         {totalItemsInCart > 0 && <span className="text-sm">{totalItemsInCart}</span>}
       </div> */}
