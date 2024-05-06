@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from "axios";
 import { BsTrash } from 'react-icons/bs';
-import { FaCartShopping } from "react-icons/fa6";
 import HorizontalCardScroll from '../Components/HorizontalCardScroll';
 import LoadingGif from "../Components/LoadingGif";
 import { AuthContext } from '../Components/AuthProvider';
@@ -22,7 +21,7 @@ const Cart = () => {
   const apiKey = import.meta.env.VITE_API_KEY;
   const [totalPrice, setTotalPrice] = useState(0);
 
-//APIII
+
   useEffect(() => {
     setIsLoading(true);
     const fetchData = async () => {
@@ -42,7 +41,7 @@ const Cart = () => {
     fetchData();
   }, []);
 
-  //LOCALSTORAGE CARTITEMS
+
   useEffect(() => {
     const storedCartItems = localStorage.getItem('cartItems');
     if (storedCartItems) {
@@ -50,10 +49,9 @@ const Cart = () => {
     }
   }, []);
 
-  // Calculate total number of items in the cart
 
 
-  //DELETE ITEMS
+
   const handleRemoveFromCart = (index) => {
     const updatedCartItems = [...cartItems];
     updatedCartItems.splice(index, 1);
