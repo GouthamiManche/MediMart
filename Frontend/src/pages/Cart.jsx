@@ -22,6 +22,7 @@ const Cart = () => {
   const apiKey = import.meta.env.VITE_API_KEY;
   const [totalPrice, setTotalPrice] = useState(0);
 
+//APIII
   useEffect(() => {
     setIsLoading(true);
     const fetchData = async () => {
@@ -41,37 +42,39 @@ const Cart = () => {
     fetchData();
   }, []);
 
+  //LOCALSTORAGE CARTITEMS
   useEffect(() => {
     const storedCartItems = localStorage.getItem('cartItems');
     if (storedCartItems) {
       setCartItems(JSON.parse(storedCartItems));
     }
   }, []);
-  
+
   // Calculate total number of items in the cart
   const totalItemsInCart = cartItems.reduce((total, item) => total + item.quantity, 0);
 
+  //DELETE ITEMS
   const handleRemoveFromCart = (index) => {
     const updatedCartItems = [...cartItems];
     updatedCartItems.splice(index, 1);
     setCartItems(updatedCartItems);
-    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems)); // Update local storage
+    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems)); 
   };
 
+  //HANDLE QUANTITY IN CART
   const handleQuantityChange = (index, value) => {
     const updatedCartItems = [...cartItems];
     updatedCartItems[index].quantity = Math.max(1, value);
     setCartItems(updatedCartItems);
-    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
-    // Update total price in localStorage after quantity change
+    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems)); 
     updateTotalPrice(updatedCartItems, discountPercentage);
   };
 
   const calculateDiscount = () => {
     return (getCartTotal() * discountPercentage) / 100;
   };
-  
-  const getCartTotal = () => {
+
+   const getCartTotal = () => {
     return cartItems.reduce((total, item) => total + item.Price * item.quantity, 0);
   };
 
@@ -87,19 +90,21 @@ const Cart = () => {
       console.log('User is not logged in. Please log in to add items to the cart.');
       return;
     }
+
+    const finalTotalPrice = getCartTotal() - calculateDiscount();
+    localStorage.setItem('totalPrice', JSON.stringify(finalTotalPrice));
+
     navigate("/checkout");
   };
 
   const handleApplyCoupon = () => {
-    const validCoupons = ['SAVE10', 'GET20', 'DISCOUNT30', 'FIRST50']; 
-  
+    const validCoupons = ['SAVE10', 'GET20', 'DISCOUNT30', 'FIRST50'];
+
     if (!coupon) {
       setDiscountPercentage(0);
-      toast.error('Coupon removed', { autoClose: 2000 });
-      updateTotalPrice(cartItems, 0); // Update total price after removing coupon
-      return;
+      updateTotalPrice(cartItems, 0); 
     }
-  
+
     if (validCoupons.includes(coupon)) {
       let discountPercentage = 0;
       switch (coupon) {
@@ -119,37 +124,38 @@ const Cart = () => {
           discountPercentage = 0;
           break;
       }
-  
+
       setDiscountPercentage(discountPercentage);
-  updateTotalPrice(cartItems, calculateDiscount()); 
-      
+      updateTotalPrice(cartItems, discountPercentage);
+
       toast.success('Coupon applied successfully', { autoClose: 2000 });
     } else {
       toast.error('Invalid coupon', { autoClose: 2000 });
     }
   };
-  
+
   useEffect(() => {
     updateTotalPrice(cartItems, discountPercentage);
   }, [cartItems, discountPercentage]);
 
   const updateTotalPrice = (items, discount) => {
-  //console.log('Updating Total Price...');
-  const newTotalPrice = calculateTotalPrice(items, discount);
-  //console.log('New Total Price:', newTotalPrice);
-  localStorage.setItem('totalPrice', JSON.stringify(newTotalPrice));
-  setTotalPrice(newTotalPrice);
-};
+    const newTotalPrice = calculateTotalPrice(items, discount);
+    localStorage.setItem('totalPrice', JSON.stringify(newTotalPrice));
+    setTotalPrice(newTotalPrice);
+  };
+
   const calculateTotalPrice = (items, discount) => {
-    return items.reduce((total, item) => total + item.Price * item.quantity, 0) - discount;
+    const cartTotal = items.reduce((total, item) => total + item.Price * item.quantity, 0);
+    const discountAmount = (cartTotal * discount) / 100;
+    return cartTotal - discountAmount;
   };
 
   return (
     <div className=''>
-       <div>
+      {/* <div>
         <FaCartShopping className="text-xl" />
         {totalItemsInCart > 0 && <span className="text-sm">{totalItemsInCart}</span>}
-      </div>
+      </div> */}
       <div className="hidden md:block">
         <div className="flex justify-between mx-auto max-w-7xl py-8 ">
           {/* Order Summary */}

@@ -43,8 +43,8 @@ const AddressForm = () => {
   });
   const [cartItems, setCartItems] = useState([]);
   const [cities, setCities] = useState([]);
+  const { user } = useContext(AuthContext);
 
-  //const [authUser, setAuthUser] = useState(null); //user details
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -55,36 +55,20 @@ const AddressForm = () => {
     }
   };
 
-  const { user } = useContext(AuthContext); // Use useContext inside the functional component
-
-  // Function to get user details from Auth context API
-  const getUserDetailsFromContext = () => {
-    return user ? {
-      email: user.email,
-    } : null;
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      
       const res = await axios.post(`${apiUrl}/createorder`, {
         ...formData,
-        total: getTotalPriceFromLocalStorage(),
-        userDetails: getUserDetailsFromContext(),
+        total: formData.total,
+        //userDetails: getUserDetailsFromContext(),
       });
       console.log(res.data);
     } catch (err) {
       console.error(err);
     }
   };
-
-  useEffect(() => {
-    const storedCartItems = localStorage.getItem('cartItems');
-    if (storedCartItems) {
-      setCartItems(JSON.parse(storedCartItems));
-    }
-  }, []);
 
 return (
   <div className="flex  items-center min-h-full mx-[4vw]">
@@ -215,23 +199,23 @@ return (
             <h2 className="text-2xl font-bold mb-4">Order Total</h2>
             <div className="bg-white">
               <div className="flex justify-between mb-2">
-                <p className="text-gray-500">Subtotal</p>
+                {/* <p className="text-gray-500">Subtotal</p>
                 <p className="font-semibold">
                   {`₹${cartItems.reduce((total, item) => total + item.Price * item.quantity, 0)}`}
-                </p>
+                </p> */}
               </div>
-              <div className="flex justify-between mb-2">
+              {/* <div className="flex justify-between mb-2">
                 <p className="text-gray-500">Discount</p>
                 <p className="font-semibold">-₹0</p>
               </div>
               <div className="flex justify-between mb-2">
                 <p className="text-gray-500">Delivery Fee</p>
                 <p className="font-semibold">₹0</p>
-              </div>
+              </div> */}
               <div className="border-t border-gray-300 pt-4 flex justify-between">
                 <p className="font-bold">Total</p>
                 <p className="font-bold">
-                  {`₹${cartItems.reduce((total, item) => total + item.Price * item.quantity, 0)}`}
+                {`₹${localStorage.getItem("totalPrice") || 0}`}
                 </p>
               </div>
               <button onClick={handleSubmit} className="bg-[#125872]  text-white font-semibold w-full py-3 rounded-md mt-4">

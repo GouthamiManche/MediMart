@@ -7,7 +7,6 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
 
-
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
 
@@ -25,12 +24,15 @@ const AuthProvider = ({ children }) => {
         setUser(decodedToken);
         setToken(storedToken);
         const userCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+       // setCartItems(userCartItems);
+        //setCartItemCount(calculateTotalItemsInCart(userCartItems));
         console.log('Cart items:', userCartItems);
       }
     } else {
       console.log('No token found');
     }
   }, [token]);
+
 
   const login = (data) => {
     setAuthenticated(true);
@@ -47,10 +49,6 @@ const AuthProvider = ({ children }) => {
     localStorage.removeItem('cartItems');
     window.location.reload();
   };
-
-useEffect(()=>{
-  //console.log("User : ",user);
-})
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, user, token, login, logout }}>

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext,useEffect } from "react";
 import { Link } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { FaCartPlus, FaBars, FaTimes } from "react-icons/fa";
@@ -8,12 +8,9 @@ import { ImSearch } from "react-icons/im";
 import { FaCartShopping } from "react-icons/fa6";
 
 function Navbar() {
-  const { user, logout } = useContext(AuthContext);
+  const { user, logout} = useContext(AuthContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
-  // Assuming you have access to the cart state and can get the number of items in the cart
-  const cartItemsCount = 5; // Replace 5 with the actual number of items in the cart
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -55,7 +52,7 @@ function Navbar() {
             className="font-bold py-2 rounded flex items-center"
           >
             <FaCartShopping className="text-xl" />
-            <span className="text-lg ml-1">Cart ({cartItemsCount})</span>
+            <span className="text-lg ml-1">Cart ({0})</span>
           </Link>
           {user ? (
             <div className="relative inline-block text-left">
