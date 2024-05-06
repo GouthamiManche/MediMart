@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext ,useMemo} from "react";
 import { Link } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { FaCartPlus, FaBars, FaTimes } from "react-icons/fa";
