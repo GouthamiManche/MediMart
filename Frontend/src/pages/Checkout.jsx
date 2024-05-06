@@ -207,23 +207,23 @@ return (
             <h2 className="text-2xl font-bold mb-4">Order Total</h2>
             <div className="bg-white">
               <div className="flex justify-between mb-2">
-                <p className="text-gray-500">Subtotal</p>
+                {/* <p className="text-gray-500">Subtotal</p>
                 <p className="font-semibold">
                   {`₹${cartItems.reduce((total, item) => total + item.Price * item.quantity, 0)}`}
-                </p>
+                </p> */}
               </div>
-              <div className="flex justify-between mb-2">
+              {/* <div className="flex justify-between mb-2">
                 <p className="text-gray-500">Discount</p>
                 <p className="font-semibold">-₹0</p>
               </div>
               <div className="flex justify-between mb-2">
                 <p className="text-gray-500">Delivery Fee</p>
                 <p className="font-semibold">₹0</p>
-              </div>
+              </div> */}
               <div className="border-t border-gray-300 pt-4 flex justify-between">
                 <p className="font-bold">Total</p>
                 <p className="font-bold">
-                  {`₹${cartItems.reduce((total, item) => total + item.Price * item.quantity, 0)}`}
+                {`₹${localStorage.getItem("totalPrice") || 0}`}
                 </p>
               </div>
               <button onClick={handleSubmit} className="bg-[#125872]  text-white font-semibold w-full py-3 rounded-md mt-4">
