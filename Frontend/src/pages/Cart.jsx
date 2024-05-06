@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from "axios";
 import { BsTrash } from 'react-icons/bs';
-import { FaCartShopping } from 'react-icons/fa';
+import { FaCartShopping } from "react-icons/fa6";
 import HorizontalCardScroll from '../Components/HorizontalCardScroll';
 import LoadingGif from "../Components/LoadingGif";
 import { AuthContext } from '../Components/AuthProvider';
