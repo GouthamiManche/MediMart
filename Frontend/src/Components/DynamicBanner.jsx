@@ -1,3 +1,5 @@
+
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 export default function DynamicBanner() {
   return (
     <div className="flex flex-col md:flex-row border rounded-md">
@@ -5,7 +7,7 @@ export default function DynamicBanner() {
         <p className="text-2xl font-semibold">Get 15% off on Medicine Purchases</p>
         <p>and get 15% off on your order</p>
         <div className="flex md:h-[8rem] h-[4rem]">
-          <p className="text-2xl font-semibold">Order now</p>
+          <p className="text-2xl font-semibold"><Link to ="/shop">Order now</Link></p>
           <img
             src="https://images.apollo247.in/images/ui_revamp_Prescription_Pot.svg"
             alt="Order now"
@@ -31,7 +33,7 @@ export default function DynamicBanner() {
             </div>
           </div>
           <br />
-          <p>Get 15% off on Medicine Purchases and get 15% off on your order. Order now</p>
+          <p>Get 15% off on Medicine Purchases and get 15% off on your order. <Link to ="/shop">Order now</Link></p>
         </div>
       </div>
     </div>
