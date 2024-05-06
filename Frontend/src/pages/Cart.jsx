@@ -20,6 +20,7 @@ const Cart = () => {
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL;
   const apiKey = import.meta.env.VITE_API_KEY;
+  const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
     setIsLoading(true);
@@ -62,14 +63,16 @@ const Cart = () => {
     updatedCartItems[index].quantity = Math.max(1, value);
     setCartItems(updatedCartItems);
     localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
-  };
-
-  const getCartTotal = () => {
-    return cartItems.reduce((total, item) => total + item.Price * item.quantity, 0);
+    // Update total price in localStorage after quantity change
+    updateTotalPrice(updatedCartItems, discountPercentage);
   };
 
   const calculateDiscount = () => {
     return (getCartTotal() * discountPercentage) / 100;
+  };
+  
+  const getCartTotal = () => {
+    return cartItems.reduce((total, item) => total + item.Price * item.quantity, 0);
   };
 
   const handleSubmit = () => {
@@ -88,20 +91,16 @@ const Cart = () => {
   };
 
   const handleApplyCoupon = () => {
-
-    const validCoupons = ['SAVE10', 'GET20', 'DISCOUNT30','FIRST50']; 
-
-
+    const validCoupons = ['SAVE10', 'GET20', 'DISCOUNT30', 'FIRST50']; 
+  
     if (!coupon) {
-
       setDiscountPercentage(0);
       toast.error('Coupon removed', { autoClose: 2000 });
+      updateTotalPrice(cartItems, 0); // Update total price after removing coupon
       return;
     }
-
-
+  
     if (validCoupons.includes(coupon)) {
-
       let discountPercentage = 0;
       switch (coupon) {
         case 'SAVE10':
@@ -113,24 +112,37 @@ const Cart = () => {
         case 'DISCOUNT30':
           discountPercentage = 30;
           break;
-          case 'FIRST50':
-            discountPercentage = 50;
-            break;
-
+        case 'FIRST50':
+          discountPercentage = 50;
+          break;
         default:
           discountPercentage = 0;
           break;
       }
-
-
+  
       setDiscountPercentage(discountPercentage);
+  updateTotalPrice(cartItems, calculateDiscount()); 
+      
       toast.success('Coupon applied successfully', { autoClose: 2000 });
     } else {
       toast.error('Invalid coupon', { autoClose: 2000 });
     }
   };
+  
+  useEffect(() => {
+    updateTotalPrice(cartItems, discountPercentage);
+  }, [cartItems, discountPercentage]);
 
-
+  const updateTotalPrice = (items, discount) => {
+  //console.log('Updating Total Price...');
+  const newTotalPrice = calculateTotalPrice(items, discount);
+  //console.log('New Total Price:', newTotalPrice);
+  localStorage.setItem('totalPrice', JSON.stringify(newTotalPrice));
+  setTotalPrice(newTotalPrice);
+};
+  const calculateTotalPrice = (items, discount) => {
+    return items.reduce((total, item) => total + item.Price * item.quantity, 0) - discount;
+  };
 
   return (
     <div className=''>
