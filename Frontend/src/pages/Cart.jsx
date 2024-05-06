@@ -51,7 +51,7 @@ const Cart = () => {
   }, []);
 
   // Calculate total number of items in the cart
-  const totalItemsInCart = cartItems.reduce((total, item) => total + item.quantity, 0);
+
 
   //DELETE ITEMS
   const handleRemoveFromCart = (index) => {
