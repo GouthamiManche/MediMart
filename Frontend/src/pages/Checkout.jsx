@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { SiPhonepe } from "react-icons/si";
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { AuthContext } from '../Components/AuthProvider';
+import { SiPhonepe } from 'react-icons/si';
+
 const stateData = [
   { name: 'Andhra Pradesh', cities: ['Visakhapatnam', 'Vijayawada', 'Guntur', 'Nellore', 'Kurnool', 'Kadapa', 'Anantapur', 'Kakinada', 'Tirupati', 'Chittoor'] },
   { name: 'Arunachal Pradesh', cities: ['Itanagar', 'Ziro', 'Tawang', 'Bomdila', 'Roing', 'Tezu', 'Namsai', 'Pasighat', 'Aalo', 'Daporijo'] },
@@ -30,7 +30,6 @@ const stateData = [
 ];
 
 const AddressForm = () => {
-
   const apiUrl = import.meta.env.VITE_API_URL;
   const [formData, setFormData] = useState({
     fullName: '',
@@ -43,11 +42,19 @@ const AddressForm = () => {
   });
   const [cartItems, setCartItems] = useState([]);
   const [cities, setCities] = useState([]);
+  const [errors, setErrors] = useState({
+    fullName: '',
+    address: '',
+    city: '',
+    state: '',
+    pincode: '',
+    contactNo: '',
+  });
 
-  //const [authUser, setAuthUser] = useState(null); //user details
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    setErrors({ ...errors, [name]: '' });
 
     if (name === 'state') {
       const selectedState = stateData.find((state) => state.name === value);
@@ -58,28 +65,45 @@ const AddressForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Convert the object of cart items into an array
-      const cartItemsArray = Object.values(cartItems);
+      const validationErrors = {};
 
-      // Calculate total price of cart items
+      if (!formData.fullName) {
+        validationErrors.fullName = 'Please enter your full name.';
+      }
+      if (!formData.address) {
+        validationErrors.address = 'Please enter your address.';
+      }
+      if (!formData.city) {
+        validationErrors.city = 'Please enter your city.';
+      }
+      if (!formData.state) {
+        validationErrors.state = 'Please select your state.';
+      }
+      if (!formData.pincode) {
+        validationErrors.pincode = 'Please enter your pincode.';
+      } else if (!/^\d{6}$/.test(formData.pincode)) {
+        validationErrors.pincode = 'Please enter a valid 6-digit pincode.';
+      }
+      if (!formData.contactNo) {
+        validationErrors.contactNo = 'Please enter your contact number.';
+      } else if (!/^\d{10}$/.test(formData.contactNo)) {
+        validationErrors.contactNo = 'Please enter a valid 10-digit contact number.';
+      }
+
+      if (Object.keys(validationErrors).length > 0) {
+        setErrors(validationErrors);
+        return;
+      }
+
+      const cartItemsArray = Object.values(cartItems);
       const totalPrice = cartItemsArray.reduce((total, item) => total + (item.Price * item.quantity), 0);
 
-      if (isNaN(totalPrice)) {
-        throw new Error("Total price is not a valid number");
-      }
-
       const orderItems = cartItemsArray.map(item => ({
-        productId: item.Product_id, // Use 'Product_id' as productId
-        name: item.Name, // Use 'Name' as name
+        productId: item.Product_id,
+        name: item.Name,
         quantity: item.quantity,
-        price: item.Price // Use 'Price' as price
+        price: item.Price
       }));
-
-      // Check if any item in orderItems is missing productId or price
-      const invalidItem = orderItems.find(item => !item.productId || !item.price);
-      if (invalidItem) {
-        throw new Error(`Product ID or price is missing for item: ${invalidItem.name}`);
-      }
 
       const orderData = {
         fullName: formData.fullName,
@@ -100,7 +124,6 @@ const AddressForm = () => {
     }
   };
 
-
   useEffect(() => {
     const storedCartItems = localStorage.getItem('cartItems');
     if (storedCartItems) {
@@ -109,13 +132,12 @@ const AddressForm = () => {
   }, []);
 
   return (
-    <div className="flex  items-center min-h-full mx-[4vw]">
+    <div className="flex items-center min-h-full mx-[4vw]">
       <div className="bg-white p-6 max-w-2xl w-full md:mt-[2rem] mx-auto">
-
         <h2 className="text-2xl font-bold mb-4">Shipping Address</h2>
         <div className="md:flex md:mb-[2rem]">
           <div className="w-full md:w-1/2 md:mr-2 mb-4 md:mb-0">
-            <label placeholder="Enter weight…" htmlFor="fullName" className="text-sm font-medium text-gray-700">
+            <label htmlFor="fullName" className="text-sm font-medium text-gray-700">
               Full Name
             </label>
             <input
@@ -127,6 +149,7 @@ const AddressForm = () => {
               required
               className="mt-1 py-3 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             />
+            {errors.fullName && <span className="text-red-500">{errors.fullName}</span>}
           </div>
           <div className="w-full md:w-1/2 md:ml-2">
             <label htmlFor="contactNo" className="text-sm font-medium text-gray-700">
@@ -138,8 +161,10 @@ const AddressForm = () => {
               name="contactNo"
               value={formData.contactNo}
               onChange={handleChange}
+              required
               className="mt-1 p-2 block py-3 w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             />
+            {errors.contactNo && <span className="text-red-500">{errors.contactNo}</span>}
           </div>
         </div>
         <div className="mb-[2rem]">
@@ -155,6 +180,7 @@ const AddressForm = () => {
             required
             className="mt-1 p-2 py-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
           />
+          {errors.address && <span className="text-red-500">{errors.address}</span>}
         </div>
         <div className="md:flex md:mb-4">
           <div className="w-full md:w-1/3 md:mr-2 mb-4 md:mb-[1rem]">
@@ -170,6 +196,7 @@ const AddressForm = () => {
               required
               className="mt-1 p-2 block py-3 w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             />
+            {errors.pincode && <span className="text-red-500">{errors.pincode}</span>}
           </div>
           <div className="w-full md:w-1/3 md:mr-2 mb-4 md:mb-0">
             <label htmlFor="state" className="block text-sm font-medium text-gray-700">
@@ -190,6 +217,7 @@ const AddressForm = () => {
                 </option>
               ))}
             </select>
+            {errors.state && <span className="text-red-500">{errors.state}</span>}
           </div>
           <div className="w-full md:w-1/3">
             <label htmlFor="city" className="block text-sm font-medium text-gray-700">
@@ -210,15 +238,12 @@ const AddressForm = () => {
                 </option>
               ))}
             </select>
+            {errors.city && <span className="text-red-500">{errors.city}</span>}
           </div>
         </div>
         <div className="mb-[2rem] flex items-center justify-between">
           <div className="flex items-center">
-            <input
-              type="radio"
-
-              className="w-4 h-4 py-3 text-blue-600 bg-gray-100 rounded border-gray-300"
-            />
+            <input type="radio" className="w-4 h-4 py-3 text-blue-600 bg-gray-100 rounded border-gray-300" />
             <label htmlFor="default-checkbox" className="ml-2 flex items-center text-lg font-medium text-fuchsia-900">
               <SiPhonepe className="text-2xl" />
               <span className="ml-1">Phone Pe</span>
@@ -226,7 +251,7 @@ const AddressForm = () => {
           </div>
         </div>
       </div>
-      <div className="w-[30%] p-[2rem]   border border-gray-300 sticky top-2 rounded-md">
+      <div className="w-[30%] p-[2rem] border border-gray-300 sticky top-2 rounded-md">
         <h2 className="text-2xl font-bold mb-4">Order Total</h2>
         <div className="bg-white">
           <div className="flex justify-between mb-2">
@@ -249,12 +274,11 @@ const AddressForm = () => {
               {`₹${cartItems.reduce((total, item) => total + item.Price * item.quantity, 0)}`}
             </p>
           </div>
-          <button onClick={handleSubmit} className="bg-[#125872]  text-white font-semibold w-full py-3 rounded-md mt-4">
+          <button onClick={handleSubmit} className="bg-[#125872] text-white font-semibold w-full py-3 rounded-md mt-4">
             Proceed To Pay
           </button>
         </div>
       </div>
-
     </div>
   );
 };
