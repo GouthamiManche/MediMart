@@ -146,10 +146,10 @@ const Cart = () => {
 
   return (
     <div className=''>
-       <div>
+       {/* <div>
         <FaCartShopping className="text-xl" />
         {totalItemsInCart > 0 && <span className="text-sm">{totalItemsInCart}</span>}
-      </div>
+      </div> */}
       <div className="hidden md:block">
         <div className="flex justify-between mx-auto max-w-7xl py-8 ">
           {/* Order Summary */}
