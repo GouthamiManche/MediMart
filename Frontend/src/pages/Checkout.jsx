@@ -1,7 +1,6 @@
-import React, { useState, useEffect,useContext  } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { SiPhonepe } from 'react-icons/si';
-import { AuthContext } from '../Components/AuthProvider';
 const stateData = [
   { name: 'Andhra Pradesh', cities: ['Visakhapatnam', 'Vijayawada', 'Guntur', 'Nellore', 'Kurnool', 'Kadapa', 'Anantapur', 'Kakinada', 'Tirupati', 'Chittoor'] },
   { name: 'Arunachal Pradesh', cities: ['Itanagar', 'Ziro', 'Tawang', 'Bomdila', 'Roing', 'Tezu', 'Namsai', 'Pasighat', 'Aalo', 'Daporijo'] },

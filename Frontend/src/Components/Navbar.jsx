@@ -69,6 +69,7 @@ function Navbar({cartItems}) {
                 </button>
               </div>
               {dropdownOpen && (
+                
                 <div
                   className="absolute right-0 z-10  w-48  rounded-md bg-white shadow-lg"
                   role="menu"
@@ -176,13 +177,7 @@ function Navbar({cartItems}) {
               About Us
             </Link> */}
            
-            <Link
-              to="/cart"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition duration-300"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Cart
-            </Link>
+         
             {/* <Link
               to="/contact"
               className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition duration-300"
