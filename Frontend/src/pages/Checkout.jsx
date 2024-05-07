@@ -43,34 +43,45 @@ const AddressForm = () => {
   const [cartItems, setCartItems] = useState([]);
   const [cities, setCities] = useState([]);
 
-  //const [authUser, setAuthUser] = useState(null); //user details
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    setErrors({ ...errors, [name]: '' });
-
     if (name === 'state') {
       const selectedState = stateData.find((state) => state.name === value);
       setCities(selectedState ? selectedState.cities : []);
     }
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const totalPrice = localStorage.getItem("totalPrice") || 0;
+      const storedCartItems = localStorage.getItem('cartItems');
+      const parsedCartItems = storedCartItems ? JSON.parse(storedCartItems) : [];
       
-      const res = await axios.post(`${apiUrl}/createorder`, {
-        ...formData,
-        total: getTotalPriceFromLocalStorage(),
-        userDetails: getUserDetailsFromContext(),
-      });
+      const cartItemsWithProductId = parsedCartItems.map(item => ({
+        Product_id: item.Product_id, // Ensure correct property name and casing
+        orderId: generateOrderId(), // Generate orderId using the generateOrderId function
+        Name: item.Name, // Assuming this is the correct property name in your data
+        Price: item.Price, // Assuming this is the correct property name in your data
+        quantity: item.quantity,
+      }));
+
+      const orderData = { ...formData, total: totalPrice, cartItems: cartItemsWithProductId };
+      const res = await axios.post(`http://localhost:4000/api/createorder`, orderData);
       console.log(res.data);
     } catch (err) {
       console.error(err);
     }
   };
 
+  // Function to generate orderId
+  const generateOrderId = () => {
+    return Math.floor(100000 + Math.random() * 900000);
+  };
+  
+
+  
   useEffect(() => {
     const storedCartItems = localStorage.getItem('cartItems');
     if (storedCartItems) {

@@ -27,7 +27,7 @@ function App() {
     if (storedCartItems) {
       setCartItems(JSON.parse(storedCartItems));
     }
-  }, [cartItems]);
+  }, []);
 
   
   const totalItemsInCart = cartItems.reduce((total, item) => total + item.quantity, 0);

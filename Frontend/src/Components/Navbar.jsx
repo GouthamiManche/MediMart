@@ -69,6 +69,7 @@ function Navbar({cartItems}) {
                 </button>
               </div>
               {dropdownOpen && (
+                
                 <div
                   className="absolute right-0 z-10  w-48  rounded-md bg-white shadow-lg"
                   role="menu"
@@ -103,7 +104,7 @@ function Navbar({cartItems}) {
           ) : (
             <Link to="/login" >
               <button
-                className="flex items-center justify-center bg-[#125872] text-white font-bold py-2 md:px-8 px-[6px] rounded transition-colors duration-300">
+                className="flex items-center justify-center bg-[#125872] text-white font-bold py-2 md:px-8 px-[6px] rounded transition-colors duration-300">                
                Login
               </button>
             </Link>
@@ -175,14 +176,8 @@ function Navbar({cartItems}) {
             >
               About Us
             </Link> */}
-
-            <Link
-              to="/cart"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition duration-300"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Cart
-            </Link>
+           
+         
             {/* <Link
               to="/contact"
               className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition duration-300"
@@ -190,7 +185,7 @@ function Navbar({cartItems}) {
             >
               Contact
             </Link> */}
-
+           
           </div>
         </div>
       </div>

@@ -10,7 +10,7 @@ const { getAllUsers } = require('./APIS/Users');
 const { getData } = require('./APIS/Data');
 const { registerUser, loginUser } = require('./APIS/Login');
 const {getProductsByCategory } = require('./APIS/ByCategory');
-//const { CreateOrder } = require('./APIS/CreateOrder');
+const { CreateOrder } = require('./APIS/CreateOrder');
 
 const app = express();
 
@@ -27,7 +27,7 @@ app.use(cors());
 app.post('/api/register', registerUser);
 app.post('/api/login', loginUser);
 
-//app.post('/api/createorder', CreateOrder);
+app.post('/api/createorder', CreateOrder);
 
 app.get('/api/users', getAllUsers);
 app.get('/api/data', getData);
@@ -37,4 +37,10 @@ app.get('/', (req, res) => {
   res.json('Hello, this is your Express API!');
 });
 
-app.listen();
+// app.listen();
+
+const PORT = 4000; // Specify the desired local port
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
