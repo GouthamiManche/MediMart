@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { toast } from 'react-toastify';
+import { FaPercentage } from 'react-icons/fa';
 
 const PaymentSummary = ({ cartItems, handleSubmit }) => {
   const [showCouponPopup, setShowCouponPopup] = useState(false);
@@ -75,10 +76,11 @@ const PaymentSummary = ({ cartItems, handleSubmit }) => {
             <p className="font-bold">{`₹${cartItems.reduce((total, item) => total + item.Price * item.quantity, 0) - calculateDiscount()}`}</p>
           </div>
           <div className="mt-4">
-            <button
+          <button
               onClick={() => setShowCouponPopup(true)}
-              className="bg-[#125872] text-white font-semibold w-full py-2 rounded-md"
+              className=" text-[#125872] border border-[#125872] font-semibold w-full py-2 rounded-md"
             >
+           <FaPercentage className="inline-block mr-2" />
               Apply Coupon
             </button>
           </div>
@@ -99,8 +101,9 @@ const PaymentSummary = ({ cartItems, handleSubmit }) => {
             </div>
             <button
               onClick={() => setShowCouponPopup(true)}
-              className="bg-[#125872] text-white font-semibold w-full py-2 rounded-md"
+              className=" text-[#125872] font-semibold w-full py-2 rounded-md"
             >
+         
               Apply Coupon
             </button>
             <button onClick={handleSubmit} className="bg-[#125872] text-white font-semibold w-full py-3 rounded-md mt-4">
