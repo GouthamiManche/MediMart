@@ -50,8 +50,6 @@ const Cart = () => {
   }, []);
 
 
-
-
   const handleRemoveFromCart = (index) => {
     const updatedCartItems = [...cartItems];
     updatedCartItems.splice(index, 1);
@@ -251,7 +249,7 @@ const Cart = () => {
                 </button>
               </div>
               <button onClick={handleSubmit} className="bg-[#125872] text-white font-semibold w-full py-3 rounded-md mt-4">
-                Checkout
+                Add Address Details
               </button>
             </div>
           </div>

@@ -193,7 +193,8 @@ return (
           </select>
         </div>
       </div>
-      <div className="mb-[2rem] flex items-center justify-between">
+     
+      {/* <div className="mb-[2rem] flex items-center justify-between">
         <div className="flex items-center">
           <input
             type="radio"
@@ -205,44 +206,9 @@ return (
             <span className="ml-1">Phone Pe</span>
           </label>
         </div>
-      </div>
-      {/* <button
-        type="submit"
-        onClick={handleSubmit}
-        className="bg-[#125872] text-white font-bold py-3 px-[50%] rounded w-full md:w-auto"
-      >
-        Pay
-      </button> */}
-    </div>
-    <div className="w-[30%] p-[2rem]   border border-gray-300 sticky top-2 rounded-md">
-            <h2 className="text-2xl font-bold mb-4">Order Total</h2>
-            <div className="bg-white">
-              <div className="flex justify-between mb-2">
-                {/* <p className="text-gray-500">Subtotal</p>
-                <p className="font-semibold">
-                  {`₹${cartItems.reduce((total, item) => total + item.Price * item.quantity, 0)}`}
-                </p> */}
-              </div>
-              {/* <div className="flex justify-between mb-2">
-                <p className="text-gray-500">Discount</p>
-                <p className="font-semibold">-₹0</p>
-              </div>
-              <div className="flex justify-between mb-2">
-                <p className="text-gray-500">Delivery Fee</p>
-                <p className="font-semibold">₹0</p>
-              </div> */}
-              <div className="border-t border-gray-300 pt-4 flex justify-between">
-                <p className="font-bold">Total</p>
-                <p className="font-bold">
-                {`₹${localStorage.getItem("totalPrice") || 0}`}
-                </p>
-              </div>
-              <button onClick={handleSubmit} className="bg-[#125872]  text-white font-semibold w-full py-3 rounded-md mt-4">
-                Proceed To Pay
-              </button>
-            </div>
-          </div>
-          
+      </div> */}
+
+    </div>     
   </div>
 );
 };

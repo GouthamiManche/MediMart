@@ -16,6 +16,9 @@ function Navbar({cartItems}) {
     setDropdownOpen(!dropdownOpen);
   };
 
+  // const handleCartClick = () => {
+  //   window.location.reload();
+  // }
   const totalItemsInCart = useMemo(() => {
     return cartItems.reduce((total, item) => total + item.quantity, 0);
   }, [cartItems]);
@@ -54,6 +57,7 @@ function Navbar({cartItems}) {
           <Link
             to="/cart"
             className="font-bold py-2 rounded flex items-center"
+            // onClick={handleCartClick}
           >
             <FaCartShopping className="text-xl" />
             <span className="text-lg ml-1">Cart ({totalItemsInCart})</span>
