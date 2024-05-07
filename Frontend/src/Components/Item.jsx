@@ -30,11 +30,11 @@ function Item({ item }) {
 // console.log()
 
   return (
-    <div className="">
-      <Link
+    <div className="bg-white m-2 p-4 rounded-xl border border-gray-200   flex flex-col md:w-[16rem] w-[16rem] md:h-[22rem] h-[22rem] overflow-hidden hover:shadow-xl transition duration-300">
+       <Link
         to={`/${item.Sub_Category}/${item.Name}`}
         state={item}
-        className="bg-white m-2 p-4 rounded-xl border border-gray-200   flex flex-col md:w-[16rem] w-[16rem] md:h-[22rem] h-[22rem] overflow-hidden hover:shadow-xl transition duration-300" >
+         >
         <div className="relative h-56 overflow-hidden rounded-lg flex items-center justify-center">
           <img
             src={item.Image_URL}
@@ -42,11 +42,18 @@ function Item({ item }) {
             className="max-w-full max-h-full transition duration-300 hover:scale-105"
           />
         </div>
+        </Link>
         <hr className="border border-gray-300 " />
+        <Link
+        to={`/${item.Sub_Category}/${item.Name}`}
+        state={item}
+         >
         <div className="flex flex-col justify-between mt-6 relative">
           <h3 className="font-semibold text-lg text-[#171A1FFF]transition duration-300 hover:text-[#3EBDE0FF]">
             {truncatedName}
           </h3>
+          </div>
+               </Link>
           {detail && (
             <p className="text-sm text-gray-600 mt-2">
               <span className="font-semibold">{detailLabel}: </span>
@@ -60,8 +67,8 @@ function Item({ item }) {
             </button>
           </div>
         </div>
-      </Link>
-    </div>
+ 
+  
   );
 }
 

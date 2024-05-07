@@ -7,6 +7,7 @@ import LoadingGif from "../Components/LoadingGif";
 import { AuthContext } from '../Components/AuthProvider';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import PaymentSummary from '../Components/PaymentSummary';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -150,10 +151,6 @@ const Cart = () => {
 
   return (
     <div className=''>
-       {/* <div>
-        <FaCartShopping className="text-xl" />
-        {totalItemsInCart > 0 && <span className="text-sm">{totalItemsInCart}</span>}
-      </div> */}
       <div className="hidden md:block">
         <div className="flex justify-between mx-auto max-w-7xl py-8 ">
           {/* Order Summary */}
@@ -178,7 +175,7 @@ const Cart = () => {
                           {item.isMedicine ? item.Medicine_Name : item.Name}
                         </h3>
                       </div>
-
+  
                       <p className=''>{item.Manufacturer}</p>
                       <p className="text-lg  font-semibold">{`₹${item.Price}`}</p>
                     </div>
@@ -212,52 +209,17 @@ const Cart = () => {
             </div>
           </div>
           {/* Payment and Summary */}
-          <div className="w-[30%] p-[2rem] h-full  border border-gray-300 sticky top-10 rounded-md">
-            <h2 className="text-2xl font-bold mb-4">Order Total</h2>
-            <div className="bg-white">
-              <div className="flex justify-between mb-2">
-                <p className="text-gray-500">Subtotal</p>
-                <p className="font-semibold">
-                  {`₹${cartItems.reduce((total, item) => total + item.Price * item.quantity, 0)}`}
-                </p>
-              </div>
-              <div className="flex justify-between mb-2">
-                <p className="text-gray-500">Discount</p>
-                <p className="font-semibold">{`-₹${calculateDiscount()}`}</p>
-              </div>
-              <div className="flex justify-between mb-2">
-                <p className="text-gray-500">Delivery Fee</p>
-                <p className="font-semibold">₹0</p>
-              </div>
-              <div className="border-t border-gray-300 pt-4 flex justify-between">
-                <p className="font-bold">Total</p>
-                <p className="font-bold">
-                  {`₹${cartItems.reduce((total, item) => total + item.Price * item.quantity, 0) - calculateDiscount()}`}
-                </p>
-              </div>
-              <div className="mt-4">
-                <input
-                  type="text"
-                  placeholder="Apply Coupon"
-                  value={coupon}
-                  onChange={(e) => setCoupon(e.target.value)}
-                  className="border border-gray-300 rounded-md px-2 py-1 w-full"
-                />
-                <button
-                  onClick={handleApplyCoupon}
-                  className="bg-[#125872] text-white font-semibold w-full py-2 mt-2 rounded-md"
-                >
-                  Apply Coupon
-                </button>
-              </div>
-              <button onClick={handleSubmit} className="bg-[#125872] text-white font-semibold w-full py-3 rounded-md mt-4">
-                Checkout
-              </button>
-            </div>
-          </div>
+          <PaymentSummary
+            cartItems={cartItems}
+            discountPercentage={discountPercentage}
+            coupon={coupon}
+            setCoupon={setCoupon}
+            handleApplyCoupon={handleApplyCoupon}
+            handleSubmit={handleSubmit}
+          />
         </div>
       </div>
-
+  
       {/* Mobile View */}
       <div className="md:hidden">
         <div className="p-4">
@@ -314,43 +276,22 @@ const Cart = () => {
               </div>
             ))
           )}
-          {cartItems.length > 0 && (
-            <div className="bg-white rounded-md  p-4">
-              <h2 className="text-2xl font-bold mb-4">Order Total</h2>
-              <div className="flex justify-between items-center mb-4">
-                <p className="text-gray-500">Subtotal</p>
-                <p className="font-semibold">
-                  {`₹${getCartTotal()}`}
-                </p>
-              </div>
-              <div className="mt-4">
-                <input
-                  type="text"
-                  placeholder="Apply Coupon"
-                  value={coupon}
-                  onChange={(e) => setCoupon(e.target.value)}
-                  className="border border-gray-300 rounded-md px-2 py-1 w-full"
-                />
-                <button
-                  onClick={handleApplyCoupon}
-                  className="bg-[#125872] text-white font-semibold w-full py-2 mt-2 rounded-md"
-                >
-                  Apply Coupon
-                </button>
-              </div>
-              <button onClick={handleSubmit} className="bg-[#125872] text-white font-semibold w-full   py-3 rounded-md mt-4">
-                Checkout
-              </button>
-            </div>
-          )}
         </div>
+        {/* Payment and Summary */}
+        <PaymentSummary
+          cartItems={cartItems}
+          discountPercentage={discountPercentage}
+          coupon={coupon}
+          setCoupon={setCoupon}
+          handleApplyCoupon={handleApplyCoupon}
+          handleSubmit={handleSubmit}
+        />
       </div>
       {isLoading ? (
         <LoadingGif />
       ) : (
         <div className='md:mt-[2rem]'>
           <HorizontalCardScroll itemForHorizontalScroll={items} />
-
         </div>
       )}
     </div>

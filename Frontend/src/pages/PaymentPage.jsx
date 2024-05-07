@@ -1,4 +1,4 @@
-// PaymentPage.js
+// PaymentPage.jsx
 
 import React, { useState } from 'react';
 import axios from 'axios';
@@ -36,6 +36,9 @@ const PaymentPage = () => {
             alert(response.razorpay_payment_id);
             alert(response.razorpay_order_id);
             alert(response.razorpay_signature);
+            console.log(response.razorpay_payment_id);
+            console.log(response.razorpay_order_id);
+            console.log(response.razorpay_signature);
           },
           prefill: {
             name: 'John Doe',
@@ -46,7 +49,7 @@ const PaymentPage = () => {
             address: 'Your Address',
           },
           theme: {
-            color: '#F37254',
+            color: '',
           },
         };
   
