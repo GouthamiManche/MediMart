@@ -24,12 +24,12 @@ const PaymentPage = lazy(() => import('./pages/PaymentPage'))
 function App() {
   const [cartItems, setCartItems] = useState([]);
 
-  // useEffect(() => {
-  //   const storedCartItems = localStorage.getItem('cartItems');
-  //   if (storedCartItems) {
-  //     setCartItems(JSON.parse(storedCartItems));
-  //   }
-  // }, [cartItems]);
+  useEffect(() => {
+    const storedCartItems = localStorage.getItem('cartItems');
+    if (storedCartItems) {
+      setCartItems(JSON.parse(storedCartItems));
+    }
+  }, [cartItems]);
 
   
   const totalItemsInCart = cartItems.reduce((total, item) => total + item.quantity, 0);

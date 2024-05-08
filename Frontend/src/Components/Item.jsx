@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FiMinus } from "react-icons/fi";
+
 function truncateString(str, num) {
   if (!str || str.length === 0) return "";
   if (str.length <= num) {
@@ -48,17 +49,35 @@ function Item({ item }) {
   const handleAddToCart = () => {
     setIsItemInCart(true);
     setQuantity(1);
+    updateCartItem(1);
   };
 
   const handleQuantityChange = (value) => {
-    const newQuantity = Math.max(1, value);
+    const newQuantity = Math.max(0, value);
     setQuantity(newQuantity);
 
-    if (newQuantity === 1) {
-      setIsItemInCart(false);
+    if (newQuantity === 0) {
+      removeFromCart();
     } else {
       updateCartItem(newQuantity);
     }
+  };
+
+  const removeFromCart = () => {
+    const storedCartItems = localStorage.getItem('cartItems');
+    let updatedCartItems;
+
+    if (storedCartItems) {
+      const cartItems = JSON.parse(storedCartItems);
+      updatedCartItems = cartItems.filter(
+        (cartItem) => cartItem._id !== item._id
+      );
+    } else {
+      updatedCartItems = [];
+    }
+
+    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+    setIsItemInCart(false);
   };
 
   const updateCartItem = (newQuantity) => {
