@@ -316,9 +316,9 @@ const Cart = () => {
             <div className="bg-white rounded-md  p-4">
               <h2 className="text-2xl font-bold mb-4">Order Total</h2>
               <div className="flex justify-between items-center mb-4">
-                <p className="text-gray-500">Subtotal</p>
-                <p className="font-semibold">
-                  {`₹${getCartTotal()}`}
+              <p className="font-bold">Total</p>
+                <p className="font-bold">
+                  {`₹${cartItems.reduce((total, item) => total + item.Price * item.quantity, 0) - calculateDiscount()}`}
                 </p>
               </div>
               <div className="mt-4">
