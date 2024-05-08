@@ -209,6 +209,7 @@ const Cart = () => {
             </div>
           </div>
           {/* Payment and Summary */}
+      
           <PaymentSummary
             cartItems={cartItems}
             discountPercentage={discountPercentage}
@@ -217,6 +218,7 @@ const Cart = () => {
             handleApplyCoupon={handleApplyCoupon}
             handleSubmit={handleSubmit}
           />
+        
         </div>
       </div>
   
