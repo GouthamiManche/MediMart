@@ -80,8 +80,8 @@ const CustomerTestimonialCarousel = () => {
   }, [testimonials.length]);
 
   return (
-    <div className="max-w-full mx-auto mt-8 px-5 mb-8 sm:px-18 sm:mt-10 sm:mb-10">
-      <h2 className="text-gray-700 text-lg md:text-2xl font-bold mb-4">Customer Testimonials</h2>
+    <div className="max-w-full mx-auto mt-8 px-5 mb-8 sm:px-18 sm:mt-10 sm:mb-10 text-gray-800">
+      <h2 className="text-lg md:text-2xl font-bold mb-4">Customer Testimonials</h2>
       <div className="relative overflow-x-hidden">
         <div
           ref={carouselRef}

@@ -11,7 +11,7 @@ function Footer() {
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap">
             <div className="w-full md:w-1/4 text-center md:text-left">
-              <h2 className="text-lg font-bold mb-4">About</h2>
+              <Link to='/about'><h2 className="text-lg font-bold mb-4">About</h2></Link>
               <ul className="mb-4">
                 <Link to='/'><li className="mb-2">Home</li></Link>
                 <Link to='/shop'><li className="mb-2">Shop</li></Link>

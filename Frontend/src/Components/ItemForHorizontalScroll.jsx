@@ -118,7 +118,7 @@ function ItemForHorizontalScroll({ item }) {
 
   return (
     <div>
-    <div className="bg-white m-2 p-2 rounded-xl border border-gray-200 flex flex-col md:w-[16rem] md:h-[22rem] w-[12.4rem] h-[14rem] overflow-hidden hover:shadow-xl transition duration-300">
+    <div className="bg-white m-2 p-2 rounded-xl border border-gray-200 flex flex-col md:w-[16rem] md:h-[22rem] w-[12.4rem] h-[14rem] overflow-hidden shadow-md hover:shadow-xl transition duration-300">
       <Link
         to={`/${item.Sub_Category}/${item.Name}`}
         state={item}
@@ -152,7 +152,7 @@ function ItemForHorizontalScroll({ item }) {
               ₹{item.Price}
             </h3>
             {isItemInCart ? (
-              <div className="flex items-center font-semi-bold border border-[#125872] border rounded-md px-4 py-1">
+              <div className="flex items-center font-semi-bold border border-[#125872] border rounded-md px-4 py-1 shadow-md">
                 <button
                   className="text-[#125872]"
                   onClick={() => handleQuantityChange(quantity - 1)}
@@ -169,7 +169,7 @@ function ItemForHorizontalScroll({ item }) {
               </div>
             ) : (
               <button
-                className="flex items-center justify-center text-white rounded-md font-bold border py-1.5 px-8 text-sm bg-[#125872] transition duration-300"
+                className="flex items-center justify-center text-white rounded-md font-bold border py-1.5 px-8 text-sm bg-[#125872] transition duration-300 shadow-md"
                 onClick={handleAddToCart}
               >
                 Add

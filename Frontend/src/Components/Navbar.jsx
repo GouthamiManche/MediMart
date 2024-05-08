@@ -21,7 +21,7 @@ function Navbar({cartItems}) {
   }, [cartItems]);
 
   return (
-    <div className="bg-white text-gray-900 z-50 w-full sticky top-0 shadow-lg">
+    <div className="bg-white text-gray-900 z-50 w-full sticky top-0 shadow-lg ">
       <header className=" py-4 mx-8  flex items-center justify-between">
         <div className="flex items-center">
           <Link to='/'>

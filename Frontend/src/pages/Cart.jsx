@@ -155,7 +155,7 @@ const Cart = () => {
         <div className="flex justify-between mx-auto max-w-7xl py-8 ">
           {/* Order Summary */}
           <div className="w-3/5">
-            <h2 className="text-2xl font-bold mb-4">Order Summary</h2>
+            <h2 className="text-2xl text-gray-700 font-bold mb-4">Order Summary</h2>
             <div className="bg-white p-4 ">
               {cartItems.length === 0 ? (
                 <p className="text-gray-500 mt-[6rem] ml-[4rem] text-center">Your cart is empty.</p>

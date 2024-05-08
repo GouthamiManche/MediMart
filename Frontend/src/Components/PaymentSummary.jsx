@@ -54,7 +54,7 @@ const PaymentSummary = ({ cartItems, handleSubmit }) => {
   return (
     <>
       {/* Desktop View */}
-      <div className="w-[30%] p-[2rem] h-full border border-gray-300 sticky top-24 rounded-md md:block hidden ">
+      <div className="w-[30%] p-[2rem] h-full border border-gray-300 sticky top-24 rounded-md md:block hidden shadow-md">
         <h2 className="text-2xl font-bold mb-4">Order Total</h2>
         <div className="bg-white">
           <div className="flex justify-between mb-2">
