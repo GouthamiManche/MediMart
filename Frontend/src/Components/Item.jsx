@@ -114,7 +114,7 @@ function Item({ item }) {
   };
 
   return (
-    <div className="bg-white m-2 p-4 rounded-xl border border-gray-200 flex flex-col md:w-[16rem] w-[16rem] md:h-[22rem] h-[22rem] overflow-hidden shadow-md hover:shadow-xl transition duration-300">
+    <div className="bg-white m-2 p-4 rounded-xl border border-gray-200 flex flex-col md:w-[16rem] w-[16rem] md:h-[22rem] h-[22rem] overflow-hidden shadow-md hover:shadow-xl transition duration-300 ">
       <Link to={`/${item.Sub_Category}/${item.Name}`} state={item}>
         <div className="relative h-56 overflow-hidden rounded-lg flex items-center justify-center">
           <img

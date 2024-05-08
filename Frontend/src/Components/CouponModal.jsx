@@ -45,7 +45,7 @@ const CouponModal = ({ onClose, onApply }) => {
                             <p className="font-semibold">FIRST50</p>
                         </div>
                         <p className="mb-2">
-                            Get 50% OFF discount on first order of Rs 1500
+                            Get 50% OFF discount on first order
                         </p>
                         <button
                             onClick={() => handleApplyCoupon('FIRST50')}

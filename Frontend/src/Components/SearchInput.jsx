@@ -8,7 +8,7 @@ function SearchInput({ searchTerm, setSearchTerm, sortOption, setSortOption }) {
     <div className="flex flex-col sm:flex-row justify-center items-center md:mb-[2rem] ">
       <div className="relative w-full sm:w-[70%]">
         <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          <GoSearch className="text-[#125872]" />
+          <GoSearch className="text-[#125872] text-xl" />
         </span>
         <input 
           id="searchInput"

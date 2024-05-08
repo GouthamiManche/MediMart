@@ -78,7 +78,7 @@ const AddressForm = () => {
   }, []);
 
 return (
-  <div className="flex  items-center min-h-full mx-[4vw]">
+  <div className="flex  items-center min-h-full mx-[4vw] text-gray-700">
     <div className="bg-white p-6 max-w-2xl w-full md:mt-[2rem] mx-auto">
      
       <h2 className="text-2xl font-bold mb-4">Shipping Address</h2>
@@ -194,31 +194,31 @@ return (
           </label>
         </div>
       </div>
-      {/* <button
+      <button
         type="submit"
         onClick={handleSubmit}
         className="bg-[#125872] text-white font-bold py-3 px-[50%] rounded w-full md:w-auto"
       >
         Pay
-      </button> */}
+      </button>
     </div>
-    <div className="w-[30%] p-[2rem]   border border-gray-300 sticky top-2 rounded-md">
+    {/* <div className="w-[30%] p-[2rem]   border border-gray-300 sticky top-2 rounded-md">
             <h2 className="text-2xl font-bold mb-4">Order Total</h2>
             <div className="bg-white">
               <div className="flex justify-between mb-2">
-                {/* <p className="text-gray-500">Subtotal</p>
+                <p className="text-gray-500">Subtotal</p>
                 <p className="font-semibold">
                   {`₹${cartItems.reduce((total, item) => total + item.Price * item.quantity, 0)}`}
-                </p> */}
+                </p> 
               </div>
-              {/* <div className="flex justify-between mb-2">
+             <div className="flex justify-between mb-2">
                 <p className="text-gray-500">Discount</p>
                 <p className="font-semibold">-₹0</p>
               </div>
               <div className="flex justify-between mb-2">
                 <p className="text-gray-500">Delivery Fee</p>
                 <p className="font-semibold">₹0</p>
-              </div> */}
+              </div> 
               <div className="border-t border-gray-300 pt-4 flex justify-between">
                 <p className="font-bold">Total</p>
                 <p className="font-bold">
@@ -229,7 +229,7 @@ return (
                 Proceed To Pay
               </button>
             </div>
-          </div>
+          </div> */}
           
   </div>
 );
