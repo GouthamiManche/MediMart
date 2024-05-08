@@ -6,35 +6,29 @@ const HorizontalCardScroll = ({ itemForHorizontalScroll }) => {
 
   const scrollLeft = () => {
     if (scrollRef.current) {
-      scrollRef.current.scrollBy({
-        left: -550,
-        behavior: "smooth"
-      });
+      scrollRef.current.scrollBy({ left: -550, behavior: "smooth" });
     }
   };
 
   const scrollRight = () => {
     if (scrollRef.current) {
-      scrollRef.current.scrollBy({
-        left: 550,
-        behavior: "smooth"
-      });
+      scrollRef.current.scrollBy({ left: 550, behavior: "smooth" });
     }
   };
 
   return (
     <div>
-      <p className='text-gray-700 text-lg md:text-3xl font-bold ml-[1rem] mb-[2rem]'>Our Products</p>
+      <p className="text-gray-700 text-lg md:text-3xl font-bold ml-[1rem] mb-[2rem]">
+        Our Products
+      </p>
       <div className="relative bg-blue-50">
         <div className="flex overflow-x-auto space-x-4 p-4" ref={scrollRef}>
           {itemForHorizontalScroll.map((item, index) => (
-            <ItemForHorizontalScroll key={index} ItemForHorizontalScroll={item} />
+            <ItemForHorizontalScroll key={index} item={item} />
           ))}
         </div>
-
-
         <button
-          className="hidden md:block absolute top-1/2 left-4 -translate-y-1/2 bg-blue-500 p-2 rounded-full "
+          className="hidden md:block absolute top-1/2 left-4 -translate-y-1/2 bg-blue-500 p-2 rounded-full"
           onClick={scrollLeft}
         >
           <svg
@@ -44,13 +38,16 @@ const HorizontalCardScroll = ({ itemForHorizontalScroll }) => {
             viewBox="0 0 24 24"
             stroke="currentColor"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 19l-7-7 7-7"
+            />
           </svg>
         </button>
-
-
         <button
-          className="hidden md:block absolute top-1/2 right-4 -translate-y-1/2 bg-blue-500 p-2 rounded-full "
+          className="hidden md:block absolute top-1/2 right-4 -translate-y-1/2 bg-blue-500 p-2 rounded-full"
           onClick={scrollRight}
         >
           <svg
@@ -60,7 +57,12 @@ const HorizontalCardScroll = ({ itemForHorizontalScroll }) => {
             viewBox="0 0 24 24"
             stroke="currentColor"
           >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 5l7 7-7 7"
+            />
           </svg>
         </button>
       </div>
