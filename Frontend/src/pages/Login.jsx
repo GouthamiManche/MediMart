@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Logo from '/src/assets/logo.jpg';
 
 function Login() {
   const { login, isAuthenticated } = useContext(AuthContext);
@@ -18,6 +19,7 @@ function Login() {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [userNotFound, setUserNotFound] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -88,100 +90,103 @@ function Login() {
         setPasswordError('');
       }
     }
+  };
 
-    // const handleAddToCart = (product, quantity) => {
-    //   if (!isAuthenticated) {
-    //     Swal.fire({
-    //       icon: 'warning',
-    //       title: 'Please Log In',
-    //       text: 'You need to be logged in to add items to your cart.',
-    //     });
-    //     navigate('/login'); // Redirect to login page
-    //     return;
-    //   }}
-
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
 
-
   return (
-    <div className="bg-[#f5f5f5]">
-
-      <div className="flex flex-col md:flex-row  h-screen">
-        {/* 1st half */}
-        <div className="w-full md:max-h-full md:w-1/2 bg-gradient-to-r from-blue-200 to-blue-400 p-8 md:mt-20 md:ml-56 md:mb-16 drop-shadow-xl ">
-          {/* <h1 className="text-white mt-7 ml-8 font-bold">MEDIMART</h1> */}
-          <div className="text-center md:text-left">
-            <h1 className="font-bold text-white text-5xl mt-10 pt-20 ml-8">
-              Welcome
-            </h1>
-            <h1 className="font-bold text-white text-5xl mt-7 mb-[6rem] ml-8">Back!</h1>
-          </div>
+    <div className="bg-[#f5f5f5] min-h-screen flex items-center justify-center">
+      <div className="max-w-md w-full mx-auto bg-white rounded-lg shadow-lg p-8">
+        <div className="flex items-center justify-center mb-6">
+          <Link to="/">
+            <img className="h-12" src={Logo} alt="Logo" />
+          </Link>
+          <Link to="/" className="md:block hidden text-xl md:text-3xl font-bold ml-1 font-PlayFair">
+            <span className="text-[#14496b]">Medi</span>
+            <span className="text-[#8ccf28]">Mart</span>
+          </Link>
         </div>
-
-        <div className="w-full md:w-1/2 bg-white md:mt-20 md:mb-16 md:mr-56 drop-shadow-2xl pl-8">
-          <h1 className="text-black text-2xl font-bold mt-[4rem] md:ml-8">Login</h1>
-
-          <form onSubmit={handleSubmit}>
-            {/* Email */}
-            <div className="mt-8 md:ml-8">
-              <h2 className="text-black text-sm font-semibold">
-                Email
-              </h2>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="border border-slate-500 w-[80%] md:w-80 h-10 mt-2 rounded px-3"
-                required
-              />
-              {emailError && (
-                <p className="text-red-500 text-xs mt-2">{emailError}</p>
-              )}
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4 relative">
+            <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className=" border-b border-gray-400 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-[#125872]"
+              required
+            />
+            <div className="absolute inset-y-0 right-0 flex items-center px-2">
+              <svg className="h-5 w-5 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
             </div>
-
-            {/* Password */}
-            <div className="mt-8 md:ml-8">
-              <h2 className="text-black text-sm font-semibold">Password</h2>
+            {emailError && (
+              <p className="text-red-500 text-xs mt-2">{emailError}</p>
+            )}
+          </div>
+          <div className="mb-6 relative">
+            <label htmlFor="password" className="block text-gray-700 font-bold mb-2">
+              Password
+            </label>
+            <div className="relative">
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
+                id="password"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                className="border border-slate-500 md:w-80 w-[80%] h-10 mt-2 rounded px-3"
+                className=" border-b border-gray-400 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-[#125872]"
                 required
               />
-              {passwordError && (
-                <p className="text-red-500 text-xs mt-2">{passwordError}</p>
-              )}
+              <div className="absolute inset-y-0 right-0 flex items-center px-2 cursor-pointer" onClick={togglePasswordVisibility}>
+                {showPassword ? (
+                  <svg className="h-5 w-5 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                ) : (
+                  <svg className="h-5 w-5 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                  </svg>
+                )}
+              </div>
             </div>
-
-            {/* Log in Button */}
+            {passwordError && (
+              <p className="text-red-500 text-xs mt-2">{passwordError}</p>
+            )}
+          </div>
+          <div className="flex items-center justify-center mb-4">
             <button
               type="submit"
-              className="text-white font-bold w-[80%] md:w-80 h-10 mt-8 md:ml-8 rounded bg-gradient-to-r from-blue-200 to-blue-400"
+              className="bg-[#125872]  text-white font-bold w-full py-2 px-4 rounded "
               disabled={!formData.email || !formData.password}
             >
               Log in
             </button>
-          </form>
-
-          {userNotFound && (
-            <div className="mt-6 md:ml-8">
-              <p className="text-red-500 text-xs">
-                User not found. Please Signup instead.
-              </p>
-            </div>
-          )}
-
-          <div className="flex mt-6 md:ml-8">
-            <h3 className="text-slate-400 mr-2">New User?</h3>
-            <Link to="/Register" style={{ color: "#90CCBA" }}>
+          </div>
+          <div className="flex justify-center">
+            <p className="text-gray-500 mr-2">New User?</p>
+            <Link to="/Register" className="text-[#125872] font-semibold">
               Register
             </Link>
           </div>
-        </div>
+        </form>
+        {userNotFound && (
+          <div className="mt-6 text-center">
+            <p className="text-red-500 text-xs">
+              User not found. Please <Link to="/Register" style={{ color: "#125872" }}>Register</Link> instead.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
