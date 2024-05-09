@@ -8,6 +8,7 @@ const { getAllUsers } = require('./APIS/Users');
 const { getData } = require('./APIS/Data');
 const { registerUser, loginUser } = require('./APIS/Login');
 const { getProductsByCategory } = require('./APIS/ByCategory');
+const {CreateOrder} = require("./APIS/CreateOrder")
 const Razorpay = require('razorpay');
 
 const app = express();
@@ -15,7 +16,7 @@ const URI = process.env.MONGO_URL;
 
 // MongoDB connection
 mongoose
-  .connect(URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(URI)
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('MongoDB connection error:', err));
 
@@ -64,10 +65,10 @@ app.get('/', (req, res) => {
   res.json('Hello, this is your Express API!');
 });
 
-app.listen();
+// app.listen();
 
-// const PORT = 4000; // Specify the desired local port
+const PORT = 4000; // Specify the desired local port
 
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

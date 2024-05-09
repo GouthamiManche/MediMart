@@ -27,6 +27,7 @@ const registerUser = async (req, res) => {
       username,
       email,
       password: hashedPassword,
+      fullname,
       // Generate a unique customerId
       customerId: generateCustomerId(),
     });
@@ -50,6 +51,7 @@ const generateToken = (user) => {
     userId: user._id,
     username: user.username,
     email: user.email,
+    
   };
   const token = jwt.sign(payload, process.env.Secret_Key, { expiresIn: '3hr' }); 
   return token;
