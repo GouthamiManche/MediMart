@@ -123,7 +123,7 @@ function ItemForHorizontalScroll({ item }) {
         to={`/${item.Sub_Category}/${item.Name}`}
         state={item}
               >
-        <div className="relative h-40 overflow-hidden rounded-lg flex items-center justify-center">
+        <div className="relative h-40 md:h-56 overflow-hidden rounded-lg flex items-center justify-center">
           <img
             src={item.Image_URL}
             alt={item?.Medicine_Name || item.Name}
