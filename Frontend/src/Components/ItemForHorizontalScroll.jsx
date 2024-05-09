@@ -44,7 +44,7 @@ function ItemForHorizontalScroll({ item }) {
     }
   }, [item?._id]);
 
-  const truncatedName = truncateString(item?.Medicine_Name || item.Name, 20);
+  const truncatedName = truncateString(item?.Medicine_Name || item.Name, 16);
   const { detail, detailLabel } = getItemDetails(item);
 
   const handleAddToCart = () => {
@@ -118,7 +118,7 @@ function ItemForHorizontalScroll({ item }) {
 
   return (
     <div>
-    <div className="bg-white m-2 p-2 rounded-xl border border-gray-200 flex flex-col md:w-[16rem] md:h-[22rem] w-[12.4rem] h-[15.4rem] overflow-hidden shadow-md hover:shadow-xl transition duration-300">
+    <div className="bg-white m-2 p-2 rounded-xl border border-gray-200 flex flex-col md:w-[16rem] md:h-[22rem] w-[12.6rem] h-[15.4rem] overflow-hidden shadow-md hover:shadow-xl transition duration-300">
       <Link
         to={`/${item.Sub_Category}/${item.Name}`}
         state={item}
