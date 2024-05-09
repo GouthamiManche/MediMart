@@ -118,12 +118,12 @@ function ItemForHorizontalScroll({ item }) {
 
   return (
     <div>
-    <div className="bg-white m-2 p-2 rounded-xl border border-gray-200 flex flex-col md:w-[16rem] md:h-[22rem] w-[12.4rem] h-[14rem] overflow-hidden shadow-md hover:shadow-xl transition duration-300">
+    <div className="bg-white m-2 p-2 rounded-xl border border-gray-200 flex flex-col md:w-[16rem] md:h-[22rem] w-[12.4rem] h-[15.4rem] overflow-hidden shadow-md hover:shadow-xl transition duration-300">
       <Link
         to={`/${item.Sub_Category}/${item.Name}`}
         state={item}
               >
-        <div className="relative h-56 overflow-hidden rounded-lg flex items-center justify-center">
+        <div className="relative h-40 md:h-56 overflow-hidden rounded-lg flex items-center justify-center">
           <img
             src={item.Image_URL}
             alt={item?.Medicine_Name || item.Name}
@@ -147,7 +147,7 @@ function ItemForHorizontalScroll({ item }) {
               {detail}
             </p>
           )}
-          <div className="flex justify-between items-center md:mt-2">
+          <div className="flex justify-between items-center mt-[0.5rem] md:mt-2">
             <h3 className="md:text-2xl text-lg font-bold text-[#323743FF]">
               ₹{item.Price}
             </h3>
