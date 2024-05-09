@@ -79,7 +79,7 @@ const CouponModal = ({ onClose, onApply }) => {
                             onClick={() => handleApplyCoupon('DISCOUNT30')}
                             className="bg-[#125872] text-white font-semibold w-full py-2 rounded-md"
                         >
-                            APPLY
+                          Apply
                         </button>
                     </div>
                     

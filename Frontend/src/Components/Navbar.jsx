@@ -1,4 +1,4 @@
-import React, { useState, useContext ,useMemo} from "react";
+import React, { useState, useContext, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { FaCartPlus, FaBars, FaTimes } from "react-icons/fa";
@@ -7,7 +7,7 @@ import Logo from '/src/assets/logo.jpg';
 import { ImSearch } from "react-icons/im";
 import { FaCartShopping } from "react-icons/fa6";
 
-function Navbar({cartItems}) {
+function Navbar({ cartItems }) {
   const { user, logout } = useContext(AuthContext);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -34,11 +34,19 @@ function Navbar({cartItems}) {
             <span className="text-[#14496b]">Medi</span><span className="text-[#8ccf28]">Mart</span>
           </Link>
         </div>
-        <div className="md:hidden text-gray-900">
+        <div className="md:hidden flex text-gray-900">
+        <Link
+              to="/cart"
+              className="font-bold py-2 rounded flex items-center mr-[1rem]"
+            >
+              <FaCartShopping className="text-xl" />
+              <span className="text-lg ml-1"> ({totalItemsInCart})</span>
+            </Link>
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="focus:outline-none"
           >
+           
             {mobileMenuOpen ? (
               <FaTimes className="text-xl" />
             ) : (
@@ -73,7 +81,7 @@ function Navbar({cartItems}) {
                 </button>
               </div>
               {dropdownOpen && (
-                
+
                 <div
                   className="absolute right-0 z-10  w-48  rounded-md bg-white shadow-lg"
                   role="menu"
@@ -89,7 +97,7 @@ function Navbar({cartItems}) {
                       tabIndex="-1"
                       id="menu-item-0"
                     >
-                     {user.username}
+                      {user.username}
                     </Link>
                     <br />
                     <button
@@ -108,8 +116,8 @@ function Navbar({cartItems}) {
           ) : (
             <Link to="/login" >
               <button
-                className="flex items-center justify-center bg-[#125872] text-white font-bold py-2 md:px-8 px-[6px] rounded transition-colors duration-300">                
-               Login
+                className="flex items-center justify-center bg-[#125872] text-white font-bold py-2 md:px-8 px-[6px] rounded transition-colors duration-300">
+                Login
               </button>
             </Link>
           )}
@@ -180,8 +188,8 @@ function Navbar({cartItems}) {
             >
               About Us
             </Link> */}
-           
-         
+
+
             {/* <Link
               to="/contact"
               className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition duration-300"
@@ -189,7 +197,7 @@ function Navbar({cartItems}) {
             >
               Contact
             </Link> */}
-           
+
           </div>
         </div>
       </div>
