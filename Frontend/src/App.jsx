@@ -7,6 +7,7 @@ import Navbar from './Components/Navbar';
 import Profile from './pages/Profile'
 import { AuthProvider } from './Components/AuthProvider';
 
+
 const Checkout = lazy(() => import('./pages/Checkout'));
 const Home = lazy(() => import('./pages/Home'));
 const Shop = lazy(() => import('./pages/Shop'));
@@ -18,6 +19,7 @@ const About = lazy(() => import('./pages/About'))
 const Contact = lazy(() => import('./pages/Contact'))
 const OrderPlaced = lazy(() => import('./pages/OrderPlaced'))
 const ErrorPage = lazy(() => import('./pages/ErrorPage'))
+const PaymentPage = lazy(() => import('./pages/PaymentPage'))
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
@@ -51,6 +53,7 @@ function App() {
               <Route exact path="/profile" element={<Profile />} />
               <Route exact path="/checkout" element={<Checkout cartItems={cartItems} />} />
               <Route exact path="/orderplaced" element={<OrderPlaced />} />
+              <Route exact path="/paymentpage" element={<PaymentPage />} />
             </Routes>
             <GotoTop />
             <Footer />

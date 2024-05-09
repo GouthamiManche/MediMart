@@ -1,6 +1,6 @@
-import React, { useState, useEffect,useContext  } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import { SiPhonepe } from 'react-icons/si';
 const stateData = [
   { name: 'Andhra Pradesh', cities: ['Visakhapatnam', 'Vijayawada', 'Guntur', 'Nellore', 'Kurnool', 'Kadapa', 'Anantapur', 'Kakinada', 'Tirupati', 'Chittoor'] },
   { name: 'Arunachal Pradesh', cities: ['Itanagar', 'Ziro', 'Tawang', 'Bomdila', 'Roing', 'Tezu', 'Namsai', 'Pasighat', 'Aalo', 'Daporijo'] },
@@ -90,7 +90,7 @@ const AddressForm = () => {
   }, []);
 
 return (
-  <div className="flex  items-center min-h-full mx-[4vw]">
+  <div className="flex  items-center min-h-full mx-[4vw] text-gray-700">
     <div className="bg-white p-6 max-w-2xl w-full md:mt-[2rem] mx-auto">
      
       <h2 className="text-2xl font-bold mb-4">Shipping Address</h2>
@@ -206,9 +206,44 @@ return (
             <span className="ml-1">Phone Pe</span>
           </label>
         </div>
-      </div> */}
-
-    </div>     
+      </div>
+      <button
+        type="submit"
+        onClick={handleSubmit}
+        className="bg-[#125872] text-white font-bold py-3 px-[50%] rounded w-full md:w-auto"
+      >
+        Pay
+      </button>
+    </div>
+    {/* <div className="w-[30%] p-[2rem]   border border-gray-300 sticky top-2 rounded-md">
+            <h2 className="text-2xl font-bold mb-4">Order Total</h2>
+            <div className="bg-white">
+              <div className="flex justify-between mb-2">
+                <p className="text-gray-500">Subtotal</p>
+                <p className="font-semibold">
+                  {`₹${cartItems.reduce((total, item) => total + item.Price * item.quantity, 0)}`}
+                </p> 
+              </div>
+             <div className="flex justify-between mb-2">
+                <p className="text-gray-500">Discount</p>
+                <p className="font-semibold">-₹0</p>
+              </div>
+              <div className="flex justify-between mb-2">
+                <p className="text-gray-500">Delivery Fee</p>
+                <p className="font-semibold">₹0</p>
+              </div> 
+              <div className="border-t border-gray-300 pt-4 flex justify-between">
+                <p className="font-bold">Total</p>
+                <p className="font-bold">
+                {`₹${localStorage.getItem("totalPrice") || 0}`}
+                </p>
+              </div>
+              <button onClick={handleSubmit} className="bg-[#125872]  text-white font-semibold w-full py-3 rounded-md mt-4">
+                Proceed To Pay
+              </button>
+            </div>
+          </div> */}
+          </div>
   </div>
 );
 };

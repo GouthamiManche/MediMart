@@ -6,7 +6,7 @@ import DynamicBanner from "../Components/DynamicBanner";
 import HomeCarousel from "../Components/HomeCarousel";
 import HomeImageBottom from "../Components/HomeImageBottom";
 import HorizontalCardScroll from "../Components/HorizontalCardScroll";
-import LoadingGif from "../Components/LoadingGif"; 
+import LoadingGif from "../Components/LoadingGif";
 
 function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -18,7 +18,6 @@ function Home() {
     setIsLoading(true);
     const fetchData = async () => {
       try {
-        //console.log(apiUrl)
         const response = await axios.get(`${apiUrl}/products?category=Other`, {
           headers: {
             apikey: apiKey,

@@ -22,7 +22,7 @@ const HomeImage = () => {
   };
 
   return (
-    <Slider {...settings} className='mb-[2rem]'>
+    <Slider {...settings} className='mb-[3rem]'>
       <div className="relative">
         <img
           src={homeimage}

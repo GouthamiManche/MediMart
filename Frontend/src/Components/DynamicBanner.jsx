@@ -2,7 +2,7 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 export default function DynamicBanner() {
   return (
-    <div className="flex flex-col md:flex-row border rounded-md">
+    <div className="flex flex-col md:flex-row border rounded-md text-gray-700">
       <div className="bg-blue-50 ml-2 md:ml-[1.5rem] mt-7 mb-7 p-7 border md:rounded-l-md w-[18rem] md:w-[36rem]">
         <p className="text-2xl font-semibold">Get 15% off on Medicine Purchases</p>
         <p>and get 15% off on your order</p>
