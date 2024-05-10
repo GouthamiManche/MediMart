@@ -1,13 +1,12 @@
 const uuid = require('uuid');
-const OrderDetail = require('../models/orderdetails.model'); // Import the OrderDetail model
-
+const OrderDetail = require('../models/orderdetails.model'); 
 const CreateOrder = async (req, res) => {
   try {
-    const { fullName, address, city, state, pincode, contactNo, total, cartItems } = req.body;
+    const { fullName, address, city, state, pincode, contactNo, total, cartItems, email } = req.body;
 
     // Validate input fields
-    if (!fullName || !address || !city || !state || !pincode || !contactNo || !total || !cartItems) {
-      throw new Error("All fields including cartItems are required");
+    if (!fullName || !address || !city || !state || !pincode || !contactNo || !total || !cartItems || !email) {
+      throw new Error("All fields including cartItems and email are required");
     }
 
     // Generate orderId as a 6-digit number
@@ -19,6 +18,7 @@ const CreateOrder = async (req, res) => {
       fullName,
       contactNo,
       address,
+      email,
       pincode,
       state,
       city,
@@ -33,11 +33,14 @@ const CreateOrder = async (req, res) => {
     res.status(201).json({
       message: "Order created successfully",
       orderId: orderId,
+      email: email, 
+      fullname:fullName // Include email in the response
     });
   } catch (err) {
     console.error("Error creating order:", err);
     res.status(400).send(err.message);
   }
 };
+
 
 module.exports = { CreateOrder };

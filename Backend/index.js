@@ -42,6 +42,22 @@ app.get('/api/users', getAllUsers);
 app.get('/api/data', getData);
 app.get('/api/products', getProductsByCategory);
 
+// app.get('/api/user', (req, res) => {
+//   res.json(userData);
+// });
+
+// app.put('/api/user', (req, res) => {
+//   const { fullName, contactNumber, emailAddress, deliveryAddress } = req.body;
+  
+//   // Update user data
+//   userData.fullName = fullName || userData.fullName;
+//   userData.contactNumber = contactNumber || userData.contactNumber;
+//   userData.emailAddress = emailAddress || userData.emailAddress;
+//   userData.deliveryAddress = deliveryAddress || userData.deliveryAddress;
+
+//   res.json(userData);
+// });
+
 // Endpoint to create a new payment order
 // app.post('/api/create-order', async (req, res) => {
 //   try {

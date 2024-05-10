@@ -1,19 +1,25 @@
-import React, { useContext } from 'react';
+import React, { useContext ,useState} from 'react';
 import { Link } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { AuthContext } from '../Components/AuthProvider';
 
 function ProfileSection() {
     const { user, logout } = useContext(AuthContext);
+    const [email, setEmail] = useState(user?.email || '');
+
     const handleChange = (event) => {
         const { value } = event.target;
         const filteredValue = value.replace(/\D/g, '');
         event.target.value = filteredValue;
     };
 
+    const handleEmailChange = (event) => {
+        setEmail(event.target.value); // Update email state on input change
+    };
+
     return (
         <>
-       
+
             <div className="flex h-[36.5rem] font-poppins">
                 <div className="w-[15rem] bg-[#125872] ">
                     <h2 className="text-2xl font-semibold text-white font-poppins mt-[5rem] ml-4">Profile</h2>
@@ -70,8 +76,10 @@ function ProfileSection() {
                                     type="email"
                                     id="email"
                                     name="email"
+                                    value={user.email}
+                                    onChange={handleEmailChange}
                                     className="mt-1 w-full border-b-2 border-gray-300 bg-transparent focus:outline-none focus:border-[#90CCBA]"
-                                    placeholder="aishwarya@gmail.com"
+                                    //placeholder="aishwarya@gmail.com"
                                     required
                                 />
                                 <span className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">&#9998;</span>
@@ -95,7 +103,7 @@ function ProfileSection() {
 
                         <div className="ml-[8rem] mt-[2rem]">
                             <div className="relative">
-                            {/* <CgProfile className='text-[20rem]'/> */}
+                                {/* <CgProfile className='text-[20rem]'/> */}
                                 <img
                                     className="object-cover w-[17rem] h-[17rem]"
                                     src="src/assets/Profilee.png"

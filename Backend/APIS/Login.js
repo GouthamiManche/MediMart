@@ -51,7 +51,6 @@ const generateToken = (user) => {
     userId: user._id,
     username: user.username,
     email: user.email,
-    
   };
   const token = jwt.sign(payload, process.env.Secret_Key, { expiresIn: '3hr' }); 
   return token;
@@ -64,7 +63,6 @@ const loginUser = async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
-
     // Check if the provided password matches the hashed password in the database
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
