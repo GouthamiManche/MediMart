@@ -1,4 +1,4 @@
-import React, { useState, useEffect ,useContext} from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../Components/AuthProvider';
 
 function OrderHistory() {
@@ -29,6 +29,7 @@ function OrderHistory() {
           <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order Date</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Full Name</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Address</th>
@@ -45,6 +46,7 @@ function OrderHistory() {
             {orders.map((order) => (
               <tr key={order._id}>
                 <td className="px-6 py-4 whitespace-nowrap">{order.orderId}</td>
+                <td className="px-6 py-4 whitespace-nowrap">{order.orderDate}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{order.fullName}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{order.email}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{order.address}</td>
