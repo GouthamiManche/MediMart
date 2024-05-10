@@ -18,7 +18,7 @@ const orderSchema = new Schema({
   email: { type: String, required: true },
   contactNo: { type: String, required: true },
   total: { type: Number, required: true },
-  orderDate: { type: Number, required: true },
+  orderDate: { type: String, required: true },
   paymentStatus: { type: String, default: 'not completed' },
   cartItems: [cartItemSchema],
 });
