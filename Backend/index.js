@@ -27,10 +27,10 @@ app.use(express.json());
 app.use(cors());
 
 // Razorpay Configuration
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET,
-});
+// const razorpay = new Razorpay({
+//   key_id: process.env.RAZORPAY_KEY_ID,
+//   key_secret: process.env.RAZORPAY_KEY_SECRET,
+// });
 
 // ROUTES
 app.post('/api/register', registerUser);
@@ -48,7 +48,7 @@ app.get('/api/products', getProductsByCategory);
 
 // app.put('/api/user', (req, res) => {
 //   const { fullName, contactNumber, emailAddress, deliveryAddress } = req.body;
-  
+
 //   // Update user data
 //   userData.fullName = fullName || userData.fullName;
 //   userData.contactNumber = contactNumber || userData.contactNumber;
@@ -81,10 +81,10 @@ app.get('/', (req, res) => {
   res.json('Hello, this is your Express API!');
 });
 
-// app.listen();
+app.listen();
 
-const PORT = 4000; // Specify the desired local port
+// const PORT = 4000; // Specify the desired local port
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });

@@ -1,5 +1,5 @@
 const uuid = require('uuid');
-const OrderDetail = require('../models/orderdetails.model'); 
+const OrderDetail = require('../models/orderdetails.model');
 const CreateOrder = async (req, res) => {
   try {
     const { fullName, address, city, state, pincode, contactNo, total, cartItems, email } = req.body;
@@ -33,14 +33,13 @@ const CreateOrder = async (req, res) => {
     res.status(201).json({
       message: "Order created successfully",
       orderId: orderId,
-      email: email, 
-      fullname:fullName // Include email in the response
+      email: email,
+      fullname: fullName // Include email in the response
     });
   } catch (err) {
     console.error("Error creating order:", err);
     res.status(400).send(err.message);
   }
 };
-
 
 module.exports = { CreateOrder };
