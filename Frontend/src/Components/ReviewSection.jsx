@@ -43,8 +43,8 @@ const ReviewSection = () => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-md shadow-md relative mt-[4rem] max-h-screen">
-      <h2 className="text-5xl font-bold mb-4">Reviews</h2>
+    <div className="bg-white p-6 rounded-md text-gray-700 shadow-md relative mt-[4rem] max-h-screen">
+      <h2 className="text-5xl font-bold mb-4 ">Reviews</h2>
       <div className="mb-4 flex justify-end">
         <button
           className="flex item-center justify-center bg-[#125872] text-white font-bold py-2 px-4 rounded"

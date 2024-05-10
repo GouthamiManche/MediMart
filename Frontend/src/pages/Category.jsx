@@ -39,8 +39,6 @@ const Category = () => {
         setIsLoading(false); // Set loading to false after fetching (even on errors)
       }
     };
-
-    // Retrieve existing cart items from local storage once during initial mount
     fetchData();
   }, []);
 
@@ -80,7 +78,7 @@ const Category = () => {
     const updatedCartItems = [...cartItems, cartItem];
     setCartItems(updatedCartItems);
     localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
-    setItemAddedToCart(true); // Set the state to indicate item added to cart
+    setItemAddedToCart(true);
     toast.success('Item Added To Cart', { autoClose: 2000 });
   };
 

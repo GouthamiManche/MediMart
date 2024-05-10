@@ -53,7 +53,7 @@ function FilterBar({
   };
 
   return (
-    <div className="relative sticky top-10 z-50">
+    <div className="relative sticky top-20 z-44">
       <div className="ml-[3.5rem] flex items-center mb-4">
         <button
           className="block md:hidden bg-[#125872] text-white px-6 py-[10px] rounded-md text-center flex items-center"
