@@ -1,7 +1,6 @@
 import React, { useState, useEffect,useContext  } from 'react';
 import axios from 'axios';
-import { SiPhonepe } from 'react-icons/si';
-import { AuthContext } from '../Components/AuthProvider';
+
 const stateData = [
   { name: 'Andhra Pradesh', cities: ['Visakhapatnam', 'Vijayawada', 'Guntur', 'Nellore', 'Kurnool', 'Kadapa', 'Anantapur', 'Kakinada', 'Tirupati', 'Chittoor'] },
   { name: 'Arunachal Pradesh', cities: ['Itanagar', 'Ziro', 'Tawang', 'Bomdila', 'Roing', 'Tezu', 'Namsai', 'Pasighat', 'Aalo', 'Daporijo'] },
@@ -31,6 +30,7 @@ const stateData = [
 
 const AddressForm = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
+  const apiKey = import.meta.env.VITE_API_KEY;
   const [formData, setFormData] = useState({
     fullName: '',
     address: '',
@@ -68,7 +68,7 @@ const AddressForm = () => {
       }));
 
       const orderData = { ...formData, total: totalPrice, cartItems: cartItemsWithProductId };
-      const res = await axios.post(`http://localhost:4000/api/createorder`, orderData);
+      const res = await axios.post(`${apiUrl}/api/createorder`, orderData);
       console.log(res.data);
     } catch (err) {
       console.error(err);
