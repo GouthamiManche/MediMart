@@ -5,6 +5,7 @@ import { AuthContext } from '../Components/AuthProvider';
 
 const AddressForm = () => {
   const { user } = useContext(AuthContext);
+  const email = user && user.email ? user.email : '';
   const apiUrl = import.meta.env.VITE_API_URL;
   const apiKey = import.meta.env.VITE_API_KEY;
   const [formData, setFormData] = useState({
@@ -15,9 +16,9 @@ const AddressForm = () => {
     pincode: '',
     contactNo: '',
     total: 0,
-    email: user && user.email ? user.email : '', // Check if user.email exists
+    email: email , // Check if user.email exists
   });
-  
+
   const [cartItems, setCartItems] = useState([]);
   const [errors, setErrors] = useState({});
 
@@ -67,7 +68,7 @@ const AddressForm = () => {
       const totalPrice = localStorage.getItem('totalPrice') || 0;
       const storedCartItems = localStorage.getItem('cartItems');
       const parsedCartItems = storedCartItems ? JSON.parse(storedCartItems) : [];
-  
+
       const cartItemsWithProductId = parsedCartItems.map((item) => ({
         Product_id: item.Product_id,
         orderId: generateOrderId(),
@@ -75,7 +76,7 @@ const AddressForm = () => {
         Price: item.Price,
         quantity: item.quantity,
       }));
-  
+
       const orderData = {
         fullName: formData.fullName,
         address: formData.address,
@@ -85,7 +86,7 @@ const AddressForm = () => {
         contactNo: formData.contactNo,
         total: totalPrice,
         cartItems: cartItemsWithProductId,
-        email: formData.email, // Ensure email is included in orderData
+        email: formData.email,
       };
       console.log(formData.email);
       const res = await axios.post(`${apiUrl}/createorder`, orderData);

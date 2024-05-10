@@ -16,9 +16,6 @@ function Navbar({ cartItems }) {
     setDropdownOpen(!dropdownOpen);
   };
 
-  // const handleCartClick = () => {
-  //   window.location.reload();
-  // }
   const totalItemsInCart = useMemo(() => {
     return cartItems.reduce((total, item) => total + item.quantity, 0);
   }, [cartItems]);
@@ -46,7 +43,7 @@ function Navbar({ cartItems }) {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="focus:outline-none"
           >
-           
+
             {mobileMenuOpen ? (
               <FaTimes className="text-xl" />
             ) : (

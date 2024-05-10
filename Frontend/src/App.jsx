@@ -23,9 +23,9 @@ const PaymentPage = lazy(() => import('./pages/PaymentPage'));
 function App() {
   const [cartItems, setCartItems] = useState([]);
 
-  useEffect(() => {
-    setCartItems(getCartItemsFromLocalStorage());
-  }, [cartItems]);
+  // useEffect(() => {
+  //   setCartItems(getCartItemsFromLocalStorage());
+  // }, [cartItems]);
 
   useEffect(() => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
