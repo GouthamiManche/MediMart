@@ -8,6 +8,7 @@ const { getAllUsers } = require('./APIS/Users');
 const { getData } = require('./APIS/Data');
 const { registerUser, loginUser } = require('./APIS/Login');
 const { getProductsByCategory } = require('./APIS/ByCategory');
+const {getOrderDetailsByEmail} = require('./APIS/OrderDetailsByEmail')
 const {CreateOrder} = require("./APIS/CreateOrder")
 const Razorpay = require('razorpay');
 
@@ -41,6 +42,7 @@ app.post('/api/createorder', CreateOrder);
 app.get('/api/users', getAllUsers);
 app.get('/api/data', getData);
 app.get('/api/products', getProductsByCategory);
+app.get('/api/orders/:email', getOrderDetailsByEmail);
 
 // app.get('/api/user', (req, res) => {
 //   res.json(userData);
