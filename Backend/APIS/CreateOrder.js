@@ -12,6 +12,8 @@ const CreateOrder = async (req, res) => {
     // Generate orderId as a 6-digit number
     const orderId = Math.floor(100000 + Math.random() * 900000);
 
+    const orderDate = new Date();
+
     // Create a new order document with cartItems
     const newOrder = new OrderDetail({
       orderId,
@@ -23,6 +25,7 @@ const CreateOrder = async (req, res) => {
       state,
       city,
       total,
+      orderDate,
       paymentStatus: 'not completed',
       cartItems,
     });
@@ -34,7 +37,8 @@ const CreateOrder = async (req, res) => {
       message: "Order created successfully",
       orderId: orderId,
       email: email,
-      fullname: fullName // Include email in the response
+      fullname: fullName,
+      orderDate: orderDate 
     });
   } catch (err) {
     console.error("Error creating order:", err);

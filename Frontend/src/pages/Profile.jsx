@@ -5,7 +5,6 @@ import { AuthContext } from '../Components/AuthProvider';
 
 function ProfileSection() {
     const { user, logout } = useContext(AuthContext);
-    const [email, setEmail] = useState(user?.email || '');
 
     const handleChange = (event) => {
         const { value } = event.target;
