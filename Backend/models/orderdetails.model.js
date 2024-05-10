@@ -18,8 +18,9 @@ const orderSchema = new Schema({
   email: { type: String, required: true },
   contactNo: { type: String, required: true },
   total: { type: Number, required: true },
+  orderDate: { type: Number, required: true },
   paymentStatus: { type: String, default: 'not completed' },
-  cartItems: [cartItemSchema], 
+  cartItems: [cartItemSchema],
 });
 
 const OrderDetail = mongoose.model('order_details', orderSchema);
