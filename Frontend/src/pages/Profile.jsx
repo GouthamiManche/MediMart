@@ -1,4 +1,4 @@
-import React, { useContext ,useState} from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from "react-router-dom";
 
 import { AuthContext } from '../Components/AuthProvider';
@@ -28,7 +28,7 @@ function Profile() {
 
     return (
         <>
-      
+
             <div className="flex h-[36.5rem] font-poppins">
                 <div className="w-[15rem] bg-[#125872] ">
                     <h2 className="text-2xl font-semibold text-white font-poppins mt-[5rem] ml-4">Profile</h2>
@@ -85,8 +85,8 @@ function Profile() {
                                     type="email"
                                     id="email"
                                     name="email"
-                                    value={user.email}
-                                    onChange={handleEmailChange}
+                                    value={user?user.email:''}
+                                    //onChange={handleEmailChange}
                                     className="mt-1 w-full border-b-2 border-gray-300 bg-transparent focus:outline-none focus:border-[#90CCBA]"
                                     //placeholder="aishwarya@gmail.com"
                                     required
