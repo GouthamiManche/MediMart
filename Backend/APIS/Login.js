@@ -27,6 +27,7 @@ const registerUser = async (req, res) => {
       username,
       email,
       password: hashedPassword,
+      fullname,
       // Generate a unique customerId
       customerId: generateCustomerId(),
     });
@@ -62,7 +63,6 @@ const loginUser = async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
-
     // Check if the provided password matches the hashed password in the database
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {

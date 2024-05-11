@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
-import { jwtDecode } from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode'; // Correct import statement for decoding JWT
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
@@ -12,6 +12,8 @@ const AuthProvider = ({ children }) => {
 
     if (storedToken) {
       const decodedToken = jwtDecode(storedToken);
+      //console.log('Decoded Token:', decodedToken); // Log the decoded token
+
       const expireTime = decodedToken.exp * 1000;
       const currentTime = Date.now();
 
@@ -24,19 +26,20 @@ const AuthProvider = ({ children }) => {
         setUser(decodedToken);
         setToken(storedToken);
         const userCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-       // setCartItems(userCartItems);
-        //setCartItemCount(calculateTotalItemsInCart(userCartItems));
-        console.log('Cart items:', userCartItems);
+       // console.log('Cart items:', userCartItems);
       }
     } else {
       console.log('No token found');
     }
   }, [token]);
 
+  useEffect(() => {
+    //console.log(user);
+  }, [user]);
 
   const login = (data) => {
     setAuthenticated(true);
-    setUser(data.user);
+    setUser(data.user); // Set the user object including fullName
     setToken(data.token);
     localStorage.setItem('token', data.token);
   };

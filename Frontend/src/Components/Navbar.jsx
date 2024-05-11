@@ -43,7 +43,7 @@ function Navbar({ cartItems }) {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="focus:outline-none"
           >
-           
+
             {mobileMenuOpen ? (
               <FaTimes className="text-xl" />
             ) : (
@@ -62,6 +62,7 @@ function Navbar({ cartItems }) {
           <Link
             to="/cart"
             className="font-bold py-2 rounded flex items-center"
+            // onClick={handleCartClick}
           >
             <FaCartShopping className="text-xl" />
             <span className="text-lg ml-1">Cart ({totalItemsInCart})</span>

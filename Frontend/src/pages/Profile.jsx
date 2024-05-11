@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext ,useState} from 'react';
 import { Link } from "react-router-dom";
 
 import { AuthContext } from '../Components/AuthProvider';
@@ -85,8 +85,10 @@ function Profile() {
                                     type="email"
                                     id="email"
                                     name="email"
+                                    value={user.email}
+                                    onChange={handleEmailChange}
                                     className="mt-1 w-full border-b-2 border-gray-300 bg-transparent focus:outline-none focus:border-[#90CCBA]"
-                                    placeholder="Enter Your Email"
+                                    //placeholder="aishwarya@gmail.com"
                                     required
                                 />
                                 <span className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">&#9998;</span>
@@ -110,6 +112,7 @@ function Profile() {
 
                         <div className="ml-[10rem]">
                             <div className="relative">
+                                {/* <CgProfile className='text-[20rem]'/> */}
                                 <img
                                     className="object-cover w-[17rem] h-[17rem] rounded-full"
                                     src={profilePic}
