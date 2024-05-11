@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { FiMinus } from "react-icons/fi";
+import axios from "axios";
+import { AuthContext } from '../Components/AuthProvider';
 
 function truncateString(str, num) {
   if (!str || str.length === 0) return "";
@@ -10,109 +11,54 @@ function truncateString(str, num) {
   return str.slice(0, num) + "...";
 }
 
-function getItemDetails(item) {
-  switch (item.Category) {
-    case "Supplements":
-      return { detail: item.Description, detailLabel: "Description" };
-    case "Capsules":
-      return { detail: item.Composition, detailLabel: "Composition" };
-    default:
-      return { detail: "", detailLabel: "" };
-  }
-}
-
 function Item({ item }) {
+  const { user } = useContext(AuthContext);
   const [isItemInCart, setIsItemInCart] = useState(false);
   const [quantity, setQuantity] = useState(1);
+  const [error, setError] = useState("");
 
-  useEffect(() => {
-    const storedCartItems = localStorage.getItem('cartItems');
-    if (storedCartItems) {
-      const cartItems = JSON.parse(storedCartItems);
-      const existingItem = cartItems.find(
-        (cartItem) => cartItem._id === item._id
+  const handleAddToCart = async () => {
+    try {
+      const res = await axios.post(
+        "https://medicine-website-two.vercel.app/api/addtocart",
+        {
+          Name: item.Name,
+          Price: item.Price,
+          Image_URL: item.Image_URL,
+          quantity: quantity,
+          Product_id: item.Product_id,
+          email: user.email, // Change this to the user's email
+        }
       );
-      if (existingItem) {
-        setQuantity(existingItem.quantity);
+      if (res.status === 201) {
         setIsItemInCart(true);
-      } else {
-        setIsItemInCart(false);
       }
-    } else {
-      setIsItemInCart(false);
+    } catch (error) {
+      console.error("Error adding item to cart:", error);
+      setError("Failed to add item to cart");
     }
-  }, [item._id]);
+  };
+
+  const handleQuantityChange = async (value) => {
+    const newQuantity = Math.max(1, value); // Ensure minimum quantity is 1
+    setQuantity(newQuantity);
+    try {
+      const res = await axios.put(
+        `https://medicine-website-two.vercel.app/api/updatecart/${item.Product_id}`,
+        {
+          quantity: newQuantity,
+        }
+      );
+      if (res.status !== 200) {
+        setError("Failed to update item quantity");
+      }
+    } catch (error) {
+      console.error("Error updating item quantity:", error);
+      setError("Failed to update item quantity");
+    }
+  };
 
   const truncatedName = truncateString(item.Medicine_Name || item.Name, 20);
-  const { detail, detailLabel } = getItemDetails(item);
-
-  const handleAddToCart = () => {
-    setIsItemInCart(true);
-    setQuantity(1);
-    updateCartItem(1);
-  };
-
-  const handleQuantityChange = (value) => {
-    const newQuantity = Math.max(0, value);
-    setQuantity(newQuantity);
-
-    if (newQuantity === 0) {
-      removeFromCart();
-    } else {
-      updateCartItem(newQuantity);
-    }
-  };
-
-  const removeFromCart = () => {
-    const storedCartItems = localStorage.getItem('cartItems');
-    let updatedCartItems;
-
-    if (storedCartItems) {
-      const cartItems = JSON.parse(storedCartItems);
-      updatedCartItems = cartItems.filter(
-        (cartItem) => cartItem._id !== item._id
-      );
-    } else {
-      updatedCartItems = [];
-    }
-
-    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
-    setIsItemInCart(false);
-  };
-
-  const updateCartItem = (newQuantity) => {
-    const { _id, Name, Price, Image_URL, Product_id } = item;
-    const cartItem = {
-      _id,
-      Name,
-      Price,
-      Image_URL,
-      quantity: newQuantity,
-      Product_id,
-    };
-
-    const storedCartItems = localStorage.getItem('cartItems');
-    let updatedCartItems;
-
-    if (storedCartItems) {
-      const cartItems = JSON.parse(storedCartItems);
-      const existingItemIndex = cartItems.findIndex(
-        (cartItem) => cartItem._id === item._id
-      );
-
-      if (existingItemIndex !== -1) {
-        cartItems[existingItemIndex].quantity = newQuantity;
-        updatedCartItems = cartItems;
-      } else {
-        updatedCartItems = [...cartItems, cartItem];
-      }
-    } else {
-      updatedCartItems = [cartItem];
-    }
-
-    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
-  };
-
 
   return (
     <div className="bg-white m-2 p-4 rounded-xl border border-gray-200 flex flex-col md:w-[16rem] w-[16rem] md:h-[22rem] h-[22rem] overflow-hidden shadow-md hover:shadow-xl transition duration-300 ">
@@ -133,12 +79,6 @@ function Item({ item }) {
           </h3>
         </div>
       </Link>
-      {detail && (
-        <p className="text-sm text-gray-600 mt-2">
-          <span className="font-semibold">{detailLabel}: </span>
-          {detail}
-        </p>
-      )}
       <div className="flex justify-between items-center mt-2">
         <h3 className="text-2xl font-bold text-[#323743FF]">₹{item.Price}</h3>
         {isItemInCart ? (
@@ -166,6 +106,7 @@ function Item({ item }) {
           </button>
         )}
       </div>
+      {error && <p className="text-red-500 mt-2">{error}</p>}
     </div>
   );
 }
