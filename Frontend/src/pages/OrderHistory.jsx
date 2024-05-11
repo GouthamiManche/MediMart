@@ -47,7 +47,7 @@ function OrderHistory() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 md:w-3/4 lg:w-1/2">
+    <div className="container mx-auto px-4 py-8 md:w-3/4 lg:w-[70%]">
       <h2 className="text-3xl font-semibold mb-6 text-gray-800 text-center">Purchase History</h2>
       <div className="space-y-8">
         {orders.map((order) => (
@@ -81,7 +81,7 @@ function OrderHistory() {
                     <div>
                       <h4 className="text-base md:text-lg font-semibold text-gray-800">{item.Name}</h4>
                       <p className="text-xs md:text-sm text-gray-600">
-                        {item.quantity} x {item.Size}ml
+                     Quantity :  {item.quantity} {item.Size}
                       </p>
                       <p className="text-base md:text-lg font-semibold text-gray-800">₹{item.Price}</p>
                       <div className="flex mt-2">
