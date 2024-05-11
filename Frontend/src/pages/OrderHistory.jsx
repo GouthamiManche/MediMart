@@ -47,7 +47,7 @@ function OrderHistory() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 md:w-3/4 lg:w-1/2">
+    <div className="container mx-auto px-4 py-8 md:w-3/4 lg:w-[80%]">
       <h2 className="text-3xl font-semibold mb-6 text-gray-800 text-center">Purchase History</h2>
       <div className="space-y-8">
         {orders.map((order) => (
