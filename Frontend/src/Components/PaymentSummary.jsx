@@ -19,7 +19,7 @@ const PaymentSummary = ({ cartItems, handleSubmit }) => {
 
   const handleApplyCoupon = (couponCode) => {
     const validCoupons = ['SAVE10', 'GET20', 'DISCOUNT30', 'FIRST50'];
-
+  
     if (validCoupons.includes(couponCode)) {
       let discountPercentage = 0;
       switch (couponCode) {
@@ -32,21 +32,22 @@ const PaymentSummary = ({ cartItems, handleSubmit }) => {
         case 'DISCOUNT30':
           discountPercentage = 30;
           break;
-          case 'FIRST50':
-            discountPercentage = 50;
-            break;
-            
+        case 'FIRST50':
+          discountPercentage = 50;
+          break;
         default:
           discountPercentage = 0;
           break;
       }
-
+  
       setDiscountPercentage(discountPercentage);
+      const discountedTotalPrice = getCartTotal() - calculateDiscount(discountPercentage);
+      localStorage.setItem('totalPrice', JSON.stringify(discountedTotalPrice));
       toast.success('Coupon applied successfully', { autoClose: 2000 });
     } else {
       toast.error('Invalid coupon', { autoClose: 2000 });
     }
-
+  
     setShowCouponPopup(false);
     setCoupon('');
   };
@@ -54,7 +55,7 @@ const PaymentSummary = ({ cartItems, handleSubmit }) => {
   return (
     <>
       {/* Desktop View */}
-      <div className="w-[30%] p-[2rem] h-full border border-gray-300 sticky top-24 rounded-md md:block hidden shadow-md">
+      <div className="w-[30%] p-[2rem] h-full border border-gray-300 sticky top-24 rounded-md md:block hidden shadow-md text-gray-700">
         <h2 className="text-2xl font-bold mb-4">Order Total</h2>
         <div className="bg-white">
           <div className="flex justify-between mb-2">
@@ -89,7 +90,7 @@ const PaymentSummary = ({ cartItems, handleSubmit }) => {
       </div>
 
       {/* Mobile View */}
-      <div className="md:hidden">
+      <div className="md:hidden text-gray-700">
         {cartItems.length > 0 && (
           <div className="bg-white rounded-md p-4">
             <h2 className="text-2xl font-bold mb-4">Order Total</h2>

@@ -22,7 +22,6 @@ const Cart = () => {
   const apiKey = import.meta.env.VITE_API_KEY;
   const [totalPrice, setTotalPrice] = useState(0);
 
-
   useEffect(() => {
     setIsLoading(true);
     const fetchData = async () => {
@@ -42,30 +41,29 @@ const Cart = () => {
     fetchData();
   }, []);
 
-
   useEffect(() => {
     const storedCartItems = localStorage.getItem('cartItems');
+    console.log('Stored Cart Items:', storedCartItems);
     if (storedCartItems) {
       setCartItems(JSON.parse(storedCartItems));
     }
   }, []);
 
-
-
-
   const handleRemoveFromCart = (index) => {
     const updatedCartItems = [...cartItems];
     updatedCartItems.splice(index, 1);
     setCartItems(updatedCartItems);
-    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems)); 
+    console.log('Updated Cart Items:', updatedCartItems);
+    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+    updateTotalPrice(updatedCartItems, discountPercentage);
   };
 
-  //HANDLE QUANTITY IN CART
   const handleQuantityChange = (index, value) => {
     const updatedCartItems = [...cartItems];
     updatedCartItems[index].quantity = Math.max(1, value);
     setCartItems(updatedCartItems);
-    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems)); 
+    console.log('Updated Cart Items:', updatedCartItems);
+    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
     updateTotalPrice(updatedCartItems, discountPercentage);
   };
 
@@ -73,7 +71,7 @@ const Cart = () => {
     return (getCartTotal() * discountPercentage) / 100;
   };
 
-   const getCartTotal = () => {
+  const getCartTotal = () => {
     return cartItems.reduce((total, item) => total + item.Price * item.quantity, 0);
   };
 
@@ -96,17 +94,17 @@ const Cart = () => {
     navigate("/checkout");
   };
 
-  const handleApplyCoupon = () => {
+  const handleApplyCoupon = (couponCode) => {
     const validCoupons = ['SAVE10', 'GET20', 'DISCOUNT30', 'FIRST50'];
 
-    if (!coupon) {
+    if (!couponCode) {
       setDiscountPercentage(0);
-      updateTotalPrice(cartItems, 0); 
+      updateTotalPrice(cartItems, 0);
     }
 
-    if (validCoupons.includes(coupon)) {
+    if (validCoupons.includes(couponCode)) {
       let discountPercentage = 0;
-      switch (coupon) {
+      switch (couponCode) {
         case 'SAVE10':
           discountPercentage = 10;
           break;
@@ -123,7 +121,6 @@ const Cart = () => {
           discountPercentage = 0;
           break;
       }
-
       setDiscountPercentage(discountPercentage);
       updateTotalPrice(cartItems, discountPercentage);
 
@@ -279,6 +276,7 @@ const Cart = () => {
             ))
           )}
         </div>
+   
         {/* Payment and Summary */}
         <PaymentSummary
           cartItems={cartItems}
@@ -288,6 +286,7 @@ const Cart = () => {
           handleApplyCoupon={handleApplyCoupon}
           handleSubmit={handleSubmit}
         />
+
       </div>
       {isLoading ? (
         <LoadingGif />
