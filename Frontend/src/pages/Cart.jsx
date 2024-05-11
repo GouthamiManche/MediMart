@@ -61,6 +61,18 @@ const Cart = () => {
     fetchData();
   }, [user.email]);
 
+  const handleRemoveFromCart = async (index, productId) => {
+    try {
+      await axios.delete(`${apiUrl}/removefromcart/${productId}`);
+      const updatedCartItems = [...cartItems];
+      updatedCartItems.splice(index, 1);
+      setCartItems(updatedCartItems);
+      toast.success('Product removed from cart successfully', { autoClose: 2000 });
+    } catch (error) {
+      console.error("Error removing product from cart:", error.message);
+      toast.error('Failed to remove product from cart', { autoClose: 2000 });
+    }
+  };
 
   const handleSubmit = () => {
     if (cartItems.length === 0) {
