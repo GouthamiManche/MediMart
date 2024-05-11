@@ -29,8 +29,8 @@ function OrderHistory() {
           <div key={order._id} className="bg-white overflow-hidden shadow-md rounded-lg">
             <div className="px-6 py-4">
               <div className="text-xl font-bold mb-2">Order ID: {order.orderId}</div>
-              <p className="text-gray-700 text-base mb-2">Order Date: {order.orderDate}</p>
-              <ul className="text-gray-700 text-base mb-2">
+              <p className="text-black text-base mb-2">Order Date: {order.orderDate}</p>
+              <ul className="text-black text-base mb-2">
                 {order.cartItems.map((item) => (
                   <li key={item._id} className="flex items-center">
                     {item.Image_URL && (
@@ -39,11 +39,13 @@ function OrderHistory() {
                     <div>
                       <div>Product: {item.Name}</div>
                       <div>Quantity: {item.quantity}</div>
+                      <div>Price: {item.Price}</div>
                     </div>
                   </li>
                 ))}
               </ul>
-              <p className="text-gray-700 text-base">Total: ${order.total}</p>
+              <p className="text-black text-base">Payment Status: {order.paymentStatus}</p>
+              <p className="text-black text-base">Total: ${order.total}</p>
             </div>
           </div>
         ))}
