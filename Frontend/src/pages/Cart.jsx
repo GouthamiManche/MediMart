@@ -22,7 +22,6 @@ const Cart = () => {
   const apiKey = import.meta.env.VITE_API_KEY;
   const [totalPrice, setTotalPrice] = useState(0);
 
-
   useEffect(() => {
     setIsLoading(true);
     const fetchData = async () => {

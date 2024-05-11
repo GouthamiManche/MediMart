@@ -16,11 +16,10 @@ const Category = () => {
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
   const [items, setItems] = useState([]);
-  const [cartItems, setCartItems] = useState([]);
-  const [itemAddedToCart, setItemAddedToCart] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const apiUrl = import.meta.env.VITE_API_URL;
   const apiKey = import.meta.env.VITE_API_KEY;
+  const { isAuthenticated, user } = useContext(AuthContext);
 
   useEffect(() => {
     setIsLoading(true);
@@ -42,13 +41,6 @@ const Category = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const storedCartItems = localStorage.getItem('cartItems');
-    if (storedCartItems) {
-      setCartItems(JSON.parse(storedCartItems));
-    }
-  }, []);
-
   if (!product) {
     return <div className="text-center text-gray-600">Product not found</div>;
   }
@@ -63,9 +55,16 @@ const Category = () => {
     setQuantity(Math.max(1, value));
   };
 
-  const { isAuthenticated, user } = useContext(AuthContext);
+  const handleAddToCart = async () => {
+    // Check if user is authenticated
+    if (!isAuthenticated) {
+      // If not authenticated, show toastify to login
+      toast.error('Please login to add item to cart');
+      // Navigate to login page
+      navigate('/login');
+      return;
+    }
 
-  const handleAddToCart = (product, quantity) => {
     const { _id, Name, Price, Image_URL, Product_id } = product;
     const cartItem = {
       _id,
@@ -73,13 +72,20 @@ const Category = () => {
       Price,
       Image_URL,
       quantity,
-      Product_id
+      Product_id,
+      email: user.email
     };
-    const updatedCartItems = [...cartItems, cartItem];
-    setCartItems(updatedCartItems);
-    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
-    setItemAddedToCart(true);
-    toast.success('Item Added To Cart', { autoClose: 2000 });
+
+    try {
+      // Make the add to cart API call
+      await axios.post("http://localhost:4000/api/addtocart", cartItem);
+      toast.success('Item Added To Cart', { autoClose: 2000 });
+      // Navigate to cart page after successful addition
+      navigate('/cart');
+    } catch (error) {
+      console.error("Error adding item to cart:", error.message);
+      toast.error('Failed to add item to cart');
+    }
   };
 
   return (
@@ -108,37 +114,35 @@ const Category = () => {
                 </svg>
               </button>
               <div className="flex justify-center items-center">
-              <ReactImageMagnify
-  {...{
-    smallImage: {
-      alt: isMedicine ? product.Medicine_Name : product.Name,
-      isFluidWidth: true,
-      src: product.Image_URL,
-      sizes: '(max-width: 480px) 100vw, (max-width: 1200px) 30vw, 360px'
-    },
-    largeImage: {
-      src: product.Image_URL,
-      width: 1440,
-      height: 975,
-    },
-    shouldUsePositiveSpaceLens: true,
-    className: "md:max-w-[24rem] md:max-h-[24rem] hover:bg-white",
-    enlargedImageContainerDimensions: { width: '200%', height: '150%' },
-    enlargedImagePosition: 'beside',
-    isHintEnabled: true,
-    shouldHideHintAfterFirstBigViewOpened: true,
-    isEnlargedImagePortalEnabledForTouch: true,
-    lensStyle: {
-      lensStyle: {
-        background: 'rgba(77, 144, 254, 0.3)', // Blue tinted background
-        border: '1px solid #4d90fe', // Blue border
-      },
-    },
-  }}
-/>
-
-
-</div>
+                <ReactImageMagnify
+                  {...{
+                    smallImage: {
+                      alt: isMedicine ? product.Medicine_Name : product.Name,
+                      isFluidWidth: true,
+                      src: product.Image_URL,
+                      sizes: '(max-width: 480px) 100vw, (max-width: 1200px) 30vw, 360px'
+                    },
+                    largeImage: {
+                      src: product.Image_URL,
+                      width: 1440,
+                      height: 975,
+                    },
+                    shouldUsePositiveSpaceLens: true,
+                    className: "md:max-w-[24rem] md:max-h-[24rem] hover:bg-white",
+                    enlargedImageContainerDimensions: { width: '200%', height: '150%' },
+                    enlargedImagePosition: 'beside',
+                    isHintEnabled: true,
+                    shouldHideHintAfterFirstBigViewOpened: true,
+                    isEnlargedImagePortalEnabledForTouch: true,
+                    lensStyle: {
+                      lensStyle: {
+                        background: 'rgba(77, 144, 254, 0.3)', // Blue tinted background
+                        border: '1px solid #4d90fe', // Blue border
+                      },
+                    },
+                  }}
+                />
+              </div>
             </div>
             <div className="flex flex-col justify-between">
               <div>
@@ -200,7 +204,7 @@ const Category = () => {
                     <div className="md:ml-[12rem] ml-[2rem]">
                       <button
                         className="flex items-center justify-center bg-[#125872] text-white font-bold py-2 md:px-8 px-[6px] rounded transition-colors duration-300"
-                        onClick={() => handleAddToCart(product, quantity)}
+                        onClick={handleAddToCart}
                       >
                         <BsCart3 className="mr-2" />
                         Add to Cart
@@ -222,7 +226,6 @@ const Category = () => {
             </div>
           )}
         </div>
-
       </div>
     </div>
   );
