@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { AuthContext } from '../Components/AuthProvider';
+import moment from 'moment';
+import { IoIosArrowDown, IoIosArrowForward } from 'react-icons/io';
 
 function OrderHistory() {
   const { user, logout } = useContext(AuthContext);
   const [orders, setOrders] = useState([]);
+  const [expandedOrderId, setExpandedOrderId] = useState(null);
 
   useEffect(() => {
     if (user) {
@@ -13,40 +16,97 @@ function OrderHistory() {
 
   const fetchOrderHistory = async (email) => {
     try {
-      const response = await fetch(`https://medicine-website-two.vercel.app/api/orders/${email}`);
+      const response = await fetch(
+        `https://medicine-website-two.vercel.app/api/orders/${email}`
+      );
       const data = await response.json();
       setOrders(data);
     } catch (error) {
-      console.error("Error fetching order history:", error);
+      console.error('Error fetching order history:', error);
     }
   };
 
+  const handleManageOrder = (orderId) => {
+    // Implement your logic for managing order here
+  };
+
+  const handleViewInvoice = (orderId) => {
+    // Implement your logic for viewing invoice here
+  };
+
+  const toggleOrderExpansion = (orderId) => {
+    setExpandedOrderId((prevId) => (prevId === orderId ? null : orderId));
+  };
+
+  const handleBuyAgain = (productId) => {
+    // Implement your logic for buying again here
+  };
+
+  const handleViewProduct = (productId) => {
+    // Implement your logic for viewing product details here
+  };
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h2 className="text-2xl font-bold mb-4">Order History</h2>
-      <div className="space-y-6">
+    <div className="container mx-auto px-4 py-8 md:w-3/4 lg:w-1/2">
+      <h2 className="text-3xl font-semibold mb-6 text-gray-800 text-center">Purchase History</h2>
+      <div className="space-y-8">
         {orders.map((order) => (
-          <div key={order._id} className="bg-white overflow-hidden shadow-md rounded-lg">
-            <div className="px-6 py-4">
-              <div className="text-xl font-bold mb-2">Order ID: {order.orderId}</div>
-              <p className="text-black mb-2">Order Date: {order.orderDate}</p>
-              <ul className="text-black mb-2">
+          <div key={order._id} className="bg-white rounded-md overflow-hidden border border-gray-200">
+            <div
+              className="p-4 md:p-6 border-b border-gray-200 flex justify-between items-center cursor-pointer"
+              onClick={() => toggleOrderExpansion(order.orderId)}
+            >
+              <div>
+                <h3 className="text-lg font-semibold text-gray-800">Order #{order.orderId}</h3>
+                <span className="text-sm text-gray-600">
+                  Delivery Date: {moment(order.orderDate).format('MMMM D, YYYY')}
+                </span>
+              </div>
+              <div className="text-lg">
+                {expandedOrderId === order.orderId ? <IoIosArrowDown /> : <IoIosArrowForward />}
+              </div>
+            </div>
+            {expandedOrderId === order.orderId && (
+              <div className="p-4 md:p-6">
+                {/* Detailed order information here */}
                 {order.cartItems.map((item) => (
-                  <li key={item._id} className="flex items-center">
+                  <div key={item._id} className="flex items-center mb-4">
                     {item.Image_URL && (
-                      <img src={item.Image_URL} alt={item.Name} className="w-20 h-20 object-cover mr-4" />
+                      <img
+                        src={item.Image_URL}
+                        alt={item.Name}
+                        className="w-16 h-16 md:w-20 md:h-20 object-cover mr-4 md:mr-6 rounded-md"
+                      />
                     )}
                     <div>
-                      <div>Product: {item.Name}</div>
-                      <div>Quantity: {item.quantity}</div>
-                      <div>Price: ₹{item.Price}</div>
+                      <h4 className="text-base md:text-lg font-semibold text-gray-800">{item.Name}</h4>
+                      <p className="text-xs md:text-sm text-gray-600">
+                        {item.quantity} x {item.Size}ml
+                      </p>
+                      <p className="text-base md:text-lg font-semibold text-gray-800">₹{item.Price}</p>
+                      <div className="flex mt-2">
+                        <button
+                          onClick={() => handleBuyAgain(item._id)}
+                          className="bg-[#125872] text-white px-2 py-2 rounded-md mr-2 hover:bg-[#0d4255] text-xs md:text-sm"
+                        >
+                          Buy Again
+                        </button>
+                        <button
+                          onClick={() => handleViewProduct(item._id)}
+                          className="bg-gray-200 text-gray-700 px-2 py-1 rounded-md hover:bg-gray-300 text-xs md:text-sm"
+                        >
+                          View Product
+                        </button>
+                      </div>
                     </div>
-                  </li>
+                  </div>
                 ))}
-              </ul>
-              <p className="text-black">Payment Status: {order.paymentStatus}</p>
-              <p className="text-black font-bold">Total: ₹{order.total}</p>
-            </div>
+                <div className="flex justify-between items-center mt-4">
+                  <div className="text-xs md:text-sm text-gray-700">Payment Status: {order.paymentStatus}</div>
+                  <div className="text-base md:text-lg font-semibold text-gray-800">Total: ₹{order.total}</div>
+                </div>
+              </div>
+            )}
           </div>
         ))}
       </div>

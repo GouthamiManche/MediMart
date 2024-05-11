@@ -1,10 +1,11 @@
 import React, { useContext ,useState} from 'react';
 import { Link } from "react-router-dom";
-import { CgProfile } from "react-icons/cg";
+
 import { AuthContext } from '../Components/AuthProvider';
 
-function ProfileSection() {
+function Profile() {
     const { user, logout } = useContext(AuthContext);
+    const [profilePic, setProfilePic] = useState('src/assets/img/profile.png');
 
     const handleChange = (event) => {
         const { value } = event.target;
@@ -12,18 +13,27 @@ function ProfileSection() {
         event.target.value = filteredValue;
     };
 
-    const handleEmailChange = (event) => {
-        setEmail(event.target.value); // Update email state on input change
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+
+        reader.onloadend = () => {
+            setProfilePic(reader.result);
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
     };
 
     return (
         <>
-
+      
             <div className="flex h-[36.5rem] font-poppins">
                 <div className="w-[15rem] bg-[#125872] ">
                     <h2 className="text-2xl font-semibold text-white font-poppins mt-[5rem] ml-4">Profile</h2>
                     <p className='text-xl text-white font-poppins mt-[1rem] ml-4'>Order history</p>
-                    <Link to="/" className="mb-12">
+                    <Link to="/" className="mb-12" style={{ color: "#90CCBA" }}>
                         <button
                             onClick={logout}
                             className="text-xl text-white font-poppins mt-[1rem] ml-4"
@@ -36,7 +46,7 @@ function ProfileSection() {
                     </Link>
                 </div>
 
-                <div className="w-[66rem] ">
+                <div className="w-[66rem]">
                     <div className="flex border border-gray-500 h-[24rem] w-[63rem] rounded p-4 ml-4 mt-12">
                         <div className='w-[30rem] mt-[1rem]'>
                             <div className="mb-4 relative">
@@ -46,7 +56,7 @@ function ProfileSection() {
                                     id="name"
                                     name="name"
                                     className="mt-1 w-full border-b-2 border-gray-300 bg-transparent focus:outline-none focus:border-[#90CCBA]"
-                                    placeholder="Aishwarya"
+                                    placeholder="Enter Your Name"
                                     required
                                 />
                                 <span className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">&#9998;</span>
@@ -62,7 +72,7 @@ function ProfileSection() {
                                     pattern="[0-9]*"
                                     maxLength="10"
                                     className="mt-1 w-full border-b-2 border-gray-300 bg-transparent focus:outline-none focus:border-[#90CCBA]"
-                                    placeholder="8548612325"
+                                    placeholder="Enter Your Number"
                                     onChange={handleChange}
                                     required
                                 />
@@ -91,26 +101,29 @@ function ProfileSection() {
                                     id="street"
                                     name="street"
                                     className="mt-1 w-full border-b-2 border-gray-300 bg-transparent focus:outline-none focus:border-[#90CCBA]"
-                                    placeholder="Hiranandani, Powai"
+                                    placeholder="Enter Your Address"
                                     required
                                 />
                                 <span className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">&#9998;</span>
                             </div>
 
-                            <button type="submit" className="bg-[#125872] text-white px-4 py-2 rounded">Save changes</button>
+                            <button type="submit" className="bg-[#125872]  text-white px-4 py-2 rounded">Save changes</button>
                         </div>
 
-                        <div className="ml-[8rem] mt-[2rem]">
+                        <div className="ml-[10rem]">
                             <div className="relative">
                                 {/* <CgProfile className='text-[20rem]'/> */}
                                 <img
-                                    className="object-cover w-[17rem] h-[17rem]"
-                                    src="src/assets/Profilee.png"
+                                    className="object-cover w-[17rem] h-[17rem] rounded-full"
+                                    src={profilePic}
                                     alt="Profile"
                                 />
-                                {/* <div className="absolute inset-0 flex items-center justify-center mt-[19.5rem]">
-                                    <button className="bg-[#125872] font-semibold text-white px-4 py-2 rounded-full">Change photo</button>
-                                </div> */}
+                                <div className="absolute inset-0 flex items-center justify-center mt-[19.5rem]">
+                                    <label htmlFor="photo-upload" className="bg-[#125872]  text-white px-4 py-2 rounded cursor-pointer">
+                                        Change photo
+                                    </label>
+                                    <input id="photo-upload" type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -120,4 +133,4 @@ function ProfileSection() {
     )
 }
 
-export default ProfileSection
+export default Profile

@@ -92,17 +92,17 @@ const Cart = () => {
     navigate("/checkout");
   };
 
-  const handleApplyCoupon = () => {
+  const handleApplyCoupon = (couponCode) => {
     const validCoupons = ['SAVE10', 'GET20', 'DISCOUNT30', 'FIRST50'];
 
-    if (!coupon) {
+    if (!couponCode) {
       setDiscountPercentage(0);
       updateTotalPrice(cartItems, 0);
     }
 
-    if (validCoupons.includes(coupon)) {
+    if (validCoupons.includes(couponCode)) {
       let discountPercentage = 0;
-      switch (coupon) {
+      switch (couponCode) {
         case 'SAVE10':
           discountPercentage = 10;
           break;
@@ -119,7 +119,6 @@ const Cart = () => {
           discountPercentage = 0;
           break;
       }
-
       setDiscountPercentage(discountPercentage);
       updateTotalPrice(cartItems, discountPercentage);
       toast.success('Coupon applied successfully', { autoClose: 2000 });
@@ -274,6 +273,7 @@ const Cart = () => {
             ))
           )}
         </div>
+
         {/* Payment and Summary */}
         <PaymentSummary
           cartItems={cartItems}
@@ -283,6 +283,7 @@ const Cart = () => {
           handleApplyCoupon={handleApplyCoupon}
           handleSubmit={handleSubmit}
         />
+
       </div>
       {isLoading ? (
         <LoadingGif />
