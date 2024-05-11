@@ -41,38 +41,26 @@ const Cart = () => {
     fetchData();
   }, []);
 
-
   useEffect(() => {
-    const storedCartItems = localStorage.getItem('cartItems');
-    if (storedCartItems) {
-      setCartItems(JSON.parse(storedCartItems));
-    }
-  }, []);
+    setIsLoading(true);
+    const fetchData = async () => {
+      try {
+        // Fetch cart items from the API
+        const response = await axios.get(`${apiUrl}/getcartitems?email=${user.email}`, {
+          headers: {
+            apikey: apiKey,
+          },
+        });
+        setCartItems(response.data);
+      } catch (error) {
+        console.error("Error fetching cart items:", error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, [user.email]);
 
-  const handleRemoveFromCart = (index) => {
-    const updatedCartItems = [...cartItems];
-    updatedCartItems.splice(index, 1);
-    setCartItems(updatedCartItems);
-    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
-    updateTotalPrice(updatedCartItems, discountPercentage);
-  };
-
-  //HANDLE QUANTITY IN CART
-  const handleQuantityChange = (index, value) => {
-    const updatedCartItems = [...cartItems];
-    updatedCartItems[index].quantity = Math.max(1, value);
-    setCartItems(updatedCartItems);
-    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
-    updateTotalPrice(updatedCartItems, discountPercentage);
-  };
-
-  const calculateDiscount = () => {
-    return (getCartTotal() * discountPercentage) / 100;
-  };
-
-   const getCartTotal = () => {
-    return cartItems.reduce((total, item) => total + item.Price * item.quantity, 0);
-  };
 
   const handleSubmit = () => {
     if (cartItems.length === 0) {
