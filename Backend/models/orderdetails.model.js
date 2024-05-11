@@ -6,6 +6,7 @@ const cartItemSchema = new Schema({
   Name: { type: String, required: true },
   Price: { type: Number, required: true },
   quantity: { type: Number, required: true },
+  Image_URL :{type:String,required:true}
 });
 
 const orderSchema = new Schema({

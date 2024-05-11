@@ -16,6 +16,7 @@ const AddressForm = () => {
     pincode: '',
     contactNo: '',
     total: 0,
+    Image_URL:'',
     email: email , // Check if user.email exists
   });
 
@@ -75,6 +76,7 @@ const AddressForm = () => {
         Name: item.Name,
         Price: item.Price,
         quantity: item.quantity,
+        Image_URL:item.Image_URL,
       }));
 
       const orderData = {
@@ -88,7 +90,9 @@ const AddressForm = () => {
         cartItems: cartItemsWithProductId,
         email: formData.email,
       };
-      console.log(formData.email);
+      orderData.Image_URL = parsedCartItems.length > 0 ? parsedCartItems[0].Image_URL : '';
+
+      console.log(orderData.Image_URL);
       const res = await axios.post(`${apiUrl}/createorder`, orderData);
       console.log(res.data);
     }catch (err) {
