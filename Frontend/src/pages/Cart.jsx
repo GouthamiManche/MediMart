@@ -42,37 +42,36 @@ const Cart = () => {
   }, []);
 
   useEffect(() => {
-    const storedCartItems = localStorage.getItem('cartItems');
-    console.log('Stored Cart Items:', storedCartItems);
-    if (storedCartItems) {
-      setCartItems(JSON.parse(storedCartItems));
+    setIsLoading(true);
+    const fetchData = async () => {
+      try {
+        // Fetch cart items from the API
+        const response = await axios.get(`${apiUrl}/getcartitems?email=${user.email}`, {
+          headers: {
+            apikey: apiKey,
+          },
+        });
+        setCartItems(response.data);
+      } catch (error) {
+        console.error("Error fetching cart items:", error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, [user.email]);
+
+  const handleRemoveFromCart = async (index, productId) => {
+    try {
+      await axios.delete(`${apiUrl}/removefromcart/${productId}`);
+      const updatedCartItems = [...cartItems];
+      updatedCartItems.splice(index, 1);
+      setCartItems(updatedCartItems);
+      toast.success('Product removed from cart successfully', { autoClose: 2000 });
+    } catch (error) {
+      console.error("Error removing product from cart:", error.message);
+      toast.error('Failed to remove product from cart', { autoClose: 2000 });
     }
-  }, []);
-
-  const handleRemoveFromCart = (index) => {
-    const updatedCartItems = [...cartItems];
-    updatedCartItems.splice(index, 1);
-    setCartItems(updatedCartItems);
-    console.log('Updated Cart Items:', updatedCartItems);
-    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
-    updateTotalPrice(updatedCartItems, discountPercentage);
-  };
-
-  const handleQuantityChange = (index, value) => {
-    const updatedCartItems = [...cartItems];
-    updatedCartItems[index].quantity = Math.max(1, value);
-    setCartItems(updatedCartItems);
-    console.log('Updated Cart Items:', updatedCartItems);
-    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
-    updateTotalPrice(updatedCartItems, discountPercentage);
-  };
-
-  const calculateDiscount = () => {
-    return (getCartTotal() * discountPercentage) / 100;
-  };
-
-  const getCartTotal = () => {
-    return cartItems.reduce((total, item) => total + item.Price * item.quantity, 0);
   };
 
   const handleSubmit = () => {
@@ -87,9 +86,6 @@ const Cart = () => {
       console.log('User is not logged in. Please log in to add items to the cart.');
       return;
     }
-
-    const finalTotalPrice = getCartTotal() - calculateDiscount();
-    localStorage.setItem('totalPrice', JSON.stringify(finalTotalPrice));
 
     navigate("/checkout");
   };
@@ -123,7 +119,6 @@ const Cart = () => {
       }
       setDiscountPercentage(discountPercentage);
       updateTotalPrice(cartItems, discountPercentage);
-
       toast.success('Coupon applied successfully', { autoClose: 2000 });
     } else {
       toast.error('Invalid coupon', { autoClose: 2000 });
@@ -172,7 +167,7 @@ const Cart = () => {
                           {item.isMedicine ? item.Medicine_Name : item.Name}
                         </h3>
                       </div>
-  
+
                       <p className=''>{item.Manufacturer}</p>
                       <p className="text-lg  font-semibold">{`₹${item.Price}`}</p>
                     </div>
@@ -195,7 +190,7 @@ const Cart = () => {
                       <p className="ml-4 font-semibold">{`₹${item.Price * item.quantity}`}</p>
                       <button
                         className="ml-4 text-red-400 hover:text-red-600"
-                        onClick={() => handleRemoveFromCart(index)}
+                        onClick={() => handleRemoveFromCart(index, item.Product_id)}
                       >
                         <BsTrash className="text-lg" />
                       </button>
@@ -206,7 +201,7 @@ const Cart = () => {
             </div>
           </div>
           {/* Payment and Summary */}
-      
+
           <PaymentSummary
             cartItems={cartItems}
             discountPercentage={discountPercentage}
@@ -215,10 +210,10 @@ const Cart = () => {
             handleApplyCoupon={handleApplyCoupon}
             handleSubmit={handleSubmit}
           />
-        
+
         </div>
       </div>
-  
+
       {/* Mobile View */}
       <div className="md:hidden">
         <div className="p-4">
@@ -266,7 +261,7 @@ const Cart = () => {
                   <div>
                     <button
                       className="text-red-400 hover:text-red-600"
-                      onClick={() => handleRemoveFromCart(index)}
+                      onClick={() => handleRemoveFromCart(index, item.Product_id)}
                     >
                       <BsTrash className="text-lg" />
                     </button>
@@ -276,7 +271,7 @@ const Cart = () => {
             ))
           )}
         </div>
-   
+
         {/* Payment and Summary */}
         <PaymentSummary
           cartItems={cartItems}
