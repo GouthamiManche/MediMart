@@ -64,10 +64,10 @@ const Category = () => {
         };
 
         await axios.put(`${apiUrl}/updatecart/${product.Product_id}`, cartItem);
-        toast.success('Cart updated successfully');
+        //toast.success('Cart updated successfully');
       } catch (error) {
         console.error("Error updating cart:", error.message);
-        toast.error('Failed to update cart');
+        //toast.error('Failed to update cart');
       }
     }
   };

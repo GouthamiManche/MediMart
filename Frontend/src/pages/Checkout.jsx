@@ -140,13 +140,7 @@ const AddressForm = () => {
     return Math.floor(100000 + Math.random() * 900000);
   };
 
-  useEffect(() => {
-    const storedCartItems = localStorage.getItem('cartItems');
-    if (storedCartItems) {
-      setCartItems(JSON.parse(storedCartItems));
-    }
-  }, []);
-
+  
   return (
     <div className="flex items-center min-h-full mx-[4vw] text-gray-700">
       <div className="bg-white p-6 max-w-2xl w-full md:mt-[2rem] mx-auto">

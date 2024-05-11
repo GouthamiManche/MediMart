@@ -122,7 +122,6 @@ const Cart = () => {
 
       setDiscountPercentage(discountPercentage);
       updateTotalPrice(cartItems, discountPercentage);
-      localStorage.setItem('coupon', coupon);
       toast.success('Coupon applied successfully', { autoClose: 2000 });
     } else {
       toast.error('Invalid coupon', { autoClose: 2000 });
@@ -194,7 +193,7 @@ const Cart = () => {
                       <p className="ml-4 font-semibold">{`₹${item.Price * item.quantity}`}</p>
                       <button
                         className="ml-4 text-red-400 hover:text-red-600"
-                        onClick={() => handleRemoveFromCart(index)}
+                        onClick={() => handleRemoveFromCart(index, item.Product_id)}
                       >
                         <BsTrash className="text-lg" />
                       </button>
@@ -265,7 +264,7 @@ const Cart = () => {
                   <div>
                     <button
                       className="text-red-400 hover:text-red-600"
-                      onClick={() => handleRemoveFromCart(index)}
+                      onClick={() => handleRemoveFromCart(index, item.Product_id)}
                     >
                       <BsTrash className="text-lg" />
                     </button>
