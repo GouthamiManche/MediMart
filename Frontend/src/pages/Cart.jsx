@@ -87,8 +87,6 @@ const Cart = () => {
       return;
     }
 
-    const finalTotalPrice = getCartTotal() - calculateDiscount();
-    localStorage.setItem('totalPrice', JSON.stringify(finalTotalPrice));
     navigate("/checkout");
   };
 
