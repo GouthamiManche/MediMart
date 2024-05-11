@@ -24,18 +24,22 @@ function OrderHistory() {
   return (
     <div className="container mx-auto px-4 py-8">
       <h2 className="text-2xl font-bold mb-4">Order History</h2>
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="space-y-6">
         {orders.map((order) => (
-          <div key={order._id} className="bg-white overflow-hidden shadow-md rounded-lg w-full">
+          <div key={order._id} className="bg-white overflow-hidden shadow-md rounded-lg">
             <div className="px-6 py-4">
               <div className="text-xl font-bold mb-2">Order ID: {order.orderId}</div>
               <p className="text-gray-700 text-base mb-2">Order Date: {order.orderDate}</p>
               <ul className="text-gray-700 text-base mb-2">
                 {order.cartItems.map((item) => (
-                  <li key={item._id}>
-                    Product : {item.Name}
-                    <br />
-                    Quantity: {item.quantity}
+                  <li key={item._id} className="flex items-center">
+                    {item.Image_URL && (
+                      <img src={item.Image_URL} alt={item.Name} className="w-20 h-20 object-cover mr-4" />
+                    )}
+                    <div>
+                      <div>Product: {item.Name}</div>
+                      <div>Quantity: {item.quantity}</div>
+                    </div>
                   </li>
                 ))}
               </ul>
