@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { toast } from 'react-toastify';
 import { LuBadgePercent } from 'react-icons/lu';
@@ -8,6 +8,8 @@ const PaymentSummary = ({ cartItems, handleSubmit }) => {
   const [showCouponPopup, setShowCouponPopup] = useState(false);
   const [coupon, setCoupon] = useState('');
   const [discountPercentage, setDiscountPercentage] = useState(0);
+
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const calculateDiscount = () => {
     return (getCartTotal() * discountPercentage) / 100;
@@ -35,13 +37,15 @@ const PaymentSummary = ({ cartItems, handleSubmit }) => {
           case 'FIRST50':
             discountPercentage = 50;
             break;
-            
+
         default:
           discountPercentage = 0;
           break;
       }
 
       setDiscountPercentage(discountPercentage);
+      updateTotalPrice(cartItems, discountPercentage);
+      localStorage.setItem('coupon', coupon);
       toast.success('Coupon applied successfully', { autoClose: 2000 });
     } else {
       toast.error('Invalid coupon', { autoClose: 2000 });
@@ -50,7 +54,21 @@ const PaymentSummary = ({ cartItems, handleSubmit }) => {
     setShowCouponPopup(false);
     setCoupon('');
   };
+  useEffect(() => {
+    updateTotalPrice(cartItems, discountPercentage);
+  }, [cartItems, discountPercentage]);
 
+  const updateTotalPrice = (items, discount) => {
+    const newTotalPrice = calculateTotalPrice(items, discount);
+    localStorage.setItem('totalPrice', JSON.stringify(newTotalPrice));
+    setTotalPrice(newTotalPrice);
+  };
+
+  const calculateTotalPrice = (items, discount) => {
+    const cartTotal = items.reduce((total, item) => total + item.Price * item.quantity, 0);
+    const discountAmount = (cartTotal * discount) / 100;
+    return cartTotal - discountAmount;
+  };
   return (
     <>
       {/* Desktop View */}
@@ -93,7 +111,7 @@ const PaymentSummary = ({ cartItems, handleSubmit }) => {
         {cartItems.length > 0 && (
           <div className="bg-white rounded-md p-4">
             <h2 className="text-2xl font-bold mb-4">Order Total</h2>
-            
+
             {/* Display Discount */}
             {discountPercentage > 0 && (
               <div className="flex justify-between items-center mb-4">

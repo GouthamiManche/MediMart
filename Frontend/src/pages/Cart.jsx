@@ -50,14 +50,12 @@ const Cart = () => {
     }
   }, []);
 
-
-
-
   const handleRemoveFromCart = (index) => {
     const updatedCartItems = [...cartItems];
     updatedCartItems.splice(index, 1);
     setCartItems(updatedCartItems);
-    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems)); 
+    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+    updateTotalPrice(updatedCartItems, discountPercentage);
   };
 
   //HANDLE QUANTITY IN CART
@@ -65,7 +63,7 @@ const Cart = () => {
     const updatedCartItems = [...cartItems];
     updatedCartItems[index].quantity = Math.max(1, value);
     setCartItems(updatedCartItems);
-    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems)); 
+    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
     updateTotalPrice(updatedCartItems, discountPercentage);
   };
 
@@ -92,7 +90,6 @@ const Cart = () => {
 
     const finalTotalPrice = getCartTotal() - calculateDiscount();
     localStorage.setItem('totalPrice', JSON.stringify(finalTotalPrice));
-
     navigate("/checkout");
   };
 
@@ -101,7 +98,7 @@ const Cart = () => {
 
     if (!coupon) {
       setDiscountPercentage(0);
-      updateTotalPrice(cartItems, 0); 
+      updateTotalPrice(cartItems, 0);
     }
 
     if (validCoupons.includes(coupon)) {
@@ -126,7 +123,7 @@ const Cart = () => {
 
       setDiscountPercentage(discountPercentage);
       updateTotalPrice(cartItems, discountPercentage);
-
+      localStorage.setItem('coupon', coupon);
       toast.success('Coupon applied successfully', { autoClose: 2000 });
     } else {
       toast.error('Invalid coupon', { autoClose: 2000 });
@@ -175,7 +172,7 @@ const Cart = () => {
                           {item.isMedicine ? item.Medicine_Name : item.Name}
                         </h3>
                       </div>
-  
+
                       <p className=''>{item.Manufacturer}</p>
                       <p className="text-lg  font-semibold">{`₹${item.Price}`}</p>
                     </div>
@@ -209,7 +206,7 @@ const Cart = () => {
             </div>
           </div>
           {/* Payment and Summary */}
-      
+
           <PaymentSummary
             cartItems={cartItems}
             discountPercentage={discountPercentage}
@@ -218,10 +215,10 @@ const Cart = () => {
             handleApplyCoupon={handleApplyCoupon}
             handleSubmit={handleSubmit}
           />
-        
+
         </div>
       </div>
-  
+
       {/* Mobile View */}
       <div className="md:hidden">
         <div className="p-4">
