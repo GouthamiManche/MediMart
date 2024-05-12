@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from '../Components/AuthProvider';
@@ -17,8 +17,30 @@ function Item({ item }) {
   const [quantity, setQuantity] = useState(1);
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    // Preload quantity if item is already in cart
+    async function loadQuantity() {
+      try {
+        const response = await axios.get(
+          `https://medicine-website-two.vercel.app/api/cart/${item.Product_id}`
+        );
+        if (response.data && response.data.quantity) {
+          setQuantity(response.data.quantity);
+          setIsItemInCart(true);
+        }
+      } catch (error) {
+        console.error("Error loading quantity:", error);
+      }
+    }
+
+    loadQuantity();
+  }, [item.Product_id]);
+
   const handleAddToCart = async () => {
     try {
+      // Optimistically update UI
+      setIsItemInCart(true);
+      
       const res = await axios.post(
         "https://medicine-website-two.vercel.app/api/addtocart",
         {
@@ -31,23 +53,27 @@ function Item({ item }) {
         }
       );
       if (res.status === 201) {
-        setIsItemInCart(true);
+        // No need to update UI, it's already updated optimistically
       }
     } catch (error) {
       console.error("Error adding item to cart:", error);
-      
+      setIsItemInCart(false); // Revert UI update on error
+      setError("Error adding item to cart");
     }
   };
 
   const removeFromCart = async () => {
     try {
+      // Optimistically update UI
+      setIsItemInCart(false);
+      
       await axios.delete(
         `https://medicine-website-two.vercel.app/api/removefromcart/${item.Product_id}`,
       );
-      setIsItemInCart(false);
     } catch (error) {
       console.error("Error removing item from cart:", error);
-     
+      setIsItemInCart(true); // Revert UI update on error
+      setError("Error removing item from cart");
     }
   };
 
@@ -57,21 +83,21 @@ function Item({ item }) {
 
     if (newQuantity === 1) {
       removeFromCart(); // Remove item from cart if quantity is 1
-    }
-
-    try {
-      const res = await axios.put(
-        `https://medicine-website-two.vercel.app/api/updatecart/${item.Product_id}`,
-        {
-          quantity: newQuantity,
+    } else {
+      try {
+        const res = await axios.put(
+          `https://medicine-website-two.vercel.app/api/updatecart/${item.Product_id}`,
+          {
+            quantity: newQuantity,
+          }
+        );
+        if (res.status !== 200) {
+          // Handle error
         }
-      );
-      if (res.status !== 200) {
-       
+      } catch (error) {
+        console.error("Error updating item quantity:", error);
+        setError("Error updating item quantity");
       }
-    } catch (error) {
-      console.error("Error updating item quantity:", error);
-   
     }
   };
 
