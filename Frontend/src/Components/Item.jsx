@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from '../Components/AuthProvider';
@@ -15,50 +15,95 @@ function Item({ item }) {
   const { user } = useContext(AuthContext);
   const [isItemInCart, setIsItemInCart] = useState(false);
   const [quantity, setQuantity] = useState(1);
-  const [error, setError] = useState("");
 
-  const handleAddToCart = async () => {
-    try {
-      const res = await axios.post(
-        "https://medicine-website-two.vercel.app/api/addtocart",
-        {
-          Name: item.Name,
-          Price: item.Price,
-          Image_URL: item.Image_URL,
-          quantity: quantity,
-          Product_id: item.Product_id,
-          email: user.email, // Change this to the user's email
-        }
+  useEffect(() => {
+    const storedCartItems = localStorage.getItem('cartItems');
+    if (storedCartItems) {
+      const cartItems = JSON.parse(storedCartItems);
+      const existingItem = cartItems.find(
+        (cartItem) => cartItem._id === item._id
       );
-      if (res.status === 201) {
+      if (existingItem) {
+        setQuantity(existingItem.quantity);
         setIsItemInCart(true);
+      } else {
+        setIsItemInCart(false);
       }
-    } catch (error) {
-      console.error("Error adding item to cart:", error);
-      setError("Failed to add item to cart");
+    } else {
+      setIsItemInCart(false);
     }
-  };
-
-  const handleQuantityChange = async (value) => {
-    const newQuantity = Math.max(1, value); // Ensure minimum quantity is 1
-    setQuantity(newQuantity);
-    try {
-      const res = await axios.put(
-        `https://medicine-website-two.vercel.app/api/updatecart/${item.Product_id}`,
-        {
-          quantity: newQuantity,
-        }
-      );
-      if (res.status !== 200) {
-        setError("Failed to update item quantity");
-      }
-    } catch (error) {
-      console.error("Error updating item quantity:", error);
-      setError("Failed to update item quantity");
-    }
-  };
+  }, [item._id]);
 
   const truncatedName = truncateString(item.Medicine_Name || item.Name, 20);
+  const { detail, detailLabel } = getItemDetails(item);
+
+  const handleAddToCart = () => {
+    setIsItemInCart(true);
+    setQuantity(1);
+    updateCartItem(1);
+  };
+
+  const handleQuantityChange = (value) => {
+    const newQuantity = Math.max(0, value);
+    setQuantity(newQuantity);
+
+    if (newQuantity === 0) {
+      removeFromCart();
+    } else {
+      updateCartItem(newQuantity);
+    }
+  };
+
+  const removeFromCart = () => {
+    const storedCartItems = localStorage.getItem('cartItems');
+    let updatedCartItems;
+
+    if (storedCartItems) {
+      const cartItems = JSON.parse(storedCartItems);
+      updatedCartItems = cartItems.filter(
+        (cartItem) => cartItem._id !== item._id
+      );
+    } else {
+      updatedCartItems = [];
+    }
+
+    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+    setIsItemInCart(false);
+  };
+
+  const updateCartItem = (newQuantity) => {
+    const { _id, Name, Price, Image_URL, Product_id } = item;
+    const cartItem = {
+      _id,
+      Name,
+      Price,
+      Image_URL,
+      quantity: newQuantity,
+      Product_id,
+    };
+
+    const storedCartItems = localStorage.getItem('cartItems');
+    let updatedCartItems;
+
+    if (storedCartItems) {
+      const cartItems = JSON.parse(storedCartItems);
+      const existingItemIndex = cartItems.findIndex(
+        (cartItem) => cartItem._id === item._id
+      );
+
+      if (existingItemIndex !== -1) {
+        cartItems[existingItemIndex].quantity = newQuantity;
+        updatedCartItems = cartItems;
+      } else {
+        updatedCartItems = [...cartItems, cartItem];
+      }
+    } else {
+      updatedCartItems = [cartItem];
+    }
+
+    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+  };
+
 
   return (
     <div className="bg-white m-2 p-4 rounded-xl border border-gray-200 flex flex-col md:w-[16rem] w-[16rem] md:h-[22rem] h-[22rem] overflow-hidden shadow-md hover:shadow-xl transition duration-300 ">
