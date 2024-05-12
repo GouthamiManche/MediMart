@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSearchParams } from 'react-router-dom';
-import { useLocation } from "react-router-dom";
+import { useSearchParams, useLocation } from 'react-router-dom';
 import axios from "axios";
 import SearchInput from "./SearchInput";
 import Item from "./Item";
@@ -27,9 +26,10 @@ function ProductDetail({ pg }) {
 
   const apiUrl = import.meta.env.VITE_API_URL;
   const apiKey = import.meta.env.VITE_API_KEY;
+
   useEffect(() => {
-    setIsLoading(true);
     const fetchData = async () => {
+      setIsLoading(true);
       try {
         const response = await axios.get(`${apiUrl}/data`, {
           headers: {
@@ -53,11 +53,9 @@ function ProductDetail({ pg }) {
         setCategories(uniqueCategories);
       } catch (error) {
         console.error("Error fetching data:", error.message);
+      } finally {
+        setIsLoading(false);
       }
-      finally {
-        setIsLoading(false); // Set loading to false after fetching (even on errors)
-      }
-
     };
     fetchData();
   }, [subCategory, Category]);
@@ -87,12 +85,6 @@ function ProductDetail({ pg }) {
       case 'priceHighToLow':
         sortedData.sort((a, b) => b.Price - a.Price);
         break;
-      // case 'averageReviewAscending':
-      //   sortedData.sort((a, b) => a.Average_Review - b.Average_Review);
-      //   break;
-      // case 'averageReviewDescending':
-      //   sortedData.sort((a, b) => b.Average_Review - a.Average_Review);
-      //   break;
       case 'nameAscending':
         sortedData.sort((a, b) => {
           const aName = a.Name || a.Medicine_Name;
@@ -136,7 +128,7 @@ function ProductDetail({ pg }) {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredData.length > 0 ? filteredData.slice(indexOfFirstItem, indexOfLastItem) : [];
+  const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
   const totalItems = filteredData.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
@@ -184,14 +176,9 @@ function ProductDetail({ pg }) {
     setSelectedSubCategory("");
     setFilteredData(data);
   };
-  //const loadingGif = ""
+
   return (
     <div className="">
-      {/* <img
-        src="src/Images/shopbgimg.jpg"
-        alt="Image 1"
-        className="w-full h-[50vh] lg:h-[260px] object-cover "
-      /> */}
       <div className="mt-9 mx-14">
         <SearchInput
           searchTerm={searchTerm}
@@ -200,28 +187,29 @@ function ProductDetail({ pg }) {
           setSortOption={setSortOption}
         />
       </div>
-        <div>
-          {isLoading ? (
-            <LoadingGif />
-          ) : (
-            <div className="md:flex space-x-6 flex-">
+      <div>
+        {isLoading ? (
+          <LoadingGif />
+        ) : (
+          <div className="md:flex space-x-6 flex-">
             <div>
-            <FilterBar
-                      selectedSubCategory={selectedSubCategory}
-                      subCategories={subCategories}
-                      handleSubCategoryFilter={handleSubCategoryFilter}
-                      resetFilters={resetFilters}
-                      sortOption={sortOption}
-                      setSortOption={setSortOption}/>
+              <FilterBar
+                selectedSubCategory={selectedSubCategory}
+                subCategories={subCategories}
+                handleSubCategoryFilter={handleSubCategoryFilter}
+                resetFilters={resetFilters}
+                sortOption={sortOption}
+                setSortOption={setSortOption}
+              />
             </div>
             <div className="flex flex-wrap">
-                          {currentItems.map((item, index) => (
-                            <Item key={index} item={item} />
-                          ))}
-                        </div>
-            </div> 
-          )}
-        </div>
+              {currentItems.map((item, index) => (
+                <Item key={index} item={item} />
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
