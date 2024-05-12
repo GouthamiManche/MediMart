@@ -28,11 +28,10 @@ function Profile() {
 
     return (
         <>
-
             <div className="flex h-[36.5rem] font-poppins">
                 <div className="w-[15rem] bg-[#125872] ">
                     <h2 className="text-2xl font-semibold text-white font-poppins mt-[5rem] ml-4">Profile</h2>
-                    <p className='text-xl text-white font-poppins mt-[1rem] ml-4'>Order history</p>
+               <Link to="/orderhistory"><p className='text-xl text-white font-poppins mt-[1rem] ml-4'>Order history</p></Link>
                     <Link to="/" className="mb-12" style={{ color: "#90CCBA" }}>
                         <button
                             onClick={logout}
