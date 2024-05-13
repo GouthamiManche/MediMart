@@ -81,7 +81,7 @@ function OrderHistory() {
                     <div>
                       <h4 className="text-base md:text-lg font-semibold text-gray-800">{item.Name}</h4>
                       <p className="text-xs md:text-sm text-gray-600">
-                        {item.quantity} x {item.Size}ml
+                     Quantity :  {item.quantity} {item.Size}
                       </p>
                       <p className="text-base md:text-lg font-semibold text-gray-800">₹{item.Price}</p>
                       <div className="flex mt-2">
