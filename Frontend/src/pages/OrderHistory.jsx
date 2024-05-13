@@ -56,11 +56,9 @@ function OrderHistory() {
               className="p-4 md:p-6 border-b border-gray-200 flex justify-between items-center cursor-pointer"
               onClick={() => toggleOrderExpansion(order.orderId)}
             >
-              <div>
+              <div className='flex'>
                 <h3 className="text-lg font-semibold text-gray-800">Order #{order.orderId}</h3>
-                <span className="text-sm text-gray-600">
-                  Delivery Date: {moment(order.orderDate).format('MMMM D, YYYY')}
-                </span>
+                <div className="text-base md:text-md pl-[1rem] md:pl-[50rem] font-semibold text-gray-800">Total: ₹{order.total}</div>
               </div>
               <div className="text-lg">
                 {expandedOrderId === order.orderId ? <IoIosArrowDown /> : <IoIosArrowForward />}
