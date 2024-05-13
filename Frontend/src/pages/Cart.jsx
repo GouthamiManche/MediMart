@@ -43,42 +43,36 @@ const Cart = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    const fetchCartItems = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/getcartitems?email=${user.email}`, {
-          headers: {
-            apikey: apiKey,
-          },
-        });
-        setCartItems(response.data);
-        setIsLoading(false);
+        // Fetch cart items from the API only if user.email exists
+        if (user.email) {
+          const response = await axios.get(`${apiUrl}/getcartitems?email=${user.email}`, {
+            headers: {
+              apikey: apiKey,
+            },
+          });
+          setCartItems(response.data);
+        }
       } catch (error) {
         console.error("Error fetching cart items:", error.message);
-      }
-      finally {
+      } finally {
         setIsLoading(false);
       }
     };
-
-    if (user.email) {
-      fetchCartItems();
-    }
+    fetchData();
   }, [user.email]);
 
   const handleRemoveFromCart = async (index, productId) => {
-    setIsLoading(true);
     try {
       await axios.delete(`${apiUrl}/removefromcart/${productId}`);
       const updatedCartItems = [...cartItems];
       updatedCartItems.splice(index, 1);
       setCartItems(updatedCartItems);
-      toast.success('Product removed from cart successfully', { autoClose: 2000 });
+      //toast.success('Product removed from cart successfully', { autoClose: 2000 });
     } catch (error) {
       console.error("Error removing product from cart:", error.message);
-      toast.error('Failed to remove product from cart', { autoClose: 2000 });
-    }
-    finally {
-      setIsLoading(false);
+      //toast.error('Failed to remove product from cart', { autoClose: 2000 });
     }
   };
 
@@ -153,10 +147,13 @@ const Cart = () => {
     <div className=''>
       <div className="hidden md:block">
         <div className="flex justify-between mx-auto max-w-7xl py-8 ">
+          {/* Order Summary */}
           <div className="w-3/5">
             <h2 className="text-2xl text-gray-700 font-bold mb-4">Order Summary</h2>
             <div className="bg-white p-4 ">
-              {cartItems.length === 0 ? (
+              {isLoading ? (
+                <LoadingGif />
+              ) : cartItems.length === 0 ? (
                 <p className="text-gray-500 mt-[6rem] ml-[4rem] text-center">Your cart is empty.</p>
               ) : (
                 cartItems.map((item, index) => (
@@ -207,6 +204,7 @@ const Cart = () => {
               )}
             </div>
           </div>
+          {/* Payment and Summary */}
 
           <PaymentSummary
             cartItems={cartItems}
@@ -220,10 +218,13 @@ const Cart = () => {
         </div>
       </div>
 
+      {/* Mobile View */}
       <div className="md:hidden">
         <div className="p-4">
           <h2 className="text-2xl font-bold mb-4">Order Summary</h2>
-          {cartItems.length === 0 ? (
+          {isLoading ? (
+            <LoadingGif />
+          ) : cartItems.length === 0 ? (
             <p className="text-gray-500 text-center">Your cart is empty.</p>
           ) : (
             cartItems.map((item, index) => (
@@ -277,6 +278,7 @@ const Cart = () => {
           )}
         </div>
 
+        {/* Payment and Summary */}
         <PaymentSummary
           cartItems={cartItems}
           discountPercentage={discountPercentage}
@@ -287,13 +289,12 @@ const Cart = () => {
         />
 
       </div>
-      {isLoading ? (
-        <LoadingGif />
-      ) : (
-        <div className='md:mt-[2rem]'>
+
+      <div className='md:mt-[2rem]'>
+        {!isLoading && cartItems.length !== 0 && (
           <HorizontalCardScroll itemForHorizontalScroll={items} />
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

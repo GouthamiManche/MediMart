@@ -33,7 +33,10 @@ function Item({ item }) {
         console.error("Error preloading cart items:", error);
       }
     }
-
+    if (item.Product_id) {
+      preloadCartItems();
+    }
+    
     preloadCartItems();
   }, [item.Product_id]);
 

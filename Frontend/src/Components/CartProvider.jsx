@@ -1,24 +1,40 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useReducer } from "react";
 
-// Create a new context for the cart
 const CartContext = createContext();
 
-// Custom hook to use the cart context
-export const useCart = () => useContext(CartContext);
+const cartReducer = (state, action) => {
+  switch (action.type) {
+    case "SET_CART_ITEMS":
+      return { ...state, cartItems: action.payload };
+    default:
+      return state;
+  }
+};
 
-// CartProvider component to wrap the application and provide the cart context
-export const CartProvider = ({ children }) => {
-  // State to track the number of items in the cart
-  const [cartItemsCount, setCartItemsCount] = useState(0);
+const initialState = {
+  cartItems: [],
+};
 
-  // Function to update the cart items count
-  const updateCartItemsCount = (count) => {
-    setCartItemsCount(count);
+const CartProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(cartReducer, initialState);
+
+  const setCartItems = (updatedCartItems) => {
+    dispatch({ type: "SET_CART_ITEMS", payload: updatedCartItems });
   };
 
   return (
-    <CartContext.Provider value={{ cartItemsCount, updateCartItemsCount }}>
+    <CartContext.Provider value={{ state, setCartItems }}>
       {children}
     </CartContext.Provider>
   );
 };
+
+const useCart = () => {
+  const context = useContext(CartContext);
+  if (!context) {
+    throw new Error("useCart must be used within a CartProvider");
+  }
+  return context;
+};
+
+export { CartProvider, useCart };

@@ -32,7 +32,6 @@ function ItemForHorizontalScroll({ item }) {
   const productId = useMemo(() => item.Product_id, [item.Product_id]);
 
   useEffect(() => {
-    // Preload quantity if item is already in cart
     async function loadQuantity() {
       if (!productId) {
         console.warn("Item doesn't have a valid Product_id");
@@ -52,7 +51,10 @@ function ItemForHorizontalScroll({ item }) {
       }
     }
 
-    loadQuantity();
+    // Call loadQuantity only if productId exists
+    if (productId) {
+      loadQuantity();
+    }
   }, [productId]);
 
   const handleAddToCart = async () => {
