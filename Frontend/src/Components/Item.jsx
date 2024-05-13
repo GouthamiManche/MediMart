@@ -18,29 +18,28 @@ function Item({ item }) {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    // Preload quantity if item is already in cart
-    async function loadQuantity() {
+    async function preloadCartItems() {
       try {
         const response = await axios.get(
-          `https://medicine-website-two.vercel.app/api/cart/${item.Product_id}`
+          `https://medicine-website-two.vercel.app/api/cart`
         );
-        if (response.data && response.data.quantity) {
-          setQuantity(response.data.quantity);
+        const cartItems = response.data;
+        const cartItem = cartItems.find((cartItem) => cartItem.Product_id === item.Product_id);
+        if (cartItem) {
+          setQuantity(cartItem.quantity);
           setIsItemInCart(true);
         }
       } catch (error) {
-        console.error("Error loading quantity:", error);
+        console.error("Error preloading cart items:", error);
       }
     }
 
-    loadQuantity();
+    preloadCartItems();
   }, [item.Product_id]);
 
   const handleAddToCart = async () => {
     try {
-      // Optimistically update UI
       setIsItemInCart(true);
-      
       const res = await axios.post(
         "https://medicine-website-two.vercel.app/api/addtocart",
         {
@@ -57,32 +56,30 @@ function Item({ item }) {
       }
     } catch (error) {
       console.error("Error adding item to cart:", error);
-      setIsItemInCart(false); // Revert UI update on error
+      setIsItemInCart(false);
       setError("Error adding item to cart");
     }
   };
 
   const removeFromCart = async () => {
     try {
-      // Optimistically update UI
       setIsItemInCart(false);
-      
       await axios.delete(
         `https://medicine-website-two.vercel.app/api/removefromcart/${item.Product_id}`,
       );
     } catch (error) {
       console.error("Error removing item from cart:", error);
-      setIsItemInCart(true); // Revert UI update on error
+      setIsItemInCart(true);
       setError("Error removing item from cart");
     }
   };
 
   const handleQuantityChange = async (value) => {
-    const newQuantity = Math.max(1, value); // Ensure minimum quantity is 1
+    const newQuantity = Math.max(1, value);
     setQuantity(newQuantity);
 
     if (newQuantity === 1) {
-      removeFromCart(); // Remove item from cart if quantity is 1
+      removeFromCart();
     } else {
       try {
         const res = await axios.put(

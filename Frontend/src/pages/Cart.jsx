@@ -42,6 +42,7 @@ const Cart = () => {
   }, []);
 
   useEffect(() => {
+    setIsLoading(true);
     const fetchCartItems = async () => {
       try {
         const response = await axios.get(`${apiUrl}/getcartitems?email=${user.email}`, {
@@ -54,6 +55,9 @@ const Cart = () => {
       } catch (error) {
         console.error("Error fetching cart items:", error.message);
       }
+      finally {
+        setIsLoading(false);
+      }
     };
 
     if (user.email) {
@@ -62,6 +66,7 @@ const Cart = () => {
   }, [user.email]);
 
   const handleRemoveFromCart = async (index, productId) => {
+    setIsLoading(true);
     try {
       await axios.delete(`${apiUrl}/removefromcart/${productId}`);
       const updatedCartItems = [...cartItems];
@@ -71,6 +76,9 @@ const Cart = () => {
     } catch (error) {
       console.error("Error removing product from cart:", error.message);
       toast.error('Failed to remove product from cart', { autoClose: 2000 });
+    }
+    finally {
+      setIsLoading(false);
     }
   };
 
@@ -288,7 +296,6 @@ const Cart = () => {
       )}
     </div>
   );
-
 };
 
 export default Cart;
