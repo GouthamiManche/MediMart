@@ -12,7 +12,7 @@ const AuthProvider = ({ children }) => {
 
     if (storedToken) {
       const decodedToken = jwtDecode(storedToken);
-      //console.log('Decoded Token:', decodedToken); // Log the decoded token
+      console.log('Decoded Token:', decodedToken); // Log the decoded token
 
       const expireTime = decodedToken.exp * 1000;
       const currentTime = Date.now();
@@ -26,7 +26,7 @@ const AuthProvider = ({ children }) => {
         setUser(decodedToken);
         setToken(storedToken);
         const userCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-       // console.log('Cart items:', userCartItems);
+       console.log('Cart items:', userCartItems);
       }
     } else {
       console.log('No token found');
@@ -34,7 +34,7 @@ const AuthProvider = ({ children }) => {
   }, [token]);
 
   useEffect(() => {
-    //console.log(user);
+    console.log(user);
   }, [user]);
 
   const login = (data) => {

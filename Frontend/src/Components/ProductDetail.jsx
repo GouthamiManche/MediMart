@@ -219,7 +219,7 @@ function ProductDetail({ pg }) {
                             <Item key={index} item={item} />
                           ))}
                         </div>
-            </div> 
+            </div>
           )}
         </div>
       <Pagination

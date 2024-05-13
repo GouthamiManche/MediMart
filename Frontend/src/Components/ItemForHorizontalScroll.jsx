@@ -35,7 +35,7 @@ function ItemForHorizontalScroll({ item }) {
     // Preload quantity if item is already in cart
     async function loadQuantity() {
       if (!productId) {
-        console.warn("Item doesn't have a valid Product_id");
+       console.warn("Item doesn't have a valid Product_id");
         return;
       }
 
@@ -114,7 +114,7 @@ function ItemForHorizontalScroll({ item }) {
           // Handle error
         }
       } catch (error) {
-        console.error("Error updating item quantity:", error);
+       console.error("Error updating item quantity:", error);
         setError("Error updating item quantity");
       }
     }

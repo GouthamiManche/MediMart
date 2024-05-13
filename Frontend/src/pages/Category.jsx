@@ -96,7 +96,7 @@ const Category = () => {
       navigate('/cart');
     } catch (error) {
       console.error("Error adding item to cart:", error.message);
-      toast.error('Failed to add item to cart');
+      //toast.error('Failed to add item to cart');
     }
   };
 
