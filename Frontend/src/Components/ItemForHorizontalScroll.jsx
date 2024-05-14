@@ -66,12 +66,9 @@ function ItemForHorizontalScroll({ item }) {
       navigate("/login");
       return;
     }
-
     try {
-      
       // Optimistically update UI
       setIsItemInCart(true);
-
       const res = await axios.post(
         "https://medicine-website-two.vercel.app/api/addtocart",
         {
