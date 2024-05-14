@@ -6,7 +6,7 @@ export default function Loader() {
 return (
    <div >
       <div className="flex items-center justify-center h-screen bg-gray-200">
-        <img className="w-10 h-20 sizw animate-spin" src={loadinggif} alt="Loading icon" />
+        <img className="max-w-full max-h-full animate-spin" src={loadinggif} alt="Loading icon" />
         {/* <h1 className='font-bold text-3xl'>LOADING ...</h1> */}
       </div>
   </div>
