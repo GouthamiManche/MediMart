@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { AuthContext } from '../Components/AuthProvider';
 
 function truncateString(str, num) {
   if (!str || str.length === 0) return "";
@@ -21,125 +23,94 @@ function getItemDetails(item) {
 }
 
 function ItemForHorizontalScroll({ item }) {
+  const { user } = useContext(AuthContext);
   const [isItemInCart, setIsItemInCart] = useState(false);
   const [quantity, setQuantity] = useState(1);
-
-  useEffect(() => {
-    if (item) {
-      const storedCartItems = localStorage.getItem('cartItems');
-      if (storedCartItems) {
-        const cartItems = JSON.parse(storedCartItems);
-        const existingItem = cartItems.find(
-          (cartItem) => cartItem._id === item._id
-        );
-        if (existingItem) {
-          setQuantity(existingItem.quantity);
-          setIsItemInCart(true);
-        } else {
-          setIsItemInCart(false);
-        }
-      } else {
-        setIsItemInCart(false);
-      }
-    }
-  }, [item?._id]);
+  const [error, setError] = useState("");
 
   const truncatedName = truncateString(item?.Medicine_Name || item.Name, 16);
   const { detail, detailLabel } = getItemDetails(item);
 
-  const handleAddToCart = () => {
-    setIsItemInCart(true);
-    setQuantity(1);
-    updateCartItem(1);
+  const handleAddToCart = async () => {
+    try {
+      const res = await axios.post(
+        "https://medicine-website-two.vercel.app/api/addtocart",
+        {
+          Name: item.Name,
+          Price: item.Price,
+          Image_URL: item.Image_URL,
+          quantity: quantity,
+          Product_id: item.Product_id,
+          email: user.email,
+        }
+      );
+      if (res.status === 201) {
+        setIsItemInCart(true);
+      }
+    } catch (error) {
+      
+    }
   };
 
-  const handleQuantityChange = (value) => {
-    const newQuantity = Math.max(0, value);
+  const removeFromCart = async () => {
+    try {
+      await axios.delete(
+        `https://medicine-website-two.vercel.app/api/removefromcart/${item.Product_id}`
+      );
+      setIsItemInCart(false);
+    } catch (error) {
+     
+    }
+  };
+
+  const handleQuantityChange = async (value) => {
+    const newQuantity = Math.max(1, value);
     setQuantity(newQuantity);
 
-    if (newQuantity === 0) {
+    if (newQuantity === 1) {
       removeFromCart();
-    } else {
-      updateCartItem(newQuantity);
-    }
-  };
-
-  const removeFromCart = () => {
-    const storedCartItems = localStorage.getItem('cartItems');
-    let updatedCartItems;
-
-    if (storedCartItems) {
-      const cartItems = JSON.parse(storedCartItems);
-      updatedCartItems = cartItems.filter(
-        (cartItem) => cartItem._id !== item._id
-      );
-    } else {
-      updatedCartItems = [];
     }
 
-    localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
-    setIsItemInCart(false);
-  };
-
-  const updateCartItem = (newQuantity) => {
-    if (item) {
-      const { _id, Name, Price, Image_URL, Product_id } = item;
-      const cartItem = {
-        _id,
-        Name,
-        Price,
-        Image_URL,
-        quantity: newQuantity,
-        Product_id,
-      };
-
-      const storedCartItems = localStorage.getItem('cartItems');
-      let updatedCartItems;
-
-      if (storedCartItems) {
-        const cartItems = JSON.parse(storedCartItems);
-        const existingItemIndex = cartItems.findIndex(
-          (cartItem) => cartItem._id === item._id
-        );
-
-        if (existingItemIndex !== -1) {
-          cartItems[existingItemIndex].quantity = newQuantity;
-          updatedCartItems = cartItems;
-        } else {
-          updatedCartItems = [...cartItems, cartItem];
+    try {
+      const res = await axios.put(
+        `https://medicine-website-two.vercel.app/api/updatecart/${item.Product_id}`,
+        {
+          quantity: newQuantity,
         }
-      } else {
-        updatedCartItems = [cartItem];
+      );
+      if (res.status !== 200) {
+        setError("Error updating item quantity");
       }
-
-      localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
+    } catch (error) {
+      console.error("Error updating item quantity:", error);
+      setError(error.message);
     }
   };
 
   return (
     <div>
-    <div className="bg-white m-2 p-2 rounded-xl border border-gray-200 flex flex-col md:w-[16rem] md:h-[22rem] w-[12.6rem] h-[15.4rem] overflow-hidden shadow-md hover:shadow-xl transition duration-300">
-      <Link
-        to={`/${item.Sub_Category}/${item.Name}`}
-        state={item}
-              >
-        <div className="relative h-40 md:h-56 overflow-hidden rounded-lg flex items-center justify-center">
-          <img
-            src={item.Image_URL}
-            alt={item?.Medicine_Name || item.Name}
-            className="max-w-full max-h-full transition duration-300 hover:scale-105"
-          />
-        </div>
-        </Link>
-        <hr className="border border-gray-300 " />
-        <div className="flex flex-col justify-between md:mt-6 relative">
+      <div className="bg-white m-2 p-4 rounded-xl border border-gray-200 flex flex-col md:w-[16rem] md:h-[22rem] w-[12.6rem] h-[15.4rem] overflow-hidden shadow-md hover:shadow-xl transition duration-300">
         <Link
-        to={`/${item.Sub_Category}/${item.Name}`}
-        state={item}
-              >
-          <h3 className="font-semibold md:text-lg text-md text-[#171A1FFF] transition duration-300 hover:text-[#3EBDE0FF]">
-            {truncatedName}
-          </h3>
+          to={`/${item.Sub_Category}/${item.Name}`}
+          state={item}
+        >
+          <div className="relative h-40 md:h-56 overflow-hidden rounded-lg flex items-center justify-center">
+            <img
+              src={item.Image_URL}
+              alt={item?.Medicine_Name || item.Name}
+              className="max-w-full max-h-full transition duration-300 hover:scale-105"
+            />
+          </div>
+        </Link>
+        <hr className="border border-gray-300" />
+        <div className="flex flex-col justify-between md:mt-6 relative">
+          <Link
+            to={`/${item.Sub_Category}/${item.Name}`}
+            state={item}
+          >
+            <h3 className="font-semibold md:text-lg text-md text-[#171A1FFF] transition duration-300 hover:text-[#3EBDE0FF]">
+              {truncatedName}
+            </h3>
           </Link>
           {detail && (
             <p className="text-sm text-gray-600 mt-2">
@@ -177,8 +148,8 @@ function ItemForHorizontalScroll({ item }) {
             )}
           </div>
         </div>
-
-    </div>
+      </div>
+      {error && <p className="text-red-500 mt-2">{error}</p>}
     </div>
   );
 }

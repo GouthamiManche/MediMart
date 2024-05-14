@@ -34,7 +34,7 @@ function Item({ item }) {
         setIsItemInCart(true);
       }
     } catch (error) {
-      console.error("Error adding item to cart:", error);
+     
       
     }
   };
@@ -46,7 +46,7 @@ function Item({ item }) {
       );
       setIsItemInCart(false);
     } catch (error) {
-      console.error("Error removing item from cart:", error);
+      
      
     }
   };
@@ -70,7 +70,7 @@ function Item({ item }) {
        
       }
     } catch (error) {
-      console.error("Error updating item quantity:", error);
+     
    
     }
   };
