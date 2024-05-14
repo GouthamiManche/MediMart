@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useContext, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from '../Components/AuthProvider';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function truncateString(str, num) {
   if (!str || str.length === 0) return "";
@@ -27,6 +29,7 @@ function ItemForHorizontalScroll({ item }) {
   const [isItemInCart, setIsItemInCart] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   // Memoize the Product_id value
   const productId = useMemo(() => item.Product_id, [item.Product_id]);
@@ -58,7 +61,14 @@ function ItemForHorizontalScroll({ item }) {
   }, [productId]);
 
   const handleAddToCart = async () => {
+    if (!user) {
+      toast.error("Please login to add items to the cart");
+      navigate("/login");
+      return;
+    }
+
     try {
+      
       // Optimistically update UI
       setIsItemInCart(true);
 

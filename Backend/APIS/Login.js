@@ -27,7 +27,6 @@ const registerUser = async (req, res) => {
       username,
       email,
       password: hashedPassword,
-      fullname,
       // Generate a unique customerId
       customerId: generateCustomerId(),
     });
