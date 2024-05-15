@@ -155,7 +155,7 @@ const AddressForm = () => {
   return (
     <div className="flex items-center min-h-full mx-[4vw] text-gray-700">
       <div className="bg-white p-6 max-w-2xl w-full md:mt-[2rem] mx-auto">
-        {/* <h2 className="text-2xl font-bold mb-4 text-[#125872]">Shipping Address</h2> */}
+        <h2 className="text-2xl font-bold mb-4 text-[#125872]">Shipping Address</h2>
         <form onSubmit={handleSubmit}>
           {/* Saved Address */}
           {/* <div className="mb-4">
