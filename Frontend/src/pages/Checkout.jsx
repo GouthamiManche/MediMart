@@ -158,31 +158,31 @@ const AddressForm = () => {
         <h2 className="text-2xl font-bold mb-4 text-[#125872]">Shipping Address</h2>
         <form onSubmit={handleSubmit}>
           {/* Saved Address */}
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
+              <div className="flex items-center"> */}
+                {/* <input
                   type="checkbox"
                   className="w-4 h-4 text-[#125872] bg-gray-100 rounded border-gray-300"
-                />
-                <label className="ml-2 text-sm text-gray-700">Home address</label>
-              </div>
-              <button
+                /> */}
+                {/* <label className="ml-2 text-sm text-gray-700">Home address</label> */}
+              {/* </div> */}
+              {/* <button
                 className="text-[#125872] text-sm font-semibold"
                 onClick={() => setIsModalOpen(true)}
               >
                 Add address
-              </button>
-            </div>
+              </button> */}
+            {/* </div>
             <div className="mt-2 text-gray-500 text-sm">1234 Maple Avenue, Apt 26, Sunnyvale, CA 92618</div>
-          </div>
+          </div> */}
 
           {/* Add Address Modal */}
-          <AddAddressModal
+          {/* <AddAddressModal
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
             onSubmit={handleAddAddress}
-          />
+          /> */}
 
           <div className="md:flex md:mb-[2rem]">
             <div className="w-full md:w-1/2 md:mr-2 mb-4 md:mb-0">
@@ -306,20 +306,20 @@ const AddressForm = () => {
       <div className="w-[30%] p-[2rem] border border-gray-300 sticky top-2 rounded-md">
         <h2 className="text-2xl font-bold mb-4">Order Total</h2>
         <div className="bg-white">
-          <div className="flex justify-between mb-2">
+          {/* <div className="flex justify-between mb-2">
             <p className="text-gray-500">Subtotal</p>
             <p className="font-semibold">
               {`₹${cartItems.reduce((total, item) => total + item.Price * item.quantity, 0)}`}
             </p>
-          </div>
-          <div className="flex justify-between mb-2">
+          </div> */}
+          {/* <div className="flex justify-between mb-2">
             <p className="text-gray-500">Discount</p>
             <p className="font-semibold">-₹0</p>
-          </div>
-          <div className="flex justify-between mb-2">
+          </div> */}
+          {/* <div className="flex justify-between mb-2">
             <p className="text-gray-500">Delivery Fee</p>
             <p className="font-semibold">₹0</p>
-          </div>
+          </div> */}
           <div className="border-t border-gray-300 pt-4 flex justify-between">
             <p className="font-bold">Total</p>
             <p className="font-bold">

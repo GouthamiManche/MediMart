@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext, useMemo } from "react";
-import { Link ,useNavigate} from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from '../Components/AuthProvider';
 import { toast } from 'react-toastify';
@@ -29,36 +29,9 @@ function ItemForHorizontalScroll({ item }) {
   const [isItemInCart, setIsItemInCart] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [error, setError] = useState("");
-  const navigate = useNavigate();
 
-  // Memoize the Product_id value
-  const productId = useMemo(() => item.Product_id, [item.Product_id]);
-
-  useEffect(() => {
-    async function loadQuantity() {
-      if (!productId) {
-        console.warn("Item doesn't have a valid Product_id");
-        return;
-      }
-
-      try {
-        const response = await axios.get(
-          `https://medicine-website-two.vercel.app/api/cart/${productId}`
-        );
-        if (response.data && response.data.quantity) {
-          setQuantity(response.data.quantity);
-          setIsItemInCart(true);
-        }
-      } catch (error) {
-        console.error("Error loading quantity:", error);
-      }
-    }
-
-    // Call loadQuantity only if productId exists
-    if (productId) {
-      loadQuantity();
-    }
-  }, [productId]);
+  const truncatedName = truncateString(item?.Medicine_Name || item.Name, 16);
+  const { detail, detailLabel } = getItemDetails(item);
 
   const handleAddToCart = async () => {
     if (!user) {
@@ -67,8 +40,6 @@ function ItemForHorizontalScroll({ item }) {
       return;
     }
     try {
-      // Optimistically update UI
-      setIsItemInCart(true);
       const res = await axios.post(
         "https://medicine-website-two.vercel.app/api/addtocart",
         {
@@ -76,65 +47,56 @@ function ItemForHorizontalScroll({ item }) {
           Price: item.Price,
           Image_URL: item.Image_URL,
           quantity: quantity,
-          Product_id: productId,
+          Product_id: item.Product_id,
           email: user.email,
         }
       );
       if (res.status === 201) {
-        // No need to update UI, it's already updated optimistically
+        setIsItemInCart(true);
       }
     } catch (error) {
-      console.error("Error adding item to cart:", error);
-      setIsItemInCart(false); // Revert UI update on error
-      setError("Error adding item to cart");
+      
     }
   };
 
   const removeFromCart = async () => {
     try {
-      // Optimistically update UI
-      setIsItemInCart(false);
-
       await axios.delete(
-        `https://medicine-website-two.vercel.app/api/removefromcart/${productId}`,
+        `https://medicine-website-two.vercel.app/api/removefromcart/${item.Product_id}`
       );
+      setIsItemInCart(false);
     } catch (error) {
-      console.error("Error removing item from cart:", error);
-      setIsItemInCart(true); // Revert UI update on error
-      setError("Error removing item from cart");
+     
     }
   };
 
   const handleQuantityChange = async (value) => {
-    const newQuantity = Math.max(1, value); // Ensure minimum quantity is 1
+    const newQuantity = Math.max(1, value);
     setQuantity(newQuantity);
 
     if (newQuantity === 1) {
-      removeFromCart(); // Remove item from cart if quantity is 1
-    } else {
-      try {
-        const res = await axios.put(
-          `https://medicine-website-two.vercel.app/api/updatecart/${productId}`,
-          {
-            quantity: newQuantity,
-          }
-        );
-        if (res.status !== 200) {
-          // Handle error
+      removeFromCart();
+    }
+
+    try {
+      const res = await axios.put(
+        `https://medicine-website-two.vercel.app/api/updatecart/${item.Product_id}`,
+        {
+          quantity: newQuantity,
         }
-      } catch (error) {
-        console.error("Error updating item quantity:", error);
+      );
+      if (res.status !== 200) {
         setError("Error updating item quantity");
       }
+    } catch (error) {
+      console.error("Error updating item quantity:", error);
+      setError(error.message);
     }
   };
 
-  const truncatedName = truncateString(item?.Medicine_Name || item.Name, 16);
-  const { detail, detailLabel } = getItemDetails(item);
-
   return (
     <div>
-      <div className="bg-white m-2 p-2 rounded-xl border border-gray-200 flex flex-col md:w-[16rem] md:h-[22rem] w-[12.6rem] h-[15.4rem] overflow-hidden shadow-md hover:shadow-xl transition duration-300">
+      <div className="bg-white m-2 p-4 rounded-xl border border-gray-200 flex flex-col md:w-[16rem] md:h-[22rem] w-[12.6rem] h-[15.4rem] overflow-hidden shadow-md hover:shadow-xl transition duration-300">
         <Link
           to={`/${item.Sub_Category}/${item.Name}`}
           state={item}
@@ -147,7 +109,7 @@ function ItemForHorizontalScroll({ item }) {
             />
           </div>
         </Link>
-        <hr className="border border-gray-300 " />
+        <hr className="border border-gray-300" />
         <div className="flex flex-col justify-between md:mt-6 relative">
           <Link
             to={`/${item.Sub_Category}/${item.Name}`}
@@ -193,8 +155,8 @@ function ItemForHorizontalScroll({ item }) {
             )}
           </div>
         </div>
-        {error && <p className="text-red-500 mt-2">{error}</p>}
       </div>
+      {error && <p className="text-red-500 mt-2">{error}</p>}
     </div>
   );
 }
