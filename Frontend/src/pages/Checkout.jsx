@@ -83,7 +83,7 @@ const AddressForm = () => {
   
       const orderData = {
         ...formData,
-        amount: totalPrice * 100,  // Convert total amount to paise
+        amount: totalPrice * 100, // Convert total amount to paise
         cartItems: cartItemsWithProductId,
         Image_URL: cartItems.length > 0 ? cartItems[0].Image_URL : '',
       };
@@ -94,18 +94,18 @@ const AddressForm = () => {
       console.log("Order creation response:", res.data);
   
       const { orderId, amount, key } = res.data;
-
-    if (!orderId || !amount || !key) {
-      throw new Error("Invalid response from create order API");
-    }
-
-    initiateRazorpayPayment(orderId, amount, key);
+  
+      if (!orderId || !amount || !key) {
+        throw new Error("Invalid response from create order API");
+      }
+  
+      initiateRazorpayPayment(orderId, amount, key);
     } catch (err) {
       console.error("Error in order creation or payment initiation:", err);
       alert("Error in order creation or payment initiation. Please try again.");
     }
   };
-
+  
   function initiateRazorpayPayment(orderId, amount, key) {
     const options = {
       key: key, // Use the valid key from your Razorpay account

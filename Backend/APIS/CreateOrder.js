@@ -1,17 +1,19 @@
 const uuid = require('uuid');
 const OrderDetail = require('../models/orderdetails.model');
+
 const CreateOrder = async (req, res) => {
   try {
     const { fullName, address, city, state, pincode, contactNo, amount, cartItems, email, Image_URL } = req.body;
 
     // Validate input fields
     if (!fullName || !address || !city || !state || !pincode || !contactNo || !amount || !cartItems || !email || !Image_URL) {
-      throw new Error("All fields including cartItems, email, and Image_URL are required");
+      return res.status(400).json({ error: "All fields including cartItems, email, and Image_URL are required" });
     }
 
-    const orderId = Math.floor(100000 + Math.random() * 900000);
+    // Generate a unique orderId using UUID
+    const orderId = uuid.v4();
 
-    const orderDate = new Date().toLocaleDateString('en-GB'); 
+    const orderDate = new Date().toLocaleDateString('en-GB');
 
     const newOrder = new OrderDetail({
       orderId,
@@ -31,19 +33,23 @@ const CreateOrder = async (req, res) => {
 
     // Save the new order document
     await newOrder.save();
-    const key = process.env.RAZORPAY_KEY;
+
+    // Get the Razorpay key from environment variables
+    const key = process.env.RAZORPAY_KEY; // Ensure this is set in your environment
+
     res.status(201).json({
       message: "Order created successfully",
       orderId: orderId,
-      email: email,
+      amount: amount, // Ensure this is in paise if required
       key: key,
-      fullname: fullName,
+      email: email,
+      fullName: fullName,
       orderDate: orderDate,
       Image_URL: Image_URL
     });
   } catch (err) {
     console.error("Error creating order:", err);
-    res.status(400).send(err.message);
+    res.status(500).json({ error: "Failed to create order" });
   }
 };
 
