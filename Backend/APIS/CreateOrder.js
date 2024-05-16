@@ -35,7 +35,7 @@ const CreateOrder = async (req, res) => {
     await newOrder.save();
 
     // Get the Razorpay key from environment variables
-    const key = process.env.RAZORPAY_KEY; // Ensure this is set in your environment
+    const key = process.env.RAZORPAY_KEY_ID; // Ensure this is set in your environment
 
     res.status(201).json({
       message: "Order created successfully",
