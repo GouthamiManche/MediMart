@@ -16,7 +16,7 @@ const AddressForm = () => {
     state: '',
     pincode: '',
     contactNo: '',
-    total: 0,
+    amount: 0,
     Image_URL: '',
     email,
   });
@@ -57,30 +57,29 @@ const AddressForm = () => {
       }
     }
   };
-
-  // function initiateRazorpayPayment(orderId, total) {
-  //   const options = {
-  //     "key": 'rzp_test_zBsZqgckNp8Zxn', // Replace with your key_id
-  //     "amount": total * 100, // Convert amount to paise
-  //     "currency": "INR",
-  //     "name": "Your Pharmacy Name", // Replace with your pharmacy name
-  //     "description": "Order Payment",
-  //     "order_id": orderId,
-  //     "handler": function (response) {
-  //       if (response.razorpay_payment_id) {
-  //         console.log("successs");
-  //         // Payment successful
-  //         // Send a POST request to your server-side endpoint to validate the payment
-  //         // using Razorpay's webhook or verify the signature using their Node.js SDK
-  //       } else {
-  //         // Payment failed
-  //         alert("Payment Failed! Please try again.");
-  //       }
-  //     }
-  //   };
-  //   var rzp1 = new Razorpay(options);
-  //   rzp1.open();
-  // }
+  function initiateRazorpayPayment(orderId, amount, key) {
+    const options = {
+      "key": 'rzp_test_zBsZqgckNp8Zxn', // Replace with your key_id
+      "amount": amount * 100, // Convert amount to paise
+      "currency": "INR",
+      "name": "Your Pharmacy Name", // Replace with your pharmacy name
+      "description": "Order Payment",
+      "order_id": orderId,
+      "handler": function (response) {
+        if (response.razorpay_payment_id) {
+          console.log("successs");
+          // Payment successful
+          // Send a POST request to your server-side endpoint to validate the payment
+          // using Razorpay's webhook or verify the signature using their Node.js SDK
+        } else {
+          // Payment failed
+          alert("Payment Failed! Please try again.");
+        }
+      }
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -105,7 +104,7 @@ const AddressForm = () => {
         }));
       const orderData = {
         ...formData,
-        total: totalPrice,
+        amount: totalPrice,
         cartItems: cartItemsWithProductId,
       };
       
@@ -114,8 +113,11 @@ const AddressForm = () => {
       const res = await axios.post(`${apiUrl}/createorder`, orderData);
       console.log(res.data);
 
-      // const { orderId, total } = res.data;
-      // initiateRazorpayPayment(orderId, total);
+      // const orderId = res.data.orderId; // Extract orderId from the response
+      //const amount = res.data.total; // Extract total amount from the response
+      const { orderId, amount, key } = res.data;
+      initiateRazorpayPayment(orderId, amount, key);
+
 
     } catch (err) {
       console.error(err);

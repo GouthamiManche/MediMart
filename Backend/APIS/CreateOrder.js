@@ -2,10 +2,10 @@ const uuid = require('uuid');
 const OrderDetail = require('../models/orderdetails.model');
 const CreateOrder = async (req, res) => {
   try {
-    const { fullName, address, city, state, pincode, contactNo, total, cartItems, email, Image_URL } = req.body;
+    const { fullName, address, city, state, pincode, contactNo, amount, cartItems, email, Image_URL } = req.body;
 
     // Validate input fields
-    if (!fullName || !address || !city || !state || !pincode || !contactNo || !total || !cartItems || !email || !Image_URL) {
+    if (!fullName || !address || !city || !state || !pincode || !contactNo || !amount || !cartItems || !email || !Image_URL) {
       throw new Error("All fields including cartItems, email, and Image_URL are required");
     }
 
@@ -22,7 +22,7 @@ const CreateOrder = async (req, res) => {
       pincode,
       state,
       city,
-      total,
+      amount,
       orderDate,
       paymentStatus: 'not completed',
       cartItems,
