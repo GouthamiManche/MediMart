@@ -58,7 +58,6 @@ const AddressForm = () => {
     }
   };
 
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
   
@@ -68,13 +67,12 @@ const AddressForm = () => {
   
     try {
       const totalPrice = localStorage.getItem('totalPrice') || 0;
-      // Fetch cart items from API
       const cartItemsResponse = await axios.get(`${apiUrl}/getcartitems?email=${email}`);
       const cartItems = cartItemsResponse.data;
   
       const cartItemsWithProductId = cartItems.map((item) => ({
         Product_id: item.Product_id,
-        orderId: generateOrderId(), // Make sure this generates a unique order ID
+        orderId: generateOrderId(),
         Name: item.Name,
         Price: item.Price,
         quantity: item.quantity,
@@ -87,6 +85,9 @@ const AddressForm = () => {
         cartItems: cartItemsWithProductId,
         Image_URL: cartItems.length > 0 ? cartItems[0].Image_URL : '',
       };
+  
+      // Log the order data before sending it
+      console.log("Sending order data to create order API:", orderData);
   
       const res = await axios.post(`${apiUrl}/createorder`, orderData);
   
@@ -105,31 +106,6 @@ const AddressForm = () => {
       alert("Error in order creation or payment initiation. Please try again.");
     }
   };
-  
-  function initiateRazorpayPayment(orderId, amount, key) {
-    const options = {
-      key: key, // Use the valid key from your Razorpay account
-      amount: amount, // Amount should already be in paise
-      currency: "INR",
-      name: "Your Pharmacy Name", // Replace with your pharmacy name
-      description: "Order Payment",
-      order_id: orderId,
-      handler: function (response) {
-        if (response.razorpay_payment_id) {
-          console.log("Payment success");
-        } else {
-          alert("Payment Failed! Please try again.");
-        }
-      },
-      prefill: {
-        name: formData.fullName,
-        email: email,
-        contact: formData.contactNo,
-      },
-    };
-    var rzp1 = new Razorpay(options);
-    rzp1.open();
-  }
   
   const validateForm = () => {
     const errors = {};
