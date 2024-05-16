@@ -64,10 +64,8 @@ const Category = () => {
         };
 
         await axios.put(`${apiUrl}/updatecart/${product.Product_id}`, cartItem);
-        //toast.success('Cart updated successfully');
       } catch (error) {
         console.error("Error updating cart:", error.message);
-        //toast.error('Failed to update cart');
       }
     }
   };
@@ -93,7 +91,7 @@ const Category = () => {
     try {
       await axios.post(`${apiUrl}/addtocart`, cartItem);
       toast.success('Item Added To Cart', { autoClose: 2000 });
-      navigate('/cart');
+      //navigate('/cart');
     } catch (error) {
       console.error("Error adding item to cart:", error.message);
       toast.error('Failed to add item to cart');

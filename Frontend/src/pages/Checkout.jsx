@@ -21,10 +21,8 @@ const AddressForm = () => {
     email,
   });
 
-  const [cartItems, setCartItems] = useState([]);
   const [errors, setErrors] = useState({});
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -60,41 +58,64 @@ const AddressForm = () => {
     }
   };
 
+  function initiateRazorpayPayment(orderId, amount) {
+    const options = {
+      "key": "YOUR_RAZORPAY_KEY_ID", // Replace with your key_id
+      "amount": amount * 100, // Convert amount to paise
+      "currency": "INR",
+      "name": "Your Pharmacy Name", // Replace with your pharmacy name
+      "description": "Order Payment",
+      "order_id": orderId,
+      "handler": function (response) {
+        if (response.razorpay_payment_id) {
+          // Payment successful
+          // Send a POST request to your server-side endpoint to validate the payment
+          // using Razorpay's webhook or verify the signature using their Node.js SDK
+        } else {
+          // Payment failed
+          alert("Payment Failed! Please try again.");
+        }
+      }
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!validateForm()) {
       return;
     }
-
+    
     try {
       const totalPrice = localStorage.getItem('totalPrice') || 0;
-      const storedCartItems = localStorage.getItem('cartItems');
-      const parsedCartItems = storedCartItems ? JSON.parse(storedCartItems) : [];
+      //fetch cart items from api 
+      const cartItemsResponse = await axios.get(`${apiUrl}/getcartitems?email=${email}`);
+        const cartItems = cartItemsResponse.data;
 
-      const cartItemsWithProductId = parsedCartItems.map((item) => ({
-        Product_id: item.Product_id,
-        orderId: generateOrderId(),
-        Name: item.Name,
-        Price: item.Price,
-        quantity: item.quantity,
-        Image_URL: item.Image_URL,
-      }));
-
+        const cartItemsWithProductId = cartItems.map((item) => ({
+            Product_id: item.Product_id,
+            orderId: generateOrderId(),
+            Name: item.Name,
+            Price: item.Price,
+            quantity: item.quantity,
+            Image_URL: item.Image_URL,
+        }));
       const orderData = {
         ...formData,
         total: totalPrice,
         cartItems: cartItemsWithProductId,
       };
-      orderData.Image_URL = parsedCartItems.length > 0 ? parsedCartItems[0].Image_URL : '';
+      
+      orderData.Image_URL = cartItems.length > 0 ? cartItems[0].Image_URL : '';
 
       const res = await axios.post(`${apiUrl}/createorder`, orderData);
       console.log(res.data);
 
-      // Optionally, clear cart items after successful order submission
-      // setCartItems([]);
+      const { orderId, amount } = res.data;
+      initiateRazorpayPayment(orderId, amount);
 
-      // Redirect or perform any other necessary action after successful order submission
     } catch (err) {
       console.error(err);
     }

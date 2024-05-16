@@ -9,12 +9,10 @@ const CreateOrder = async (req, res) => {
       throw new Error("All fields including cartItems, email, and Image_URL are required");
     }
 
-    // Generate orderId as a 6-digit number
     const orderId = Math.floor(100000 + Math.random() * 900000);
 
-    const orderDate = new Date().toLocaleDateString('en-GB'); // Get current date in dd/mm/yyyy format
+    const orderDate = new Date().toLocaleDateString('en-GB'); 
 
-    // Create a new order document with cartItems
     const newOrder = new OrderDetail({
       orderId,
       fullName,
