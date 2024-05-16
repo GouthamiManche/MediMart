@@ -31,11 +31,12 @@ const CreateOrder = async (req, res) => {
 
     // Save the new order document
     await newOrder.save();
-
+    const key = process.env.RAZORPAY_KEY;
     res.status(201).json({
       message: "Order created successfully",
       orderId: orderId,
       email: email,
+      key: key,
       fullname: fullName,
       orderDate: orderDate,
       Image_URL: Image_URL

@@ -57,73 +57,80 @@ const AddressForm = () => {
       }
     }
   };
+
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    if (!validateForm()) {
+      return;
+    }
+  
+    try {
+      const totalPrice = localStorage.getItem('totalPrice') || 0;
+      // Fetch cart items from API
+      const cartItemsResponse = await axios.get(`${apiUrl}/getcartitems?email=${email}`);
+      const cartItems = cartItemsResponse.data;
+  
+      const cartItemsWithProductId = cartItems.map((item) => ({
+        Product_id: item.Product_id,
+        orderId: generateOrderId(), // Make sure this generates a unique order ID
+        Name: item.Name,
+        Price: item.Price,
+        quantity: item.quantity,
+        Image_URL: item.Image_URL,
+      }));
+  
+      const orderData = {
+        ...formData,
+        amount: totalPrice * 100,  // Convert total amount to paise
+        cartItems: cartItemsWithProductId,
+        Image_URL: cartItems.length > 0 ? cartItems[0].Image_URL : '',
+      };
+  
+      const res = await axios.post(`${apiUrl}/createorder`, orderData);
+  
+      // Log the response to verify its structure
+      console.log("Order creation response:", res.data);
+  
+      const { orderId, amount, key } = res.data;
+
+    if (!orderId || !amount || !key) {
+      throw new Error("Invalid response from create order API");
+    }
+
+    initiateRazorpayPayment(orderId, amount, key);
+    } catch (err) {
+      console.error("Error in order creation or payment initiation:", err);
+      alert("Error in order creation or payment initiation. Please try again.");
+    }
+  };
+
   function initiateRazorpayPayment(orderId, amount, key) {
     const options = {
-      "key": 'rzp_test_zBsZqgckNp8Zxn', // Replace with your key_id
-      "amount": amount * 100, // Convert amount to paise
-      "currency": "INR",
-      "name": "Your Pharmacy Name", // Replace with your pharmacy name
-      "description": "Order Payment",
-      "order_id": orderId,
-      "handler": function (response) {
+      key: key, // Use the valid key from your Razorpay account
+      amount: amount, // Amount should already be in paise
+      currency: "INR",
+      name: "Your Pharmacy Name", // Replace with your pharmacy name
+      description: "Order Payment",
+      order_id: orderId,
+      handler: function (response) {
         if (response.razorpay_payment_id) {
-          console.log("successs");
-          // Payment successful
-          // Send a POST request to your server-side endpoint to validate the payment
-          // using Razorpay's webhook or verify the signature using their Node.js SDK
+          console.log("Payment success");
         } else {
-          // Payment failed
           alert("Payment Failed! Please try again.");
         }
-      }
+      },
+      prefill: {
+        name: formData.fullName,
+        email: email,
+        contact: formData.contactNo,
+      },
     };
     var rzp1 = new Razorpay(options);
     rzp1.open();
   }
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!validateForm()) {
-      return;
-    }
-    
-    try {
-      const totalPrice = localStorage.getItem('totalPrice') || 0;
-      //fetch cart items from api 
-      const cartItemsResponse = await axios.get(`${apiUrl}/getcartitems?email=${email}`);
-        const cartItems = cartItemsResponse.data;
-
-        const cartItemsWithProductId = cartItems.map((item) => ({
-            Product_id: item.Product_id,
-            orderId: generateOrderId(),
-            Name: item.Name,
-            Price: item.Price,
-            quantity: item.quantity,
-            Image_URL: item.Image_URL,
-        }));
-      const orderData = {
-        ...formData,
-        amount: totalPrice,
-        cartItems: cartItemsWithProductId,
-      };
-      
-      orderData.Image_URL = cartItems.length > 0 ? cartItems[0].Image_URL : '';
-
-      const res = await axios.post(`${apiUrl}/createorder`, orderData);
-      console.log(res.data);
-
-      // const orderId = res.data.orderId; // Extract orderId from the response
-      //const amount = res.data.total; // Extract total amount from the response
-      const { orderId, amount, key } = res.data;
-      initiateRazorpayPayment(orderId, amount, key);
-
-
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
+  
   const validateForm = () => {
     const errors = {};
 
@@ -161,7 +168,7 @@ const AddressForm = () => {
   };
 
   const generateOrderId = () => {
-    return Math.floor(100000 + Math.random() * 900000);
+    return `order_${Math.floor(1000000000 + Math.random() * 9000000000)}`;
   };
 
   useEffect(() => {
