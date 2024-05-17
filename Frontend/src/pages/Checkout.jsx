@@ -39,7 +39,7 @@ const AddressForm = () => {
         const res = await axios.get(`https://api.postalpincode.in/pincode/${value}`);
         const data = res.data;
 
-        if (data && data.length > 0) {
+        if (data && data.length > 0 && data[0].PostOffice) {
           const city = data[0].PostOffice[0].Block;
           const state = data[0].PostOffice[0].State;
 
@@ -107,6 +107,49 @@ const AddressForm = () => {
     }
   };
   
+  const initiateRazorpayPayment = (orderId, amount, key) => {
+    const options = {
+      key: key, 
+      amount: amount, 
+      currency: 'INR',
+      name: 'Your Company Name',
+      description: 'Purchase Description',
+      order_id: orderId,
+      handler: function (response) {
+        alert(response.razorpay_payment_id);
+        alert(response.razorpay_order_id);
+        alert(response.razorpay_signature);
+        // Handle successful payment response
+      },
+      prefill: {
+        name: 'Customer Name',
+        email: 'customer@example.com',
+        contact: '9999999999',
+      },
+      notes: {
+        address: 'Customer Address',
+      },
+      theme: {
+        color: '#125872',
+      },
+    };
+  
+    const rzp = new window.Razorpay(options);
+    rzp.on('payment.failed', function (response) {
+      alert(response.error.code);
+      alert(response.error.description);
+      alert(response.error.source);
+      alert(response.error.step);
+      alert(response.error.reason);
+      console.log(response.error.code);
+      console.log(response.error.description);
+      console.log(response.error.source);
+      console.log(response.error.step);
+      console.log(response.error.reason);
+    });
+    rzp.open();
+  };
+
   const validateForm = () => {
     const errors = {};
 
@@ -164,33 +207,7 @@ const AddressForm = () => {
       <div className="bg-white p-6 max-w-2xl w-full md:mt-[2rem] mx-auto">
         <h2 className="text-2xl font-bold mb-4 text-[#125872]">Shipping Address</h2>
         <form onSubmit={handleSubmit}>
-          {/* Saved Address */}
-          {/* <div className="mb-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center"> */}
-                {/* <input
-                  type="checkbox"
-                  className="w-4 h-4 text-[#125872] bg-gray-100 rounded border-gray-300"
-                /> */}
-                {/* <label className="ml-2 text-sm text-gray-700">Home address</label> */}
-              {/* </div> */}
-              {/* <button
-                className="text-[#125872] text-sm font-semibold"
-                onClick={() => setIsModalOpen(true)}
-              >
-                Add address
-              </button> */}
-            {/* </div>
-            <div className="mt-2 text-gray-500 text-sm">1234 Maple Avenue, Apt 26, Sunnyvale, CA 92618</div>
-          </div> */}
-
-          {/* Add Address Modal */}
-          {/* <AddAddressModal
-            isOpen={isModalOpen}
-            onClose={() => setIsModalOpen(false)}
-            onSubmit={handleAddAddress}
-          /> */}
-
+          {/* Address Inputs */}
           <div className="md:flex md:mb-[2rem]">
             <div className="w-full md:w-1/2 md:mr-2 mb-4 md:mb-0">
               <label htmlFor="fullName" className="text-sm font-medium text-gray-700">
@@ -313,20 +330,6 @@ const AddressForm = () => {
       <div className="w-[30%] p-[2rem] border border-gray-300 sticky top-2 rounded-md">
         <h2 className="text-2xl font-bold mb-4">Order Total</h2>
         <div className="bg-white">
-          {/* <div className="flex justify-between mb-2">
-            <p className="text-gray-500">Subtotal</p>
-            <p className="font-semibold">
-              {`₹${cartItems.reduce((total, item) => total + item.Price * item.quantity, 0)}`}
-            </p>
-          </div> */}
-          {/* <div className="flex justify-between mb-2">
-            <p className="text-gray-500">Discount</p>
-            <p className="font-semibold">-₹0</p>
-          </div> */}
-          {/* <div className="flex justify-between mb-2">
-            <p className="text-gray-500">Delivery Fee</p>
-            <p className="font-semibold">₹0</p>
-          </div> */}
           <div className="border-t border-gray-300 pt-4 flex justify-between">
             <p className="font-bold">Total</p>
             <p className="font-bold">

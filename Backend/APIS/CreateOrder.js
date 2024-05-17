@@ -47,13 +47,11 @@ const CreateOrder = async (req, res) => {
       Image_URL,
     });
 
-    // Save the new order document
     await newOrder.save();
 
-    // Get the Razorpay key from environment variables
-    const key = process.env.RAZORPAY_KEY_ID; // Ensure this is set in your environment
+    const key = "rzp_test_5SZr51HRqWorlQ";
+    // console.log(key)
 
-    // Log the response data before sending it
     console.log("Order created successfully, sending response:", {
       orderId,
       amount,
@@ -74,6 +72,7 @@ const CreateOrder = async (req, res) => {
       orderDate,
       Image_URL,
     });
+
   } catch (err) {
     console.error("Error creating order:", err);
     res.status(500).json({ error: "Failed to create order" });
