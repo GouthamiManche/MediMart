@@ -1,7 +1,10 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from '../Components/AuthProvider';
+
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function truncateString(str, num) {
   if (!str || str.length === 0) return "";
@@ -16,8 +19,14 @@ function Item({ item }) {
   const [isItemInCart, setIsItemInCart] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleAddToCart = async () => {
+    if (!user) {
+      toast.error("Please login to add items to the cart");
+      navigate("/login");
+      return;
+    }
     try {
       const res = await axios.post(
         "https://medicine-website-two.vercel.app/api/addtocart",
@@ -34,8 +43,7 @@ function Item({ item }) {
         setIsItemInCart(true);
       }
     } catch (error) {
-     
-      
+     console.log(error)
     }
   };
 

@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { FaCartPlus, FaBars, FaTimes } from "react-icons/fa";
 import Logo from '/src/assets/logo.jpg';
@@ -7,6 +7,8 @@ import { ImSearch } from "react-icons/im";
 import { FaCartShopping } from "react-icons/fa6";
 import { useCart } from "./CartProvider";
 import { AuthContext } from "./AuthProvider";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Navbar() {
   const { user, logout } = useContext(AuthContext);
@@ -14,9 +16,9 @@ function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [totalItemsInCart, setTotalItemsInCart] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Calculate total quantity of items in the cart
     const total = state.cartItems.reduce((total, item) => total + item.quantity, 0);
     setTotalItemsInCart(total);
   }, [state.cartItems]);
@@ -25,22 +27,31 @@ function Navbar() {
     setDropdownOpen(!dropdownOpen);
   };
 
+  const handleCartClick = () => {
+    if (user) {
+      navigate("/cart");
+    } else {
+      toast.error("Please login first");
+      navigate("/login");
+    }
+  };
+
   return (
     <div className="bg-white text-gray-900 z-50 w-full sticky top-0 shadow-lg">
-      <header className="py-4 mx-8  flex items-center justify-between">
+      <header className="py-4 mx-8 flex items-center justify-between">
         <div className="flex items-center">
           <Link to='/'>
             <img className="h-12" src={Logo} alt="Logo" />
           </Link>
-          <Link to="/" className="md:block hidden text-xl md:text-3xl font-bold ml-1  font-PlayFair">
+          <Link to="/" className="md:block hidden text-xl md:text-3xl font-bold ml-1 font-PlayFair">
             <span className="text-[#14496b]">Medi</span><span className="text-[#8ccf28]">Mart</span>
           </Link>
         </div>
         <div className="md:hidden flex text-gray-900">
-          <Link to="/cart" className="font-bold py-2 rounded flex items-center mr-[1rem]">
+          <button onClick={handleCartClick} className="font-bold py-2 rounded flex items-center mr-[1rem]">
             <FaCartShopping className="text-xl" />
             <span className="text-lg ml-1"> ({totalItemsInCart})</span>
-          </Link>
+          </button>
           <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="focus:outline-none">
             {mobileMenuOpen ? (
               <FaTimes className="text-xl" />
@@ -57,10 +68,10 @@ function Navbar() {
               </Link>
             </div>
           </nav>
-          <Link to="/cart" className="font-bold py-2 rounded flex items-center">
+          <button onClick={handleCartClick} className="font-bold py-2 rounded flex items-center">
             <FaCartShopping className="text-xl" />
             <span className="text-lg ml-1">Cart</span>
-          </Link>
+          </button>
           {user ? (
             <div className="relative inline-block text-left">
               <div className="flex items-center">
@@ -69,13 +80,13 @@ function Navbar() {
                 </button>
               </div>
               {dropdownOpen && (
-                <div className="absolute right-0 z-10  w-48  rounded-md bg-white shadow-lg">
+                <div className="absolute right-0 z-10 w-48 rounded-md bg-white shadow-lg">
                   <div>
-                    <Link to="/profile" className="text-gray-700  px-4 py-2  text-sm">
+                    <Link to="/profile" className="text-gray-700 px-4 py-2 text-sm">
                       {user.username}
                     </Link>
                     <br />
-                    <button onClick={logout} className="text-gray-700  w-full px-4 py-2  text-left text-sm">
+                    <button onClick={logout} className="text-gray-700 w-full px-4 py-2 text-left text-sm">
                       Sign out
                     </button>
                   </div>

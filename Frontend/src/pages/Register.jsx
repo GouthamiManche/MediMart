@@ -33,11 +33,11 @@ function Register() {
         toast.success('Registered Successfully', { autoClose: 2000 });
         navigate("/login");
       } catch (error) {
-        console.error(error);
+        console.error("Registration error:", error);
         if (error.response && error.response.data && error.response.data.error) {
           setErrorMessage(error.response.data.error);
         } else {
-          setErrorMessage("An error occurred during registration.");
+          setErrorMessage("An internal server error occurred during registration.");
         }
       }
     }
@@ -71,6 +71,7 @@ function Register() {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
   return (
     <div className="bg-[#f5f5f5] min-h-screen flex items-center justify-center">
       <div className="max-w-md w-full mx-auto bg-white rounded-lg shadow-lg p-8">
@@ -206,7 +207,7 @@ function Register() {
           <div className="flex items-center justify-center">
             <button
               type="submit"
-              className="bg-[#125872]  text-white font-bold py-2 px-4 rounded  w-full"
+              className="bg-[#125872] text-white font-bold py-2 px-4 rounded w-full"
             >
               Register
             </button>

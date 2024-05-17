@@ -10,10 +10,11 @@ const { registerUser, loginUser } = require('./APIS/Login');
 const { getProductsByCategory } = require('./APIS/ByCategory');
 const {getOrderDetailsByEmail} = require('./APIS/OrderDetailsByEmail')
 const {CreateOrder} = require("./APIS/CreateOrder")
-const {CartItem}= require('./models/addtocart.model')
-const Razorpay = require('razorpay');
 const { addToCart, updateCartItem, deleteCartItem } = require('./APIS/Addtocart');
 const { getCartItemsByEmail } = require('./APIS/GetCartItems');
+
+
+const Razorpay = require('razorpay');
 
 const app = express();
 const URI = process.env.MONGO_URL;
@@ -30,7 +31,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 app.use(express.json());
 app.use(cors());
 
-// Razorpay Configuration
+//Razorpay Configuration
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
   key_secret: process.env.RAZORPAY_KEY_SECRET,
@@ -51,23 +52,22 @@ app.get('/api/products', getProductsByCategory);
 app.get('/api/orders/:email', getOrderDetailsByEmail);
 app.get('/api/getcartitems',getCartItemsByEmail);
 
-
-//Endpoint to create a new payment order
-app.post('/api/create-order', async (req, res) => {
+app.post('/api/orders', async (req, res) => {
   try {
-    const { amount, currency } = req.body;
+    const amount = req.body.amount; // Get order amount from request body
+    const currency = 'INR'; // Assuming orders are in INR
+
     const options = {
-      amount: amount * 100, // Amount in smallest currency unit (e.g., paise for INR)
+      amount: amount * 100, // Convert amount to paise (100 paise = 1 rupee)
       currency,
-      receipt: `order_${Date.now()}`,
-      payment_capture: 1, // Auto-capture payment
+      receipt: 'receipt_' + Math.random().toString(36).substring(2, 7) // Generate a unique receipt ID
     };
 
-    const response = await razorpay.orders.create(options);
-    res.json(response);
+    const order = await razorpay.orders.create(options);
+    res.json({ order, key: razorpay.auth.key_id }); // Send order details and key_id to client
   } catch (error) {
-    console.error('Error creating Razorpay order:', error);
-    res.status(500).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ error: 'Failed to create order' });
   }
 });
 

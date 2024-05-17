@@ -10,7 +10,7 @@ const cartItemSchema = new Schema({
 });
 
 const orderSchema = new Schema({
-  orderId: { type: Number, required: true },
+  orderId: { type: String, required: true },
   fullName: { type: String, required: true },
   address: { type: String, required: true },
   city: { type: String, required: true },
@@ -18,7 +18,7 @@ const orderSchema = new Schema({
   pincode: { type: String, required: true },
   email: { type: String, required: true },
   contactNo: { type: String, required: true },
-  total: { type: Number, required: true },
+  amount: { type: Number, required: true },
   orderDate: { type: String, required: true },
   paymentStatus: { type: String, default: 'not completed' },
   cartItems: [cartItemSchema],

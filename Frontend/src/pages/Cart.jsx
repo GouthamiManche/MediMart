@@ -67,10 +67,24 @@ const Cart = () => {
       const updatedCartItems = [...cartItems];
       updatedCartItems.splice(index, 1);
       setCartItems(updatedCartItems);
-      toast.success('Product removed from cart successfully', { autoClose: 2000 });
+      //toast.success('Product removed from cart successfully', { autoClose: 2000 });
     } catch (error) {
       console.error("Error removing product from cart:", error.message);
       toast.error('Failed to remove product from cart', { autoClose: 2000 });
+    }
+  };
+
+  const handleQuantityChange = async (index, newQuantity) => {
+    try {
+      const updatedCartItems = [...cartItems];
+      updatedCartItems[index].quantity = newQuantity;
+      setCartItems(updatedCartItems);
+      await axios.put(`${apiUrl}/updatecart/${updatedCartItems[index].Product_id}`, {
+        quantity: newQuantity,
+      });
+    } catch (error) {
+      console.error("Error updating quantity:", error.message);
+      //toast.error('Failed to update quantity', { autoClose: 2000 });
     }
   };
 
@@ -200,8 +214,6 @@ const Cart = () => {
               )}
             </div>
           </div>
-          {/* Payment and Summary */}
-
           <PaymentSummary
             cartItems={cartItems}
             discountPercentage={discountPercentage}

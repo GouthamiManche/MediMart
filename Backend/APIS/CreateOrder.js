@@ -1,20 +1,36 @@
 const uuid = require('uuid');
 const OrderDetail = require('../models/orderdetails.model');
+
 const CreateOrder = async (req, res) => {
   try {
-    const { fullName, address, city, state, pincode, contactNo, total, cartItems, email, Image_URL } = req.body;
+    const { fullName, address, city, state, pincode, contactNo, amount, cartItems, email, Image_URL } = req.body;
 
     // Validate input fields
-    if (!fullName || !address || !city || !state || !pincode || !contactNo || !total || !cartItems || !email || !Image_URL) {
-      throw new Error("All fields including cartItems, email, and Image_URL are required");
+    if (!fullName || !address || !city || !state || !pincode || !contactNo || !amount || !cartItems || !email || !Image_URL) {
+      console.error("Validation error: Missing required fields");
+      return res.status(400).json({ error: "All fields including cartItems, email, and Image_URL are required" });
     }
 
-    // Generate orderId as a 6-digit number
-    const orderId = Math.floor(100000 + Math.random() * 900000);
+    // Generate a unique orderId using UUID
+    const orderId = uuid.v4();
+    const orderDate = new Date().toLocaleDateString('en-GB');
 
-    const orderDate = new Date().toLocaleDateString('en-GB'); // Get current date in dd/mm/yyyy format
+    // Log the order details before saving
+    console.log("Creating new order with details:", {
+      orderId,
+      fullName,
+      address,
+      city,
+      state,
+      pincode,
+      contactNo,
+      amount,
+      cartItems,
+      email,
+      Image_URL,
+      orderDate,
+    });
 
-    // Create a new order document with cartItems
     const newOrder = new OrderDetail({
       orderId,
       fullName,
@@ -24,27 +40,42 @@ const CreateOrder = async (req, res) => {
       pincode,
       state,
       city,
-      total,
+      amount,
       orderDate,
       paymentStatus: 'not completed',
       cartItems,
-      Image_URL, // Include Image_URL field
+      Image_URL,
     });
 
-    // Save the new order document
     await newOrder.save();
+
+    const key = "rzp_test_5SZr51HRqWorlQ";
+    // console.log(key)
+
+    console.log("Order created successfully, sending response:", {
+      orderId,
+      amount,
+      key,
+      email,
+      fullName,
+      orderDate,
+      Image_URL,
+    });
 
     res.status(201).json({
       message: "Order created successfully",
-      orderId: orderId,
-      email: email,
-      fullname: fullName,
-      orderDate: orderDate,
-      Image_URL: Image_URL
+      orderId,
+      amount,
+      key,
+      email,
+      fullName,
+      orderDate,
+      Image_URL,
     });
+
   } catch (err) {
     console.error("Error creating order:", err);
-    res.status(400).send(err.message);
+    res.status(500).json({ error: "Failed to create order" });
   }
 };
 
