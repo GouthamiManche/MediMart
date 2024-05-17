@@ -2,9 +2,8 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { SiPhonepe } from 'react-icons/si';
 import { AuthContext } from '../Components/AuthProvider';
-import AddAddressModal from '../Components/AddAddressModal';
-
-const AddressForm = () => {
+//import AddAddressModal from '../Components/AddAddressModal';
+ const AddressForm = () => {
   const { user } = useContext(AuthContext);
   const email = user?.email || '';
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -22,7 +21,7 @@ const AddressForm = () => {
   });
 
   const [errors, setErrors] = useState({});
-  
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -60,16 +59,16 @@ const AddressForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (!validateForm()) {
       return;
     }
-  
+
     try {
       const totalPrice = localStorage.getItem('totalPrice') || 0;
       const cartItemsResponse = await axios.get(`${apiUrl}/getcartitems?email=${email}`);
       const cartItems = cartItemsResponse.data;
-  
+
       const cartItemsWithProductId = cartItems.map((item) => ({
         Product_id: item.Product_id,
         orderId: generateOrderId(),
@@ -78,75 +77,64 @@ const AddressForm = () => {
         quantity: item.quantity,
         Image_URL: item.Image_URL,
       }));
-  
+
       const orderData = {
         ...formData,
         amount: totalPrice * 100, // Convert total amount to paise
         cartItems: cartItemsWithProductId,
         Image_URL: cartItems.length > 0 ? cartItems[0].Image_URL : '',
       };
-  
-      // Log the order data before sending it
-      console.log("Sending order data to create order API:", orderData);
-  
+
       const res = await axios.post(`${apiUrl}/createorder`, orderData);
-  
-      // Log the response to verify its structure
-      console.log("Order creation response:", res.data);
-  
+
       const { orderId, amount, key } = res.data;
-  
+
       if (!orderId || !amount || !key) {
         throw new Error("Invalid response from create order API");
       }
-  
+
       initiateRazorpayPayment(orderId, amount, key);
     } catch (err) {
       console.error("Error in order creation or payment initiation:", err);
       alert("Error in order creation or payment initiation. Please try again.");
     }
   };
-  
+
   const initiateRazorpayPayment = (orderId, amount, key) => {
-    const options = {
-      key: key, 
-      amount: amount, 
+    if (!window.Razorpay) {
+      console.error('Razorpay library is not available');
+      return;
+    }
+
+    const rzp = new window.Razorpay({
+      key: key, // Use the key from the API response
+      amount: amount,
       currency: 'INR',
       name: 'Your Company Name',
       description: 'Purchase Description',
       order_id: orderId,
-      handler: function (response) {
-        alert(response.razorpay_payment_id);
-        alert(response.razorpay_order_id);
-        alert(response.razorpay_signature);
-        // Handle successful payment response
+      handler: async (response) => {
+        console.log('Payment successful:', response);
+        // Implement your logic here, e.g., update order status, redirect to success page
       },
       prefill: {
-        name: 'Customer Name',
-        email: 'customer@example.com',
-        contact: '9999999999',
+        name: formData.fullName,
+        email: formData.email,
+        contact: formData.contactNo,
       },
       notes: {
-        address: 'Customer Address',
+        address: `${formData.address}, ${formData.city}, ${formData.state} - ${formData.pincode}`,
       },
       theme: {
         color: '#125872',
       },
-    };
-  
-    const rzp = new window.Razorpay(options);
-    rzp.on('payment.failed', function (response) {
-      alert(response.error.code);
-      alert(response.error.description);
-      alert(response.error.source);
-      alert(response.error.step);
-      alert(response.error.reason);
-      console.log(response.error.code);
-      console.log(response.error.description);
-      console.log(response.error.source);
-      console.log(response.error.step);
-      console.log(response.error.reason);
     });
+
+    rzp.on('payment.failed', (response) => {
+      console.log('Payment failed:', response);
+      alert(`Payment Failed: ${response.error.reason}`);
+    });
+
     rzp.open();
   };
 
@@ -220,9 +208,8 @@ const AddressForm = () => {
                 value={formData.fullName}
                 onChange={handleChange}
                 required
-                className={`mt-1 py-3 p-2 block w-full border ${
-                  errors.fullName ? 'border-red-500' : 'border-gray-300'
-                } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+                className={`mt-1 py-3 p-2 block w-full border ${errors.fullName ? 'border-red-500' : 'border-gray-300'
+                  } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
               />
               {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>}
             </div>
@@ -237,9 +224,8 @@ const AddressForm = () => {
                 value={formData.contactNo}
                 onChange={handleChange}
                 required
-                className={`mt-1 p-2 block py-3 w-full border ${
-                  errors.contactNo ? 'border-red-500' : 'border-gray-300'
-                } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+                className={`mt-1 p-2 block py-3 w-full border ${errors.contactNo ? 'border-red-500' : 'border-gray-300'
+                  } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
               />
               {errors.contactNo && <p className="text-red-500 text-sm mt-1">{errors.contactNo}</p>}
             </div>
@@ -255,9 +241,8 @@ const AddressForm = () => {
               value={formData.address}
               onChange={handleChange}
               required
-              className={`mt-1 p-2 py-3 block w-full border ${
-                errors.address ? 'border-red-500' : 'border-gray-300'
-              } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+              className={`mt-1 p-2 py-3 block w-full border ${errors.address ? 'border-red-500' : 'border-gray-300'
+                } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
             />
             {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
           </div>
@@ -273,9 +258,8 @@ const AddressForm = () => {
                 value={formData.pincode}
                 onChange={handlePinChange}
                 required
-                className={`mt-1 p-2 block py-3 w-full border ${
-                  errors.pincode ? 'border-red-500' : 'border-gray-300'
-                } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+                className={`mt-1 p-2 block py-3 w-full border ${errors.pincode ? 'border-red-500' : 'border-gray-300'
+                  } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
               />
               {errors.pincode && <p className="text-red-500 text-sm mt-1">{errors.pincode}</p>}
             </div>
@@ -288,9 +272,8 @@ const AddressForm = () => {
                 value={formData.state}
                 onChange={handleChange}
                 required
-                className={`mt-1 p-2 block py-3 w-full border ${
-                  errors.state ? 'border-red-500' : 'border-gray-300'
-                } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+                className={`mt-1 p-2 block py-3 w-full border ${errors.state ? 'border-red-500' : 'border-gray-300'
+                  } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
               />
               {errors.state && <p className="text-red-500 text-sm mt-1">{errors.state}</p>}
             </div>
@@ -303,9 +286,8 @@ const AddressForm = () => {
                 value={formData.city}
                 onChange={handleChange}
                 required
-                className={`mt-1 p-2 block py-3 w-full border ${
-                  errors.city ? 'border-red-500' : 'border-gray-300'
-                } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+                className={`mt-1 p-2 block py-3 w-full border ${errors.city ? 'border-red-500' : 'border-gray-300'
+                  } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
               />
               {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city}</p>}
             </div>

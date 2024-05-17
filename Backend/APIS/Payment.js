@@ -8,7 +8,7 @@ const razorpay = new Razorpay({
 });
 
 // POST route to create a new payment order
-app.post('/create-order', async (req, res) => {
+app.post('/createorder', async (req, res) => {
   try {
     const { amount, currency } = req.body;
     const options = {
