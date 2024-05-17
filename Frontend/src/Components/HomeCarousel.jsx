@@ -82,7 +82,7 @@ const CustomerTestimonialCarousel = () => {
   return (
     <div className="max-w-full mx-auto mt-8 px-5 mb-8 sm:px-18 sm:mt-10 sm:mb-10 text-gray-800 ">
       <h2 className="text-lg md:text-2xl font-bold mb-4">Customer Testimonials</h2>
-      <div className="relative overflow-x-hidden ">
+      <div className="relative overflow-x-hidden font-Akaya ">
         <div
           ref={carouselRef}
           className="carousel flex gap-8 h-64 w-full transition-transform duration-500 ease-in-out overflow-x-scroll scrollbar-hide "
@@ -92,7 +92,7 @@ const CustomerTestimonialCarousel = () => {
               key={index}
               className="carousel-item flex flex-col justify-center p-6 rounded-lg bg-blue-100 w-full md:w-1/3 shrink-0 shadow-md"
             >
-              <p className="text-base text-center md:text-lg">{testimonial.text}</p>
+              <p className="text-base text-center md:text-xl">{testimonial.text}</p>
               <p className="text-sm text-center mt-2">{testimonial.author}</p>
             </div>
           ))}

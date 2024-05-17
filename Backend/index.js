@@ -31,10 +31,10 @@ app.use(express.json());
 app.use(cors());
 
 // Razorpay Configuration
-// const razorpay = new Razorpay({
-//   key_id: process.env.RAZORPAY_KEY_ID,
-//   key_secret: process.env.RAZORPAY_KEY_SECRET,
-// });
+const razorpay = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET,
+});
 
 // ROUTES
 app.post('/api/register', registerUser);
@@ -52,33 +52,33 @@ app.get('/api/orders/:email', getOrderDetailsByEmail);
 app.get('/api/getcartitems',getCartItemsByEmail);
 
 
-// Endpoint to create a new payment order
-// app.post('/api/create-order', async (req, res) => {
-//   try {
-//     const { amount, currency } = req.body;
-//     const options = {
-//       amount: amount * 100, // Amount in smallest currency unit (e.g., paise for INR)
-//       currency,
-//       receipt: `order_${Date.now()}`,
-//       payment_capture: 1, // Auto-capture payment
-//     };
+//Endpoint to create a new payment order
+app.post('/api/create-order', async (req, res) => {
+  try {
+    const { amount, currency } = req.body;
+    const options = {
+      amount: amount * 100, // Amount in smallest currency unit (e.g., paise for INR)
+      currency,
+      receipt: `order_${Date.now()}`,
+      payment_capture: 1, // Auto-capture payment
+    };
 
-//     const response = await razorpay.orders.create(options);
-//     res.json(response);
-//   } catch (error) {
-//     console.error('Error creating Razorpay order:', error);
-//     res.status(500).json({ error: error.message });
-//   }
-// });
+    const response = await razorpay.orders.create(options);
+    res.json(response);
+  } catch (error) {
+    console.error('Error creating Razorpay order:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
 
 app.get('/', (req, res) => {
   res.json('Hello, this is your Express API!');
 });
 
-app.listen();
+// app.listen();
 
-// const PORT = 4000; // Specify the desired local port
+const PORT = 4000; // Specify the desired local port
 
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
