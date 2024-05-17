@@ -1,38 +1,20 @@
 const uuid = require('uuid');
+const Razorpay = require('razorpay');
 const OrderDetail = require('../models/orderdetails.model');
 
 const CreateOrder = async (req, res) => {
   try {
-    const { fullName, address, city, state, pincode, contactNo, amount, cartItems, email, Image_URL } = req.body;
+    const { fullName, address, city, state, pincode, contactNo, amount, cartItems, email } = req.body;
 
     // Validate input fields
-    if (!fullName || !address || !city || !state || !pincode || !contactNo || !amount || !cartItems || !email || !Image_URL) {
+    if (!fullName || !address || !city || !state || !pincode || !contactNo || !amount || !cartItems || !email ) {
       console.error("Validation error: Missing required fields");
       return res.status(400).json({ error: "All fields including cartItems, email, and Image_URL are required" });
     }
 
-    // Generate a unique orderId using UUID
-    const orderId = uuid.v4();
     const orderDate = new Date().toLocaleDateString('en-GB');
 
-    // Log the order details before saving
-    console.log("Creating new order with details:", {
-      orderId,
-      fullName,
-      address,
-      city,
-      state,
-      pincode,
-      contactNo,
-      amount,
-      cartItems,
-      email,
-      Image_URL,
-      orderDate,
-    });
-
     const newOrder = new OrderDetail({
-      orderId,
       fullName,
       contactNo,
       address,
@@ -43,34 +25,45 @@ const CreateOrder = async (req, res) => {
       amount,
       orderDate,
       paymentStatus: 'not completed',
-      cartItems,
-      Image_URL,
+      cartItems
     });
 
     await newOrder.save();
 
-    const key = "rzp_test_5SZr51HRqWorlQ";
-    // console.log(key)
-
-    console.log("Order created successfully, sending response:", {
-      orderId,
-      amount,
-      key,
-      email,
-      fullName,
-      orderDate,
-      Image_URL,
+    const razorpay = new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_KEY_SECRET,
     });
 
+    const options = {
+      amount: amount * 100, // amount in smallest currency unit (e.g., paise for INR)
+      currency: "INR",
+      receipt: `receipt_order_${newOrder._id}`,
+      payment_capture: 1, // auto capture
+    };
+
+    const order = await razorpay.orders.create(options);
+
+    if (!order) {
+      console.error("Error creating Razorpay order");
+      return res.status(500).send("Error creating Razorpay order");
+    }
+
     res.status(201).json({
-      message: "Order created successfully",
-      orderId,
-      amount,
-      key,
-      email,
-      fullName,
-      orderDate,
-      Image_URL,
+      message: "Order created successfully",orderDetails: {
+        orderId: order.id,
+        amount: order.amount,
+        key: process.env.RAZORPAY_KEY_ID,
+        email,
+        fullName,
+        orderDate,
+        cartItems,
+        address,
+        city,
+        state,
+        pincode,
+        contactNo
+      }
     });
 
   } catch (err) {

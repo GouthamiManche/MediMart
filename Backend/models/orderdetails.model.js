@@ -10,7 +10,6 @@ const cartItemSchema = new Schema({
 });
 
 const orderSchema = new Schema({
-  orderId: { type: String, required: true },
   fullName: { type: String, required: true },
   address: { type: String, required: true },
   city: { type: String, required: true },

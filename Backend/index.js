@@ -4,6 +4,7 @@ const Schema = require('./models/user.model');
 const data = require('./models/product.model');
 require('dotenv').config();
 const cors = require('cors');
+const crypto = require("crypto");
 const { getAllUsers } = require('./APIS/Users');
 const { getData } = require('./APIS/Data');
 const { registerUser, loginUser } = require('./APIS/Login');
@@ -12,9 +13,7 @@ const {getOrderDetailsByEmail} = require('./APIS/OrderDetailsByEmail')
 const {CreateOrder} = require("./APIS/CreateOrder")
 const { addToCart, updateCartItem, deleteCartItem } = require('./APIS/Addtocart');
 const { getCartItemsByEmail } = require('./APIS/GetCartItems');
-
-
-//const Razorpay = require('razorpay');
+const Razorpay = require("razorpay");
 
 const app = express();
 const URI = process.env.MONGO_URL;
@@ -30,12 +29,8 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 app.use(express.json());
 app.use(cors());
+app.use(express.urlencoded({ extended: false }));
 
-//Razorpay Configuration
-// const razorpay = new Razorpay({
-//   key_id: process.env.RAZORPAY_KEY_ID,
-//   key_secret: process.env.RAZORPAY_KEY_SECRET,
-// });
 
 // ROUTES
 app.post('/api/register', registerUser);
@@ -57,6 +52,24 @@ app.get('/', (req, res) => {
   res.json('Hello, this is your Express API!');
 });
 
+app.post("/order/validate", async (req, res) => {
+  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
+    req.body;
+
+  const sha = crypto.createHmac("sha256", process.env.RAZORPAY_KEY_SECRET);
+  //order_id + "|" + razorpay_payment_id
+  sha.update(`${razorpay_order_id}|${razorpay_payment_id}`);
+  const digest = sha.digest("hex");
+  if (digest !== razorpay_signature) {
+    return res.status(400).json({ msg: "Transaction is not legit!" });
+  }
+
+  res.json({
+    msg: "success",
+    orderId: razorpay_order_id,
+    paymentId: razorpay_payment_id,
+  });
+});
 // app.listen();
 
 const PORT = 4000; // Specify the desired local port
