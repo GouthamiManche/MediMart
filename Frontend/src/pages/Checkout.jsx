@@ -1,14 +1,20 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import { useNavigate, useLocation } from 'react-router-dom';
+
 import { SiPhonepe } from 'react-icons/si';
 import { AuthContext } from '../Components/AuthProvider';
 import AddAddressModal from '../Components/AddAddressModal';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddressForm = () => {
   const { user } = useContext(AuthContext);
   const email = user?.email || '';
   const apiUrl = import.meta.env.VITE_API_URL;
   const apiKey = import.meta.env.VITE_API_KEY;
+
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: '',
     address: '',
@@ -59,12 +65,12 @@ const AddressForm = () => {
   };
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
-  
+
     if (!validateForm()) {
       return;
     }
-  
     try {
       const totalPrice = localStorage.getItem('totalPrice') || 0;
       const cartItemsResponse = await axios.get(`${apiUrl}/getcartitems?email=${email}`);
@@ -72,7 +78,6 @@ const AddressForm = () => {
   
       const cartItemsWithProductId = cartItems.map((item) => ({
         Product_id: item.Product_id,
-        orderId: generateOrderId(),
         Name: item.Name,
         Price: item.Price,
         quantity: item.quantity,
@@ -81,73 +86,63 @@ const AddressForm = () => {
   
       const orderData = {
         ...formData,
-        amount: totalPrice * 100, // Convert total amount to paise
+        amount: totalPrice, // Convert total amount to paise
         cartItems: cartItemsWithProductId,
         Image_URL: cartItems.length > 0 ? cartItems[0].Image_URL : '',
       };
   
-      // Log the order data before sending it
-      console.log("Sending order data to create order API:", orderData);
-  
       const res = await axios.post(`${apiUrl}/createorder`, orderData);
-  
-      // Log the response to verify its structure
       console.log("Order creation response:", res.data);
-  
-      const { orderId, amount, key } = res.data;
-  
-      if (!orderId || !amount || !key) {
-        throw new Error("Invalid response from create order API");
+      
+      if (res.data.orderDetails) {
+        const { orderId, amount, key, email, fullName, orderDate, Image_URL } = res.data.orderDetails;
+        const options = {
+          key,
+          amount,
+          currency: 'INR',
+          name:"MediMart",
+          description: 'Order Payment',
+          order_id: orderId,
+          handler: async function (response) {
+            const body = {
+              ...response,
+            };
+    
+            const validateRes = await fetch(
+              "http://localhost:4000/order/validate",
+              {
+                method: "POST",
+                body: JSON.stringify(body),
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            );
+            const jsonRes = await validateRes.json();
+            console.log(jsonRes);
+            toast.success(`Payment successfull`);
+            navigate('/orderplaced');
+          },
+          prefill: {
+            name: fullName,
+            email: email,
+            contact: formData.contactNo,
+          },
+          notes: {
+            address: formData.address,
+          },
+          theme: {
+            color: '#3399cc',
+          },
+        };
+        const rzp1 = new window.Razorpay(options);
+        rzp1.open();
+        e.preventDefault();
       }
-  
-      initiateRazorpayPayment(orderId, amount, key);
     } catch (err) {
       console.error("Error in order creation or payment initiation:", err);
       alert("Error in order creation or payment initiation. Please try again.");
     }
-  };
-  
-  const initiateRazorpayPayment = (orderId, amount, key) => {
-    const options = {
-      key: key, 
-      amount: amount, 
-      currency: 'INR',
-      name: 'Your Company Name',
-      description: 'Purchase Description',
-      order_id: orderId,
-      handler: function (response) {
-        alert(response.razorpay_payment_id);
-        alert(response.razorpay_order_id);
-        alert(response.razorpay_signature);
-        // Handle successful payment response
-      },
-      prefill: {
-        name: 'Customer Name',
-        email: 'customer@example.com',
-        contact: '9999999999',
-      },
-      notes: {
-        address: 'Customer Address',
-      },
-      theme: {
-        color: '#125872',
-      },
-    };
-  
-    const rzp = new window.Razorpay(options);
-    rzp.on('payment.failed', function (response) {
-      alert(response.error.code);
-      alert(response.error.description);
-      alert(response.error.source);
-      alert(response.error.step);
-      alert(response.error.reason);
-      console.log(response.error.code);
-      console.log(response.error.description);
-      console.log(response.error.source);
-      console.log(response.error.step);
-      console.log(response.error.reason);
-    });
-    rzp.open();
   };
 
   const validateForm = () => {
@@ -186,16 +181,6 @@ const AddressForm = () => {
     return Object.keys(errors).length === 0;
   };
 
-  const generateOrderId = () => {
-    return `order_${Math.floor(1000000000 + Math.random() * 9000000000)}`;
-  };
-
-  useEffect(() => {
-    const storedCartItems = localStorage.getItem('cartItems');
-    if (storedCartItems) {
-      setCartItems(JSON.parse(storedCartItems));
-    }
-  }, []);
 
   const handleAddAddress = (data) => {
     // Handle adding a new address
