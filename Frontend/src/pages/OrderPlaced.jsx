@@ -11,7 +11,7 @@ const OrderPlaced = () => {
     // Fetch order details from the API using the orderId parameter
     const fetchOrderDetails = async () => {
       try {
-        const res = await axios.get(`http://localhost:4000/api/getorderdetails/${orderId}`);
+        const res = await axios.get(`https://medicine-website-two.vercel.app/api/getorderdetails/${orderId}`);
         if (res.data.order) {
           setOrderDetails(res.data.order);
         } else {
