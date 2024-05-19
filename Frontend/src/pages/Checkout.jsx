@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
-
-import { SiPhonepe } from 'react-icons/si';
+import { SiRazorpay } from "react-icons/si";
 import { AuthContext } from '../Components/AuthProvider';
-import AddAddressModal from '../Components/AddAddressModal';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -12,8 +10,6 @@ const AddressForm = () => {
   const { user } = useContext(AuthContext);
   const email = user?.email || '';
   const apiUrl = import.meta.env.VITE_API_URL;
-  const apiKey = import.meta.env.VITE_API_KEY;
-
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     fullName: '',
@@ -65,12 +61,12 @@ const AddressForm = () => {
   };
 
   const handleSubmit = async (e) => {
-
     e.preventDefault();
 
     if (!validateForm()) {
       return;
     }
+
     try {
       const totalPrice = localStorage.getItem('totalPrice') || 0;
       const cartItemsResponse = await axios.get(`${apiUrl}/getcartitems?email=${email}`);
@@ -86,42 +82,39 @@ const AddressForm = () => {
 
       const orderData = {
         ...formData,
-        amount: totalPrice, // Convert total amount to paise
+        amount: totalPrice,
         cartItems: cartItemsWithProductId,
         Image_URL: cartItems.length > 0 ? cartItems[0].Image_URL : '',
       };
-  
+
       const res = await axios.post(`${apiUrl}/createorder`, orderData);
-      console.log("Order creation response:", res.data);
-      
+
       if (res.data.orderDetails) {
-        const { orderId, amount, key, email, fullName, orderDate, Image_URL } = res.data.orderDetails;
+        const { orderId, amount, key, email, fullName, orderDate } = res.data.orderDetails;
         const options = {
           key,
           amount,
           currency: 'INR',
-          name:"MediMart",
+          name: "MediMart",
           description: 'Order Payment',
           order_id: orderId,
           handler: async function (response) {
             const body = {
-              ...response,
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
             };
-    
-            const validateRes = await fetch(
-              "http://localhost:4000/order/validate",
-              {
-                method: "POST",
-                body: JSON.stringify(body),
-                headers: {
-                  "Content-Type": "application/json",
-                },
-              }
-            );
-            const jsonRes = await validateRes.json();
-            console.log(jsonRes);
-            toast.success(`Payment successfull`);
-            navigate('/orderplaced');
+
+            const validateRes = await axios.post(`${apiUrl}/order/validate`, body);
+
+            if (validateRes.data.msg === 'success') {
+              toast.success(`Payment successful`);
+              deleteAllCartItems(email);
+              navigate(`/orderplaced/${orderId}`);
+            } else {
+              toast.error('Payment validation failed');
+              navigate('/checkout');
+            }
           },
           prefill: {
             name: fullName,
@@ -137,11 +130,19 @@ const AddressForm = () => {
         };
         const rzp1 = new window.Razorpay(options);
         rzp1.open();
-        e.preventDefault();
       }
     } catch (err) {
       console.error("Error in order creation or payment initiation:", err);
       alert("Error in order creation or payment initiation. Please try again.");
+    }
+  };
+
+  const deleteAllCartItems = async (email) => {
+    try {
+      await axios.delete(`${apiUrl}/deleteallcartitems`, { data: { email } });
+      console.log('All cart items deleted successfully');
+    } catch (error) {
+      console.error('Error deleting cart items:', error);
     }
   };
 
@@ -181,18 +182,11 @@ const AddressForm = () => {
     return Object.keys(errors).length === 0;
   };
 
-
-  const handleAddAddress = (data) => {
-    // Handle adding a new address
-    console.log('New address:', data);
-  };
-
   return (
     <div className="flex items-center min-h-full mx-[4vw] text-gray-700">
       <div className="bg-white p-6 max-w-2xl w-full md:mt-[2rem] mx-auto">
         <h2 className="text-2xl font-bold mb-4 text-[#125872]">Shipping Address</h2>
         <form onSubmit={handleSubmit}>
-          {/* Address Inputs */}
           <div className="md:flex md:mb-[2rem]">
             <div className="w-full md:w-1/2 md:mr-2 mb-4 md:mb-0">
               <label htmlFor="fullName" className="text-sm font-medium text-gray-700">
@@ -244,38 +238,27 @@ const AddressForm = () => {
             {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
           </div>
           <div className="md:flex md:mb-4">
-            <div className="w-full md:w-1/3 md:mr-2 mb-4 md:mb-[1rem]">
-              <label htmlFor="pincode" className="block text-sm font-medium text-gray-700">
+            <div className="w-full md:w-1/3 md:mr-2 mb-4 md:mb-0">
+              <label htmlFor="pincode" className="text-sm font-medium text-gray-700">
                 Pincode
               </label>
               <input
-                type="number"
+                type="text"
                 id="pincode"
                 name="pincode"
                 value={formData.pincode}
                 onChange={handlePinChange}
                 required
-                className={`mt-1 p-2 block py-3 w-full border ${errors.pincode ? 'border-red-500' : 'border-gray-300'
-                  } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+                className={`mt-1 p-2 py-3 block w-full border ${
+                  errors.pincode ? 'border-red-500' : 'border-gray-300'
+                } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
               />
               {errors.pincode && <p className="text-red-500 text-sm mt-1">{errors.pincode}</p>}
             </div>
             <div className="w-full md:w-1/3 md:mr-2 mb-4 md:mb-0">
-              <label className="block text-sm font-medium text-gray-700">State</label>
-              <input
-                type="text"
-                id="state"
-                name="state"
-                value={formData.state}
-                onChange={handleChange}
-                required
-                className={`mt-1 p-2 block py-3 w-full border ${errors.state ? 'border-red-500' : 'border-gray-300'
-                  } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
-              />
-              {errors.state && <p className="text-red-500 text-sm mt-1">{errors.state}</p>}
-            </div>
-            <div className="w-full md:w-1/3">
-              <label className="block text-sm font-medium text-gray-700">City</label>
+              <label htmlFor="city" className="text-sm font-medium text-gray-700">
+                City
+              </label>
               <input
                 type="text"
                 id="city"
@@ -283,27 +266,43 @@ const AddressForm = () => {
                 value={formData.city}
                 onChange={handleChange}
                 required
-                className={`mt-1 p-2 block py-3 w-full border ${errors.city ? 'border-red-500' : 'border-gray-300'
-                  } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+                readOnly
+                className={`mt-1 p-2 py-3 block w-full border ${
+                  errors.city ? 'border-red-500' : 'border-gray-300'
+                } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
               />
               {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city}</p>}
             </div>
-          </div>
-          <div className="mb-[2rem] flex items-center justify-between">
-            <div className="flex items-center">
-              <input
-                type="radio"
-                className="w-4 h-4 py-3 text-[#125872] bg-gray-100 rounded border-gray-300"
-              />
-              <label htmlFor="default-checkbox" className="ml-2 flex items-center text-lg font-medium text-[#125872]">
-                <SiPhonepe className="text-2xl" />
-                <span className="ml-1">Phone Pe</span>
+            <div className="w-full md:w-1/3 md:ml-2">
+              <label htmlFor="state" className="text-sm font-medium text-gray-700">
+                State
               </label>
+              <input
+                type="text"
+                id="state"
+                name="state"
+                value={formData.state}
+                onChange={handleChange}
+                required
+                readOnly
+                className={`mt-1 p-2 py-3 block w-full border ${
+                  errors.state ? 'border-red-500' : 'border-gray-300'
+                } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+              />
+              {errors.state && <p className="text-red-500 text-sm mt-1">{errors.state}</p>}
             </div>
           </div>
-          <button type="submit" className="bg-[#125872] text-white font-bold py-3 px-[50%] rounded w-full md:w-auto">
-            Pay
-          </button>
+          <div className="flex justify-center">
+            <button
+              type="submit"
+              className="mt-[2rem] px-8 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#125872] hover:bg-[#0066ff] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#125872] sm:w-auto sm:text-sm"
+            >
+              <div className="flex items-center">
+                <SiRazorpay className="w-6 h-6 mr-2" />
+                Pay Now
+              </div>
+            </button>
+          </div>
         </form>
       </div>
       <div className="w-[30%] p-[2rem] border border-gray-300 sticky top-2 rounded-md">
@@ -316,7 +315,7 @@ const AddressForm = () => {
             </p>
           </div>
         </div>
-      </div>
+</div>
     </div>
   );
 };

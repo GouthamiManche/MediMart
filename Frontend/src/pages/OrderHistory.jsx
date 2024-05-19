@@ -57,9 +57,11 @@ function OrderHistory() {
               onClick={() => toggleOrderExpansion(order.orderId)}
             >
               <div className='flex'>
-                <h3 className="text-lg font-semibold text-gray-800">Order #{order.orderId}</h3>
-                <div className="text-base md:text-md pl-[1rem] md:pl-[50rem] font-semibold text-gray-800">Total: ₹{order.total}</div>
-              </div>
+              <h3 className="text-lg font-semibold text-gray-800">
+    Order #{order._id.slice(0, 12)}...
+  </h3>
+  <div className="text-base md:text-md pl-[1rem] md:pl-[50rem] font-semibold text-gray-800">Total: ₹{order.amount}</div>
+</div>
               <div className="text-lg">
                 {expandedOrderId === order.orderId ? <IoIosArrowDown /> : <IoIosArrowForward />}
               </div>
@@ -101,7 +103,7 @@ function OrderHistory() {
                 ))}
                 <div className="flex justify-between items-center mt-4">
                   <div className="text-xs md:text-sm text-gray-700">Payment Status: {order.paymentStatus}</div>
-                  <div className="text-base md:text-lg font-semibold text-gray-800">Total: ₹{order.total}</div>
+                  <div className="text-base md:text-lg font-semibold text-gray-800">Total: ₹{order.amount}</div>
                 </div>
               </div>
             )}
