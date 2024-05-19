@@ -6,7 +6,7 @@ const cartItemSchema = new Schema({
   Name: { type: String, required: true },
   Price: { type: Number, required: true },
   quantity: { type: Number, required: true },
-  Image_URL :{type:String,required:true}
+  Image_URL: { type: String, required: true }
 });
 
 const orderSchema = new Schema({
@@ -21,8 +21,10 @@ const orderSchema = new Schema({
   orderDate: { type: String, required: true },
   paymentStatus: { type: String, default: 'not completed' },
   cartItems: [cartItemSchema],
+  razorpay_order_id: { type: String, required: true }, // Add this field
+  razorpay_payment_id: { type: String }
 });
 
-const OrderDetail = mongoose.model('order_details', orderSchema);
+const OrderDetail = mongoose.model('Order_Detail', orderSchema);
 
 module.exports = OrderDetail;

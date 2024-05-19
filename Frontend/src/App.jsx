@@ -20,7 +20,6 @@ const About = lazy(() => import('./pages/About'));
 const Contact = lazy(() => import('./pages/Contact'));
 const OrderPlaced = lazy(() => import('./pages/OrderPlaced'));
 const ErrorPage = lazy(() => import('./pages/ErrorPage'));
-const PaymentPage = lazy(() => import('./pages/PaymentPage'));
 
 function App() {
   return (
@@ -42,8 +41,7 @@ function App() {
                 <Route exact path="*" element={<ErrorPage />} />
                 <Route exact path="/profile" element={<Profile />} />
                 <Route exact path="/checkout" element={<Checkout />} />
-                <Route exact path="/orderplaced" element={<OrderPlaced />} />
-                <Route exact path="/paymentpage" element={<PaymentPage />} />
+                <Route path="/orderplaced/:orderId" element={<OrderPlaced />} />
                 <Route exact path="/orderhistory" element={<OrderHistory />} />
               </Routes>
               <GotoTop />

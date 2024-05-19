@@ -57,8 +57,22 @@ async function deleteCartItem(req, res) {
     }
 }
 
+async function deleteAllCartItems(req, res) {
+    const userEmail = req.body.email; // Assuming you're passing the user's email in the request body
+
+    try {
+        const deletedItems = await CartItem.deleteMany({ email: userEmail });
+
+        res.json({ message: 'All cart items deleted successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Failed to delete cart items' });
+    }
+}
+
 module.exports = {
     addToCart,
     updateCartItem,
-    deleteCartItem
+    deleteCartItem,
+    deleteAllCartItems,
 };
