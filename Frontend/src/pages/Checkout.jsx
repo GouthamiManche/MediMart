@@ -199,8 +199,9 @@ const AddressForm = () => {
                 value={formData.fullName}
                 onChange={handleChange}
                 required
-                className={`mt-1 py-3 p-2 block w-full border ${errors.fullName ? 'border-red-500' : 'border-gray-300'
-                  } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+                className={`mt-1 py-3 p-2 block w-full border ${
+                  errors.fullName ? 'border-red-500' : 'border-gray-300'
+                } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
               />
               {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>}
             </div>
@@ -215,8 +216,9 @@ const AddressForm = () => {
                 value={formData.contactNo}
                 onChange={handleChange}
                 required
-                className={`mt-1 p-2 block py-3 w-full border ${errors.contactNo ? 'border-red-500' : 'border-gray-300'
-                  } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+                className={`mt-1 p-2 block py-3 w-full border ${
+                  errors.contactNo ? 'border-red-500' : 'border-gray-300'
+                } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
               />
               {errors.contactNo && <p className="text-red-500 text-sm mt-1">{errors.contactNo}</p>}
             </div>
@@ -232,8 +234,9 @@ const AddressForm = () => {
               value={formData.address}
               onChange={handleChange}
               required
-              className={`mt-1 p-2 py-3 block w-full border ${errors.address ? 'border-red-500' : 'border-gray-300'
-                } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+              className={`mt-1 p-2 py-3 block w-full border ${
+                errors.address ? 'border-red-500' : 'border-gray-300'
+              } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
             />
             {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
           </div>
