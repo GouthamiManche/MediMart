@@ -44,7 +44,6 @@ const PaymentSummary = ({ cartItems, handleSubmit }) => {
 
       setDiscountPercentage(discountPercentage);
       updateTotalPrice(cartItems, discountPercentage);
-      //localStorage.setItem('coupon', coupon);
       toast.success('Coupon applied successfully', { autoClose: 2000 });
     } else {
       toast.error('Invalid coupon', { autoClose: 2000 });

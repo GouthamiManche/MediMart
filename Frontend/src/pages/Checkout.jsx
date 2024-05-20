@@ -1,6 +1,6 @@
-import React, { useState,useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { SiRazorpay } from "react-icons/si";
 import { AuthContext } from '../Components/AuthProvider';
 import { toast } from 'react-toastify';
@@ -133,7 +133,8 @@ const AddressForm = () => {
       }
     } catch (err) {
       console.error("Error in order creation or payment initiation:", err);
-      alert("Error in order creation or payment initiation. Please try again.");
+      toast.error("Error in order creation or payment initiation. Please try again.");
+      navigate('/checkout');
     }
   };
 
@@ -240,13 +241,13 @@ const AddressForm = () => {
             />
             {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
           </div>
-          <div className="md:flex md:mb-4">
-            <div className="w-full md:w-1/3 md:mr-2 mb-4 md:mb-0">
-              <label htmlFor="pincode" className="text-sm font-medium text-gray-700">
+          <div className="md:flex md:mb-[2rem]">
+            <div className="w-full md:w-1/2 md:mr-2 mb-4 md:mb-0">
+              <label htmlFor="pincode" className="block text-sm font-medium text-gray-700">
                 Pincode
               </label>
               <input
-                type="text"
+                type="number"
                 id="pincode"
                 name="pincode"
                 value={formData.pincode}
@@ -258,8 +259,8 @@ const AddressForm = () => {
               />
               {errors.pincode && <p className="text-red-500 text-sm mt-1">{errors.pincode}</p>}
             </div>
-            <div className="w-full md:w-1/3 md:mr-2 mb-4 md:mb-0">
-              <label htmlFor="city" className="text-sm font-medium text-gray-700">
+            <div className="w-full md:w-1/2 md:ml-2">
+              <label htmlFor="city" className="block text-sm font-medium text-gray-700">
                 City
               </label>
               <input
@@ -269,56 +270,40 @@ const AddressForm = () => {
                 value={formData.city}
                 onChange={handleChange}
                 required
-                readOnly
                 className={`mt-1 p-2 py-3 block w-full border ${
                   errors.city ? 'border-red-500' : 'border-gray-300'
                 } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
               />
               {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city}</p>}
             </div>
-            <div className="w-full md:w-1/3 md:ml-2">
-              <label htmlFor="state" className="text-sm font-medium text-gray-700">
-                State
-              </label>
-              <input
-                type="text"
-                id="state"
-                name="state"
-                value={formData.state}
-                onChange={handleChange}
-                required
-                readOnly
-                className={`mt-1 p-2 py-3 block w-full border ${
-                  errors.state ? 'border-red-500' : 'border-gray-300'
-                } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
-              />
-              {errors.state && <p className="text-red-500 text-sm mt-1">{errors.state}</p>}
-            </div>
+          </div>
+          <div className="mb-4">
+            <label htmlFor="state" className="block text-sm font-medium text-gray-700">
+              State
+            </label>
+            <input
+              type="text"
+              id="state"
+              name="state"
+              value={formData.state}
+              onChange={handleChange}
+              required
+              className={`mt-1 p-2 py-3 block w-full border ${
+                errors.state ? 'border-red-500' : 'border-gray-300'
+              } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+            />
+            {errors.state && <p className="text-red-500 text-sm mt-1">{errors.state}</p>}
           </div>
           <div className="flex justify-center">
             <button
               type="submit"
-              className="mt-[2rem] px-8 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#125872] hover:bg-[#0066ff] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#125872] sm:w-auto sm:text-sm"
+              className="flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#125872] hover:bg-[#0E4E63] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0E4E63]"
             >
-              <div className="flex items-center">
-                <SiRazorpay className="w-6 h-6 mr-2" />
-                Pay Now
-              </div>
+              Pay <SiRazorpay className="ml-2" />
             </button>
           </div>
         </form>
       </div>
-      <div className="w-[30%] p-[2rem] border border-gray-300 sticky top-2 rounded-md">
-        <h2 className="text-2xl font-bold mb-4">Order Total</h2>
-        <div className="bg-white">
-          <div className="border-t border-gray-300 pt-4 flex justify-between">
-            <p className="font-bold">Total</p>
-            <p className="font-bold">
-              {`₹${localStorage.getItem('totalPrice') || 0}`}
-            </p>
-          </div>
-        </div>
-</div>
     </div>
   );
 };
