@@ -1,19 +1,20 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import {jwtDecode} from 'jwt-decode'; // Correct import statement for decoding JWT
+
 const AuthContext = createContext();
+const AuthNavigateContext = createContext(); // Create a new context for navigation
 
 const AuthProvider = ({ children }) => {
   const [isAuthenticated, setAuthenticated] = useState(null);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
+  const navigate = useContext(AuthNavigateContext); // Use the navigation context
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
 
     if (storedToken) {
       const decodedToken = jwtDecode(storedToken);
-      //console.log('Decoded Token:', decodedToken); // Log the decoded token
-
       const expireTime = decodedToken.exp * 1000;
       const currentTime = Date.now();
 
@@ -26,16 +27,11 @@ const AuthProvider = ({ children }) => {
         setUser(decodedToken);
         setToken(storedToken);
         const userCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-       // console.log('Cart items:', userCartItems);
       }
     } else {
       console.log('No token found');
     }
   }, [token]);
-
-  useEffect(() => {
-    //console.log(user);
-  }, [user]);
 
   const login = (data) => {
     setAuthenticated(true);
@@ -50,7 +46,7 @@ const AuthProvider = ({ children }) => {
     setToken(null);
     localStorage.removeItem('token');
     localStorage.removeItem('cartItems');
-    window.location.reload();
+    navigate('/'); // Redirect to home page after logout
   };
 
   return (
@@ -60,4 +56,12 @@ const AuthProvider = ({ children }) => {
   );
 };
 
-export { AuthContext, AuthProvider };
+const AuthProviderWithNavigation = ({ children, navigate }) => (
+  <AuthNavigateContext.Provider value={navigate}>
+    <AuthProvider>
+      {children}
+    </AuthProvider>
+  </AuthNavigateContext.Provider>
+);
+
+export { AuthContext, AuthProviderWithNavigation };

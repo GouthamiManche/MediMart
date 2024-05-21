@@ -7,6 +7,8 @@ function OrderHistory() {
   const { user, logout } = useContext(AuthContext);
   const [orders, setOrders] = useState([]);
   const [expandedOrderId, setExpandedOrderId] = useState(null);
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const apiKey = import.meta.env.VITE_API_KEY;
 
   useEffect(() => {
     if (user) {
@@ -17,7 +19,7 @@ function OrderHistory() {
   const fetchOrderHistory = async (email) => {
     try {
       const response = await fetch(
-        `https://medicine-website-two.vercel.app/api/orders/${email}`
+        `${apiUrl}/orders/${email}`
       );
       const data = await response.json();
       setOrders(data);

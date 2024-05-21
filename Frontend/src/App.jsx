@@ -1,14 +1,13 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import Loader from './Components/Loader';
 import GotoTop from './Components/GotoTop';
 import Footer from './Components/Footer';
 import Navbar from './Components/Navbar';
-import Profile from './pages/Profile';
-import { AuthProvider } from './Components/AuthProvider';
-import OrderHistory from './pages/OrderHistory';
+import { AuthProviderWithNavigation } from './Components/AuthProvider';
 import { CartProvider } from './Components/CartProvider';
 
+const Profile = lazy(() => import('./pages/Profile'));
 const Checkout = lazy(() => import('./pages/Checkout'));
 const Home = lazy(() => import('./pages/Home'));
 const Shop = lazy(() => import('./pages/Shop'));
@@ -20,37 +19,46 @@ const About = lazy(() => import('./pages/About'));
 const Contact = lazy(() => import('./pages/Contact'));
 const OrderPlaced = lazy(() => import('./pages/OrderPlaced'));
 const ErrorPage = lazy(() => import('./pages/ErrorPage'));
+const OrderHistory = lazy(() => import('./pages/OrderHistory'));
+
+const AppWrapper = () => {
+  const navigate = useNavigate();
+
+  return (
+    <AuthProviderWithNavigation navigate={navigate}>
+      <CartProvider>
+        <div className='font-Poppins'>
+          <Suspense fallback={<Loader />}>
+            <Navbar />
+            <Routes>
+              <Route exact path="/" element={<Home />} />
+              <Route exact path="/Shop/:pg?" element={<Shop />} />
+              <Route exact path="/Login" element={<Login />} />
+              <Route exact path="/Register" element={<Register />} />
+              <Route exact path="/:category/:id" element={<Category />} />
+              <Route exact path="/cart" element={<Cart />} />
+              <Route exact path="/about" element={<About />} />
+              <Route exact path="/contact" element={<Contact />} />
+              <Route exact path="*" element={<ErrorPage />} />
+              <Route exact path="/profile" element={<Profile />} />
+              <Route exact path="/checkout" element={<Checkout />} />
+              <Route path="/orderplaced/:orderId" element={<OrderPlaced />} />
+              <Route exact path="/orderhistory" element={<OrderHistory />} />
+            </Routes>
+            <GotoTop />
+            <Footer />
+          </Suspense>
+        </div>
+      </CartProvider>
+    </AuthProviderWithNavigation>
+  );
+};
 
 function App() {
   return (
-    <AuthProvider>
-      <CartProvider>
-        <Router>
-          <div className='font-Poppins'>
-            <Suspense fallback={<Loader />}>
-              <Navbar />
-              <Routes>
-                <Route exact path="/" element={<Home />} />
-                <Route exact path="/Shop/:pg?" element={<Shop />} />
-                <Route exact path="/Login" element={<Login />} />
-                <Route exact path="/Register" element={<Register />} />
-                <Route exact path="/:category/:id" element={<Category />} />
-                <Route exact path="/cart" element={<Cart />} />
-                <Route exact path="/about" element={<About />} />
-                <Route exact path="/contact" element={<Contact />} />
-                <Route exact path="*" element={<ErrorPage />} />
-                <Route exact path="/profile" element={<Profile />} />
-                <Route exact path="/checkout" element={<Checkout />} />
-                <Route path="/orderplaced/:orderId" element={<OrderPlaced />} />
-                <Route exact path="/orderhistory" element={<OrderHistory />} />
-              </Routes>
-              <GotoTop />
-              <Footer />
-            </Suspense>
-          </div>
-        </Router>
-      </CartProvider>
-    </AuthProvider>
+    <Router>
+      <AppWrapper />
+    </Router>
   );
 }
 

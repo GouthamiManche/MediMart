@@ -16,6 +16,7 @@ const { addToCart, updateCartItem, deleteCartItem,deleteAllCartItems } = require
 const { getCartItemsByEmail } = require('./APIS/GetCartItems');
 const Razorpay = require("razorpay");
 const { getOrderDetailsByOrderId ,getAllOrders} = require('./APIS/OrderDetailsbyID');
+const { ValidateOrder } = require('./APIS/OrderValidate');
 
 const app = express();
 const URI = process.env.MONGO_URL;
@@ -35,12 +36,15 @@ app.use(express.urlencoded({ extended: false }));
 
 
 // ROUTES
+app.put('/api/updatecart/:id', updateCartItem);
+
 app.post('/api/register', registerUser);
 app.post('/api/login', loginUser);
 app.post('/api/createorder', CreateOrder);
-app.delete('/api/deleteallcartitems',deleteAllCartItems);
+app.post("/api/order/validate",ValidateOrder);
 app.post('/api/addtocart', addToCart);
-app.put('/api/updatecart/:id', updateCartItem);
+
+app.delete('/api/deleteallcartitems',deleteAllCartItems);
 app.delete('/api/removefromcart/:id', deleteCartItem);
 
 app.get('/api/users', getAllUsers);
@@ -51,47 +55,8 @@ app.get('/api/getcartitems',getCartItemsByEmail);
 app.get('/api/getorderdetails/:orderId',getOrderDetailsByOrderId);
 app.get('/api/orders', getAllOrders);
 
-
 app.get('/', (req, res) => {
-  res.json('Hello, this is your Express API!');
-});
-
-app.post("/api/order/validate", async (req, res) => {
-  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
-
-  const sha = crypto.createHmac("sha256", process.env.RAZORPAY_KEY_SECRET);
-  sha.update(`${razorpay_order_id}|${razorpay_payment_id}`);
-  const digest = sha.digest("hex");
-
-  if (digest !== razorpay_signature) {
-    return res.status(400).json({ msg: "Transaction is not legit!" });
-  }
-
-  try {
-    // Update order details in the database
-    const updatedOrder = await OrderDetail.findOneAndUpdate(
-      { razorpay_order_id: razorpay_order_id }, // Use the razorpay_order_id field for querying
-      {
-        paymentStatus: 'completed',
-        razorpay_payment_id: razorpay_payment_id,
-        razorpay_order_id: razorpay_order_id,
-      },
-      { new: true }
-    );
-
-    if (!updatedOrder) {
-      return res.status(404).json({ msg: "Order not found" });
-    }
-
-    res.json({
-      msg: "success",
-      orderId: razorpay_order_id,
-      paymentId: razorpay_payment_id,
-    });
-  } catch (err) {
-    console.error("Error updating order details:", err);
-    res.status(500).json({ error: "Failed to update order details" });
-  }
+  res.json('Hello, Backend Readyyyy!!! ');
 });
 
 // app.listen();

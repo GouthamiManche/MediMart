@@ -4,6 +4,7 @@ import { FaTwitter } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
+
 function Footer() {
   return (
     <div className=''>
@@ -15,7 +16,6 @@ function Footer() {
               <ul className="mb-4">
                 <Link to='/'><li className="mb-2">Home</li></Link>
                 <Link to='/shop'><li className="mb-2">Shop</li></Link>
-
               </ul>
             </div>
             <div className="w-full md:w-1/4 text-center md:text-left">
@@ -32,7 +32,7 @@ function Footer() {
                 <li className="mb-2">Phone:</li>
                 <li className="mb-2">(+1)123 456 7890</li>
                 <li className="mb-2">Email:</li>
-                <li className="mb-2">name@gmail.com</li>
+                <li className="mb-2">medimart@gmail.com</li>
               </ul>
             </div>
             <div className="w-full md:w-1/4 text-center md:text-left">

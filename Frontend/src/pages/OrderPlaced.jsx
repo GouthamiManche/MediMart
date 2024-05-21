@@ -6,12 +6,13 @@ import { Link, useParams } from "react-router-dom";
 const OrderPlaced = () => {
   const { orderId } = useParams();
   const [orderDetails, setOrderDetails] = useState(null);
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     // Fetch order details from the API using the orderId parameter
     const fetchOrderDetails = async () => {
       try {
-        const res = await axios.get(`https://medicine-website-two.vercel.app/api/getorderdetails/${orderId}`);
+        const res = await axios.get(`${apiUrl}/getorderdetails/${orderId}`);
         if (res.data.order) {
           setOrderDetails(res.data.order);
         } else {
