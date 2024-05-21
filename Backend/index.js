@@ -15,7 +15,7 @@ const {CreateOrder} = require("./APIS/CreateOrder")
 const { addToCart, updateCartItem, deleteCartItem,deleteAllCartItems } = require('./APIS/Addtocart');
 const { getCartItemsByEmail } = require('./APIS/GetCartItems');
 const Razorpay = require("razorpay");
-const { getOrderDetailsByOrderId } = require('./APIS/OrderDetailsbyID');
+const { getOrderDetailsByOrderId ,getAllOrders} = require('./APIS/OrderDetailsbyID');
 
 const app = express();
 const URI = process.env.MONGO_URL;
@@ -48,7 +48,8 @@ app.get('/api/data', getData);
 app.get('/api/products', getProductsByCategory);
 app.get('/api/orders/:email', getOrderDetailsByEmail);
 app.get('/api/getcartitems',getCartItemsByEmail);
-app.get('/api/getorderdetails/:orderId',getOrderDetailsByOrderId)
+app.get('/api/getorderdetails/:orderId',getOrderDetailsByOrderId);
+app.get('/api/orders', getAllOrders);
 
 
 app.get('/', (req, res) => {
@@ -93,10 +94,10 @@ app.post("/api/order/validate", async (req, res) => {
   }
 });
 
-app.listen();
+// app.listen();
 
-// const PORT = 4000; // Specify the desired local port
+const PORT = 4000; // Specify the desired local port
 
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

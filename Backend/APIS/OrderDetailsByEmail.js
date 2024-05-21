@@ -2,7 +2,7 @@ const OrderDetail = require('../models/orderdetails.model');
 
 const getOrderDetailsByEmail = async (req, res) => {
   try {
-    const email = req.params.email; // Assuming email is passed as a URL parameter
+    const email = req.params.email;
     const orders = await OrderDetail.find({ email: email });
 
     if (orders.length === 0) {
