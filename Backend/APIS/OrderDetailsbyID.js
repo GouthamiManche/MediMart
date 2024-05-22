@@ -15,6 +15,7 @@ const getOrderDetailsByOrderId = async (req, res) => {
   }
 };
 
+//admin apis
 const getAllOrders = async (req, res) => {
   try {
     const orders = await OrderDetail.find();
@@ -24,5 +25,6 @@ const getAllOrders = async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch all orders' });
   }
 };
+
 
 module.exports = { getOrderDetailsByOrderId,getAllOrders };

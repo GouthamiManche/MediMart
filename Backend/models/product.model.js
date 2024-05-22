@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-//const ObjectID = mongoose.Schema.Types.ObjectId
+
 const dataSchema = new mongoose.Schema({
     Product_id:Number,
     Category:String,

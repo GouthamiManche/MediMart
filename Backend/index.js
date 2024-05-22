@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const Schema = require('./models/user.model');
-const data = require('./models/product.model');
+const Data = require('./models/product.model');
 const OrderDetail= require('./models/orderdetails.model')
 require('dotenv').config();
 const cors = require('cors');
@@ -57,6 +57,30 @@ app.get('/api/orders', getAllOrders);
 
 app.get('/', (req, res) => {
   res.json('Hello, Backend Readyyyy!!! ');
+});
+
+app.post('/addproduct', async (req, res) => {
+  const newProduct = new Data({
+      Product_id: req.body.Product_id,
+      Category: req.body.Category,
+      Sub_Category: req.body.Sub_Category,
+      Name: req.body.Name,
+      Composition: req.body.Composition,
+      Uses: req.body.Uses,
+      Side_effects: req.body.Side_effects,
+      Image_URL: req.body.Image_URL,
+      Manufacturer: req.body.Manufacturer,
+      Price: req.body.Price,
+      Return_Policy: req.body.Return_Policy,
+      Directions_for_Use: req.body.Directions_for_Use
+  });
+
+  try {
+      const savedProduct = await newProduct.save();
+      res.status(201).json(savedProduct);
+  } catch (error) {
+      res.status(400).json({ message: error.message });
+  }
 });
 
 app.listen();
