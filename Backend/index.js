@@ -44,7 +44,7 @@ app.post('/api/login', loginUser);
 app.post('/api/createorder', CreateOrder);
 app.post("/api/order/validate",ValidateOrder);
 app.post('/api/addtocart', addToCart);
-app.post('/api/add-product', addProduct);
+app.post('/api/addproduct', addProduct);
 
 app.delete('/api/deleteallcartitems',deleteAllCartItems);
 app.delete('/api/removefromcart/:id', deleteCartItem);
