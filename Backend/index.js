@@ -34,7 +34,6 @@ app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 
-
 // ROUTES
 app.put('/api/updatecart/:id', updateCartItem);
 app.put('/api/updateproduct/:Product_id', updateProduct);
