@@ -1,14 +1,14 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
-import {jwtDecode} from 'jwt-decode'; // Correct import statement for decoding JWT
+import {jwtDecode} from 'jwt-decode'; 
 
 const AuthContext = createContext();
-const AuthNavigateContext = createContext(); // Create a new context for navigation
+const AuthNavigateContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [isAuthenticated, setAuthenticated] = useState(null);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
-  const navigate = useContext(AuthNavigateContext); // Use the navigation context
+  const navigate = useContext(AuthNavigateContext); 
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
@@ -26,7 +26,6 @@ const AuthProvider = ({ children }) => {
         setAuthenticated(true);
         setUser(decodedToken);
         setToken(storedToken);
-        const userCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
       }
     } else {
       console.log('No token found');
@@ -35,7 +34,7 @@ const AuthProvider = ({ children }) => {
 
   const login = (data) => {
     setAuthenticated(true);
-    setUser(data.user); // Set the user object including fullName
+    setUser(data.user);
     setToken(data.token);
     localStorage.setItem('token', data.token);
   };
@@ -45,7 +44,7 @@ const AuthProvider = ({ children }) => {
     setUser(null);
     setToken(null);
     localStorage.removeItem('token');
-    localStorage.removeItem('cartItems');
+    //localStorage.removeItem('cartItems');
     navigate('/'); // Redirect to home page after logout
   };
 

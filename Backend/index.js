@@ -15,8 +15,9 @@ const {CreateOrder} = require("./APIS/CreateOrder")
 const { addToCart, updateCartItem, deleteCartItem,deleteAllCartItems } = require('./APIS/Addtocart');
 const { getCartItemsByEmail } = require('./APIS/GetCartItems');
 const Razorpay = require("razorpay");
-const { getOrderDetailsByOrderId ,getAllOrders} = require('./APIS/OrderDetailsbyID');
+const { getOrderDetailsByOrderId ,getAllOrders, deleteOrder} = require('./APIS/OrderDetailsbyID');
 const { ValidateOrder } = require('./APIS/OrderValidate');
+const { saveOrUpdateProfile, getProfileByEmail } = require('./APIS/Profile');
 
 const app = express();
 const URI = process.env.MONGO_URL;
@@ -44,10 +45,12 @@ app.post('/api/createorder', CreateOrder);
 app.post("/api/order/validate",ValidateOrder);
 app.post('/api/addtocart', addToCart);
 app.post('/api/addproduct', addProduct);
+app.post('/api/profile',saveOrUpdateProfile);
 
 app.delete('/api/deleteallcartitems',deleteAllCartItems);
 app.delete('/api/removefromcart/:id', deleteCartItem);
 app.delete('/api/deleteproduct/:Product_id', deleteProduct);
+app.delete('/api/deleteorder/:id',deleteOrder)
 
 app.get('/api/users', getAllUsers);
 app.get('/api/data', getData);
@@ -56,7 +59,7 @@ app.get('/api/orders/:email', getOrderDetailsByEmail);
 app.get('/api/getcartitems',getCartItemsByEmail);
 app.get('/api/getorderdetails/:orderId',getOrderDetailsByOrderId);
 app.get('/api/orders', getAllOrders);
-
+app.get('/api/profile/:email', getProfileByEmail);
 
 app.get('/', (req, res) => {
   res.json('Hello, Backend Readyyyy!!! ');
