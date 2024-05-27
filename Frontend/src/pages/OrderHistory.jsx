@@ -70,7 +70,6 @@ function OrderHistory() {
             </div>
             {expandedOrderId === order.orderId && (
               <div className="p-4 md:p-6">
-                {/* Detailed order information here */}
                 {order.cartItems.map((item) => (
                   <div key={item._id} className="flex items-center mb-4">
                     {item.Image_URL && (
