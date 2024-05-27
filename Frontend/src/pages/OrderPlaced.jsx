@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { FaCalendarAlt, FaUserAlt, FaCreditCard, FaTag, FaMoneyBillAlt } from 'react-icons/fa';
 import { Link, useParams } from "react-router-dom";
 
 const OrderPlaced = () => {
@@ -9,7 +8,6 @@ const OrderPlaced = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    // Fetch order details from the API using the orderId parameter
     const fetchOrderDetails = async () => {
       try {
         const res = await axios.get(`${apiUrl}/getorderdetails/${orderId}`);
@@ -27,72 +25,102 @@ const OrderPlaced = () => {
   }, [orderId]);
 
   return (
-    <div className="flex flex-col items-center max-h-screen">
-      <div className="bg-white p-6 max-w-xl w-full">
-        <h1 className="text-2xl font-bold mb-[1rem] text-center">Thank you for your purchase!</h1>
-
-        {orderDetails && (
-          <div className="mb-4 space-y-[1.2rem]">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center text-gray-600">
-                <FaCalendarAlt className="text-blue-500 mr-2" />
-                <span>Date:</span>
-              </div>
-              <p className="text-gray-600">{orderDetails.orderDate}</p>
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center text-gray-600">
-                <FaUserAlt className="text-blue-500 mr-2" />
-                <span>Customer:</span>
-              </div>
-              <p className="text-gray-600">{orderDetails.fullName}</p>
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center text-gray-600">
-                <FaCreditCard className="text-blue-500 mr-2" />
-                <span>Payment Method:</span>
-              </div>
-              <p className="text-gray-600">
-                <span className="text-blue-800">{orderDetails.paymentStatus}</span>
-              </p>
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center text-gray-600">
-                <FaTag className="text-blue-500 mr-2" />
-                <span>Order Number:</span>
-              </div>
-              <p className="text-gray-600">{orderDetails._id}</p>
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <FaMoneyBillAlt className="text-blue-500 mr-2" />
-                <span>Total:</span>
-              </div>
-              <p className="text-gray-600">${orderDetails.amount}</p>
-            </div>
-          </div>
-        )}
-
-        <div className="mb-[2rem]">
-          <h2 className="text-lg font-bold mb-[1rem]">Order Line</h2>
-          {orderDetails && orderDetails.cartItems.map((item, index) => (
-            <div key={index} className="flex items-center justify-between mb-4">
-              <span className="text-2xl mb-[2rem]">🛍️</span>
-              <div className="text-center">
-                <p className="font-bold">{item.Name}</p>
-                <p className="text-gray-600">${item.Price}</p>
-              </div>
-            </div>
-          ))}
+    <div className="min-h-screen  py-12 px-4">
+      <div className="max-w-5xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className=" py-6  bg-[#125872]  px-8">
+          <h1 className="text-4xl font-bold text-white text-center mb-4">Thank You for Your Order!</h1>
+          <p className="text-white text-center">Your order has been placed successfully.</p>
         </div>
-
-        <Link to="/">
-          <div className="md:w-[40%]">
-            <button className="bg-[#125872] text-white font-bold py-2 px-4 rounded w-full">
-              Continue shopping
-            </button>
+        <div className="py-8 px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div>
+              <h2 className="text-2xl font-bold text-[#125872] mb-4">Order Summary</h2>
+              {orderDetails && (
+                <div className=" rounded-lg shadow-md p-6">
+                  <div className="mb-4">
+                    <div className="flex justify-between mb-2">
+                      <span className="text-gray-600 font-bold">Order Number:</span>
+                      <span className="text-gray-800">{orderDetails._id}</span>
+                    </div>
+                    <div className="flex justify-between mb-2">
+                      <span className="text-gray-600 font-bold">Order Date:</span>
+                      <span className="text-gray-800">{orderDetails.orderDate}</span>
+                    </div>
+                    <div className="flex justify-between mb-2">
+                      <span className="text-gray-600 font-bold">Payment Method:</span>
+                      <span className="text-gray-800">{orderDetails.paymentStatus}</span>
+                    </div>
+                  </div>
+                  <div>
+                    {orderDetails.cartItems.map((item, index) => (
+                      <div
+                        key={index}
+                        className="flex justify-between mb-4 p-4 rounded-lg shadow-md bg-white transition-all duration-300 hover:scale-105 hover:shadow-lg"
+                      >
+                        <img
+                          className="w-16 h-16 object-cover rounded-lg"
+                          src={item.Image_URL}
+                          alt={item.Name}
+                        />
+                        <div className="flex-1 ml-4">
+                          <p className="font-bold text-lg text-[#125872]">{item.Name}</p>
+                          <p className="text-gray-600">₹{item.Price}</p>
+                        </div>
+                        <div className="text-gray-800 font-bold">₹{item.Price}</div>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="border-t pt-4">
+                    <div className="flex justify-between mb-2">
+                      <span className="text-gray-600 font-bold">Sub Total:</span>
+                      <span className="text-gray-800 font-bold">₹{orderDetails.amount}</span>
+                    </div>
+                    <div className="flex justify-between mb-2">
+                      <span className="text-gray-600 font-bold">Shipping:</span>
+                      <span className="text-gray-800 font-bold">₹2.00</span>
+                    </div>
+                    <div className="flex justify-between mb-4">
+                      <span className="text-gray-600 font-bold">Tax:</span>
+                      <span className="text-gray-800 font-bold">₹5.00</span>
+                    </div>
+                    <div className="flex justify-between font-bold text-xl text-[#125872]">
+                      <span>Order Total:</span>
+                      <span>₹{orderDetails.amount + 7}</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-[#125872] mb-4">Billing Address</h2>
+              {orderDetails && (
+                <div className="rounded-lg shadow-md p-6">
+                  <p className="text-gray-800 mb-2"><span className="font-bold">Name: </span>{orderDetails.fullName}</p>
+                  <p className="text-gray-800 mb-2"><span className="font-bold">Address: </span>{orderDetails.address}</p>
+                  <p className="text-gray-800 mb-2"><span className="font-bold">Email: </span>{orderDetails.email}</p>
+                </div>
+              )}
+              <div className="mt-8">
+                <h2 className="text-xl font-bold text-[#125872] mb-4">What's Next?</h2>
+                <p className="text-gray-600 mb-4">We are processing your order and will notify you once it has been shipped. You can track your order status and view your order history.</p>
+                <Link to="/orderhistory">
+                  <button className="bg-[#125872] text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-opacity-90 transition duration-300 w-full">
+                    View Your Orders
+                  </button>
+                </Link>
+              </div>
+              <div className="mt-8">
+                <h2 className="text-xl font-bold text-[#125872] mb-4">Need Help?</h2>
+                <p className="text-gray-600 mb-4">If you have any questions about your order, feel free to contact our support team.</p>
+                <Link to="/contact">
+                  <button className="bg-[#125872] text-white font-bold py-2 px-4 rounded-lg shadow-md hover:bg-opacity-90 transition duration-300 w-full">
+                    Contact Us
+                  </button>
+                </Link>
+              </div>
+            </div>
           </div>
-        </Link>
+        </div>
       </div>
     </div>
   );
