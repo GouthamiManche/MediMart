@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { AuthContext } from '../Components/AuthProvider';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 function Profile() {
     const { user, logout } = useContext(AuthContext);
@@ -44,6 +45,7 @@ function Profile() {
                 profilePic: profilePic,
             });
             console.log(response.data);
+            toast.success("Profile updated");
         } catch (error) {
             console.error(error);
         }

@@ -294,6 +294,7 @@ const AddressForm = () => {
             />
             {errors.state && <p className="text-red-500 text-sm mt-1">{errors.state}</p>}
           </div>
+          
           <div className="flex justify-center">
             <button
               type="submit"
@@ -302,6 +303,7 @@ const AddressForm = () => {
               Pay <SiRazorpay className="ml-2" />
             </button>
           </div>
+          
         </form>
       </div>
     </div>
