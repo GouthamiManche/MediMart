@@ -18,14 +18,25 @@ function OrderHistory() {
 
   const fetchOrderHistory = async (email) => {
     try {
-      const response = await fetch(
-        `${apiUrl}/orders/${email}`
-      );
+      const response = await fetch(`${apiUrl}/orders/${email}`);
       const data = await response.json();
-      setOrders(data);
+      // Sort the data in descending order based on the createdAt and _id
+      const sortedData = data.sort((a, b) => {
+        const dateA = new Date(a.createdAt);
+        const dateB = new Date(b.createdAt);
+        if (dateA > dateB) return -1;
+        if (dateA < dateB) return 1;
+        // If createdAt is the same, sort by _id in descending order
+        return new Date(b._id) - new Date(a._id);
+      });
+      setOrders(sortedData);
     } catch (error) {
       console.error('Error fetching order history:', error);
     }
+  };
+
+  const addNewOrder = (newOrder) => {
+    setOrders((prevOrders) => [newOrder, ...prevOrders]);
   };
 
   const handleManageOrder = (orderId) => {
@@ -56,19 +67,19 @@ function OrderHistory() {
           <div key={order._id} className="bg-white rounded-md overflow-hidden border border-gray-200">
             <div
               className="p-4 md:p-6 border-b border-gray-200 flex justify-between items-center cursor-pointer"
-              onClick={() => toggleOrderExpansion(order.orderId)}
+              onClick={() => toggleOrderExpansion(order._id)}
             >
               <div className='flex'>
-              <h3 className="text-lg font-semibold text-gray-800">
-    Order #{order._id.slice(0, 12)}...
-  </h3>
-  <div className="text-base md:text-md pl-[1rem] md:pl-[50rem] font-semibold text-gray-800">Total: ₹{order.amount}</div>
-</div>
+                <h3 className="text-lg font-semibold text-gray-800">
+                  Order #{order._id.slice(0, 12)}...
+                </h3>
+                <div className="text-base md:text-md pl-[1rem] md:pl-[50rem] font-semibold text-gray-800">Total: ₹{order.amount}</div>
+              </div>
               <div className="text-lg">
-                {expandedOrderId === order.orderId ? <IoIosArrowDown /> : <IoIosArrowForward />}
+                {expandedOrderId === order._id ? <IoIosArrowDown /> : <IoIosArrowForward />}
               </div>
             </div>
-            {expandedOrderId === order.orderId && (
+            {expandedOrderId === order._id && (
               <div className="p-4 md:p-6">
                 {order.cartItems.map((item) => (
                   <div key={item._id} className="flex items-center mb-4">
@@ -82,7 +93,7 @@ function OrderHistory() {
                     <div>
                       <h4 className="text-base md:text-lg font-semibold text-gray-800">{item.Name}</h4>
                       <p className="text-xs md:text-sm text-gray-600">
-                     Quantity :  {item.quantity} {item.Size}
+                        Quantity :  {item.quantity} {item.Size}
                       </p>
                       <p className="text-base md:text-lg font-semibold text-gray-800">₹{item.Price}</p>
                       <div className="flex mt-2">
