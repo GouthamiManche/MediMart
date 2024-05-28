@@ -71,20 +71,20 @@ function Profile() {
     return (
         <>
             <div className="flex flex-col md:flex-row font-poppins">
-                <div className="w-full md:w-[15rem] bg-[#125872]">
-                    <h2 className="text-2xl font-semibold text-white font-poppins mt-5 md:mt-[5rem] ml-4">Profile</h2>
-                    <Link to="/orderhistory" className="text-xl text-white font-poppins mt-1 ml-4">Order history</Link>
-                    <Link to="/" className="mb-12" style={{ color: "#90CCBA" }}>
-                        <button
-                            onClick={logout}
-                            className="text-xl text-white font-poppins mt-1 ml-4"
-                            role="menuitem"
-                            tabIndex="-1"
-                            id="menu-item-3"
-                        >
-                            Logout
-                        </button>
-                    </Link>
+                <div className="w-full md:w-[15rem] bg-[#125872] ">
+                    <div>
+                        <h2 className="text-2xl font-semibold text-white font-poppins mt-5 md:mt-[5rem] ml-4">Profile</h2>
+                        <div className='md:mt-[2rem] '> <Link to="/orderhistory" className="text-xl text-white font-poppins mt-1 ml-4">Order history</Link></div>
+                        <div className='md:mt-[2rem]'>
+                            <Link to="/" className="mb-12" style={{ color: "#90CCBA" }}>
+                                <button
+                                    onClick={logout}
+                                    className="text-xl text-white font-poppins mt-1 ml-4" >
+                                    Logout
+                                </button>
+                            </Link>
+                        </div>
+                    </div>
                 </div>
 
                 <div className="w-full md:w-[66rem]">
@@ -120,7 +120,6 @@ function Profile() {
                                     required
                                     onChange={(e) => setFullName(e.target.value)}
                                 />
-                                <span className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">&#9998;</span>
                             </div>
 
                             <div className="mb-4 relative">
@@ -138,7 +137,6 @@ function Profile() {
                                     onChange={(e) => setContactNumber(e.target.value)}
                                     required
                                 />
-                                <span className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">&#9998;</span>
                             </div>
 
                             <div className="mb-4 relative">
@@ -149,10 +147,9 @@ function Profile() {
                                     name="email"
                                     value={user ? user.email : ''} // Set the value to the user's email
                                     className="mt-1 w-full border-b-2 border-gray-300 bg-transparent focus:outline-none focus:border-[#90CCBA]"
-                                   
+
                                     required
                                 />
-                                <span className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">&#9998;</span>
                             </div>
 
                             <div className="mb-4 relative">
@@ -167,7 +164,6 @@ function Profile() {
                                     required
                                     onChange={(e) => setDeliveryAddress(e.target.value)}
                                 />
-                                <span className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">&#9998;</span>
                             </div>
 
                             <button onClick={handleSaveProfile} type="submit" className="bg-[#125872] text-white px-4 py-2 rounded">Save changes</button>
