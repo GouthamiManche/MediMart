@@ -90,60 +90,74 @@ function OrderHistory() {
       {isLoading ? (
         <LoadingGif />
       ) : (
-        <div className="space-y-8">
-          {orders.map((order) => (
-            <div key={order._id} className="bg-white rounded-md overflow-hidden border border-gray-200">
-              <div
-                className="p-4 md:p-6 border-b border-gray-200 flex justify-between items-center cursor-pointer"
-                onClick={() => toggleOrderExpansion(order._id)}
+        <>
+          {orders.length === 0 ? (
+            <div className="text-center mb-4">
+              <p className="text-lg text-gray-800">No orders found.</p>
+              <button
+                onClick={() => navigate('/shop')}
+                className="bg-[#125872] text-white hover:bg-[#0d4255] text-sm px-4 py-2 rounded-md mt-4"
               >
-                <div className='flex'>
-                  <h3 className="text-lg font-semibold text-gray-800">
-                    Order #{order._id.slice(0, 12)}...
-                  </h3>
-                  <div className="text-base md:text-md pl-[1rem] md:pl-[50rem] font-semibold text-gray-800">Total: ₹{order.amount}</div>
-                </div>
-                <div className="text-lg">
-                  {expandedOrderId === order._id ? <IoIosArrowDown /> : <IoIosArrowForward />}
-                </div>
-              </div>
-              {expandedOrderId === order._id && (
-                <div className="p-4 md:p-6">
-                  {order.cartItems.map((item) => (
-                    <div key={item._id} className="flex items-center mb-4">
-                      {item.Image_URL && (
-                        <img
-                          src={item.Image_URL}
-                          alt={item.Name}
-                          className="w-16 h-16 md:w-20 md:h-20 object-cover mr-4 md:mr-6 rounded-md"
-                        />
-                      )}
-                      <div className='flex justify-between items-center w-full'>
-                        <div>
-                          <h4 className="text-base md:text-lg font-semibold text-gray-800">{item.Name}</h4>
-                          <p className="text-xs md:text-sm text-gray-600">
-                            Quantity :  {item.quantity} {item.Size}
-                          </p>
-                          <p className="text-base md:text-lg font-semibold text-gray-800">₹{item.Price}</p>
+                Shop Products
+              </button>
+            </div>
+          ) : (
+            <div className="space-y-8">
+              {orders.map((order) => (
+                <div key={order._id} className="bg-white rounded-md overflow-hidden border border-gray-200">
+                  <div
+                    className="p-4 md:p-6 border-b border-gray-200 flex justify-between items-center cursor-pointer"
+                    onClick={() => toggleOrderExpansion(order._id)}
+                  >
+                    <div className='flex'>
+                      <h3 className="text-lg font-semibold text-gray-800">
+                        Order #{order._id.slice(0, 12)}...
+                      </h3>
+                      <div className="text-base md:text-md pl-[1rem] md:pl-[50rem] font-semibold text-gray-800">Total: ₹{order.amount}</div>
+                    </div>
+                    <div className="text-lg">
+                      {expandedOrderId === order._id ? <IoIosArrowDown /> : <IoIosArrowForward />}
+                    </div>
+                  </div>
+                  {expandedOrderId === order._id && (
+                    <div className="p-4 md:p-6">
+                      {order.cartItems.map((item) => (
+                        <div key={item._id} className="flex items-center mb-4">
+                          {item.Image_URL && (
+                            <img
+                              src={item.Image_URL}
+                              alt={item.Name}
+                              className="w-16 h-16 md:w-20 md:h-20 object-cover mr-4 md:mr-6 rounded-md"
+                            />
+                          )}
+                          <div className='flex justify-between items-center w-full'>
+                            <div>
+                              <h4 className="text-base md:text-lg font-semibold text-gray-800">{item.Name}</h4>
+                              <p className="text-xs md:text-sm text-gray-600">
+                                Quantity :  {item.quantity} {item.Size}
+                              </p>
+                              <p className="text-base md:text-lg font-semibold text-gray-800">₹{item.Price}</p>
+                            </div>
+                            <button
+                              onClick={() => handleBuyAgain(item)}
+                              className="bg-[#125872] text-white hover:bg-[#0d4255] text-xs md:text-sm px-2 py-2 rounded-md"
+                            >
+                              Buy Again
+                            </button>
+                          </div>
                         </div>
-                        <button
-                          onClick={() => handleBuyAgain(item)}
-                          className="bg-[#125872] text-white hover:bg-[#0d4255] text-xs md:text-sm px-2 py-2 rounded-md"
-                        >
-                          Buy Again
-                        </button>
+                      ))}
+                      <div className="flex justify-between items-center mt-4">
+                        <div className="text-xs md:text-sm text-gray-700">Payment Status: {order.paymentStatus}</div>
+                        <div className="text-base md:text-lg font-semibold text-gray-800">Total: ₹{order.amount}</div>
                       </div>
                     </div>
-                  ))}
-                  <div className="flex justify-between items-center mt-4">
-                    <div className="text-xs md:text-sm text-gray-700">Payment Status: {order.paymentStatus}</div>
-                    <div className="text-base md:text-lg font-semibold text-gray-800">Total: ₹{order.amount}</div>
-                  </div>
+                  )}
                 </div>
-              )}
+              ))}
             </div>
-          ))}
-        </div>
+          )}
+        </>
       )}
     </div>
   );

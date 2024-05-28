@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from "axios";
 import { BsTrash } from 'react-icons/bs';
 import HorizontalCardScroll from '../Components/HorizontalCardScroll';
@@ -171,13 +171,11 @@ const Cart = () => {
             cartItems.map((item, index) => (
               <div key={index} className="flex items-center border rounded-md border-gray-300 mb-4">
                 <div className="flex  ml-[2rem] items-center justify-center w-24 h-24  my-[1rem]">
-                <Link className="max-w-full h-24" to={`/${item.Sub_Category}/${item.Name}`}>
                   <img
                     src={item.Image_URL}
                     alt={item.isMedicine ? item.Medicine_Name : item.Name}
-                    className="max-w-full h-24"
+                    className="max-w-full h-24 "
                   />
-                  </Link>
                 </div>
                 <div className='ml-[2rem]'>
                   <div>
@@ -242,13 +240,11 @@ const Cart = () => {
           <div key={index} className="bg-white rounded-md  mb-4">
             <div className="flex items-center p-4 border-b border-gray-200">
               <div className="w-1/3">
-              <Link  className="w-full h-auto rounded-md" to={`/${item.Sub_Category}/${item.Name}` }>
                 <img
                   src={item.Image_URL}
                   alt={item.isMedicine ? item.Medicine_Name : item.Name}
                   className="w-full h-auto rounded-md"
                 />
-                </Link>
               </div>
               <div className="w-2/3 pl-4">
                 <h3 className="text-lg font-semibold">
