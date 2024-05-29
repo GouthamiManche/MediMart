@@ -64,9 +64,9 @@ const OrderPlaced = () => {
                         />
                         <div className="flex-1 ml-4">
                           <p className="font-bold text-lg text-[#125872]">{item.Name}</p>
-                          <p className="text-gray-600">₹{item.Price}</p>
+                          <p className="text-gray-600">₹{item.Price} x {item.quantity}</p>
                         </div>
-                        <div className="text-gray-800 font-bold">₹{item.Price}</div>
+                        <div className="text-gray-800 font-bold">₹{orderDetails.amount}</div>
                       </div>
                     ))}
                   </div>
@@ -77,15 +77,15 @@ const OrderPlaced = () => {
                     </div>
                     <div className="flex justify-between mb-2">
                       <span className="text-gray-600 font-bold">Shipping:</span>
-                      <span className="text-gray-800 font-bold">₹2.00</span>
+                      <span className="text-gray-800 font-bold">₹0.00</span>
                     </div>
                     <div className="flex justify-between mb-4">
                       <span className="text-gray-600 font-bold">Tax:</span>
-                      <span className="text-gray-800 font-bold">₹5.00</span>
+                      <span className="text-gray-800 font-bold">₹0.00</span>
                     </div>
                     <div className="flex justify-between font-bold text-xl text-[#125872]">
                       <span>Order Total:</span>
-                      <span>₹{orderDetails.amount + 7}</span>
+                      <span>₹{orderDetails.amount }</span>
                     </div>
                   </div>
                 </div>
@@ -98,6 +98,9 @@ const OrderPlaced = () => {
                   <p className="text-gray-800 mb-2"><span className="font-bold">Name: </span>{orderDetails.fullName}</p>
                   <p className="text-gray-800 mb-2"><span className="font-bold">Address: </span>{orderDetails.address}</p>
                   <p className="text-gray-800 mb-2"><span className="font-bold">Email: </span>{orderDetails.email}</p>
+                  <p className="text-gray-800 mb-2"><span className="font-bold">Pincode: </span>{orderDetails.pincode}</p>
+                  <p className="text-gray-800 mb-2"><span className="font-bold">State: </span>{orderDetails.state}</p>
+                  <p className="text-gray-800 mb-2"><span className="font-bold">City: </span>{orderDetails.city}</p>
                 </div>
               )}
               <div className="mt-8">

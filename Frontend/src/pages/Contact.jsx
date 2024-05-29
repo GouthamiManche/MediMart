@@ -27,7 +27,7 @@ const Contact = () => {
             >
               <input
                 type="text"
-                placeholder="username"
+                placeholder="Username"
                 name="username"
                 required
                 autoComplete="off"
@@ -52,7 +52,7 @@ const Contact = () => {
               ></textarea>
               <input
                 type="submit"
-                value="send"
+                value="Send"
                 className="px-4 py-2 bg-[#125872] text-white rounded cursor-pointer"/>
             </form>
           </div>

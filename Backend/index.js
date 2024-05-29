@@ -1,9 +1,9 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const Schema = require('./models/user.model');
 const Data = require('./models/product.model');
 const OrderDetail= require('./models/orderdetails.model')
-require('dotenv').config();
 const cors = require('cors');
 const crypto = require("crypto");
 const { getAllUsers } = require('./APIS/Users');
