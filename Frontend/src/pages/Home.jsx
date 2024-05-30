@@ -31,7 +31,7 @@ function Home() {
       }
     };
     fetchData();
-  }, []);
+  }, [apiUrl, apiKey]); // Ensure dependency array is correct
 
   return (
     <div>

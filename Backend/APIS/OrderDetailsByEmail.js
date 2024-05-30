@@ -3,7 +3,7 @@ const OrderDetail = require('../models/orderdetails.model');
 const getOrderDetailsByEmail = async (req, res) => {
   try {
     const email = req.params.email;
-    const orders = await OrderDetail.find({ email: email });
+    const orders = await OrderDetail.find({ email: email }).sort({ createdAt: -1 });
 
     if (orders.length === 0) {
       return res.status(404).json({ message: "No orders found for the provided email" });
@@ -15,5 +15,6 @@ const getOrderDetailsByEmail = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
 
 module.exports = { getOrderDetailsByEmail };

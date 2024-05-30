@@ -27,13 +27,7 @@ function OrderHistory() {
     try {
       const response = await fetch(`${apiUrl}/orders/${email}`);
       const data = await response.json();
-      const sortedData = data.sort((a, b) => {
-        const dateA = new Date(a.createdAt);
-        const dateB = new Date(b.createdAt);
-        if (dateA > dateB) return -1;
-        if (dateA < dateB) return 1;
-        return new Date(b._id) - new Date(a._id);
-      });
+      
       setOrders(sortedData);
     } catch (error) {
       console.error('Error fetching order history:', error);
@@ -41,6 +35,8 @@ function OrderHistory() {
       setIsLoading(false);
     }
   };
+
+ 
 
   const addNewOrder = (newOrder) => {
     setOrders((prevOrders) => [newOrder, ...prevOrders]);
@@ -113,7 +109,8 @@ function OrderHistory() {
                       <h3 className="text-lg font-semibold text-gray-800">
                         Order #{order._id.slice(0, 12)}...
                       </h3>
-                      <div className="text-base md:text-md pl-[1rem] md:pl-[50rem] font-semibold text-gray-800">Total: ₹{order.amount}</div>
+                      <div className="text-base md:text-md md:pl-[18rem] font-semibold text-gray-800">Order Date: {order.orderDate}</div>
+                      <div className="text-base md:text-md md:pl-[24rem] font-semibold text-gray-800">Total: ₹{order.amount}</div>
                     </div>
                     <div className="text-lg">
                       {expandedOrderId === order._id ? <IoIosArrowDown /> : <IoIosArrowForward />}

@@ -125,7 +125,7 @@ const AddressForm = () => {
             address: formData.address,
           },
           theme: {
-            color: '#3399cc',
+            "hide_topbar": true
           },
         };
         const rzp1 = new window.Razorpay(options);
@@ -133,7 +133,7 @@ const AddressForm = () => {
       }
     } catch (err) {
       console.error("Error in order creation or payment initiation:", err);
-      toast.error("Error in order creation or payment initiation. Please try again.");
+      toast.error("Go back and Please try again.");
       navigate('/checkout');
     }
   };
@@ -141,7 +141,7 @@ const AddressForm = () => {
   const deleteAllCartItems = async (email) => {
     try {
       await axios.delete(`${apiUrl}/deleteallcartitems`, { data: { email } });
-      console.log('All cart items deleted successfully');
+      //console.log('All cart items deleted successfully');
     } catch (error) {
       console.error('Error deleting cart items:', error);
     }
@@ -300,7 +300,7 @@ const AddressForm = () => {
               type="submit"
               className="flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#125872] hover:bg-[#0E4E63] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0E4E63]"
             >
-              Pay <SiRazorpay className="ml-2" />
+              RazorPay <SiRazorpay className="ml-2" />
             </button>
           </div>
           

@@ -19,10 +19,10 @@ const AuthProvider = ({ children }) => {
       const currentTime = Date.now();
 
       if (expireTime < currentTime) {
-        console.log('Token has expired!');
+        //console.log('Token has expired!');
         logout();
       } else {
-        console.log('Token is valid');
+        //console.log('Token is valid');
         setAuthenticated(true);
         setUser(decodedToken);
         setToken(storedToken);
