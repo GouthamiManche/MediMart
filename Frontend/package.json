@@ -39,7 +39,8 @@
     "reactstrap": "^9.2.2",
     "slick-carousel": "^1.8.1",
     "sweetalert2": "^11.10.7",
-    "vite-plugin-pwa": "^0.20.0"
+    "vite-plugin-pwa": "^0.20.0",
+    "workbox-build": "^7.1.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.56",
