@@ -3,7 +3,7 @@ const OrderDetail = require('../models/orderdetails.model');
 const getOrderDetailsByEmail = async (req, res) => {
   try {
     const email = req.params.email;
-    const orders = await OrderDetail.find({ email: email }).sort({ createdAt: -1 });
+    const orders = await OrderDetail.find({ email: email }).sort({ orderDate: -1 });
 
     if (orders.length === 0) {
       return res.status(404).json({ message: "No orders found for the provided email" });

@@ -1,5 +1,4 @@
 import React from 'react'
-import loadinggif from '../assets/282.gif'
 import loadingGif2 from "../assets/loadinggif.gif"
 import loadinggif from "../assets/282.gif"
 //import loadingGif from "../assets/Infinity@1x-2.8s-200px-200px.gif"

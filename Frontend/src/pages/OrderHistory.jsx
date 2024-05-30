@@ -36,8 +36,6 @@ function OrderHistory() {
     }
   };
 
- 
-
   const addNewOrder = (newOrder) => {
     setOrders((prevOrders) => [newOrder, ...prevOrders]);
   };
