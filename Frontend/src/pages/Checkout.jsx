@@ -88,7 +88,7 @@ const AddressForm = () => {
       };
 
       const res = await axios.post(`${apiUrl}/createorder`, orderData);
-
+      console.log(res.data.orderDetails);
       if (res.data.orderDetails) {
         const { orderId, amount, key, email, fullName, orderDate } = res.data.orderDetails;
         const options = {

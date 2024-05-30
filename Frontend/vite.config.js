@@ -5,36 +5,40 @@
 // export default defineConfig({
 //   plugins: [react()],
 // })
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import { VitePWA } from 'vite-plugin-pwa/dist/index'
-
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import { VitePWA } from 'vite-plugin-pwa';
+import Icon from './src/assets/logo.jpg'
 export default defineConfig({
   plugins: [
     react(),
     VitePWA({
-      includeAssets: ['favicon.svg', 'robots.txt', 'apple-touch-icon.png'],
+      registerType: 'autoUpdate',
+      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
       manifest: {
-        name: 'My Vite PWA',
-        short_name: 'VitePWA',
-        description: 'A fantastic Vite-powered Progressive Web App!',
-        start_url: '/',
+        name: 'My PWA App',
+        short_name: 'MyPWA',
+        description: 'A Progressive Web App built with Vite and React',
+        theme_color: '#ffffff',
         icons: [
           {
-            src: '/icons/icon-192x192.png',
+            src: {Icon},
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: '/icons/icon-512x512.png',
+            src: {Icon},
             sizes: '512x512',
             type: 'image/png',
           },
+          {
+            src: '{Icon}',
+            sizes: '512x512',
+            type: 'image/png',
+            purpose: 'maskable',
+          },
         ],
-        theme_color: '#ffffff',
-        background_color: '#ffffff',
-        display: 'standalone',
       },
     }),
   ],
-})
+});
