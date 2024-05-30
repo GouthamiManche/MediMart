@@ -27,8 +27,7 @@ function OrderHistory() {
     try {
       const response = await fetch(`${apiUrl}/orders/${email}`);
       const data = await response.json();
-      
-      setOrders(sortedData);
+      setOrders(data);
     } catch (error) {
       console.error('Error fetching order history:', error);
     } finally {
