@@ -45,7 +45,7 @@ function ProductDetail({ pg }) {
         }
         setData(filteredData);
         setFilteredData(filteredData);
-
+console.log(setData);
         const uniqueSubCategories = [...new Set(filteredData.map((item) => item.Sub_Category))];
         setSubCategories(uniqueSubCategories);
 
@@ -219,7 +219,7 @@ function ProductDetail({ pg }) {
                             <Item key={index} item={item} />
                           ))}
                         </div>
-            </div> 
+            </div>
           )}
         </div>
       <Pagination

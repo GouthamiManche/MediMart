@@ -11,6 +11,8 @@ function Profile() {
     const [fullName, setFullName] = useState('');
     const [contactNumber, setContactNumber] = useState('');
     const [deliveryAddress, setDeliveryAddress] = useState('');
+    const [gender, setGender] = useState(''); // Changed from empty string to null
+    const [dob, setDOB] = useState('');
 
     const apiUrl = import.meta.env.VITE_API_URL;
     const apiKey = import.meta.env.VITE_API_KEY;
@@ -24,12 +26,14 @@ function Profile() {
     const fetchProfile = async (email) => {
         try {
             const response = await axios.get(`${apiUrl}/profile/${email}`);
-            const { fullName, contactNumber, deliveryAddress, profilePic } = response.data;
+            const { fullName, contactNumber, deliveryAddress, profilePic, gender, dateOfBirth } = response.data;
             setProfile(response.data);
             setFullName(fullName);
             setContactNumber(contactNumber);
             setDeliveryAddress(deliveryAddress);
             setProfilePic(profilePic || 'src/assets/img/profile.png'); // Set default profile pic if none available
+            setGender(gender);
+            setDOB(dateOfBirth);
         } catch (error) {
             console.error(error);
         }
@@ -43,6 +47,8 @@ function Profile() {
                 contactNumber: contactNumber,
                 deliveryAddress: deliveryAddress,
                 profilePic: profilePic,
+                gender: gender,
+                dateOfBirth: dob,
             });
             console.log(response.data);
             toast.success("Profile updated");
@@ -64,12 +70,6 @@ function Profile() {
         }
     };
 
-    const handleChange = (event) => {
-        const { value } = event.target;
-        const filteredValue = value.replace(/\D/g, '');
-        event.target.value = filteredValue;
-    };
-
     return (
         <>
             <div className="flex flex-col md:flex-row font-poppins">
@@ -77,20 +77,11 @@ function Profile() {
                     <div>
                         <h2 className="text-2xl font-semibold text-white font-poppins mt-5 md:mt-[5rem] ml-4">Profile</h2>
                         <div className='md:mt-[2rem] '> <Link to="/orderhistory" className="text-xl text-white font-poppins mt-1 ml-4">Order history</Link></div>
-                        <div className='md:mt-[2rem]'>
-                            <Link to="/" className="mb-12" style={{ color: "#90CCBA" }}>
-                                <button
-                                    onClick={logout}
-                                    className="text-xl text-white font-poppins mt-1 ml-4" >
-                                    Logout
-                                </button>
-                            </Link>
-                        </div>
                     </div>
                 </div>
 
-                <div className="w-full md:w-[66rem]">
-                    <div className="flex flex-col md:flex-row border border-gray-500 md:h-[24rem] rounded p-4 md:ml-4 md:mt-12">
+                <div className="w-full md:w-[66rem] ">
+                    <div className="flex flex-col md:flex-row border border-gray-500 md:h-[30rem] rounded p-4 md:ml-4 md:mt-12">
                         {/* Mobile view */}
                         <div className="md:hidden flex justify-center mt-8">
                             <div className="relative mb-4">
@@ -116,7 +107,7 @@ function Profile() {
                                     type="text"
                                     id="name"
                                     name="name"
-                                    value={fullName} // Set the value to the state variable
+                                    value={fullName}
                                     className="mt-1 w-full border-b-2 border-gray-300 bg-transparent focus:outline-none focus:border-[#90CCBA]"
                                     placeholder="Enter Your Name"
                                     required
@@ -125,12 +116,12 @@ function Profile() {
                             </div>
 
                             <div className="mb-4 relative">
-                                <label htmlFor="number" className="block text-sm font-medium text-gray-700">Contact number</label>
+                                <label htmlFor="number" className="block text-sm font-medium text-gray-700">Mobile Number</label>
                                 <input
                                     type="tel"
                                     id="number"
                                     name="number"
-                                    value={contactNumber} // Set the value to the state variable
+                                    value={contactNumber}
                                     inputMode="numeric"
                                     pattern="[0-9]*"
                                     maxLength="10"
@@ -142,14 +133,43 @@ function Profile() {
                             </div>
 
                             <div className="mb-4 relative">
+                                <label htmlFor="gender" className="block text-sm font-medium text-gray-700">Gender</label>
+                                <select
+                                    id="gender"
+                                    name="gender"
+                                    value={gender}
+                                    onChange={(e) => setGender(e.target.value)} // Handle the change event for the dropdown
+                                    className="mt-1 w-full border-b-2 border-gray-300 bg-transparent focus:outline-none focus:border-[#90CCBA]"
+                                    required
+                                >
+                                    <option value="">Select your gender</option>
+                                    <option value="Female">Female</option> {/* Updated values to match the backend */}
+                                    <option value="Male">Male</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+
+                            <div className="mb-4 relative">
+                                <label htmlFor="dob" className="block text-sm font-medium text-gray-700">Date Of Birth</label>
+                                <input
+                                    type="date"
+                                    id="dob"
+                                    name="dob"
+                                    value={dob}
+                                    className="mt-1 w-full border-b-2 border-gray-300 bg-transparent focus:outline-none focus:border-[#90CCBA]"
+                                    onChange={(e) => setDOB(e.target.value)}
+                                    required
+                                />
+                            </div>
+
+                            <div className="mb-4 relative">
                                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email address</label>
                                 <input
                                     type="email"
                                     id="email"
                                     name="email"
-                                    value={user ? user.email : ''} // Set the value to the user's email
+                                    value={user ? user.email : ''}
                                     className="mt-1 w-full border-b-2 border-gray-300 bg-transparent focus:outline-none focus:border-[#90CCBA]"
-
                                     required
                                 />
                             </div>
@@ -160,7 +180,7 @@ function Profile() {
                                     type="text"
                                     id="street"
                                     name="street"
-                                    value={deliveryAddress} // Set the value to the state variable
+                                    value={deliveryAddress}
                                     className="mt-1 w-full border-b-2 border-gray-300 bg-transparent focus:outline-none focus:border-[#90CCBA]"
                                     placeholder="Enter Your Address"
                                     required

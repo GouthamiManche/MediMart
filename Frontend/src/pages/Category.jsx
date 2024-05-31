@@ -177,6 +177,11 @@ const Category = () => {
                     <p className="text-gray-600"><span className="text-lg font-semibold text-gray-700">Description :</span> {product.Description}</p>
                   </div>
                 )}
+                {product.Stock && (
+                  <div className=" bg-white rounded-lg   mb-[0.5rem]">
+                    <p className="text-gray-600 "><span className="text-lg font-semibold text-gray-700"></span> {product.Stock}</p>
+                  </div>
+                )}
                 {product['Directions for Use'] && (
                   <div className=" bg-white rounded-lg mb-[0.5rem]">
                     <h3 ></h3>
