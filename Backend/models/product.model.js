@@ -12,7 +12,8 @@ const dataSchema = new mongoose.Schema({
     Manufacturer: String,
     Price:Number,
     Return_Policy:String,
-    Directions_for_Use:String
+    Directions_for_Use:String,
+    Stock: Boolean,
 })
 const Data = mongoose.model('product1', dataSchema);
 module.exports= Data;
