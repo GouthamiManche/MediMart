@@ -49,6 +49,15 @@ function Navbar() {
     }
   };
 
+  const categories = [
+    { title: "Personal Care", subCategory: "Personal Care" },
+    { title: "Health Supplements", subCategory: "Supplements" },
+    { title: "Women Care", subCategory: "Women Care" },
+    { title: "Baby Care", subCategory: "Baby Care" },
+    { title: "Health Devices", subCategory: "Health Devices" },
+
+  ];
+
   return (
     <div className="bg-white text-gray-900 z-50 w-full sticky top-0 shadow-lg">
       <header className="py-4 mx-8 flex items-center justify-between">
@@ -73,17 +82,31 @@ function Navbar() {
             )}
           </button>
         </div>
-        <nav className="hidden md:flex items-center gap-4">
-          <nav className="hidden md:flex md:ml-[18vw]">
+        <nav className="hidden md:flex items-center ">
+        <div className="">
+    {categories.map(({ title, subCategory, category }, index) => (
+      <Link
+        key={index}
+        to={`/shop?subCategory=${subCategory || ''}&Category=${category || ''}`}
+        className="text-gray-900 hover:text-gray-700 transition duration-300 text-center mx-6"
+      >
+        {title}
+      </Link>
+    ))}
+  </div>
+          <nav className="hidden md:flex md:ml-[10vw]">
+
             <div className="flex gap-10 text-gray-900">
-              <Link to="/shop" className="">
+
+              <Link to="/shop" className="mr-[1rem]">
                 <ImSearch className="text-xl" />
               </Link>
+
             </div>
           </nav>
           <button onClick={handleCartClick} className="font-bold py-2 rounded flex items-center">
             <FaCartShopping className="text-xl" />
-            <span className="text-lg ml-1">Cart ({totalItemsInCart})</span>
+            <span className="text-lg ml-1">({totalItemsInCart})</span>
           </button>
           {user ? (
             <div className="relative inline-block text-left">
