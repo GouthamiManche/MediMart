@@ -4,6 +4,17 @@ async function addToCart(req, res) {
     const { Name, Price, Image_URL, quantity, Product_id, email } = req.body;
 
     try {
+        // Check if the product is in stock
+        const product = await Data.findOne({ Product_id });
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+
+        if (product.Stock !== 'In Stock') {
+            return res.status(400).json({ message: 'Item is out of stock' });
+        }
+
+        // Add item to cart
         const newItem = new CartItem({
             Name,
             Price,
