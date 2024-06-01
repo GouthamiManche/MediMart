@@ -11,7 +11,7 @@ function Profile() {
     const [fullName, setFullName] = useState('');
     const [contactNumber, setContactNumber] = useState('');
     const [deliveryAddress, setDeliveryAddress] = useState('');
-    const [gender, setGender] = useState(''); // Changed from empty string to null
+    const [gender, setGender] = useState('');
     const [dob, setDOB] = useState('');
 
     const apiUrl = import.meta.env.VITE_API_URL;
@@ -31,7 +31,7 @@ function Profile() {
             setFullName(fullName);
             setContactNumber(contactNumber);
             setDeliveryAddress(deliveryAddress);
-            setProfilePic(profilePic || 'src/assets/img/profile.png'); // Set default profile pic if none available
+            setProfilePic(profilePic || 'src/assets/img/profile.png');
             setGender(gender);
             setDOB(dateOfBirth);
         } catch (error) {

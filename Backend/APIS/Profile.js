@@ -1,3 +1,5 @@
+const orderDate = new Date().toLocaleDateString('en-GB');
+
 const User = require('../models/user.model');
 
 const saveOrUpdateProfile = async (req, res) => {
@@ -12,14 +14,10 @@ const saveOrUpdateProfile = async (req, res) => {
             user.deliveryAddress = deliveryAddress;
             user.profilePic = profilePic;
             user.gender = gender;
-
-            // Format date of birth to ddmmyy
-            const formattedDOB = formatDateOfBirth(dateOfBirth);
-            user.dateOfBirth = formattedDOB;
-
+            user.dateOfBirth = new Date(dateOfBirth);
             await user.save();
         } else {
-            // If user doesn't exist, you might want to create a new user with these details
+            // If user doesn't exist, create a new user
             user = new User({
                 email,
                 fullName,
@@ -27,8 +25,7 @@ const saveOrUpdateProfile = async (req, res) => {
                 deliveryAddress,
                 profilePic,
                 gender,
-                // Format date of birth to ddmmyy
-                dateOfBirth: formatDateOfBirth(dateOfBirth),
+                dateOfBirth: new Date(dateOfBirth)
             });
             await user.save();
         }
@@ -38,19 +35,6 @@ const saveOrUpdateProfile = async (req, res) => {
         res.status(500).json({ message: 'Error saving profile' });
     }
 };
-
-const formatDateOfBirth = (dateOfBirth) => {
-    if (!dateOfBirth) return '';
-
-    // Assuming dateOfBirth is a Date object or string in the format 'yyyy-mm-dd'
-    const date = new Date(dateOfBirth);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = String(date.getFullYear()).slice(-2);
-
-    return `${day}${month}${year}`;
-};
-
 const getProfileByEmail = async (req, res) => {
     const email = req.params.email;
 
@@ -67,7 +51,7 @@ const getProfileByEmail = async (req, res) => {
             deliveryAddress: user.deliveryAddress,
             profilePic: user.profilePic,
             gender: user.gender,
-            dateOfBirth: user.dateOfBirth,
+            dateOfBirth: user.dateOfBirth.toISOString().split('T')[0], // Return date in YYYY-MM-DD format
         };
 
         res.status(200).json(profile);
