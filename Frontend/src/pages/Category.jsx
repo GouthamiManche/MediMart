@@ -87,17 +87,14 @@ const Category = () => {
       Product_id,
       email: user.email
     };
+
     try {
       await axios.post(`${apiUrl}/addtocart`, cartItem);
       toast.success('Item Added To Cart', { autoClose: 2000 });
+      //navigate('/cart');
     } catch (error) {
       console.error("Error adding item to cart:", error.message);
-
-      if (error.response && error.response.status === 400 && error.response.data.message === 'Item is out of stock') {
-        toast.error('Item is out of stock');
-      } else {
-        toast.error('Failed to add item to cart');
-      }
+      toast.error('Failed to add item to cart');
     }
   };
 
