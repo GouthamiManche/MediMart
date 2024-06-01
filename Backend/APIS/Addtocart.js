@@ -13,7 +13,6 @@ async function addToCart(req, res) {
         if (product.Stock !== 'In Stock') {
             return res.status(400).json({ message: 'Item is out of stock' });
         }
-
         // Add item to cart
         const newItem = new CartItem({
             Name,
