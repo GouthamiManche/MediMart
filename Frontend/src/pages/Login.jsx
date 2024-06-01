@@ -185,8 +185,12 @@ function Login() {
             <p className="text-red-500 text-xs">
               User not found. Please <Link to="/Register" style={{ color: "#125872" }}>Register</Link> instead.
             </p>
+
           </div>
         )}
+        <div className="text-center">
+          <Link to="/forgetpassword" className="text-[#125872]">ForgetPassword</Link>
+        </div>
       </div>
     </div>
   );

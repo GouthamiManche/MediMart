@@ -12,6 +12,7 @@ const Checkout = lazy(() => import('./pages/Checkout'));
 const Home = lazy(() => import('./pages/Home'));
 const Shop = lazy(() => import('./pages/Shop'));
 const Login = lazy(() => import('./pages/Login'));
+const ForgetPassword = lazy(() => import('./pages/ForgetPassword'));
 const Register = lazy(() => import('./pages/Register'));
 const Cart = lazy(() => import('./pages/Cart'));
 const Category = lazy(() => import('./pages/Category'));
@@ -34,6 +35,7 @@ const AppWrapper = () => {
               <Route exact path="/" element={<Home />} />
               <Route exact path="/Shop/:pg?" element={<Shop />} />
               <Route exact path="/Login" element={<Login />} />
+              <Route exact path="/forgetpassword" element={<ForgetPassword />} />
               <Route exact path="/Register" element={<Register />} />
               <Route exact path="/:category/:id" element={<Category />} />
               <Route exact path="/cart" element={<Cart />} />
