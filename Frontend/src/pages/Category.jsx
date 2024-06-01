@@ -69,11 +69,17 @@ const Category = () => {
       }
     }
   };
-
+  
   const handleAddToCart = async () => {
     if (!isAuthenticated) {
       toast.error('Please login to add item to cart');
       navigate('/login');
+      return;
+    }
+
+    // Check if the product is in stock
+    if (!product.Stock || product.Stock.toLowerCase() !== 'in stock') {
+      toast.error('Product is out of stock');
       return;
     }
 
@@ -97,6 +103,7 @@ const Category = () => {
       toast.error('Failed to add item to cart');
     }
   };
+
 
   return (
     <div>
