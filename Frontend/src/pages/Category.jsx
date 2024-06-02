@@ -166,8 +166,8 @@ const Category = () => {
                       },
                       largeImage: {
                         src: productImages[currentImageIndex],
-                        width: 1440,
-                        height: 975,
+                        width: 888,
+                        height: 888,
                       },
                       shouldUsePositiveSpaceLens: true,
                       className: "md:max-w-[24rem] md:max-h-[24rem] hover:bg-white",
