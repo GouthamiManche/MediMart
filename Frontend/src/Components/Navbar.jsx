@@ -34,7 +34,7 @@ function Navbar() {
 
       fetchCartItems();
     }
-  }, [user, apiUrl]);
+  }, [user, apiUrl, setTotalItemsInCart]);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -94,7 +94,7 @@ function Navbar() {
       </Link>
     ))}
   </div>
-          <nav className="hidden md:flex md:ml-[10vw]">
+          <nav className="hidden md:flex md:ml-[12vw]">
 
             <div className="flex gap-10 text-gray-900">
 
