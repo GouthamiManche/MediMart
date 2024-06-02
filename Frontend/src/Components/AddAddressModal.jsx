@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const AddAddressModal = ({ isOpen, onClose, onSubmit }) => {
+const AddAddressModal = ({ isOpen, onClose, onAddAddress }) => {
   const [formData, setFormData] = useState({
     title: '',
     address: '',
@@ -29,7 +29,7 @@ const AddAddressModal = ({ isOpen, onClose, onSubmit }) => {
     const validationErrors = validateForm(formData);
     if (Object.keys(validationErrors).length === 0) {
       // No validation errors, submit the form
-      onSubmit(formData);
+      onAddAddress(formData); // Call the onAddAddress function with the form data
       onClose();
     } else {
       // Update errors state to display error messages
