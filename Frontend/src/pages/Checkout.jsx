@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddAddressModal from '../Components/AddAddressModal';
 import { FaTrashAlt, FaEdit } from 'react-icons/fa';
+import ManageAddModal from '../Components/ManageAddModal';
 const AddressForm = () => {
   const { user } = useContext(AuthContext);
   const email = user?.email || '';
@@ -222,6 +223,18 @@ const AddressForm = () => {
     }
   };
 
+
+  // Function to handle deleting an address
+  const handleDeleteAddress = async (addressId) => {
+    try {
+      const response = await axios.delete(`${apiUrl}/user/addresses/${addressId}`, { data: { email } });
+      setAddresses(response.data);
+    } catch (error) {
+      console.error('Error deleting address:', error);
+    }
+  };
+
+
   const handleSelectAddress = (address) => {
     setSelectedAddress(address);
     setFormData({
@@ -260,14 +273,13 @@ const AddressForm = () => {
                   <p>{address.city}, {address.state} {address.pincode}</p>
                   <div className="border-t border-[2px] border-dotted my-2"></div>
                   <div className="flex justify-between items-center ">
-                    <button className="text-gray-500 hover:text-red-700">
+                    <button onClick={handleDeleteAddress} className="text-gray-500 hover:text-red-700">
                       <FaTrashAlt />
                     </button>
-                    <button className="flex items-center text-gray-500 hover:text-blue-700">
+                    <button onClick={() => setShowModal(true)} className="flex items-center text-gray-500 hover:text-blue-700">
                       <FaEdit /> <span className='ml-[4px]'>Edit</span>
                     </button>
                   </div>
-
                 </div>
 
               ))
@@ -396,6 +408,11 @@ const AddressForm = () => {
           isOpen={showModal}
           onClose={() => setShowModal(false)}
           onAddAddress={handleAddAddress}
+        />
+        <ManageAddModal
+          isOpen={showModal}
+          onClose={() => setShowModal(false)}
+          onAddAddress={handleEditAddress}
         />
       </div>
       <div className="w-[30%] p-[2rem] h-full border border-gray-300  rounded-md md:block hidden shadow-md text-gray-700 mr-[4rem]">
