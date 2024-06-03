@@ -20,6 +20,7 @@ const Category = () => {
   const apiUrl = import.meta.env.VITE_API_URL;
   const apiKey = import.meta.env.VITE_API_KEY;
   const { isAuthenticated, user } = useContext(AuthContext);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     setIsLoading(true);
@@ -35,7 +36,7 @@ const Category = () => {
         console.error("Error fetching data:", error.message);
       }
       finally {
-        setIsLoading(false); // Set loading to false after fetching (even on errors)
+        setIsLoading(false);
       }
     };
     fetchData();
@@ -69,7 +70,7 @@ const Category = () => {
       }
     }
   };
-  
+
   const handleAddToCart = async () => {
     if (!isAuthenticated) {
       toast.error('Please login to add item to cart');
@@ -77,7 +78,6 @@ const Category = () => {
       return;
     }
 
-    // Check if the product is in stock
     if (!product.Stock || product.Stock.toLowerCase() !== 'in stock') {
       toast.error('Product is out of stock');
       return;
@@ -97,20 +97,31 @@ const Category = () => {
     try {
       await axios.post(`${apiUrl}/addtocart`, cartItem);
       toast.success('Item Added To Cart', { autoClose: 2000 });
-      //navigate('/cart');
     } catch (error) {
       console.error("Error adding item to cart:", error.message);
       toast.error('Failed to add item to cart');
     }
   };
 
+  const handleImageChange = (index) => {
+    setCurrentImageIndex(index);
+  };
+
+  const productImages = [
+    product.Image_URL,
+    product.Image_URL,
+    product.Image_URL,
+    product.Image_URL,
+    product.Image_URL,
+    product.Image_URL,
+  ];
 
   return (
     <div>
       <div className="bg-white min-h-screen md:p-[1px] p-[1rem] ">
         <div className="container mx-auto py-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="flex justify-center md:block ">
+            <div className="flex md:block ">
               <button
                 className="hidden md:block bg-white rounded-full p-2 transition-colors duration-300 hover:bg-gray-200"
                 onClick={handleBackClick}
@@ -130,35 +141,50 @@ const Category = () => {
                   />
                 </svg>
               </button>
-              <div className="flex justify-center items-center">
-                <ReactImageMagnify
-                  {...{
-                    smallImage: {
-                      alt: isMedicine ? product.Medicine_Name : product.Name,
-                      isFluidWidth: true,
-                      src: product.Image_URL,
-                      sizes: '(max-width: 480px) 100vw, (max-width: 1200px) 30vw, 360px'
-                    },
-                    largeImage: {
-                      src: product.Image_URL,
-                      width: 1440,
-                      height: 975,
-                    },
-                    shouldUsePositiveSpaceLens: true,
-                    className: "md:max-w-[24rem] md:max-h-[24rem] hover:bg-white",
-                    enlargedImageContainerDimensions: { width: '200%', height: '150%' },
-                    enlargedImagePosition: 'beside',
-                    isHintEnabled: true,
-                    shouldHideHintAfterFirstBigViewOpened: true,
-                    isEnlargedImagePortalEnabledForTouch: true,
-                    lensStyle: {
-                      lensStyle: {
-                        background: 'rgba(77, 144, 254, 0.3)',
-                        border: '1px solid #4d90fe',
+              <div className="flex flex-col md:flex-row">
+                <div className="flex flex-col mr-4">
+                  {productImages.map((image, index) => (
+                    <div
+                      key={index}
+                      className={`mb-2 border border-gray-300 p-1 cursor-pointer ${
+                        currentImageIndex === index ? 'border-blue-500' : ''
+                      }`}
+                      onClick={() => handleImageChange(index)}
+                    >
+                      <img src={image} alt={`Product Image ${index}`} className="w-16 h-16 object-cover" />
+                    </div>
+                  ))}
+                </div>
+                <div className="flex justify-center items-center">
+                  <ReactImageMagnify
+                    {...{
+                      smallImage: {
+                        alt: isMedicine ? product.Medicine_Name : product.Name,
+                        isFluidWidth: true,
+                        src: productImages[currentImageIndex],
+                        sizes: '(max-width: 480px) 100vw, (max-width: 1200px) 30vw, 360px'
                       },
-                    },
-                  }}
-                />
+                      largeImage: {
+                        src: productImages[currentImageIndex],
+                        width: 888,
+                        height: 888,
+                      },
+                      shouldUsePositiveSpaceLens: true,
+                      className: "md:max-w-[24rem] md:max-h-[24rem] hover:bg-white",
+                      enlargedImageContainerDimensions: { width: '220%', height: '120%' },
+                      enlargedImagePosition: 'beside',
+                      isHintEnabled: true,
+                      shouldHideHintAfterFirstBigViewOpened: true,
+                      isEnlargedImagePortalEnabledForTouch: true,
+                      lensStyle: {
+                        lensStyle: {
+                          background: 'rgba(77, 144, 254, 0.3)',
+                          border: '1px solid #4d90fe',
+                        },
+                      },
+                    }}
+                  />
+                </div>
               </div>
             </div>
             <div className="flex flex-col justify-between">

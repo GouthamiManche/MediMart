@@ -5,7 +5,7 @@ import { SiRazorpay } from "react-icons/si";
 import { AuthContext } from '../Components/AuthProvider';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import AddAddressModal from '../Components/AddAddressModal';
 const AddressForm = () => {
   const { user } = useContext(AuthContext);
   const email = user?.email || '';
@@ -24,6 +24,10 @@ const AddressForm = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [addresses, setAddresses] = useState([]); // Add state for addresses
+  const [showModal, setShowModal] = useState(false); // Add state for modal visibility
+  const [selectedAddress, setSelectedAddress] = useState(null); // Add state for selected address
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -182,11 +186,49 @@ const AddressForm = () => {
 
     return Object.keys(errors).length === 0;
   };
+  const handleAddAddress = (newAddress) => {
+    setAddresses([...addresses, newAddress]);
+    setShowModal(false);
+  };
+
+  const handleSelectAddress = (address) => {
+    setSelectedAddress(address);
+    setFormData({
+      ...formData,
+      address: address.address,
+      city: address.city,
+      state: address.state,
+      pincode: address.pincode,
+    });
+  };
 
   return (
-    <div className="flex items-center min-h-full mx-[4vw] text-gray-700">
+    <div className="flex flex-col items-center min-h-full mx-[4vw] text-gray-700">
       <div className="bg-white p-6 max-w-2xl w-full md:mt-[2rem] mx-auto">
         <h2 className="text-2xl font-bold mb-4 text-[#125872]">Shipping Address</h2>
+        <div>
+          <h3 className="text-lg font-semibold mb-2">Saved Address</h3>
+          {addresses.map((address, index) => (
+            <div key={index} className="border border-gray-300 rounded-md p-4 mb-2">
+              <div className="flex items-center justify-between">
+                <h4 className="text-lg font-semibold">{address.title}</h4>
+                <input
+                  type="checkbox"
+                  checked={selectedAddress === address}
+                  onChange={() => handleSelectAddress(address)}
+                />
+              </div>
+              <p>{address.address}</p>
+              <p>{address.city}, {address.state} {address.pincode}</p>
+            </div>
+          ))}
+          <button
+            className="bg-[#125872] text-white px-4 py-2 rounded-md mt-2"
+            onClick={() => setShowModal(true)}
+          >
+            Add address
+          </button>
+        </div>
         <form onSubmit={handleSubmit}>
           <div className="md:flex md:mb-[2rem]">
             <div className="w-full md:w-1/2 md:mr-2 mb-4 md:mb-0">
@@ -306,6 +348,11 @@ const AddressForm = () => {
           
         </form>
       </div>
+      <AddAddressModal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        onAddAddress={handleAddAddress}
+      />
     </div>
   );
 };
