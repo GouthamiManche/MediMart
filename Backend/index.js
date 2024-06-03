@@ -41,7 +41,7 @@ app.use(express.urlencoded({ extended: false }));
 // ROUTES
 app.put('/api/updatecart/:id', updateCartItem);
 app.put('/api/updateproduct/:Product_id', updateProduct);
-app.put('/user/address/:id', editAddress);
+app.put('/api/user/address/:id', editAddress);
 
 app.post('/api/register', registerUser);
 app.post('/api/login', loginUser);
@@ -58,7 +58,7 @@ app.delete('/api/deleteallcartitems',deleteAllCartItems);
 app.delete('/api/removefromcart/:id', deleteCartItem);
 app.delete('/api/deleteproduct/:Product_id', deleteProduct);
 app.delete('/api/deleteorder/:id',deleteOrder);
-app.delete('/user/address/:id', deleteAddress);
+app.delete('/api/user/address/:id', deleteAddress);
 
 app.get('/api/users', getAllUsers);
 app.get('/api/data', getData);
@@ -75,7 +75,6 @@ app.get('/', (req, res) => {
 });
 
 // app.listen();
-
 
 const PORT = 4000; // Specify the desired local port
 

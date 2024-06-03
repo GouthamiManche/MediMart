@@ -24,15 +24,25 @@ const AddressForm = () => {
     Image_URL: '',
     email,
   });
-
+  const [addressToEdit, setAddressToEdit] = useState(null);
+  const handleEditClick = (address) => {
+    setAddressToEdit(address);
+    setShowModal(true); // Show modal when edit is clicked
+  };
   const [errors, setErrors] = useState({});
   const [addresses, setAddresses] = useState([]); // Add state for addresses
   const [showModal, setShowModal] = useState(false); // Add state for modal visibility
   const [selectedAddress, setSelectedAddress] = useState(null); // Add state for selected address
   const [cartItems, setCartItems] = useState([]);
   const [discountPercentage, setDiscountPercentage] = useState(0);
+
   const calculateDiscount = () => {
     return (getCartTotal() * discountPercentage) / 100;
+  };
+
+  const updateAddressFunction = (updatedAddress) => {
+    // Update the address in your UI state or perform any necessary actions
+    console.log('Address updated:', updatedAddress);
   };
 
   const handleChange = (e) => {
@@ -224,17 +234,6 @@ const AddressForm = () => {
   };
 
 
-  // Function to handle deleting an address
-  const handleDeleteAddress = async (addressId) => {
-    try {
-      const response = await axios.delete(`${apiUrl}/user/addresses/${addressId}`, { data: { email } });
-      setAddresses(response.data);
-    } catch (error) {
-      console.error('Error deleting address:', error);
-    }
-  };
-
-
   const handleSelectAddress = (address) => {
     setSelectedAddress(address);
     setFormData({
@@ -248,6 +247,34 @@ const AddressForm = () => {
     });
   };
 
+  const handleDeleteAddress = async (addressId) => {
+    try {
+      const response = await axios.delete(`${apiUrl}/user/address/${addressId}`, {
+        data: { email }
+      });
+      console.log('Address deleted:', response.data);
+      setAddresses(addresses.filter(address => address.addressId !== addressId));
+    } catch (error) {
+      console.error('Error deleting address:', error);
+    }
+  };
+  const handleEditAddress = async () => {
+    if (!addressToEdit || !addressToEdit._id) {
+      console.error('Invalid address data');
+      return;
+    }
+
+    try {
+      const response = await axios.put(`/api/user/address/${addressToEdit.addressId}`, {
+        email, // Assuming email is available
+        address: formData,
+      });
+      // Handle response, maybe update UI
+      onClose();
+    } catch (error) {
+      console.error('Error editing address:', error);
+    }
+  };
   return (
     <div className='flex items-center justify-center'>
       <div className="flex flex-col items-center min-h-full w-[70%] mx-[4vw] text-gray-700">
@@ -273,10 +300,10 @@ const AddressForm = () => {
                   <p>{address.city}, {address.state} {address.pincode}</p>
                   <div className="border-t border-[2px] border-dotted my-2"></div>
                   <div className="flex justify-between items-center ">
-                    <button onClick={handleDeleteAddress} className="text-gray-500 hover:text-red-700">
+                    <button onClick={() => handleDeleteAddress(address.addressId)} className="text-gray-500 hover:text-red-700">
                       <FaTrashAlt />
                     </button>
-                    <button onClick={() => setShowModal(true)} className="flex items-center text-gray-500 hover:text-blue-700">
+                    <button onClick={() => handleEditClick(address)} className="flex items-center text-gray-500 hover:text-blue-700">
                       <FaEdit /> <span className='ml-[4px]'>Edit</span>
                     </button>
                   </div>
@@ -409,18 +436,11 @@ const AddressForm = () => {
           onClose={() => setShowModal(false)}
           onAddAddress={handleAddAddress}
         />
-        <ManageAddModal
-          isOpen={showModal}
-          onClose={() => setShowModal(false)}
-          onAddAddress={handleEditAddress}
-        />
+        <ManageAddModal isOpen={showModal} onAddAddress={handleEditAddress} onClose={() => setShowModal(false)} addressToEdit={addressToEdit} />
       </div>
       <div className="w-[30%] p-[2rem] h-full border border-gray-300  rounded-md md:block hidden shadow-md text-gray-700 mr-[4rem]">
         <h2 className="text-2xl font-bold mb-4">Order Total</h2>
         <div className="bg-white">
-
-
-
           <div className="border-t border-gray-300 pt-4 flex justify-between">
             <p className="font-bold">Total</p>
             <p className="font-bold">{`₹${localStorage.getItem('totalPrice')}`}</p>

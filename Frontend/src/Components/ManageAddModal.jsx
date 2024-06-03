@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const ManageAddressModal = ({ isOpen, onClose, onAddAddress }) => {
+const ManageAddressModal = ({ isOpen, onClose, onAddAddress,addressToEdit }) => {
+
   const [formData, setFormData] = useState({
     fullName: '',
     address: '',
@@ -23,6 +24,25 @@ const ManageAddressModal = ({ isOpen, onClose, onAddAddress }) => {
       ...prevErrors,
       [name]: '', // Clear error message when input changes
     }));
+  };
+
+  useEffect(() => {
+    if (addressToEdit) {
+      setFormData(addressToEdit);
+    }
+  }, [addressToEdit]);
+
+  const handleEditAddress = async () => {
+    try {
+      const response = await axios.put(`/api/user/address/${addressToEdit._id}`, {
+        email,
+        address: formData,
+      });
+
+      onClose();
+    } catch (error) {
+      console.error('Error editing address:', error);
+    }
   };
 
   const handlePincodeChange = async (e) => {
@@ -109,16 +129,6 @@ const ManageAddressModal = ({ isOpen, onClose, onAddAddress }) => {
   if (!isOpen) {
     return null;
   }
-
-  const handleEditAddress = async (editedAddress) => {
-    try {
-      const response = await axios.put(`${apiUrl}/user/addresses/${editedAddress._id}`, { email, address: editedAddress });
-      setAddresses(response.data);
-      setShowModal(false);
-    } catch (error) {
-      console.error('Error editing address:', error);
-    }
-  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
@@ -232,7 +242,7 @@ const ManageAddressModal = ({ isOpen, onClose, onAddAddress }) => {
             >
               Cancel
             </button>
-            <button type="submit" className="bg-[#125872] text-white px-4 py-2 rounded-md">
+            <button onClick={handleEditAddress} type="submit" className="bg-[#125872] text-white px-4 py-2 rounded-md">
               Save
             </button>
           </div>
