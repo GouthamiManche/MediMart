@@ -208,6 +208,8 @@ const AddressForm = () => {
       city: address.city,
       state: address.state,
       pincode: address.pincode,
+      fullName: address.fullName,
+      contactNo: address.contactNo
     });
   };
 
@@ -221,14 +223,15 @@ const AddressForm = () => {
           {addresses.map((address, index) => (
             <div key={index} className="border border-gray-300 rounded-md p-4 mb-2">
               <div className="flex items-center justify-between">
-                <h4 className="text-lg font-semibold">{address.title}</h4>
+                <h4 className="text-lg font-semibold">{address.fullName}</h4>
                 <input
                   type="checkbox"
                   checked={selectedAddress === address}
                   onChange={() => handleSelectAddress(address)}
                 />
               </div>
-              <p>{address.address}</p>
+              <p>{address.contactNo}</p>
+              <p>{address.address}</p>            
               <p>{address.city}, {address.state} {address.pincode}</p>
             </div>
           ))}
