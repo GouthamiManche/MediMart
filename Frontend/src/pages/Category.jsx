@@ -112,8 +112,6 @@ const Category = () => {
     product.Image_URL,
     product.Image_URL,
     product.Image_URL,
-    product.Image_URL,
-    product.Image_URL,
   ];
 
   return (
@@ -121,7 +119,7 @@ const Category = () => {
       <div className="bg-white min-h-screen md:p-[1px] p-[1rem] ">
         <div className="container mx-auto py-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="flex md:block ">
+            <div className="flex md:block flex-col">
               <button
                 className="hidden md:block bg-white rounded-full p-2 transition-colors duration-300 hover:bg-gray-200"
                 onClick={handleBackClick}
@@ -141,50 +139,61 @@ const Category = () => {
                   />
                 </svg>
               </button>
-              <div className="flex flex-col md:flex-row">
-                <div className="flex flex-col mr-4">
-                  {productImages.map((image, index) => (
-                    <div
-                      key={index}
-                      className={`mb-2 border border-gray-300 p-1 cursor-pointer ${
-                        currentImageIndex === index ? 'border-blue-500' : ''
-                      }`}
-                      onClick={() => handleImageChange(index)}
-                    >
-                      <img src={image} alt={`Product Image ${index}`} className="w-16 h-16 object-cover" />
-                    </div>
-                  ))}
-                </div>
-                <div className="flex justify-center items-center">
-                  <ReactImageMagnify
-                    {...{
-                      smallImage: {
-                        alt: isMedicine ? product.Medicine_Name : product.Name,
-                        isFluidWidth: true,
-                        src: productImages[currentImageIndex],
-                        sizes: '(max-width: 480px) 100vw, (max-width: 1200px) 30vw, 360px'
-                      },
-                      largeImage: {
-                        src: productImages[currentImageIndex],
-                        width: 888,
-                        height: 888,
-                      },
-                      shouldUsePositiveSpaceLens: true,
-                      className: "md:max-w-[24rem] md:max-h-[24rem] hover:bg-white",
-                      enlargedImageContainerDimensions: { width: '220%', height: '120%' },
-                      enlargedImagePosition: 'beside',
-                      isHintEnabled: true,
-                      shouldHideHintAfterFirstBigViewOpened: true,
-                      isEnlargedImagePortalEnabledForTouch: true,
+              <div className="flex justify-center items-center">
+                <ReactImageMagnify
+                  {...{
+                    smallImage: {
+                      alt: isMedicine ? product.Medicine_Name : product.Name,
+                      isFluidWidth: true,
+                      src: productImages[currentImageIndex],
+                      sizes: '(max-width: 480px) 100vw, (max-width: 1200px) 30vw, 360px'
+                    },
+                    largeImage: {
+                      src: productImages[currentImageIndex],
+                      width: 888,
+                      height: 888,
+                    },
+                    shouldUsePositiveSpaceLens: true,
+                    className: "md:max-w-[24rem] md:max-h-[24rem] hover:bg-white",
+                    enlargedImageContainerDimensions: { width: '220%', height: '120%' },
+                    enlargedImagePosition: 'beside',
+                    isHintEnabled: true,
+                    shouldHideHintAfterFirstBigViewOpened: true,
+                    isEnlargedImagePortalEnabledForTouch: true,
+                    lensStyle: {
                       lensStyle: {
-                        lensStyle: {
-                          background: 'rgba(77, 144, 254, 0.3)',
-                          border: '1px solid #4d90fe',
-                        },
+                        background: 'rgba(77, 144, 254, 0.3)',
+                        border: '1px solid #4d90fe',
                       },
-                    }}
-                  />
-                </div>
+                    },
+                  }}
+                />
+              </div>
+              <div className="md:hidden mt-4 overflow-x-auto flex">
+                {productImages.map((image, index) => (
+                  <div
+                    key={index}
+                    className={`mr-2 border border-gray-300 p-1 cursor-pointer ${
+                      currentImageIndex === index ? 'border-blue-500' : ''
+                    }`}
+                    onClick={() => handleImageChange(index)}
+                  >
+                    <img src={image} alt={`Product Image ${index}`} className="w-16 h-16 object-cover" />
+                  </div>
+                ))}
+              </div>
+              <div className="md:flex hidden md:ml-[8rem] md:mt-[2rem] md:mr-4 overflow-x-auto md:overflow-x-visible flex md:flex-row">
+                {productImages.map((image, index) => (
+                  <div
+                    key={index}
+                    className={`mb-2 md:mb-0 md:mr-2 border border-gray-300 p-1 cursor-pointer ${
+                      currentImageIndex === index ? 'border-blue-500' : ''
+                    }`}
+                    onClick={() => handleImageChange(index)}
+                  >
+                    <img src={image} alt={`Product Image ${index}`} className="w-16 h-16 object-cover" />
+                  </div>
+                ))}
               </div>
             </div>
             <div className="flex flex-col justify-between">
