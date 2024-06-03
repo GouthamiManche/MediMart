@@ -4,9 +4,9 @@ import Loader from './Components/Loader';
 import GotoTop from './Components/GotoTop';
 import Footer from './Components/Footer';
 import Navbar from './Components/Navbar';
-import ResetPassword from './pages/ResetPassword';
 import { AuthProviderWithNavigation } from './Components/AuthProvider';
 import { CartProvider } from './Components/CartProvider';
+import ResetPassword from './pages/ResetPassword';
 
 const Profile = lazy(() => import('./pages/Profile'));
 const Checkout = lazy(() => import('./pages/Checkout'));

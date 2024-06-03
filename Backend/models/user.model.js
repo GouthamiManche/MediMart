@@ -40,6 +40,8 @@ const userSchema = new mongoose.Schema({
       message: 'Invalid date format',
     },
   },
+  resetPasswordToken:{type:String},
+  resetPasswordExpires:{type:String}
 });
 
 const User = mongoose.model('User', userSchema);
