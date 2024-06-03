@@ -6,8 +6,7 @@ import { AuthContext } from '../Components/AuthProvider';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddAddressModal from '../Components/AddAddressModal';
-import PaymentSummary from '../Components/PaymentSummary';
-
+import { FaTrashAlt, FaEdit } from 'react-icons/fa';
 const AddressForm = () => {
   const { user } = useContext(AuthContext);
   const email = user?.email || '';
@@ -259,7 +258,18 @@ const AddressForm = () => {
                   <p>{address.contactNo}</p>
                   <p>{address.address}</p>
                   <p>{address.city}, {address.state} {address.pincode}</p>
+                  <div className="border-t border-[2px] border-dotted my-2"></div>
+                  <div className="flex justify-between items-center ">
+                    <button className="text-gray-500 hover:text-red-700">
+                      <FaTrashAlt />
+                    </button>
+                    <button className="flex items-center text-gray-500 hover:text-blue-700">
+                      <FaEdit /> <span className='ml-[4px]'>Edit</span>
+                    </button>
+                  </div>
+
                 </div>
+
               ))
             )}
             <button
