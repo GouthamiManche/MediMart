@@ -7,10 +7,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import { registerSW } from 'virtual:pwa-register';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+<>
     <App />
     <ToastContainer />
-  </React.StrictMode>
+    </>
 );
 
 // Register the service worker

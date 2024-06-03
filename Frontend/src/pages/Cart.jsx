@@ -67,7 +67,7 @@ const Cart = () => {
       const updatedCartItems = [...cartItems];
       updatedCartItems.splice(index, 1);
       setCartItems(updatedCartItems);
-      toast.success('Product removed from cart successfully', { autoClose: 2000 });
+      //toast.success('Product removed from cart successfully', { autoClose: 2000 });
     } catch (error) {
       console.error("Error removing product from cart:", error.message);
       toast.error('Failed to remove product from cart', { autoClose: 2000 });

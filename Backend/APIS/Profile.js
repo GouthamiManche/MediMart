@@ -1,25 +1,33 @@
-const Profile = require('../models/userprofile.model')
+const orderDate = new Date().toLocaleDateString('en-GB');
+
+const User = require('../models/user.model');
+
 const saveOrUpdateProfile = async (req, res) => {
-    const { email, fullName, contactNumber, deliveryAddress, profilePic } = req.body;
+    const { email, fullName, contactNumber, deliveryAddress, profilePic, gender, dateOfBirth } = req.body;
 
     try {
-        let profile = await Profile.findOne({ email });
+        let user = await User.findOne({ email });
 
-        if (profile) {
-            profile.fullName = fullName;
-            profile.contactNumber = contactNumber;
-            profile.deliveryAddress = deliveryAddress;
-            profile.profilePic = profilePic;
-            await profile.save();
+        if (user) {
+            user.fullName = fullName;
+            user.contactNumber = contactNumber;
+            user.deliveryAddress = deliveryAddress;
+            user.profilePic = profilePic;
+            user.gender = gender;
+            user.dateOfBirth = new Date(dateOfBirth);
+            await user.save();
         } else {
-            profile = new Profile({
+            // If user doesn't exist, create a new user
+            user = new User({
                 email,
                 fullName,
                 contactNumber,
                 deliveryAddress,
                 profilePic,
+                gender,
+                dateOfBirth: new Date(dateOfBirth)
             });
-            await profile.save();
+            await user.save();
         }
         res.status(200).json({ message: 'Profile saved successfully' });
     } catch (error) {
@@ -27,15 +35,25 @@ const saveOrUpdateProfile = async (req, res) => {
         res.status(500).json({ message: 'Error saving profile' });
     }
 };
-
 const getProfileByEmail = async (req, res) => {
     const email = req.params.email;
 
     try {
-        const profile = await Profile.findOne({ email });
-        if (!profile) {
-            return res.status(404).json({ message: 'Profile not found' });
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
         }
+
+        const profile = {
+            email: user.email,
+            fullName: user.fullName,
+            contactNumber: user.contactNumber,
+            deliveryAddress: user.deliveryAddress,
+            profilePic: user.profilePic,
+            gender: user.gender,
+            dateOfBirth: user.dateOfBirth.toISOString().split('T')[0], // Return date in YYYY-MM-DD format
+        };
+
         res.status(200).json(profile);
     } catch (error) {
         console.error(error);
@@ -43,4 +61,4 @@ const getProfileByEmail = async (req, res) => {
     }
 };
 
-module.exports={getProfileByEmail,saveOrUpdateProfile}
+module.exports = { saveOrUpdateProfile, getProfileByEmail };

@@ -69,11 +69,17 @@ const Category = () => {
       }
     }
   };
-
+  
   const handleAddToCart = async () => {
     if (!isAuthenticated) {
       toast.error('Please login to add item to cart');
       navigate('/login');
+      return;
+    }
+
+    // Check if the product is in stock
+    if (!product.Stock || product.Stock.toLowerCase() !== 'in stock') {
+      toast.error('Product is out of stock');
       return;
     }
 
@@ -97,6 +103,7 @@ const Category = () => {
       toast.error('Failed to add item to cart');
     }
   };
+
 
   return (
     <div>
@@ -175,6 +182,11 @@ const Category = () => {
                 {product.Description && (
                   <div className=" bg-white rounded-lg mb-[0.5rem]">
                     <p className="text-gray-600"><span className="text-lg font-semibold text-gray-700">Description :</span> {product.Description}</p>
+                  </div>
+                )}
+                {product.Stock && (
+                  <div className=" bg-white rounded-lg   mb-[0.5rem]">
+                    <p className="text-gray-600 "><span className="text-lg font-semibold text-gray-700"></span> {product.Stock}</p>
                   </div>
                 )}
                 {product['Directions for Use'] && (

@@ -1,27 +1,40 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
-import { FaCartPlus, FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes } from "react-icons/fa";
 import Logo from '/src/assets/logo.jpg';
 import { ImSearch } from "react-icons/im";
 import { FaCartShopping } from "react-icons/fa6";
-import { useCart } from "./CartProvider";
 import { AuthContext } from "./AuthProvider";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function Navbar() {
   const { user, logout } = useContext(AuthContext);
-  const { state } = useCart();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [totalItemsInCart, setTotalItemsInCart] = useState(0);
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const apiKey = import.meta.env.VITE_API_KEY;
 
   useEffect(() => {
-    const total = state.cartItems.reduce((total, item) => total + item.quantity, 0);
-    setTotalItemsInCart(total);
-  }, [state.cartItems]);
+    if (user && user.email) {
+      const fetchCartItems = async () => {
+        try {
+          const response = await fetch(`${apiUrl}/getcartitems?email=${user.email}`);
+          const data = await response.json();
+          const total = data.reduce((total, item) => total + item.quantity, 0);
+          setTotalItemsInCart(total);
+        } catch (error) {
+          console.error("Failed to fetch cart items:", error);
+          toast.error("Failed to fetch cart items");
+        }
+      };
+
+      fetchCartItems();
+    }
+  }, [user, apiUrl]);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -50,7 +63,7 @@ function Navbar() {
         <div className="md:hidden flex text-gray-900">
           <button onClick={handleCartClick} className="font-bold py-2 rounded flex items-center mr-[1rem]">
             <FaCartShopping className="text-xl" />
-            {/* <span className="text-lg ml-1"> ({totalItemsInCart})</span> */}
+            <span className="text-lg ml-1">({totalItemsInCart})</span>
           </button>
           <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="focus:outline-none">
             {mobileMenuOpen ? (
@@ -70,7 +83,7 @@ function Navbar() {
           </nav>
           <button onClick={handleCartClick} className="font-bold py-2 rounded flex items-center">
             <FaCartShopping className="text-xl" />
-            <span className="text-lg ml-1">Cart</span>
+            <span className="text-lg ml-1">Cart ({totalItemsInCart})</span>
           </button>
           {user ? (
             <div className="relative inline-block text-left">
