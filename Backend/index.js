@@ -20,7 +20,7 @@ const { ValidateOrder } = require('./APIS/OrderValidate');
 const { saveOrUpdateProfile, getProfileByEmail } = require('./APIS/Profile');
 const { forgotPassword } = require('./APIS/ForgetPassword');
 const { resetPassword } = require('./APIS/PasswordReset');
-const { addAddress, getAddresses } = require('./APIS/Address');
+const { addAddress, getAddresses, editAddress, deleteAddress } = require('./APIS/Address');
 
 const app = express();
 const URI = process.env.MONGO_URL;
@@ -41,6 +41,7 @@ app.use(express.urlencoded({ extended: false }));
 // ROUTES
 app.put('/api/updatecart/:id', updateCartItem);
 app.put('/api/updateproduct/:Product_id', updateProduct);
+app.put('/user/address/:id', editAddress);
 
 app.post('/api/register', registerUser);
 app.post('/api/login', loginUser);
@@ -52,12 +53,12 @@ app.post('/api/profile',saveOrUpdateProfile);
 app.post('/api/forgot-password',forgotPassword);
 app.post('/api/reset-password/:token',resetPassword);
 app.post('/api/user/add-address', addAddress);
-app.get('/api/user/addresses',getAddresses);
 
 app.delete('/api/deleteallcartitems',deleteAllCartItems);
 app.delete('/api/removefromcart/:id', deleteCartItem);
 app.delete('/api/deleteproduct/:Product_id', deleteProduct);
-app.delete('/api/deleteorder/:id',deleteOrder)
+app.delete('/api/deleteorder/:id',deleteOrder);
+app.delete('/user/address/:id', deleteAddress);
 
 app.get('/api/users', getAllUsers);
 app.get('/api/data', getData);
@@ -67,12 +68,14 @@ app.get('/api/getcartitems',getCartItemsByEmail);
 app.get('/api/getorderdetails/:orderId',getOrderDetailsByOrderId);
 app.get('/api/orders', getAllOrders);
 app.get('/api/profile/:email', getProfileByEmail);
+app.get('/api/user/addresses',getAddresses);
 
 app.get('/', (req, res) => {
   res.json('Hello, Backend Readyyyy!!! ');
 });
 
 // app.listen();
+
 
 const PORT = 4000; // Specify the desired local port
 
