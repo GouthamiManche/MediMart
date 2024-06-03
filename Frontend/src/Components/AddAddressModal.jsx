@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 const AddAddressModal = ({ isOpen, onClose, onAddAddress }) => {
   const [formData, setFormData] = useState({
-    title: '',
+    fullName: '',
     address: '',
     city: '',
     state: '',
     pincode: '',
+    contactNo: '',
   });
 
   const [errors, setErrors] = useState({});
@@ -24,44 +25,6 @@ const AddAddressModal = ({ isOpen, onClose, onAddAddress }) => {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const validationErrors = validateForm(formData);
-    if (Object.keys(validationErrors).length === 0) {
-      // No validation errors, submit the form
-      onAddAddress(formData); // Call the onAddAddress function with the form data
-      onClose();
-    } else {
-      // Update errors state to display error messages
-      setErrors(validationErrors);
-    }
-  };
-
-  const validateForm = (data) => {
-    const errors = {};
-
-    // Validate each field
-    if (!data.title.trim()) {
-      errors.title = 'Title is required';
-    }
-    if (!data.address.trim()) {
-      errors.address = 'Address is required';
-    }
-    if (!data.city.trim()) {
-      errors.city = 'City is required';
-    }
-    if (!data.state.trim()) {
-      errors.state = 'State is required';
-    }
-    if (!data.pincode.trim()) {
-      errors.pincode = 'Pincode is required';
-    } else if (!/^\d{6}$/.test(data.pincode)) {
-      errors.pincode = 'Pincode must be 6 digits';
-    }
-
-    return errors;
-  };
-
   const handlePincodeChange = async (e) => {
     const { value } = e.target;
     setFormData((prevData) => ({
@@ -73,14 +36,13 @@ const AddAddressModal = ({ isOpen, onClose, onAddAddress }) => {
       pincode: '', // Clear pincode error message when input changes
     }));
 
-    // Fetch city and state based on pincode
     if (value.length === 6) {
       try {
         const response = await axios.get(`https://api.postalpincode.in/pincode/${value}`);
         const data = response.data;
 
         if (data && data.length > 0 && data[0]?.Status === 'Success') {
-          const city = data[0]?.PostOffice[0]?.District;
+          const city = data[0]?.PostOffice[0]?.Block;
           const state = data[0]?.PostOffice[0]?.State;
 
           setFormData((prevData) => ({
@@ -104,6 +66,46 @@ const AddAddressModal = ({ isOpen, onClose, onAddAddress }) => {
     }
   };
 
+  const validateForm = (data) => {
+    const errors = {};
+
+    if (!data.fullName.trim()) {
+      errors.fullName = 'Full Name is required';
+    }
+    if (!data.contactNo.trim()) {
+      errors.contactNo = 'Contact number is required';
+    } else if (!/^\d{10}$/.test(data.contactNo)) {
+      errors.contactNo = 'Contact number must be 10 digits';
+    }
+    if (!data.address.trim()) {
+      errors.address = 'Address is required';
+    }
+    if (!data.city.trim()) {
+      errors.city = 'City is required';
+    }
+    if (!data.state.trim()) {
+      errors.state = 'State is required';
+    }
+    if (!data.pincode.trim()) {
+      errors.pincode = 'Pincode is required';
+    } else if (!/^\d{6}$/.test(data.pincode)) {
+      errors.pincode = 'Pincode must be 6 digits';
+    }
+
+    return errors;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validationErrors = validateForm(formData);
+    if (Object.keys(validationErrors).length === 0) {
+      onAddAddress(formData); // Call the onAddAddress function with the form data
+      onClose();
+    } else {
+      setErrors(validationErrors);
+    }
+  };
+
   if (!isOpen) {
     return null;
   }
@@ -115,24 +117,39 @@ const AddAddressModal = ({ isOpen, onClose, onAddAddress }) => {
         <h2 className="text-2xl font-bold mb-4">Add Address</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="title" className="block text-gray-700 font-semibold mb-1">
-              Address title
+            <label htmlFor="fullName" className="text-sm font-medium text-gray-700">
+              Full Name
             </label>
             <input
               type="text"
-              id="title"
-              name="title"
-              value={formData.title}
+              id="fullName"
+              name="fullName"
+              value={formData.fullName}
               onChange={handleChange}
-              className={`border border-gray-300 rounded-md w-full p-2 ${
-                errors.title ? 'border-red-500' : ''
-              }`}
-              placeholder="e.g. Home, Office"
+              className={`mt-1 py-3 p-2 block w-full border ${errors.fullName ? 'border-red-500' : 'border-gray-300'
+                } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+              required
             />
-            {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title}</p>}
+            {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>}
           </div>
           <div className="mb-4">
-            <label htmlFor="address" className="block text-gray-700 font-semibold mb-1">
+            <label htmlFor="contactNo" className="text-sm font-medium text-gray-700">
+              Contact number
+            </label>
+            <input
+              type="text"
+              id="contactNo"
+              name="contactNo"
+              value={formData.contactNo}
+              onChange={handleChange}
+              className={`mt-1 p-2 block py-3 w-full border ${errors.contactNo ? 'border-red-500' : 'border-gray-300'
+                } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+              required
+            />
+            {errors.contactNo && <p className="text-red-500 text-sm mt-1">{errors.contactNo}</p>}
+          </div>
+          <div className="mb-4">
+            <label htmlFor="address" className="block text-sm font-medium text-gray-700">
               Address
             </label>
             <input
@@ -141,16 +158,31 @@ const AddAddressModal = ({ isOpen, onClose, onAddAddress }) => {
               name="address"
               value={formData.address}
               onChange={handleChange}
-              className={`border border-gray-300 rounded-md w-full p-2 ${
-                errors.address ? 'border-red-500' : ''
-              }`}
-              placeholder="e.g. 123 Main Street, Anytown, USA"
+              className={`mt-1 p-2 py-3 block w-full border ${errors.address ? 'border-red-500' : 'border-gray-300'
+                } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+              required
             />
             {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <div>
-              <label htmlFor="city" className="block text-gray-700 font-semibold mb-1">
+              <label htmlFor="pincode" className="block text-sm font-medium text-gray-700">
+                Pincode
+              </label>
+              <input
+                type="text"
+                id="pincode"
+                name="pincode"
+                value={formData.pincode}
+                onChange={handlePincodeChange}
+                className={`mt-1 p-2 py-3 block w-full border ${errors.pincode ? 'border-red-500' : 'border-gray-300'
+                  } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+                required
+              />
+              {errors.pincode && <p className="text-red-500 text-sm mt-1">{errors.pincode}</p>}
+            </div>
+            <div>
+              <label htmlFor="city" className="block text-sm font-medium text-gray-700">
                 City
               </label>
               <input
@@ -159,47 +191,28 @@ const AddAddressModal = ({ isOpen, onClose, onAddAddress }) => {
                 name="city"
                 value={formData.city}
                 onChange={handleChange}
-                className={`border border-gray-300 rounded-md w-full p-2 ${
-                  errors.city ? 'border-red-500' : ''
-                }`}
-                placeholder="e.g. New York"
+                className={`mt-1 p-2 py-3 block w-full border ${errors.city ? 'border-red-500' : 'border-gray-300'
+                  } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+                required
               />
               {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city}</p>}
             </div>
-            <div>
-              <label htmlFor="state" className="block text-gray-700 font-semibold mb-1">
-                State
-              </label>
-              <input
-                type="text"
-                id="state"
-                name="state"
-                value={formData.state}
-                onChange={handleChange}
-                className={`border border-gray-300 rounded-md w-full p-2 ${
-                  errors.state ? 'border-red-500' : ''
-                }`}
-                placeholder="e.g. NY"
-              />
-              {errors.state && <p className="text-red-500 text-sm mt-1">{errors.state}</p>}
-            </div>
           </div>
           <div className="mb-4">
-            <label htmlFor="pincode" className="block text-gray-700 font-semibold mb-1">
-              Pincode
+            <label htmlFor="state" className="block text-sm font-medium text-gray-700">
+              State
             </label>
             <input
               type="text"
-              id="pincode"
-              name="pincode"
-              value={formData.pincode}
-              onChange={handlePincodeChange}
-              className={`border border-gray-300 rounded-md w-full p-2 ${
-                errors.pincode ? 'border-red-500' : ''
-              }`}
-              placeholder="e.g. 123456"
+              id="state"
+              name="state"
+              value={formData.state}
+              onChange={handleChange}
+              className={`mt-1 p-2 py-3 block w-full border ${errors.state ? 'border-red-500' : 'border-gray-300'
+                } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+              required
             />
-            {errors.pincode && <p className="text-red-500 text-sm mt-1">{errors.pincode}</p>}
+            {errors.state && <p className="text-red-500 text-sm mt-1">{errors.state}</p>}
           </div>
           <div className="flex justify-end mt-4">
             <button

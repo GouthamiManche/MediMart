@@ -99,7 +99,7 @@ const PaymentSummary = ({ cartItems, handleSubmit }) => {
             </button>
           </div>
           <button onClick={handleSubmit} className="bg-[#125872] text-white font-semibold w-full py-3 rounded-md mt-4">
-            Checkout
+             Add Address
           </button>
         </div>
       </div>
@@ -132,7 +132,7 @@ const PaymentSummary = ({ cartItems, handleSubmit }) => {
             </button>
             {/* Checkout Button */}
             <button onClick={handleSubmit} className="bg-[#125872] text-white font-semibold w-full py-3 rounded-md mt-4">
-              Checkout
+             Add Address
             </button>
           </div>
         )}

@@ -6,6 +6,8 @@ import { AuthContext } from '../Components/AuthProvider';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddAddressModal from '../Components/AddAddressModal';
+import PaymentSummary from '../Components/PaymentSummary';
+
 const AddressForm = () => {
   const { user } = useContext(AuthContext);
   const email = user?.email || '';
@@ -27,8 +29,12 @@ const AddressForm = () => {
   const [addresses, setAddresses] = useState([]); // Add state for addresses
   const [showModal, setShowModal] = useState(false); // Add state for modal visibility
   const [selectedAddress, setSelectedAddress] = useState(null); // Add state for selected address
-
-
+  const [cartItems, setCartItems] = useState([]);
+  const [discountPercentage, setDiscountPercentage] = useState(0);
+  const calculateDiscount = () => {
+    return (getCartTotal() * discountPercentage) / 100;
+  };
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -150,6 +156,9 @@ const AddressForm = () => {
       console.error('Error deleting cart items:', error);
     }
   };
+  const getCartTotal = () => {
+   localStorage.getItem('totalPrice')
+  }
 
   const validateForm = () => {
     const errors = {};
@@ -199,11 +208,14 @@ const AddressForm = () => {
       city: address.city,
       state: address.state,
       pincode: address.pincode,
+      fullName: address.fullName,
+      contactNo: address.contactNo
     });
   };
 
   return (
-    <div className="flex flex-col items-center min-h-full mx-[4vw] text-gray-700">
+    <div className='flex items-center justify-center'>
+    <div className="flex flex-col items-center min-h-full w-[70%] mx-[4vw] text-gray-700">
       <div className="bg-white p-6 max-w-2xl w-full md:mt-[2rem] mx-auto">
         <h2 className="text-2xl font-bold mb-4 text-[#125872]">Shipping Address</h2>
         <div>
@@ -211,14 +223,15 @@ const AddressForm = () => {
           {addresses.map((address, index) => (
             <div key={index} className="border border-gray-300 rounded-md p-4 mb-2">
               <div className="flex items-center justify-between">
-                <h4 className="text-lg font-semibold">{address.title}</h4>
+                <h4 className="text-lg font-semibold">{address.fullName}</h4>
                 <input
                   type="checkbox"
                   checked={selectedAddress === address}
                   onChange={() => handleSelectAddress(address)}
                 />
               </div>
-              <p>{address.address}</p>
+              <p>{address.contactNo}</p>
+              <p>{address.address}</p>            
               <p>{address.city}, {address.state} {address.pincode}</p>
             </div>
           ))}
@@ -337,14 +350,14 @@ const AddressForm = () => {
             {errors.state && <p className="text-red-500 text-sm mt-1">{errors.state}</p>}
           </div>
           
-          <div className="flex justify-center">
+          {/* <div className="flex justify-center">
             <button
               type="submit"
-              className="flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#125872] hover:bg-[#0E4E63] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0E4E63]"
+              className="flex items-center justify-center px-8 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#125872] hover:bg-[#0E4E63] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0E4E63]"
             >
               RazorPay <SiRazorpay className="ml-2" />
             </button>
-          </div>
+          </div> */}
           
         </form>
       </div>
@@ -353,6 +366,53 @@ const AddressForm = () => {
         onClose={() => setShowModal(false)}
         onAddAddress={handleAddAddress}
       />
+      </div>
+        <div className="w-[30%] p-[2rem] h-full border border-gray-300  rounded-md md:block hidden shadow-md text-gray-700 mr-[4rem]">
+        <h2 className="text-2xl font-bold mb-4">Order Total</h2>
+        <div className="bg-white">
+         
+          
+          
+          <div className="border-t border-gray-300 pt-4 flex justify-between">
+            <p className="font-bold">Total</p>
+            <p className="font-bold">{`₹${localStorage.getItem('totalPrice')}`}</p>
+          </div>
+          <div className="mt-4">
+            
+          </div>
+          <div className="flex justify-center">
+            <button
+              type="submit"
+              onClick={handleSubmit}
+              className="flex items-center justify-center px-24 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#125872] hover:bg-[#0E4E63] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0E4E63]"
+            >
+              RazorPay <SiRazorpay className="ml-2" />
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile View */}
+      <div className="md:hidden text-gray-700">
+        {cartItems.length > 0 && (
+          <div className="bg-white rounded-md p-4">
+            <h2 className="text-2xl font-bold mb-4">Order Total</h2>
+
+        
+            {/* Calculate and Display Total */}
+            <div className="flex justify-between items-center mb-4">
+              <p className="text-gray-500">Total</p>
+              <p className="font-semibold">{`₹${localStorage.getItem('totalPrice')}`}</p>
+            </div>
+            {/* Apply Coupon Button */}
+          
+            {/* Checkout Button */}
+            <button onClick={handleSubmit} className="bg-[#125872] text-white font-semibold w-full py-3 rounded-md mt-4">
+              Checkout
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
