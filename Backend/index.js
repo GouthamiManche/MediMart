@@ -18,6 +18,8 @@ const Razorpay = require("razorpay");
 const { getOrderDetailsByOrderId ,getAllOrders, deleteOrder} = require('./APIS/OrderDetailsbyID');
 const { ValidateOrder } = require('./APIS/OrderValidate');
 const { saveOrUpdateProfile, getProfileByEmail } = require('./APIS/Profile');
+const { forgotPassword } = require('./APIS/ForgetPassword');
+const { resetPassword } = require('./APIS/PasswordReset');
 
 const app = express();
 const URI = process.env.MONGO_URL;
@@ -46,6 +48,8 @@ app.post("/api/order/validate",ValidateOrder);
 app.post('/api/addtocart', addToCart);
 app.post('/api/addproduct', addProduct);
 app.post('/api/profile',saveOrUpdateProfile);
+app.post('/api/forgot-password',forgotPassword);
+app.post('/api/reset-password/:token',resetPassword);
 
 app.delete('/api/deleteallcartitems',deleteAllCartItems);
 app.delete('/api/removefromcart/:id', deleteCartItem);
@@ -65,10 +69,10 @@ app.get('/', (req, res) => {
   res.json('Hello, Backend Readyyyy!!! ');
 });
 
-app.listen();
+// app.listen();
 
-// const PORT = 4000; // Specify the desired local port
+const PORT = 4000; // Specify the desired local port
 
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

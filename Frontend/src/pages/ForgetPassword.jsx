@@ -30,7 +30,7 @@ export default function ForgetPassword() {
     }
 
     try {
-      await axios.post(`${apiUrl}/forgetpassword`, { email });
+      await axios.post(`${apiUrl}/forgot-password`, { email });
       setIsSubmitted(true);
       toast.success('Password reset email sent', { autoClose: 2000 });
     } catch (error) {

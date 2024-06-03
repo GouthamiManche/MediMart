@@ -4,6 +4,7 @@ import Loader from './Components/Loader';
 import GotoTop from './Components/GotoTop';
 import Footer from './Components/Footer';
 import Navbar from './Components/Navbar';
+import ResetPassword from './pages/ResetPassword';
 import { AuthProviderWithNavigation } from './Components/AuthProvider';
 import { CartProvider } from './Components/CartProvider';
 
@@ -36,6 +37,7 @@ const AppWrapper = () => {
               <Route exact path="/Shop/:pg?" element={<Shop />} />
               <Route exact path="/Login" element={<Login />} />
               <Route exact path="/forgetpassword" element={<ForgetPassword />} />
+              <Route path="/reset-password/:token" element={<ResetPassword />} />
               <Route exact path="/Register" element={<Register />} />
               <Route exact path="/:category/:id" element={<Category />} />
               <Route exact path="/cart" element={<Cart />} />
