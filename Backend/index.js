@@ -20,6 +20,7 @@ const { ValidateOrder } = require('./APIS/OrderValidate');
 const { saveOrUpdateProfile, getProfileByEmail } = require('./APIS/Profile');
 const { forgotPassword } = require('./APIS/ForgetPassword');
 const { resetPassword } = require('./APIS/PasswordReset');
+const { addAddress, getAddresses } = require('./APIS/Address');
 
 const app = express();
 const URI = process.env.MONGO_URL;
@@ -50,6 +51,8 @@ app.post('/api/addproduct', addProduct);
 app.post('/api/profile',saveOrUpdateProfile);
 app.post('/api/forgot-password',forgotPassword);
 app.post('/api/reset-password/:token',resetPassword);
+app.post('/api/user/add-address', addAddress);
+app.get('/api/user/addresses',getAddresses);
 
 app.delete('/api/deleteallcartitems',deleteAllCartItems);
 app.delete('/api/removefromcart/:id', deleteCartItem);
@@ -76,4 +79,3 @@ const PORT = 4000; // Specify the desired local port
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-// 
