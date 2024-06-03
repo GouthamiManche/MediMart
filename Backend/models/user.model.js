@@ -1,5 +1,14 @@
 const mongoose = require('mongoose');
 
+const addressSchema = new mongoose.Schema({
+  fullName: String,
+  contactNo: String,
+  address: String,
+  city: String,
+  state: String,
+  pincode: String,
+}, { _id: false });
+
 const userSchema = new mongoose.Schema({
   customerId: { type: String, unique: true, sparse: true },
   username: {
@@ -41,7 +50,8 @@ const userSchema = new mongoose.Schema({
     },
   },
   resetPasswordToken:{type:String},
-  resetPasswordExpires:{type:String}
+  resetPasswordExpires:{type:String},
+  addresses: [addressSchema], 
 });
 
 const User = mongoose.model('User', userSchema);

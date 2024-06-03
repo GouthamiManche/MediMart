@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { SiRazorpay } from "react-icons/si";
@@ -34,7 +34,7 @@ const AddressForm = () => {
   const calculateDiscount = () => {
     return (getCartTotal() * discountPercentage) / 100;
   };
-  
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -157,7 +157,7 @@ const AddressForm = () => {
     }
   };
   const getCartTotal = () => {
-   localStorage.getItem('totalPrice')
+    localStorage.getItem('totalPrice')
   }
 
   const validateForm = () => {
@@ -195,9 +195,32 @@ const AddressForm = () => {
 
     return Object.keys(errors).length === 0;
   };
-  const handleAddAddress = (newAddress) => {
-    setAddresses([...addresses, newAddress]);
-    setShowModal(false);
+
+  useEffect(() => {
+    // Fetch addresses from server
+    const fetchAddresses = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}/user/addresses`, { params: { email } });
+        setAddresses(response.data);
+      } catch (error) {
+        console.error('Error fetching addresses:', error);
+        toast.error('Failed to fetch addresses');
+      }
+    };
+
+    if (email) {
+      fetchAddresses();
+    }
+  }, [email, apiUrl]);
+
+  const handleAddAddress = async (newAddress) => {
+    try {
+      const response = await axios.post(`${apiUrl}/user/add-address`, { email, address: newAddress });
+      setAddresses(response.data);
+      setShowModal(false);
+    } catch (error) {
+      console.error('Error adding address:', error);
+    }
   };
 
   const handleSelectAddress = (address) => {
@@ -215,142 +238,140 @@ const AddressForm = () => {
 
   return (
     <div className='flex items-center justify-center'>
-    <div className="flex flex-col items-center min-h-full w-[70%] mx-[4vw] text-gray-700">
-      <div className="bg-white p-6 max-w-2xl w-full md:mt-[2rem] mx-auto">
-        <h2 className="text-2xl font-bold mb-4 text-[#125872]">Shipping Address</h2>
-        <div>
-          <h3 className="text-lg font-semibold mb-2">Saved Address</h3>
-          {addresses.map((address, index) => (
-            <div key={index} className="border border-gray-300 rounded-md p-4 mb-2">
-              <div className="flex items-center justify-between">
-                <h4 className="text-lg font-semibold">{address.fullName}</h4>
+      <div className="flex flex-col items-center min-h-full w-[70%] mx-[4vw] text-gray-700">
+        <div className="bg-white p-6 max-w-2xl w-full md:mt-[2rem] mx-auto">
+          <h2 className="text-2xl font-bold mb-4 text-[#125872]">Shipping Address</h2>
+          <div>
+            <h3 className="text-lg font-semibold mb-2">Saved Addresses</h3>
+            {addresses.length === 0 ? (
+              <p>No addresses saved yet.</p>
+            ) : (
+              addresses.map((address, index) => (
+                <div key={index} className="border border-gray-300 rounded-md p-4 mb-2">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-lg font-semibold">{address.fullName}</h4>
+                    <input
+                      type="checkbox"
+                      checked={selectedAddress === address}
+                      onChange={() => handleSelectAddress(address)}
+                    />
+                  </div>
+                  <p>{address.contactNo}</p>
+                  <p>{address.address}</p>
+                  <p>{address.city}, {address.state} {address.pincode}</p>
+                </div>
+              ))
+            )}
+            <button
+              className="bg-[#125872] text-white px-4 py-2 rounded-md mt-2"
+              onClick={() => setShowModal(true)}
+            >
+              Add address
+            </button>
+          </div>
+          <form onSubmit={handleSubmit}>
+            <div className="md:flex md:mb-[2rem]">
+              <div className="w-full md:w-1/2 md:mr-2 mb-4 md:mb-0">
+                <label htmlFor="fullName" className="text-sm font-medium text-gray-700">
+                  Full Name
+                </label>
                 <input
-                  type="checkbox"
-                  checked={selectedAddress === address}
-                  onChange={() => handleSelectAddress(address)}
+                  type="text"
+                  id="fullName"
+                  name="fullName"
+                  value={formData.fullName}
+                  onChange={handleChange}
+                  required
+                  className={`mt-1 py-3 p-2 block w-full border ${errors.fullName ? 'border-red-500' : 'border-gray-300'
+                    } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
                 />
+                {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>}
               </div>
-              <p>{address.contactNo}</p>
-              <p>{address.address}</p>            
-              <p>{address.city}, {address.state} {address.pincode}</p>
+              <div className="w-full md:w-1/2 md:ml-2">
+                <label htmlFor="contactNo" className="text-sm font-medium text-gray-700">
+                  Contact number
+                </label>
+                <input
+                  type="number"
+                  id="contactNo"
+                  name="contactNo"
+                  value={formData.contactNo}
+                  onChange={handleChange}
+                  required
+                  className={`mt-1 p-2 block py-3 w-full border ${errors.contactNo ? 'border-red-500' : 'border-gray-300'
+                    } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+                />
+                {errors.contactNo && <p className="text-red-500 text-sm mt-1">{errors.contactNo}</p>}
+              </div>
             </div>
-          ))}
-          <button
-            className="bg-[#125872] text-white px-4 py-2 rounded-md mt-2"
-            onClick={() => setShowModal(true)}
-          >
-            Add address
-          </button>
-        </div>
-        <form onSubmit={handleSubmit}>
-          <div className="md:flex md:mb-[2rem]">
-            <div className="w-full md:w-1/2 md:mr-2 mb-4 md:mb-0">
-              <label htmlFor="fullName" className="text-sm font-medium text-gray-700">
-                Full Name
+            <div className="mb-[2rem]">
+              <label htmlFor="address" className="block text-sm font-medium text-gray-700">
+                Address
               </label>
               <input
                 type="text"
-                id="fullName"
-                name="fullName"
-                value={formData.fullName}
+                id="address"
+                name="address"
+                value={formData.address}
                 onChange={handleChange}
                 required
-                className={`mt-1 py-3 p-2 block w-full border ${
-                  errors.fullName ? 'border-red-500' : 'border-gray-300'
-                } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+                className={`mt-1 p-2 py-3 block w-full border ${errors.address ? 'border-red-500' : 'border-gray-300'
+                  } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
               />
-              {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>}
+              {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
             </div>
-            <div className="w-full md:w-1/2 md:ml-2">
-              <label htmlFor="contactNo" className="text-sm font-medium text-gray-700">
-                Contact number
-              </label>
-              <input
-                type="number"
-                id="contactNo"
-                name="contactNo"
-                value={formData.contactNo}
-                onChange={handleChange}
-                required
-                className={`mt-1 p-2 block py-3 w-full border ${
-                  errors.contactNo ? 'border-red-500' : 'border-gray-300'
-                } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
-              />
-              {errors.contactNo && <p className="text-red-500 text-sm mt-1">{errors.contactNo}</p>}
+            <div className="md:flex md:mb-[2rem]">
+              <div className="w-full md:w-1/2 md:mr-2 mb-4 md:mb-0">
+                <label htmlFor="pincode" className="block text-sm font-medium text-gray-700">
+                  Pincode
+                </label>
+                <input
+                  type="number"
+                  id="pincode"
+                  name="pincode"
+                  value={formData.pincode}
+                  onChange={handlePinChange}
+                  required
+                  className={`mt-1 p-2 py-3 block w-full border ${errors.pincode ? 'border-red-500' : 'border-gray-300'
+                    } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+                />
+                {errors.pincode && <p className="text-red-500 text-sm mt-1">{errors.pincode}</p>}
+              </div>
+              <div className="w-full md:w-1/2 md:ml-2">
+                <label htmlFor="city" className="block text-sm font-medium text-gray-700">
+                  City
+                </label>
+                <input
+                  type="text"
+                  id="city"
+                  name="city"
+                  value={formData.city}
+                  onChange={handleChange}
+                  required
+                  className={`mt-1 p-2 py-3 block w-full border ${errors.city ? 'border-red-500' : 'border-gray-300'
+                    } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+                />
+                {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city}</p>}
+              </div>
             </div>
-          </div>
-          <div className="mb-[2rem]">
-            <label htmlFor="address" className="block text-sm font-medium text-gray-700">
-              Address
-            </label>
-            <input
-              type="text"
-              id="address"
-              name="address"
-              value={formData.address}
-              onChange={handleChange}
-              required
-              className={`mt-1 p-2 py-3 block w-full border ${
-                errors.address ? 'border-red-500' : 'border-gray-300'
-              } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
-            />
-            {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
-          </div>
-          <div className="md:flex md:mb-[2rem]">
-            <div className="w-full md:w-1/2 md:mr-2 mb-4 md:mb-0">
-              <label htmlFor="pincode" className="block text-sm font-medium text-gray-700">
-                Pincode
-              </label>
-              <input
-                type="number"
-                id="pincode"
-                name="pincode"
-                value={formData.pincode}
-                onChange={handlePinChange}
-                required
-                className={`mt-1 p-2 py-3 block w-full border ${
-                  errors.pincode ? 'border-red-500' : 'border-gray-300'
-                } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
-              />
-              {errors.pincode && <p className="text-red-500 text-sm mt-1">{errors.pincode}</p>}
-            </div>
-            <div className="w-full md:w-1/2 md:ml-2">
-              <label htmlFor="city" className="block text-sm font-medium text-gray-700">
-                City
+            <div className="mb-4">
+              <label htmlFor="state" className="block text-sm font-medium text-gray-700">
+                State
               </label>
               <input
                 type="text"
-                id="city"
-                name="city"
-                value={formData.city}
+                id="state"
+                name="state"
+                value={formData.state}
                 onChange={handleChange}
                 required
-                className={`mt-1 p-2 py-3 block w-full border ${
-                  errors.city ? 'border-red-500' : 'border-gray-300'
-                } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+                className={`mt-1 p-2 py-3 block w-full border ${errors.state ? 'border-red-500' : 'border-gray-300'
+                  } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
               />
-              {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city}</p>}
+              {errors.state && <p className="text-red-500 text-sm mt-1">{errors.state}</p>}
             </div>
-          </div>
-          <div className="mb-4">
-            <label htmlFor="state" className="block text-sm font-medium text-gray-700">
-              State
-            </label>
-            <input
-              type="text"
-              id="state"
-              name="state"
-              value={formData.state}
-              onChange={handleChange}
-              required
-              className={`mt-1 p-2 py-3 block w-full border ${
-                errors.state ? 'border-red-500' : 'border-gray-300'
-              } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
-            />
-            {errors.state && <p className="text-red-500 text-sm mt-1">{errors.state}</p>}
-          </div>
-          
-          {/* <div className="flex justify-center">
+
+            {/* <div className="flex justify-center">
             <button
               type="submit"
               className="flex items-center justify-center px-8 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#125872] hover:bg-[#0E4E63] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0E4E63]"
@@ -358,27 +379,27 @@ const AddressForm = () => {
               RazorPay <SiRazorpay className="ml-2" />
             </button>
           </div> */}
-          
-        </form>
+
+          </form>
+        </div>
+        <AddAddressModal
+          isOpen={showModal}
+          onClose={() => setShowModal(false)}
+          onAddAddress={handleAddAddress}
+        />
       </div>
-      <AddAddressModal
-        isOpen={showModal}
-        onClose={() => setShowModal(false)}
-        onAddAddress={handleAddAddress}
-      />
-      </div>
-        <div className="w-[30%] p-[2rem] h-full border border-gray-300  rounded-md md:block hidden shadow-md text-gray-700 mr-[4rem]">
+      <div className="w-[30%] p-[2rem] h-full border border-gray-300  rounded-md md:block hidden shadow-md text-gray-700 mr-[4rem]">
         <h2 className="text-2xl font-bold mb-4">Order Total</h2>
         <div className="bg-white">
-         
-          
-          
+
+
+
           <div className="border-t border-gray-300 pt-4 flex justify-between">
             <p className="font-bold">Total</p>
             <p className="font-bold">{`₹${localStorage.getItem('totalPrice')}`}</p>
           </div>
           <div className="mt-4">
-            
+
           </div>
           <div className="flex justify-center">
             <button
@@ -398,14 +419,14 @@ const AddressForm = () => {
           <div className="bg-white rounded-md p-4">
             <h2 className="text-2xl font-bold mb-4">Order Total</h2>
 
-        
+
             {/* Calculate and Display Total */}
             <div className="flex justify-between items-center mb-4">
               <p className="text-gray-500">Total</p>
               <p className="font-semibold">{`₹${localStorage.getItem('totalPrice')}`}</p>
             </div>
             {/* Apply Coupon Button */}
-          
+
             {/* Checkout Button */}
             <button onClick={handleSubmit} className="bg-[#125872] text-white font-semibold w-full py-3 rounded-md mt-4">
               Checkout

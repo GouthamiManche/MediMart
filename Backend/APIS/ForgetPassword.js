@@ -9,6 +9,7 @@ const bodyParser = require('body-parser');
 app.use(cors());
 app.use(bodyParser.json());
 
+const FRONTEND_URL = process.env.FRONTEND_URL;
 const forgotPassword = async (req, res) => {
     const { email } = req.body;
     try {
@@ -34,7 +35,7 @@ const forgotPassword = async (req, res) => {
             subject: 'Reset your password',
             text: `You are receiving this because you (or someone else) have requested to reset the password for your account.\n\n` +
                 `Please click on the following link, or paste this into your browser to complete the process:\n\n` +
-                `http://localhost:5173/reset-password/${token}\n\n` +
+                `${FRONTEND_URL}/reset-password/${token}\n\n` +
                 `If you did not request this, please ignore this email and your password will remain unchanged.\n`
         };
 
