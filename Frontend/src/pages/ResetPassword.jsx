@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Logo from '/src/assets/logo.jpg';
+import { Link } from 'react-router-dom';
 
 export default function ResetPassword() {
   const { token } = useParams();
@@ -36,38 +38,59 @@ export default function ResetPassword() {
   };
 
   return (
-    <div className="reset-password-container">
-      <h2>Reset Password</h2>
-      <form onSubmit={handleSubmit} className="reset-password-form">
-        <div className="form-group">
-          <label htmlFor="password">New Password:</label>
-          <input
-            type="password"
-            id="password"
-            className="form-control"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+    <div className="bg-[#f5f5f5] min-h-screen flex items-center justify-center">
+      <div className="max-w-md w-full mx-auto bg-white rounded-lg shadow-lg p-8">
+        <div className="flex items-center justify-center mb-6">
+          <Link to="/">
+            <img className="h-12" src={Logo} alt="Logo" />
+          </Link>
+          <Link to="/" className="md:block hidden text-xl md:text-3xl font-bold ml-1 font-PlayFair">
+            <span className="text-[#14496b]">Medi</span>
+            <span className="text-[#8ccf28]">Mart</span>
+          </Link>
         </div>
-        <div className="form-group">
-          <label htmlFor="confirmPassword">Confirm Password:</label>
-          <input
-            type="password"
-            id="confirmPassword"
-            className="form-control"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
-          />
-        </div>
-        {error && <p className="error-message">{error}</p>}
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
-          <button type="submit" className="btn btn-primary">Reset Password</button>
-        )}
-      </form>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4 relative">
+            <label htmlFor="password" className="block text-gray-700 font-bold mb-2">
+              New Password:
+            </label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="border-b border-gray-400 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-[#125872]"
+              required
+            />
+          </div>
+          <div className="mb-4 relative">
+            <label htmlFor="confirmPassword" className="block text-gray-700 font-bold mb-2">
+              Confirm Password:
+            </label>
+            <input
+              type="password"
+              id="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="border-b border-gray-400 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-[#125872]"
+              required
+            />
+          </div>
+          {error && <p className="text-red-500 text-xs mt-2">{error}</p>}
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
+            <div className="flex items-center justify-center mb-4">
+              <button
+                type="submit"
+                className="bg-[#125872] text-white font-bold w-full py-2 px-4 rounded"
+              >
+                Reset Password
+              </button>
+            </div>
+          )}
+        </form>
+      </div>
     </div>
   );
 }
