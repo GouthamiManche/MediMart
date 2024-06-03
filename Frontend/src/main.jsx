@@ -17,3 +17,4 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 if ('serviceWorker' in navigator) {
   registerSW();
 }
+
