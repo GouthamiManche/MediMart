@@ -81,10 +81,9 @@ function Profile() {
                         <div className='md:mt-[2rem] '> <Link to="/orderhistory" className="text-xl text-white font-poppins mt-1 ml-4">Order history</Link></div>
                     </div>
                 </div>
+                <div className="w-full md:w-[100%] md:h-full ">
+                    <div className="flex flex-col md:flex-row  shadow-2xl  rounded p-4 md:m-4 md:m-12">
 
-                <div className="w-full md:w-[66rem] ">
-                    <div className="flex flex-col md:flex-row border border-gray-500 md:h-[50rem] rounded p-4 md:ml-4 md:mt-12">
-                        {/* Mobile view */}
                         <div className="md:hidden flex justify-center mt-8">
                             <div className="relative mb-4">
                                 <img
@@ -101,8 +100,7 @@ function Profile() {
                             </div>
                         </div>
 
-                        {/* Form */}
-                        <div className='w-full md:w-[30rem] md:mt-1'>
+                        <div className='w-full md:w-[30rem]'>
                             <div className="mb-4 relative">
                                 <label htmlFor="name" className="block text-sm font-medium text-gray-700">Full name</label>
                                 <input
@@ -176,24 +174,7 @@ function Profile() {
                                 />
                             </div>
 
-                            <div className="mt-8">
-                        <h2 className="text-xl font-semibold mb-4">Addresses</h2>
-                        {addresses.length > 0 ? (
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                {addresses.map((address, index) => (
-                                    <div key={index} className="bg-white rounded-lg shadow-md p-4">
-                                        <h3 className="text-lg font-semibold mb-2">{address.fullName}</h3>
-                                        <p>{address.address}</p>
-                                        <p>{`${address.city}, ${address.state}, ${address.pincode}`}</p>
-                                        <p>Contact: {address.contactNo}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        ) : (
-                            <p>No addresses found.</p>
-                        )}
-                    </div>
-
+                        
                             <button onClick={handleSaveProfile} type="submit" className="bg-[#125872] text-white px-4 py-2 rounded">Save changes</button>
                         </div>
 

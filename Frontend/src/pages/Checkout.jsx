@@ -458,8 +458,8 @@ const AddressForm = () => {
           <div className="bg-white rounded-md p-4">
             <h2 className="text-2xl font-bold mb-4">Order Total</h2>
 
-
             {/* Calculate and Display Total */}
+            
             <div className="flex justify-between items-center mb-4">
               <p className="text-gray-500">Total</p>
               <p className="font-semibold">{`₹${localStorage.getItem('totalPrice')}`}</p>

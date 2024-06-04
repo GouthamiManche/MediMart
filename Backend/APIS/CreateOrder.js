@@ -15,7 +15,7 @@ const CreateOrder = async (req, res) => {
     const orderDate = new Date().toLocaleDateString('en-GB');
 
     // Initialize Razorpay instance with debugging logs
-    console.log("Initializing Razorpay with Key ID:", process.env.RAZORPAY_KEY_ID);
+    //console.log("Initializing Razorpay with Key ID:", process.env.RAZORPAY_KEY_ID);
 
     const razorpay = new Razorpay({
       key_id: process.env.RAZORPAY_KEY_ID,
