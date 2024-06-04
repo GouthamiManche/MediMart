@@ -21,6 +21,7 @@ const { saveOrUpdateProfile, getProfileByEmail } = require('./APIS/Profile');
 const { forgotPassword } = require('./APIS/ForgetPassword');
 const { resetPassword } = require('./APIS/PasswordReset');
 const { addAddress, getAddresses, editAddress, deleteAddress } = require('./APIS/Address');
+const { getBanner, updateBanner } = require('./APIS/Banner');
 
 const app = express();
 const URI = process.env.MONGO_URL;
@@ -42,6 +43,7 @@ app.use(express.urlencoded({ extended: false }));
 app.put('/api/updatecart/:id', updateCartItem);
 app.put('/api/updateproduct/:Product_id', updateProduct);
 app.put('/api/user/address/:id', editAddress);
+app.put('/api/updatebanner/:id',updateBanner)
 
 app.post('/api/register', registerUser);
 app.post('/api/login', loginUser);
@@ -69,15 +71,17 @@ app.get('/api/getorderdetails/:orderId',getOrderDetailsByOrderId);
 app.get('/api/orders', getAllOrders);
 app.get('/api/profile/:email', getProfileByEmail);
 app.get('/api/user/addresses',getAddresses);
+app.get('/api/bannerPhotos',getBanner);
+
 
 app.get('/', (req, res) => {
   res.json('Hello, Backend Readyyyy!!! ');
 });
 
-// app.listen();
+app.listen();
 
-const PORT = 4000; // Specify the desired local port
+// const PORT = 4000; // Specify the desired local port
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });

@@ -19,7 +19,7 @@ const orderSchema = new Schema({
   contactNo: { type: String, required: true },
   amount: { type: Number, required: true },
   orderDate: { type: String, required: true },
-  paymentStatus: { type: String, default: 'not completed' },
+  paymentStatus: { type: String, default: 'Not Completed' },
   cartItems: [cartItemSchema],
   razorpay_order_id: { type: String, required: true }, // Add this field
   razorpay_payment_id: { type: String }
