@@ -6,7 +6,7 @@ import LoadingGif from "../Components/LoadingGif";
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import SideMenu from '../Components/SideMenuProfile';
+
 
 function OrderHistory() {
   const { user, logout } = useContext(AuthContext);
