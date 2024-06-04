@@ -13,6 +13,7 @@ function Profile() {
     const [deliveryAddress, setDeliveryAddress] = useState('');
     const [gender, setGender] = useState('');
     const [dob, setDOB] = useState('');
+    const [addresses, setAddresses] = useState([]);
 
     const apiUrl = import.meta.env.VITE_API_URL;
     const apiKey = import.meta.env.VITE_API_KEY;
@@ -26,7 +27,7 @@ function Profile() {
     const fetchProfile = async (email) => {
         try {
             const response = await axios.get(`${apiUrl}/profile/${email}`);
-            const { fullName, contactNumber, deliveryAddress, profilePic, gender, dateOfBirth } = response.data;
+            const { fullName, contactNumber, deliveryAddress, profilePic, gender, dateOfBirth, addresses } = response.data;
             setProfile(response.data);
             setFullName(fullName);
             setContactNumber(contactNumber);
@@ -34,6 +35,7 @@ function Profile() {
             setProfilePic(profilePic || 'src/assets/img/profile.png');
             setGender(gender);
             setDOB(dateOfBirth);
+            setAddresses(addresses);
         } catch (error) {
             console.error(error);
         }
@@ -81,7 +83,7 @@ function Profile() {
                 </div>
 
                 <div className="w-full md:w-[66rem] ">
-                    <div className="flex flex-col md:flex-row border border-gray-500 md:h-[30rem] rounded p-4 md:ml-4 md:mt-12">
+                    <div className="flex flex-col md:flex-row border border-gray-500 md:h-[50rem] rounded p-4 md:ml-4 md:mt-12">
                         {/* Mobile view */}
                         <div className="md:hidden flex justify-center mt-8">
                             <div className="relative mb-4">
@@ -174,19 +176,23 @@ function Profile() {
                                 />
                             </div>
 
-                            <div className="mb-4 relative">
-                                <label htmlFor="street" className="block text-sm font-medium text-gray-700">Delivery address</label>
-                                <input
-                                    type="text"
-                                    id="street"
-                                    name="street"
-                                    value={deliveryAddress}
-                                    className="mt-1 w-full border-b-2 border-gray-300 bg-transparent focus:outline-none focus:border-[#90CCBA]"
-                                    placeholder="Enter Your Address"
-                                    required
-                                    onChange={(e) => setDeliveryAddress(e.target.value)}
-                                />
+                            <div className="mt-8">
+                        <h2 className="text-xl font-semibold mb-4">Addresses</h2>
+                        {addresses.length > 0 ? (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {addresses.map((address, index) => (
+                                    <div key={index} className="bg-white rounded-lg shadow-md p-4">
+                                        <h3 className="text-lg font-semibold mb-2">{address.fullName}</h3>
+                                        <p>{address.address}</p>
+                                        <p>{`${address.city}, ${address.state}, ${address.pincode}`}</p>
+                                        <p>Contact: {address.contactNo}</p>
+                                    </div>
+                                ))}
                             </div>
+                        ) : (
+                            <p>No addresses found.</p>
+                        )}
+                    </div>
 
                             <button onClick={handleSaveProfile} type="submit" className="bg-[#125872] text-white px-4 py-2 rounded">Save changes</button>
                         </div>

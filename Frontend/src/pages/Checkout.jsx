@@ -7,6 +7,8 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddAddressModal from '../Components/AddAddressModal';
 import { FaTrashAlt, FaEdit } from 'react-icons/fa';
+import ManageAddModal from '../Components/ManageAddModal';
+import checkbox from '../assets/checkmark.png'
 const AddressForm = () => {
   const { user } = useContext(AuthContext);
   const email = user?.email || '';
@@ -23,13 +25,14 @@ const AddressForm = () => {
     Image_URL: '',
     email,
   });
-
   const [errors, setErrors] = useState({});
   const [addresses, setAddresses] = useState([]); // Add state for addresses
-  const [showModal, setShowModal] = useState(false); // Add state for modal visibility
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [showManageModal, setShowManageModal] = useState(false); // Add state for modal visibility
   const [selectedAddress, setSelectedAddress] = useState(null); // Add state for selected address
   const [cartItems, setCartItems] = useState([]);
   const [discountPercentage, setDiscountPercentage] = useState(0);
+  const [addressToEdit, setAddressToEdit] = useState(null);
   const calculateDiscount = () => {
     return (getCartTotal() * discountPercentage) / 100;
   };
@@ -39,7 +42,10 @@ const AddressForm = () => {
     setFormData({ ...formData, [name]: value });
     setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
   };
-
+  const handleEditClick = (address) => {
+    setAddressToEdit(address);
+    setShowManageModal(true);
+  };
   const handlePinChange = async (e) => {
     const { value } = e.target;
     setFormData({ ...formData, pincode: value });
@@ -216,11 +222,12 @@ const AddressForm = () => {
     try {
       const response = await axios.post(`${apiUrl}/user/add-address`, { email, address: newAddress });
       setAddresses(response.data);
-      setShowModal(false);
+      setShowAddModal(false);
     } catch (error) {
       console.error('Error adding address:', error);
     }
   };
+
 
   const handleSelectAddress = (address) => {
     setSelectedAddress(address);
@@ -235,9 +242,39 @@ const AddressForm = () => {
     });
   };
 
+  const handleDeleteAddress = async (addressId) => {
+    try {
+      const response = await axios.delete(`${apiUrl}/user/address/${addressId}`, {
+        data: { email }
+      });
+      console.log('Address deleted:', response.data);
+      setAddresses(addresses.filter(address => address.addressId !== addressId));
+    } catch (error) {
+      console.error('Error deleting address:', error);
+    }
+  };
+
+  const handleEditAddress = async (formData) => {
+    if (!addressToEdit || !addressToEdit.addressId) {
+      console.error('Invalid address data');
+      return;
+    }
+    try {
+      const response = await axios.put(`${apiUrl}/user/address/${addressToEdit.addressId}`, {
+        email,
+        address: formData,
+      });
+      setShowManageModal(false);
+      const updatedAddresses = await axios.get(`${apiUrl}/user/addresses`,{ params: { email } });
+      setAddresses(updatedAddresses.data);
+    } catch (error) {
+      console.error('Error editing address:', error);
+    }
+  };
+
   return (
-    <div className='flex items-center justify-center'>
-      <div className="flex flex-col items-center min-h-full w-[70%] mx-[4vw] text-gray-700">
+    <div className=' flex items-center justify-center'>
+      <div className="h-screen flex flex-col items-center min-h-full w-[70%] mx-[4vw] text-gray-700">
         <div className="bg-white p-6 max-w-2xl w-full md:mt-[2rem] mx-auto">
           <h2 className="text-2xl font-bold mb-4 text-[#125872]">Shipping Address</h2>
           <div>
@@ -251,6 +288,7 @@ const AddressForm = () => {
                     <h4 className="text-lg font-semibold">{address.fullName}</h4>
                     <input
                       type="checkbox"
+                      src={checkbox}
                       checked={selectedAddress === address}
                       onChange={() => handleSelectAddress(address)}
                     />
@@ -258,27 +296,26 @@ const AddressForm = () => {
                   <p>{address.contactNo}</p>
                   <p>{address.address}</p>
                   <p>{address.city}, {address.state} {address.pincode}</p>
-                  <div className="border-t border-[2px] border-dotted my-2"></div>
+                  {/* <div className="border-t border-[2px] border-dotted my-2"></div> */}
+                  {/* <hr className='m-1 border border-gray-300'></hr> */}
                   <div className="flex justify-between items-center ">
-                    <button className="text-gray-500 hover:text-red-700">
+                    <button onClick={() => handleDeleteAddress(address.addressId)} className="text-gray-500 hover:text-red-700">
                       <FaTrashAlt />
                     </button>
-                    <button className="flex items-center text-gray-500 hover:text-blue-700">
-                      <FaEdit /> <span className='ml-[4px]'>Edit</span>
+                    <button onClick={() => handleEditClick(address)} className="flex items-center text-gray-500 hover:text-blue-700">
+                      <FaEdit /><span className='ml-[4px]'>Edit</span>
                     </button>
                   </div>
                 </div>
-
               ))
             )}
             <button
               className="bg-[#125872] text-white px-4 py-2 rounded-md mt-2"
-              onClick={() => setShowModal(true)}
-            >
+              onClick={() => setShowAddModal(true)}>
               Add address
             </button>
           </div>
-          <form onSubmit={handleSubmit}>
+          <form className="" onSubmit={handleSubmit}>
             <div className="md:flex md:mb-[2rem]">
               <div className="w-full md:w-1/2 md:mr-2 mb-4 md:mb-0">
                 <label htmlFor="fullName" className="text-sm font-medium text-gray-700">
@@ -379,30 +416,23 @@ const AddressForm = () => {
               />
               {errors.state && <p className="text-red-500 text-sm mt-1">{errors.state}</p>}
             </div>
-
-            {/* <div className="flex justify-center">
-            <button
-              type="submit"
-              className="flex items-center justify-center px-8 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#125872] hover:bg-[#0E4E63] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0E4E63]"
-            >
-              RazorPay <SiRazorpay className="ml-2" />
-            </button>
-          </div> */}
-
           </form>
         </div>
         <AddAddressModal
-          isOpen={showModal}
-          onClose={() => setShowModal(false)}
+          isOpen={showAddModal}
+          onClose={() => setShowAddModal(false)}
           onAddAddress={handleAddAddress}
+        />
+        <ManageAddModal
+          isOpen={showManageModal}
+          onAddAddress={handleEditAddress}
+          onClose={() => setShowManageModal(false)}
+          addressToEdit={addressToEdit}
         />
       </div>
       <div className="w-[30%] p-[2rem] h-full border border-gray-300  rounded-md md:block hidden shadow-md text-gray-700 mr-[4rem]">
         <h2 className="text-2xl font-bold mb-4">Order Total</h2>
         <div className="bg-white">
-
-
-
           <div className="border-t border-gray-300 pt-4 flex justify-between">
             <p className="font-bold">Total</p>
             <p className="font-bold">{`₹${localStorage.getItem('totalPrice')}`}</p>
