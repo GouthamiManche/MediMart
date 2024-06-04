@@ -3,8 +3,7 @@ const orderDate = new Date().toLocaleDateString('en-GB');
 const User = require('../models/user.model');
 
 const saveOrUpdateProfile = async (req, res) => {
-    const { email, fullName, contactNumber, deliveryAddress, profilePic, gender, dateOfBirth } = req.body;
-
+    const { username, email, password, fullName, contactNumber, deliveryAddress, profilePic, gender, dateOfBirth } = req.body;
     try {
         let user = await User.findOne({ email });
 
@@ -14,18 +13,19 @@ const saveOrUpdateProfile = async (req, res) => {
             user.deliveryAddress = deliveryAddress;
             user.profilePic = profilePic;
             user.gender = gender;
-            user.dateOfBirth = new Date(dateOfBirth);
+            user.dateOfBirth = dateOfBirth;
             await user.save();
         } else {
-            // If user doesn't exist, create a new user
             user = new User({
+                username,
                 email,
+                password,
                 fullName,
                 contactNumber,
                 deliveryAddress,
                 profilePic,
                 gender,
-                dateOfBirth: new Date(dateOfBirth)
+                dateOfBirth
             });
             await user.save();
         }
@@ -35,25 +35,25 @@ const saveOrUpdateProfile = async (req, res) => {
         res.status(500).json({ message: 'Error saving profile' });
     }
 };
+
 const getProfileByEmail = async (req, res) => {
     const email = req.params.email;
-
     try {
         const user = await User.findOne({ email });
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
-
         const profile = {
+            username: user.username,
             email: user.email,
             fullName: user.fullName,
             contactNumber: user.contactNumber,
             deliveryAddress: user.deliveryAddress,
             profilePic: user.profilePic,
             gender: user.gender,
-            dateOfBirth: user.dateOfBirth.toISOString().split('T')[0], // Return date in YYYY-MM-DD format
+            dateOfBirth: user.dateOfBirth.toISOString().split('T')[0],
+            addresses: user.addresses
         };
-
         res.status(200).json(profile);
     } catch (error) {
         console.error(error);

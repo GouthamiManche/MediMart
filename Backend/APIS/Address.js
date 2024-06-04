@@ -2,7 +2,7 @@ const User = require('../models/user.model');
 
 // Add new address
 async function addAddress(req, res) {
-  const userEmail = req.body.email;  // Assuming email is sent in the request body
+  const userEmail = req.body.email;  
   const newAddress = req.body.address;
 
   try {
@@ -20,8 +20,7 @@ async function addAddress(req, res) {
 
 // Fetch addresses
 async function getAddresses(req, res) {
-  const userEmail = req.query.email; // Using query parameters
-
+  const userEmail = req.query.email;
   try {
     const user = await User.findOne({ email: userEmail });
     if (!user) {
@@ -36,8 +35,8 @@ async function getAddresses(req, res) {
 
 // Edit address
 async function editAddress(req, res) {
-  const userEmail = req.body.email;  // Assuming email is sent in the request body
-  const addressId = req.params.id;  // Assuming addressId is passed in the URL params
+  const userEmail = req.body.email; 
+  const addressId = req.params.id;  
   const updatedAddress = req.body.address;
 
   try {
@@ -60,8 +59,8 @@ async function editAddress(req, res) {
 
 // Delete address
 async function deleteAddress(req, res) {
-  const userEmail = req.body.email;  // Assuming email is sent in the request body
-  const addressId = req.params.id;  // Assuming addressId is passed in the URL params
+  const userEmail = req.body.email; 
+  const addressId = req.params.id;
 
   try {
     const user = await User.findOne({ email: userEmail });

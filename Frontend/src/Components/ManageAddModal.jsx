@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const ManageAddressModal = ({ isOpen, onClose, onAddAddress,addressToEdit }) => {
+const ManageAddressModal = ({ isOpen, onClose, onAddAddress, addressToEdit }) => {
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -11,7 +11,6 @@ const ManageAddressModal = ({ isOpen, onClose, onAddAddress,addressToEdit }) => 
     pincode: '',
     contactNo: '',
   });
-
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
@@ -22,7 +21,7 @@ const ManageAddressModal = ({ isOpen, onClose, onAddAddress,addressToEdit }) => 
     }));
     setErrors((prevErrors) => ({
       ...prevErrors,
-      [name]: '', // Clear error message when input changes
+      [name]: '', 
     }));
   };
 
@@ -31,19 +30,6 @@ const ManageAddressModal = ({ isOpen, onClose, onAddAddress,addressToEdit }) => 
       setFormData(addressToEdit);
     }
   }, [addressToEdit]);
-
-  const handleEditAddress = async () => {
-    try {
-      const response = await axios.put(`/api/user/address/${addressToEdit._id}`, {
-        email,
-        address: formData,
-      });
-
-      onClose();
-    } catch (error) {
-      console.error('Error editing address:', error);
-    }
-  };
 
   const handlePincodeChange = async (e) => {
     const { value } = e.target;
@@ -119,7 +105,7 @@ const ManageAddressModal = ({ isOpen, onClose, onAddAddress,addressToEdit }) => 
     e.preventDefault();
     const validationErrors = validateForm(formData);
     if (Object.keys(validationErrors).length === 0) {
-      onAddAddress(formData); // Call the onAddAddress function with the form data
+      onAddAddress(formData);
       onClose();
     } else {
       setErrors(validationErrors);
@@ -242,7 +228,7 @@ const ManageAddressModal = ({ isOpen, onClose, onAddAddress,addressToEdit }) => 
             >
               Cancel
             </button>
-            <button onClick={handleEditAddress} type="submit" className="bg-[#125872] text-white px-4 py-2 rounded-md">
+            <button type="submit" className="bg-[#125872] text-white px-4 py-2 rounded-md">
               Save
             </button>
           </div>
