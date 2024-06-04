@@ -43,7 +43,7 @@ app.use(express.urlencoded({ extended: false }));
 app.put('/api/updatecart/:id', updateCartItem);
 app.put('/api/updateproduct/:Product_id', updateProduct);
 app.put('/api/user/address/:id', editAddress);
-app.put('/api/updatebanner/:id',updateBanner)
+
 
 app.post('/api/register', registerUser);
 app.post('/api/login', loginUser);
@@ -62,8 +62,10 @@ app.delete('/api/deleteproduct/:Product_id', deleteProduct);
 app.delete('/api/deleteorder/:id',deleteOrder);
 app.delete('/api/user/address/:id', deleteAddress);
 
-app.post('/banners', addBanner);
-app.delete('/banners/:id', deleteBanner);
+app.post('/api/banners', addBanner);
+app.delete('/api/banners/:id', deleteBanner);
+app.get('/api/bannerPhotos',getBanner);
+app.put('/api/updatebanner/:id',updateBanner)
 
 app.get('/api/users', getAllUsers);
 app.get('/api/data', getData);
@@ -74,7 +76,7 @@ app.get('/api/getorderdetails/:orderId',getOrderDetailsByOrderId);
 app.get('/api/orders', getAllOrders);
 app.get('/api/profile/:email', getProfileByEmail);
 app.get('/api/user/addresses',getAddresses);
-app.get('/api/bannerPhotos',getBanner);
+
 
 
 app.get('/', (req, res) => {
