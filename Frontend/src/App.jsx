@@ -22,6 +22,7 @@ const Contact = lazy(() => import('./pages/Contact'));
 const OrderPlaced = lazy(() => import('./pages/OrderPlaced'));
 const ErrorPage = lazy(() => import('./pages/ErrorPage'));
 const OrderHistory = lazy(() => import('./pages/OrderHistory'));
+const Address = lazy(() => import('./pages/Address'));
 
 const AppWrapper = () => {
   const navigate = useNavigate();
@@ -48,6 +49,7 @@ const AppWrapper = () => {
               <Route exact path="/checkout" element={<Checkout />} />
               <Route path="/orderplaced/:orderId" element={<OrderPlaced />} />
               <Route exact path="/orderhistory" element={<OrderHistory />} />
+              <Route exact path="/address" element={<Address />} />
             </Routes>
             <GotoTop />
             <Footer />

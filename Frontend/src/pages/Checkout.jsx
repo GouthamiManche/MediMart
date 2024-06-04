@@ -273,8 +273,8 @@ const AddressForm = () => {
   };
 
   return (
-    <div className=' flex items-center justify-center'>
-      <div className="h-screen flex flex-col items-center min-h-full w-[70%] mx-[4vw] text-gray-700">
+    <div className=' flex  justify-center'>
+      <div className="h-full flex flex-col items-center min-h-full w-[70%] mx-[4vw] text-gray-700">
         <div className="bg-white p-6 max-w-2xl w-full md:mt-[2rem] mx-auto">
           <h2 className="text-2xl font-bold mb-4 text-[#125872]">Shipping Address</h2>
           <div>
@@ -315,7 +315,7 @@ const AddressForm = () => {
               Add address
             </button>
           </div>
-          <form className="" onSubmit={handleSubmit}>
+          <form className="hidden" onSubmit={handleSubmit}>
             <div className="md:flex md:mb-[2rem]">
               <div className="w-full md:w-1/2 md:mr-2 mb-4 md:mb-0">
                 <label htmlFor="fullName" className="text-sm font-medium text-gray-700">
@@ -430,7 +430,7 @@ const AddressForm = () => {
           addressToEdit={addressToEdit}
         />
       </div>
-      <div className="w-[30%] p-[2rem] h-full border border-gray-300  rounded-md md:block hidden shadow-md text-gray-700 mr-[4rem]">
+      <div className="w-[30%] p-[2rem] h-full border border-gray-300 sticky top-[14rem] rounded-md md:block hidden shadow-md text-gray-700 mr-[4rem]">
         <h2 className="text-2xl font-bold mb-4">Order Total</h2>
         <div className="bg-white">
           <div className="border-t border-gray-300 pt-4 flex justify-between">
