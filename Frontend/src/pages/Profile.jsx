@@ -77,9 +77,10 @@ function Profile() {
             <div className="flex flex-col md:flex-row font-poppins">
                 <div className="w-full md:w-[15rem] bg-[#125872] ">
                     <div>
-                        <h2 className="text-2xl font-semibold text-white font-poppins mt-5 md:mt-[5rem] ml-4">Profile</h2>
-                        <div className='md:mt-[2rem] '> <Link to="/orderhistory" className="text-xl text-white font-poppins mt-1 ml-4">Order history</Link></div>
+                        <h2 className="text-2xl font-semibold text-white font-poppins mt-4 md:mt-[5rem] ml-4">Profile</h2>
+                        <div className='md:mt-[1rem]'> <Link to="/orderhistory" className="text-xl text-white font-poppins mt-1 ml-4">Order history</Link></div>
                     </div>
+                    <div className='md:mt-[1rem] '><Link to="/address" className='text-xl text-white font-poppins mt-1 ml-4'>Address</Link></div>
                 </div>
                 <div className="w-full md:w-[100%] md:h-full ">
                     <div className="flex flex-col md:flex-row  shadow-2xl  rounded p-4 md:m-4 md:m-12">
@@ -174,7 +175,7 @@ function Profile() {
                                 />
                             </div>
 
-                        
+
                             <button onClick={handleSaveProfile} type="submit" className="bg-[#125872] text-white px-4 py-2 rounded">Save changes</button>
                         </div>
 

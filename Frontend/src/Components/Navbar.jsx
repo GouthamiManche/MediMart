@@ -1,3 +1,4 @@
+// Navbar.jsx
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
@@ -6,35 +7,20 @@ import Logo from '/src/assets/logo.jpg';
 import { ImSearch } from "react-icons/im";
 import { FaCartShopping } from "react-icons/fa6";
 import { AuthContext } from "./AuthProvider";
+import { useCart } from "./CartProvider";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function Navbar() {
   const { user, logout } = useContext(AuthContext);
+  const { state: { cartItems }, fetchCartItems } = useCart();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [totalItemsInCart, setTotalItemsInCart] = useState(0);
   const navigate = useNavigate();
-  const apiUrl = import.meta.env.VITE_API_URL;
-  const apiKey = import.meta.env.VITE_API_KEY;
 
   useEffect(() => {
-    if (user && user.email) {
-      const fetchCartItems = async () => {
-        try {
-          const response = await fetch(`${apiUrl}/getcartitems?email=${user.email}`);
-          const data = await response.json();
-          const total = data.reduce((total, item) => total + item.quantity, 0);
-          setTotalItemsInCart(total);
-        } catch (error) {
-          console.error("Failed to fetch cart items:", error);
-          toast.error("Failed to fetch cart items");
-        }
-      };
-
-      fetchCartItems();
-    }
-  }, [user, apiUrl, setTotalItemsInCart]);
+    fetchCartItems();
+  }, [fetchCartItems]);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -55,8 +41,9 @@ function Navbar() {
     { title: "Women Care", subCategory: "Women Care" },
     { title: "Baby Care", subCategory: "Baby Care" },
     { title: "Health Devices", subCategory: "Health Devices" },
-
   ];
+
+  const totalItemsInCart = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   return (
     <div className="bg-white text-gray-900 z-50 w-full sticky top-0 shadow-lg">
@@ -83,25 +70,22 @@ function Navbar() {
           </button>
         </div>
         <nav className="hidden md:flex items-center ">
-        <div className="">
-    {categories.map(({ title, subCategory, category }, index) => (
-      <Link
-        key={index}
-        to={`/shop?subCategory=${subCategory || ''}&Category=${category || ''}`}
-        className="text-gray-900 hover:text-gray-700 transition duration-300 text-center mx-6"
-      >
-        {title}
-      </Link>
-    ))}
-  </div>
+          <div className="">
+            {categories.map(({ title, subCategory, category }, index) => (
+              <Link
+                key={index}
+                to={`/shop?subCategory=${subCategory || ''}&Category=${category || ''}`}
+                className="text-gray-900 hover:text-gray-700 transition duration-300 text-center mx-6"
+              >
+                {title}
+              </Link>
+            ))}
+          </div>
           <nav className="hidden md:flex md:ml-[12vw]">
-
             <div className="flex gap-10 text-gray-900">
-
               <Link to="/shop" className="mr-[1rem]">
                 <ImSearch className="text-xl" />
               </Link>
-
             </div>
           </nav>
           <button onClick={handleCartClick} className="font-bold py-2 rounded flex items-center">
@@ -138,7 +122,6 @@ function Navbar() {
           )}
         </nav>
       </header>
-
       <div className={`fixed inset-0 z-50 overflow-hidden transition-transform duration-300 ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full"}`}>
         <div className={`absolute inset-0 bg-gray-900 opacity-50 transition-opacity duration-300 ${mobileMenuOpen ? "opacity-50" : "opacity-0"}`} onClick={() => setMobileMenuOpen(false)}></div>
         <div className={`absolute left-0 w-3/4 max-w-xs h-screen bg-white shadow-lg transition-transform duration-300 ${mobileMenuOpen ? "translate-x-0" : "-translate-x-full"}`}>
