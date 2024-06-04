@@ -21,7 +21,7 @@ const { saveOrUpdateProfile, getProfileByEmail } = require('./APIS/Profile');
 const { forgotPassword } = require('./APIS/ForgetPassword');
 const { resetPassword } = require('./APIS/PasswordReset');
 const { addAddress, getAddresses, editAddress, deleteAddress } = require('./APIS/Address');
-const { getBanner, updateBanner } = require('./APIS/Banner');
+const { getBanner, updateBanner, deleteBanner ,addBanner} = require('./APIS/Banner');
 
 const app = express();
 const URI = process.env.MONGO_URL;
@@ -61,6 +61,9 @@ app.delete('/api/removefromcart/:id', deleteCartItem);
 app.delete('/api/deleteproduct/:Product_id', deleteProduct);
 app.delete('/api/deleteorder/:id',deleteOrder);
 app.delete('/api/user/address/:id', deleteAddress);
+
+app.post('/banners', addBanner);
+app.delete('/banners/:id', deleteBanner);
 
 app.get('/api/users', getAllUsers);
 app.get('/api/data', getData);
