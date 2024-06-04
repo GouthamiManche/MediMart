@@ -10,6 +10,8 @@ app.use(cors());
 app.use(bodyParser.json());
 
 const FRONTEND_URL = process.env.FRONTEND_URL;
+const EMAIL = process.env.EMAIL;
+const PASS = process.env.PASS;
 const forgotPassword = async (req, res) => {
     const { email } = req.body;
     try {
@@ -19,14 +21,14 @@ const forgotPassword = async (req, res) => {
         }
         const token = crypto.randomBytes(20).toString('hex');
         user.resetPasswordToken = token;
-        user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+        user.resetPasswordExpires = Date.now() + 3600000;
         await user.save();
 
         const transporter = nodemailer.createTransport({
             service: 'Gmail',
             auth: {
-                user: `teammedimart@gmail.com`,
-                pass: `waaa nprf fgyq rbck` // Use environment variables for security
+                user: `${EMAIL}`,
+                pass: `${PASS}`
             }
         });
         const mailOptions = {

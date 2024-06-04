@@ -189,7 +189,7 @@ function Login() {
           </div>
         )}
         <div className="text-center">
-          <Link to="/forgetpassword" className="text-[#125872]">ForgetPassword</Link>
+          <Link to="/forgetpassword" className="text-[#125872]">Forget Password </Link>
         </div>
       </div>
     </div>

@@ -13,7 +13,7 @@ async function ValidateOrder(req, res) {
     const updatedOrder = await OrderDetail.findOneAndUpdate(
       { razorpay_order_id: razorpay_order_id },
       {
-        paymentStatus: 'completed',
+        paymentStatus: 'Completed',
         razorpay_payment_id: razorpay_payment_id,
         razorpay_order_id: razorpay_order_id,
       },

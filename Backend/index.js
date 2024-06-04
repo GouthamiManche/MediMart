@@ -21,6 +21,7 @@ const { saveOrUpdateProfile, getProfileByEmail } = require('./APIS/Profile');
 const { forgotPassword } = require('./APIS/ForgetPassword');
 const { resetPassword } = require('./APIS/PasswordReset');
 const { addAddress, getAddresses, editAddress, deleteAddress } = require('./APIS/Address');
+const { getBanner, updateBanner, deleteBanner ,addBanner} = require('./APIS/Banner');
 
 const app = express();
 const URI = process.env.MONGO_URL;
@@ -43,6 +44,7 @@ app.put('/api/updatecart/:id', updateCartItem);
 app.put('/api/updateproduct/:Product_id', updateProduct);
 app.put('/api/user/address/:id', editAddress);
 
+
 app.post('/api/register', registerUser);
 app.post('/api/login', loginUser);
 app.post('/api/createorder', CreateOrder);
@@ -60,6 +62,11 @@ app.delete('/api/deleteproduct/:Product_id', deleteProduct);
 app.delete('/api/deleteorder/:id',deleteOrder);
 app.delete('/api/user/address/:id', deleteAddress);
 
+app.post('/api/banners', addBanner);
+app.delete('/api/banners/:id', deleteBanner);
+app.get('/api/bannerPhotos',getBanner);
+app.put('/api/updatebanner/:id',updateBanner)
+
 app.get('/api/users', getAllUsers);
 app.get('/api/data', getData);
 app.get('/api/products', getProductsByCategory);
@@ -70,14 +77,16 @@ app.get('/api/orders', getAllOrders);
 app.get('/api/profile/:email', getProfileByEmail);
 app.get('/api/user/addresses',getAddresses);
 
+
+
 app.get('/', (req, res) => {
   res.json('Hello, Backend Readyyyy!!! ');
 });
 
-// app.listen();
+app.listen();
 
-const PORT = 4000; // Specify the desired local port
+// const PORT = 4000; // Specify the desired local port
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });
