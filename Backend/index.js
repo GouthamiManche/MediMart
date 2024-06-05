@@ -1,11 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const Schema = require('./models/user.model');
-const Data = require('./models/product.model');
-const OrderDetail= require('./models/orderdetails.model')
 const cors = require('cors');
-const crypto = require("crypto");
 const { getAllUsers } = require('./APIS/Users');
 const { getData, addProduct, updateProduct, deleteProduct } = require('./APIS/Data');
 const { registerUser, loginUser } = require('./APIS/Login');
@@ -14,7 +10,6 @@ const {getOrderDetailsByEmail} = require('./APIS/OrderDetailsByEmail')
 const {CreateOrder} = require("./APIS/CreateOrder")
 const { addToCart, updateCartItem, deleteCartItem,deleteAllCartItems } = require('./APIS/Addtocart');
 const { getCartItemsByEmail } = require('./APIS/GetCartItems');
-const Razorpay = require("razorpay");
 const { getOrderDetailsByOrderId ,getAllOrders, deleteOrder} = require('./APIS/OrderDetailsbyID');
 const { ValidateOrder } = require('./APIS/OrderValidate');
 const { saveOrUpdateProfile, getProfileByEmail } = require('./APIS/Profile');
@@ -40,43 +35,58 @@ app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 
 // ROUTES
-app.put('/api/updatecart/:id', updateCartItem);
-app.put('/api/updateproduct/:Product_id', updateProduct);
-app.put('/api/user/address/:id', editAddress);
 
-
-app.post('/api/register', registerUser);
-app.post('/api/login', loginUser);
-app.post('/api/createorder', CreateOrder);
-app.post("/api/order/validate",ValidateOrder);
+//cart
 app.post('/api/addtocart', addToCart);
-app.post('/api/addproduct', addProduct);
-app.post('/api/profile',saveOrUpdateProfile);
-app.post('/api/forgot-password',forgotPassword);
-app.post('/api/reset-password/:token',resetPassword);
-app.post('/api/user/add-address', addAddress);
-
+app.put('/api/updatecart/:id', updateCartItem);
 app.delete('/api/deleteallcartitems',deleteAllCartItems);
 app.delete('/api/removefromcart/:id', deleteCartItem);
-app.delete('/api/deleteproduct/:Product_id', deleteProduct);
-app.delete('/api/deleteorder/:id',deleteOrder);
-app.delete('/api/user/address/:id', deleteAddress);
-
-app.post('/api/banners', addBanner);
-app.delete('/api/banners/:id', deleteBanner);
-app.get('/api/bannerPhotos',getBanner);
-app.put('/api/updatebanner/:id',updateBanner)
-
-app.get('/api/users', getAllUsers);
-app.get('/api/data', getData);
-app.get('/api/products', getProductsByCategory);
-app.get('/api/orders/:email', getOrderDetailsByEmail);
 app.get('/api/getcartitems',getCartItemsByEmail);
-app.get('/api/getorderdetails/:orderId',getOrderDetailsByOrderId);
-app.get('/api/orders', getAllOrders);
-app.get('/api/profile/:email', getProfileByEmail);
+
+//address
+app.put('/api/user/address/:id', editAddress);
+app.post('/api/user/add-address', addAddress);
+app.delete('/api/user/address/:id', deleteAddress);
 app.get('/api/user/addresses',getAddresses);
 
+//product
+app.post('/api/addproduct', addProduct);
+app.put('/api/updateproduct/:Product_id', updateProduct);
+app.delete('/api/deleteproduct/:Product_id', deleteProduct);
+app.get('/api/products', getProductsByCategory);
+
+//login register 
+app.post('/api/register', registerUser);
+app.post('/api/login', loginUser);
+app.post('/api/forgot-password',forgotPassword);
+app.post('/api/reset-password/:token',resetPassword);
+
+//data
+app.get('/api/data', getData);
+
+//createorder and payment validate
+app.post('/api/createorder', CreateOrder);
+app.post("/api/order/validate",ValidateOrder);
+
+//user
+app.post('/api/profile',saveOrUpdateProfile)
+app.get('/api/users', getAllUsers);
+app.get('/api/profile/:email', getProfileByEmail);
+
+//order history
+app.get('/api/getorderdetails/:orderId',getOrderDetailsByOrderId);
+
+//orderss
+app.delete('/api/deleteorder/:id',deleteOrder);
+app.get('/api/orders', getAllOrders);
+app.get('/api/orders/:email', getOrderDetailsByEmail);
+
+
+//banner
+app.post('/api/addbanners', addBanner);
+app.delete('/api/deletebanners/:id', deleteBanner);
+app.get('/api/bannerPhotos',getBanner);
+app.put('/api/updatebanner/:id',updateBanner)
 
 
 app.get('/', (req, res) => {

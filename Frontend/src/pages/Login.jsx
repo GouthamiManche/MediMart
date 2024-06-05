@@ -173,11 +173,14 @@ function Login() {
               Log in
             </button>
           </div>
-          <div className="flex justify-center">
+          <div className="flex ">
             <p className="text-gray-500 mr-2">New User?</p>
             <Link to="/Register" className="text-[#125872] font-semibold">
               Register
             </Link>
+            <div className="ml-[7.5rem]">
+          <Link to="/forgetpassword" className="text-[#125872]">Forget Password </Link>
+        </div>
           </div>
         </form>
         {userNotFound && (
@@ -188,9 +191,7 @@ function Login() {
 
           </div>
         )}
-        <div className="text-center">
-          <Link to="/forgetpassword" className="text-[#125872]">Forget Password </Link>
-        </div>
+        
       </div>
     </div>
   );

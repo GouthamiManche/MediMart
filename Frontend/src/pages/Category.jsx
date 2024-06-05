@@ -220,8 +220,8 @@ const Category = () => {
                   </div>
                 )}
                 {product.Stock && (
-                  <div className=" bg-white rounded-lg   mb-[0.5rem]">
-                    <p className="text-gray-600 "><span className="text-lg font-semibold text-gray-700"></span> {product.Stock}</p>
+                  <div className=" bg-white rounded-lg  mb-[0.5rem]">
+                    <p className="text-gray-600 "><span className="text-lg text-bold text-gray-700"></span> {product.Stock}</p>
                   </div>
                 )}
                 {product['Directions for Use'] && (
