@@ -22,12 +22,13 @@ function OrderHistory() {
       fetchOrderHistory(user.email);
     }
   }, [user]);
-
+  
   const fetchOrderHistory = async (email) => {
     setIsLoading(true);
     try {
       const response = await fetch(`${apiUrl}/orders/${email}`);
       const data = await response.json();
+      console.log("Fetched orders:", data); // Log the orders to confirm the order
       setOrders(data);
     } catch (error) {
       console.error('Error fetching order history:', error);
@@ -35,18 +36,7 @@ function OrderHistory() {
       setIsLoading(false);
     }
   };
-
-  const addNewOrder = (newOrder) => {
-    setOrders((prevOrders) => [newOrder, ...prevOrders]);
-  };
-
-  const handleManageOrder = (orderId) => {
-    // Implement your logic for managing order here
-  };
-
-  const handleViewInvoice = (orderId) => {
-    // Implement your logic for viewing invoice here
-  };
+  
 
   const toggleOrderExpansion = (orderId) => {
     setExpandedOrderId((prevId) => (prevId === orderId ? null : orderId));

@@ -77,7 +77,11 @@ const AddressForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    
+    if (!selectedAddress) {
+      toast.error("Please select an address.");
+      return;
+    }
     if (!validateForm()) {
       return;
     }
@@ -253,7 +257,7 @@ const AddressForm = () => {
       console.error('Error deleting address:', error);
     }
   };
-
+ 
   const handleEditAddress = async (formData) => {
     if (!addressToEdit || !addressToEdit.addressId) {
       console.error('Invalid address data');
@@ -265,7 +269,7 @@ const AddressForm = () => {
         address: formData,
       });
       setShowManageModal(false);
-      const updatedAddresses = await axios.get(`${apiUrl}/user/addresses`,{ params: { email } });
+      const updatedAddresses = await axios.get(`${apiUrl}/user/addresses`, { params: { email } });
       setAddresses(updatedAddresses.data);
     } catch (error) {
       console.error('Error editing address:', error);
@@ -286,12 +290,17 @@ const AddressForm = () => {
                 <div key={index} className="border border-gray-300 rounded-md p-4 mb-2">
                   <div className="flex items-center justify-between">
                     <h4 className="text-lg font-semibold">{address.fullName}</h4>
-                    <input
-                      type="checkbox"
-                      src={checkbox}
-                      checked={selectedAddress === address}
-                      onChange={() => handleSelectAddress(address)}
-                    />
+                    <label className="flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={selectedAddress === address}
+                        onChange={() => handleSelectAddress(address)}
+                        className="hidden"
+                      />
+                      <span className="w-5 h-5 border border-gray-300 flex items-center justify-center">
+                        {selectedAddress === address && <img src={checkbox} alt="checkmark" className="w-full h-full" />}
+                      </span>
+                    </label>
                   </div>
                   <p>{address.contactNo}</p>
                   <p>{address.address}</p>
@@ -459,7 +468,7 @@ const AddressForm = () => {
             <h2 className="text-2xl font-bold mb-4">Order Total</h2>
 
             {/* Calculate and Display Total */}
-            
+
             <div className="flex justify-between items-center mb-4">
               <p className="text-gray-500">Total</p>
               <p className="font-semibold">{`₹${localStorage.getItem('totalPrice')}`}</p>
