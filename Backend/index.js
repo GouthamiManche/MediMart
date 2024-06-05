@@ -81,7 +81,6 @@ app.delete('/api/deleteorder/:id',deleteOrder);
 app.get('/api/orders', getAllOrders);
 app.get('/api/orders/:email', getOrderDetailsByEmail);
 
-
 //banner
 app.post('/api/addbanners', addBanner);
 app.delete('/api/deletebanners/:id', deleteBanner);
