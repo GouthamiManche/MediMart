@@ -12,33 +12,33 @@ function Footer() {
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap">
             <div className="w-full md:w-1/4 text-center md:text-left">
-              <Link to='/about'><h2 className="text-lg font-bold mb-4">About</h2></Link>
+              <Link to='/about'><h2 className="text-lg mb-4">About</h2></Link>
               <ul className="mb-4">
                 <Link to='/'><li className="mb-2">Home</li></Link>
                 <Link to='/shop'><li className="mb-2">Shop</li></Link>
               </ul>
             </div>
             <div className="w-full md:w-1/4 text-center md:text-left">
-              <h2 className="text-lg font-bold mb-4">Help</h2>
+              <h2 className="text-lg mb-4">Help</h2>
               <ul className="list-unstyled">
-                <li className="mb-2">Shipping & Returns</li>
-                <li className="mb-2">Track Orders</li>
-                <li className="mb-2">FAQs</li>
+                {/* <li className="mb-2">Shipping & Returns</li>
+                <li className="mb-2">Track Orders</li> */}
+                <Link to="/faq" className="mb-2">FAQs</Link>
               </ul>
             </div>
             <div className="w-full md:w-1/4 text-center md:text-left">
-              <Link to='/contact'><h2 className="text-lg font-bold mb-4">Contact</h2></Link>
+              <Link to='/contact'><h2 className="text-lg mb-4">Contact</h2></Link>
               <ul className="list-unstyled">
                 <li className="mb-2">Phone:</li>
-                <li className="mb-2">(+1)123 456 7890</li>
+                <li className="mb-2">(+91) 8652146200</li>
                 <li className="mb-2">Email:</li>
-                <li className="mb-2">medimart@gmail.com</li>
+                <li className="mb-2">teammedimart@gmail.com</li>
               </ul>
             </div>
             <div className="w-full md:w-1/4 text-center md:text-left">
-              <h2 className="text-2xl font-bold mb-4">Medimart</h2>
+              <h2 className="text-2xl font-bold mb-4">MediMart: Your Trusted Online Pharmacy</h2>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio vel sed adipisci, officiis voluptatem, aspernatur tempore in earum labore nostrum praesentium, ut id!
+              Experience seamless online ordering and efficient data management with our state-of-the-art MERN stack platform. Our Progressive Web App ensures accessibility and a superior user experience.
               </p>
               <div className='flex gap-2 mt-[1rem]'>
                 <FaTwitter className='text-blue-400' />

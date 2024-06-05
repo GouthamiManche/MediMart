@@ -6,7 +6,7 @@ import LoadingGif from "../Components/LoadingGif";
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-
+import UserNavigation from '../Components/UserNavigation';
 
 function OrderHistory() {
   const { user, logout } = useContext(AuthContext);
@@ -80,6 +80,7 @@ function OrderHistory() {
 
   return (
     <div className="container mx-auto px-4 py-8 md:w-3/4 lg:w-[80%]">
+        <UserNavigation/>
       <h2 className="text-3xl font-semibold mb-6 text-gray-800 text-center">Purchase History</h2>
       {isLoading ? (
         <LoadingGif />
