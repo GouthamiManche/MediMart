@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from "react-router-dom";
 import { AuthContext } from '../Components/AuthProvider';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -80,6 +81,13 @@ const Address = () => {
 
   return (
     <div className="flex justify-center">
+      <div className="w-full md:w-[15rem] bg-[#125872] ">
+                    <div>
+                        <h2 className="text-2xl font-semibold text-white font-poppins mt-4 md:mt-[5rem] ml-4">Profile</h2>
+                        <div className='md:mt-[1rem]'> <Link to="/orderhistory" className="text-xl text-white font-poppins mt-1 ml-4">Order history</Link></div>
+                    </div>
+                    <div className='md:mt-[1rem] '><Link to="/address" className='text-xl text-white font-poppins mt-1 ml-4'>Address</Link></div>
+                </div>
       <div className="h-full flex flex-col items-center min-h-full w-[70%] mx-[4vw] text-gray-700">
         <div className="bg-white p-6 max-w-2xl w-full md:mt-[2rem] mx-auto">
           <h2 className="text-2xl font-bold mb-4 text-[#125872]">Saved Addresses</h2>

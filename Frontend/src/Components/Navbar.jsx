@@ -59,7 +59,7 @@ function Navbar() {
         <div className="md:hidden flex text-gray-900">
           <button onClick={handleCartClick} className="font-bold py-2 rounded flex items-center mr-[1rem]">
             <FaCartShopping className="text-xl" />
-            <span className="text-lg ml-1">({totalItemsInCart})</span>
+            <span className="text-lg">({totalItemsInCart})</span>
           </button>
           <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="focus:outline-none">
             {mobileMenuOpen ? (
@@ -115,7 +115,7 @@ function Navbar() {
             </div>
           ) : (
             <Link to="/login">
-              <button className="flex items-center justify-center bg-[#125872] text-white font-bold py-2 md:px-8 px-[6px] rounded transition-colors duration-300">
+              <button className="ml-2 flex items-center justify-center bg-[#125872] text-white font-bold py-2 md:px-8 px-[6px] rounded transition-colors duration-300">
                 Login
               </button>
             </Link>

@@ -13,7 +13,7 @@ const SortDropdown = ({ sortOption, setSortOption }) => {
           id="sortOptions"
           value=""
           onChange={handleSortChange}
-          className="appearance-none bg-[#125872] text-white md:px-6 px-2  md:py-4 py-3 rounded-md flex justify-between items-center  text-sm sm:text-base md:ml-[1px] ml-[0.5rem] text-[16px]"
+          className="appearance-none bg-[#125872] text-white md:px-6 px-5  md:py-4 py-3 rounded-md flex justify-between items-center  text-sm sm:text-base md:ml-[1px] ml-[0.5rem] text-[16px]"
         >
           <option value="">Sort by</option>
           <option value="priceLowToHigh">Low-High</option>

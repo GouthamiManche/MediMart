@@ -75,17 +75,17 @@ function Profile() {
     return (
         <>
             <div className="flex flex-col md:flex-row font-poppins">
-                <div className="w-full md:w-[15rem] bg-[#125872] ">
+                {/* <div className="w-full md:w-[15rem] bg-[#125872] ">
                     <div>
                         <h2 className="text-2xl font-semibold text-white font-poppins mt-4 md:mt-[5rem] ml-4">Profile</h2>
                         <div className='md:mt-[1rem]'> <Link to="/orderhistory" className="text-xl text-white font-poppins mt-1 ml-4">Order history</Link></div>
                     </div>
                     <div className='md:mt-[1rem] '><Link to="/address" className='text-xl text-white font-poppins mt-1 ml-4'>Address</Link></div>
-                </div>
+                </div> */}
                 <div className="w-full md:w-[100%] md:h-full ">
                     <div className="flex flex-col md:flex-row  shadow-2xl  rounded p-4 md:m-4 md:m-12">
 
-                        <div className="md:hidden flex justify-center mt-8">
+                        <div className="md:hidden flex mb-[3rem] justify-center mt-8">
                             <div className="relative mb-4">
                                 <img
                                     className="object-cover w-[7rem] h-[7rem] rounded-full"
@@ -93,7 +93,7 @@ function Profile() {
                                     alt="Profile"
                                 />
                                 <div className="absolute inset-0 flex items-center justify-center w-[7rem] mt-[9rem]">
-                                    <label htmlFor="photo-upload" className="bg-[#90CCBA] text-xs text-white px-2 py-2 rounded cursor-pointer">
+                                    <label htmlFor="photo-upload" className="bg-[#125872] text-xs text-white px-2 py-2 rounded cursor-pointer">
                                         Change photo
                                     </label>
                                     <input id="photo-upload" type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
