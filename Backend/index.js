@@ -62,8 +62,8 @@ app.delete('/api/deleteproduct/:Product_id', deleteProduct);
 app.delete('/api/deleteorder/:id',deleteOrder);
 app.delete('/api/user/address/:id', deleteAddress);
 
-app.post('/api/banners', addBanner);
-app.delete('/api/banners/:id', deleteBanner);
+app.post('/api/addbanners', addBanner);
+app.delete('/api/deletebanners/:id', deleteBanner);
 app.get('/api/bannerPhotos',getBanner);
 app.put('/api/updatebanner/:id',updateBanner)
 

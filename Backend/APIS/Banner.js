@@ -2,7 +2,7 @@ const Banner = require('../models/banner.model');
 
 const getBanner = async (req, res) => {
   try {
-    const banners = await Banner.find(); // Should work now
+    const banners = await Banner.find(); 
     res.json(banners);
   } catch (error) {
     console.error('Error fetching banner photos:', error);
