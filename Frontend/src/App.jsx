@@ -10,7 +10,9 @@ import { CartProvider } from './Components/CartProvider';
 import ResetPassword from './pages/ResetPassword';
 import FAQ from './Components/FAQ';
 
+
 const Profile = lazy(() => import('./pages/Profile'));
+const VerifyOTP = lazy(() => import('./pages/VerifyOTP'));
 const Checkout = lazy(() => import('./pages/Checkout'));
 const Home = lazy(() => import('./pages/Home'));
 const Shop = lazy(() => import('./pages/Shop'));
@@ -39,6 +41,7 @@ const AppWrapper = () => {
               <Route exact path="/" element={<Home />} />
               <Route exact path="/Shop/:pg?" element={<Shop />} />
               <Route exact path="/Login" element={<Login />} />
+              <Route exact path="/verifyOTP" element={<VerifyOTP />} />
               <Route exact path="/forgetpassword" element={<ForgetPassword />} />
               <Route path="/reset-password/:token" element={<ResetPassword />} />
               <Route exact path="/Register" element={<Register />} />
