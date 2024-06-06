@@ -8,6 +8,7 @@ import Navbar from './Components/Navbar';
 import { AuthProviderWithNavigation } from './Components/AuthProvider';
 import { CartProvider } from './Components/CartProvider';
 import ResetPassword from './pages/ResetPassword';
+import FAQ from './Components/FAQ';
 
 const Profile = lazy(() => import('./pages/Profile'));
 const Checkout = lazy(() => import('./pages/Checkout'));
@@ -51,6 +52,7 @@ const AppWrapper = () => {
               <Route path="/orderplaced/:orderId" element={<OrderPlaced />} />
               <Route exact path="/orderhistory" element={<OrderHistory />} />
               <Route exact path="/address" element={<Address />} />
+              <Route exact path="/faq" element={<FAQ />} />
             </Routes>
             <GotoTop />
             <Footer />

@@ -1,12 +1,13 @@
 import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from "react-router-dom";
 import { AuthContext } from '../Components/AuthProvider';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddAddressModal from '../Components/AddAddressModal';
 import { FaTrashAlt, FaEdit } from 'react-icons/fa';
 import ManageAddModal from '../Components/ManageAddModal';
-
+import UserNavigation from '../Components/UserNavigation';
 const Address = () => {
   const { user } = useContext(AuthContext);
   const email = user?.email || '';
@@ -80,8 +81,9 @@ const Address = () => {
 
   return (
     <div className="flex justify-center">
-      <div className="h-full flex flex-col items-center min-h-full w-[70%] mx-[4vw] text-gray-700">
-        <div className="bg-white p-6 max-w-2xl w-full md:mt-[2rem] mx-auto">
+      <div className="h-full flex flex-col  min-h-full w-full mx-[4vw] text-gray-700">
+      <UserNavigation/>
+        <div className="bg-white p-6 max-w-2xl w-full mx-auto">
           <h2 className="text-2xl font-bold mb-4 text-[#125872]">Saved Addresses</h2>
           <div>
             {addresses.length === 0 ? (

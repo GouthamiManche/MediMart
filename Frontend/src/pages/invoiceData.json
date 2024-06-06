@@ -1,0 +1,74 @@
+{
+    "company": {
+      "name": "Nexible",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "address": "64, Akshay Industrial Estate, Near New Cloth Market, Ahmedabad - 38562",
+      "contact": {
+        "tel": "079-25820309",
+        "web": "www.gftools.com",
+        "email": "info@gftools.com"
+      },
+      "GSTIN": "24HDE7487RE5RT4"
+    },
+    "invoiceDetails": {
+      "invoiceNo": "GST112020",
+      "invoiceDate": "04-Mar-2020",
+      "challanNo": "865",
+      "challanDate": "03-Mar-2020",
+      "PONo": "66",
+      "deliveryDate": "04-Mar-2020",
+      "LRNo": "958",
+      "ewayNo": "EWB54864584",
+      "reverseCharge": "No",
+      "dueDate": "19-Mar-2020"
+    },
+    "customer": {
+      "name": "Kevin Motors",
+      "address": "Chandani Chok, New Delhi, Opposite Statue, New Delhi, Delhi - 110014",
+      "phone": "9372346666",
+      "GSTIN": "07A0LCC1206D1ZG",
+      "placeOfSupply": "Delhi (07)"
+    },
+    "products": [
+      {
+        "srNo": 1,
+        "name": "Automatic Saw",
+        "HSN": "8202",
+        "qty": "1.00 PCS",
+        "rate": "586.00",
+        "taxableValue": "586.00",
+        "IGSTPercentage": "9.00",
+        "IGSTAmount": "52.74",
+        "total": "638.74"
+      },
+      {
+        "srNo": 2,
+        "name": "Stanley Hammer",
+        "HSN": "8205",
+        "qty": "1.00 PCS",
+        "rate": "568.00",
+        "taxableValue": "568.00",
+        "IGSTPercentage": "9.00",
+        "IGSTAmount": "51.12",
+        "total": "619.12"
+      }
+    ],
+    "totalAmount": {
+      "taxableAmount": "1,154.00",
+      "IGST": "103.86",
+      "totalAmountAfterTax": "1,258.00"
+    },
+    "bankDetails": {
+      "bankName": "State Bank of India",
+      "branchName": "RAF CAMP",
+      "accountNumber": "2000000004512",
+      "branchIFSC": "SBIN0000488"
+    },
+    "termsAndConditions": [
+      "Subject to Ahmedabad Jurisdiction.",
+      "Our responsibility ceases as soon as the goods leave our premises.",
+      "Goods once sold will not be taken back.",
+      "Delivery ex-premises."
+    ]
+  }
+  
