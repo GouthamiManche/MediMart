@@ -286,7 +286,7 @@ const AddressForm = () => {
                 <div
                   key={index}
                   className={`border border-gray-300 rounded-md p-4 mb-2 ${
-                    selectedAddress === address ? 'bg-gray-100' : ''
+                    selectedAddress === address ? 'bg-[#b3c9d2]' : ''
                   }`}
                   onClick={() => handleSelectAddress(address)}
                 >

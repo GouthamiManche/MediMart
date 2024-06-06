@@ -1,4 +1,3 @@
-// Navbar.jsx
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
@@ -46,7 +45,7 @@ function Navbar() {
   const totalItemsInCart = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   return (
-    <div className="bg-white text-gray-900 z-50 w-full sticky top-0 shadow-lg">
+    <div className="bg-white text-gray-900 z-50 w-full sticky top-0 shadow-lg" onClick={toggleDropdown}>
       <header className="py-4 mx-8 flex items-center justify-between">
         <div className="flex items-center">
           <Link to='/'>
