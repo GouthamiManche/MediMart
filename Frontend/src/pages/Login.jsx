@@ -10,13 +10,13 @@ import Logo from '/src/assets/logo.jpg';
 function Login() {
   const { login, isAuthenticated } = useContext(AuthContext);
   const [formData, setFormData] = useState({
-    email: "",
+    identifier: "",
     password: "",
     rememberMe: false,
   });
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
-  const [emailError, setEmailError] = useState("");
+  const [identifierError, setIdentifierError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [userNotFound, setUserNotFound] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -29,17 +29,17 @@ function Login() {
     setFormData((prevData) => ({ ...prevData, [name]: inputValue }));
 
     // Clear error messages when input values change
-    if (name === "email") {
-      setEmailError("");
+    if (name === "identifier") {
+      setIdentifierError("");
       setUserNotFound(false);
     } else if (name === "password") {
       setPasswordError("");
     }
   };
 
-  const validateEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+  const validateIdentifier = (identifier) => {
+    // Add any specific validation for identifier if needed
+    return identifier.length > 0;
   };
 
   const validatePassword = (password) => {
@@ -49,12 +49,11 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { email, password } = formData;
+    const { identifier, password } = formData;
 
-    // Validate email
-    if (!validateEmail(email)) {
-      setEmailError('Please enter a valid email address.');
-      setPasswordError('');
+    // Validate identifier
+    if (!validateIdentifier(identifier)) {
+      setIdentifierError('Please enter a valid email or username.');
       return; // Stop further execution
     }
 
@@ -96,7 +95,6 @@ function Login() {
     setShowPassword(!showPassword);
   };
 
-
   return (
     <div className="bg-[#f5f5f5] min-h-screen flex items-center justify-center">
       <div className="max-w-md w-full mx-auto bg-white rounded-lg shadow-lg p-8">
@@ -111,16 +109,16 @@ function Login() {
         </div>
         <form onSubmit={handleSubmit}>
           <div className="mb-4 relative">
-            <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
-              Email
+            <label htmlFor="identifier" className="block text-gray-700 font-bold mb-2">
+              Email / Username
             </label>
             <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
+              type="text"
+              id="identifier"
+              name="identifier"
+              value={formData.identifier}
               onChange={handleChange}
-              className=" border-b border-gray-400 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-[#125872]"
+              className="border-b border-gray-400 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-[#125872]"
               required
             />
             <div className="absolute inset-y-0 right-0 flex items-center px-2">
@@ -129,8 +127,8 @@ function Login() {
                 <polyline points="22,6 12,13 2,6" />
               </svg>
             </div>
-            {emailError && (
-              <p className="text-red-500 text-xs mt-2">{emailError}</p>
+            {identifierError && (
+              <p className="text-red-500 text-xs mt-2">{identifierError}</p>
             )}
           </div>
           <div className="mb-6 relative">
@@ -144,7 +142,7 @@ function Login() {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                className=" border-b border-gray-400 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-[#125872]"
+                className="border-b border-gray-400 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-[#125872]"
                 required
               />
               <div className="absolute inset-y-0 right-0 flex items-center px-2 cursor-pointer" onClick={togglePasswordVisibility}>
@@ -167,20 +165,20 @@ function Login() {
           <div className="flex items-center justify-center mb-4">
             <button
               type="submit"
-              className="bg-[#125872]  text-white font-bold w-full py-2 px-4 rounded "
-              disabled={!formData.email || !formData.password}
+              className="bg-[#125872] text-white font-bold w-full py-2 px-4 rounded"
+              disabled={!formData.identifier || !formData.password}
             >
               Log in
             </button>
           </div>
-          <div className="flex ">
+          <div className="flex">
             <p className="text-gray-500 mr-2">New User?</p>
             <Link to="/Register" className="text-[#125872] font-semibold">
               Register
             </Link>
             <div className="ml-[7.5rem]">
-          <Link to="/forgetpassword" className="text-[#125872]">Forget Password </Link>
-        </div>
+              <Link to="/forgetpassword" className="text-[#125872]">Forget Password</Link>
+            </div>
           </div>
         </form>
         {userNotFound && (
@@ -188,10 +186,8 @@ function Login() {
             <p className="text-red-500 text-xs">
               User not found. Please <Link to="/Register" style={{ color: "#125872" }}>Register</Link> instead.
             </p>
-
           </div>
         )}
-        
       </div>
     </div>
   );

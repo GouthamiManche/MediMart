@@ -1,4 +1,4 @@
-import React, { useState ,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { toast } from 'react-toastify';
 import { LuBadgePercent } from 'react-icons/lu';
@@ -8,65 +8,113 @@ const PaymentSummary = ({ cartItems, handleSubmit }) => {
   const [showCouponPopup, setShowCouponPopup] = useState(false);
   const [coupon, setCoupon] = useState('');
   const [discountPercentage, setDiscountPercentage] = useState(0);
-
   const [totalPrice, setTotalPrice] = useState(0);
+  const [subtotal, setSubtotal] = useState(0);
+  const [discount, setDiscount] = useState(0);
+  const deliveryFee = 50; // Fixed delivery fee
 
-  const calculateDiscount = () => {
-    return (getCartTotal() * discountPercentage) / 100;
+  const validCoupons = {
+    'SAVE10': 10,
+    'GET20': 20,
+    'DISCOUNT30': 30,
+    'FIRST50': 50,
+  };
+
+  useEffect(() => {
+    initializeLocalStorage();
+  }, []);
+
+  const initializeLocalStorage = () => {
+    const storedCoupon = localStorage.getItem('coupon');
+    const storedDiscountPercentage = parseInt(localStorage.getItem('discountPercentage')) || 0;
+    const storedTotalPrice = parseFloat(localStorage.getItem('totalPrice')) || 0;
+    const storedDiscount = parseFloat(localStorage.getItem('discount')) || 0;
+
+    setCoupon(storedCoupon || '');
+    setDiscountPercentage(storedDiscountPercentage);
+    setTotalPrice(storedTotalPrice);
+    setDiscount(storedDiscount);
+
+    // Calculate subtotal and total price with delivery fee
+    const initialSubtotal = getCartTotal();
+    const initialTotalPrice = calculateTotalPrice(initialSubtotal, storedDiscountPercentage);
+    localStorage.setItem('subtotal', JSON.stringify(initialSubtotal));
+    localStorage.setItem('deliveryFee', JSON.stringify(deliveryFee));
+    localStorage.setItem('totalPrice', JSON.stringify(initialTotalPrice));
+    setSubtotal(initialSubtotal);
+  };
+
+
+  useEffect(() => {
+    if (coupon) {
+      handleApplyCoupon(coupon, false);
+    } else {
+      updateTotalPrice(cartItems, discountPercentage);
+    }
+  }, [cartItems, discountPercentage]);
+
+  const calculateDiscount = (discountPercentage) => {
+    return (subtotal * discountPercentage) / 100;
   };
 
   const getCartTotal = () => {
     return cartItems.reduce((total, item) => total + item.Price * item.quantity, 0);
   };
 
-  const handleApplyCoupon = (couponCode) => {
-    const validCoupons = ['SAVE10', 'GET20', 'DISCOUNT30', 'FIRST50'];
+  const handleApplyCoupon = (couponCode, showToast = true) => {
+    if (validCoupons[couponCode]) {
+      const discount = validCoupons[couponCode];
 
-    if (validCoupons.includes(couponCode)) {
-      let discountPercentage = 0;
-      switch (couponCode) {
-        case 'SAVE10':
-          discountPercentage = 10;
-          break;
-        case 'GET20':
-          discountPercentage = 20;
-          break;
-        case 'DISCOUNT30':
-          discountPercentage = 30;
-          break;
-        case 'FIRST50':
-          discountPercentage = 50;
-          break;
-        default:
-          discountPercentage = 0;
-          break;
+      setDiscountPercentage(discount);
+      setCoupon(couponCode);
+      const discountValue = calculateDiscount(discount);
+      setDiscount(discountValue);
+      updateTotalPrice(cartItems, discount);
+
+      localStorage.setItem('coupon', couponCode);
+      localStorage.setItem('discountPercentage', discount.toString());
+      localStorage.setItem('discount', discountValue.toString());
+
+      if (showToast) {
+        toast.success('Coupon applied successfully', { autoClose: 2000 });
       }
-
-      setDiscountPercentage(discountPercentage);
-      updateTotalPrice(cartItems, discountPercentage);
-      toast.success('Coupon applied successfully', { autoClose: 2000 });
     } else {
-      toast.error('Invalid coupon', { autoClose: 2000 });
+      if (showToast) {
+        toast.error('Invalid coupon', { autoClose: 2000 });
+      }
     }
 
     setShowCouponPopup(false);
-    setCoupon('');
   };
+
   useEffect(() => {
-    updateTotalPrice(cartItems, discountPercentage);
-  }, [cartItems, discountPercentage]);
+    localStorage.setItem('totalPrice', JSON.stringify(totalPrice));
+  }, [totalPrice]);
+
+  useEffect(() => {
+    localStorage.setItem('subtotal', JSON.stringify(subtotal));
+  }, [subtotal]);
+
+  useEffect(() => {
+    localStorage.setItem('deliveryFee', JSON.stringify(deliveryFee));
+  }, [deliveryFee]);
+  
 
   const updateTotalPrice = (items, discount) => {
-    const newTotalPrice = calculateTotalPrice(items, discount);
+    const newSubtotal = getCartTotal();
+    const newTotalPrice = calculateTotalPrice(newSubtotal, discount);
     localStorage.setItem('totalPrice', JSON.stringify(newTotalPrice));
     setTotalPrice(newTotalPrice);
+    setSubtotal(newSubtotal);
   };
 
-  const calculateTotalPrice = (items, discount) => {
-    const cartTotal = items.reduce((total, item) => total + item.Price * item.quantity, 0);
-    const discountAmount = (cartTotal * discount) / 100;
-    return cartTotal - discountAmount;
+  const calculateTotalPrice = (subtotal, discount) => {
+    const discountAmount = (subtotal * discount) / 100;
+    const totalBeforeDelivery = subtotal - discountAmount;
+    const totalWithDelivery = totalBeforeDelivery + deliveryFee;
+    return totalWithDelivery;
   };
+
   return (
     <>
       {/* Desktop View */}
@@ -75,19 +123,19 @@ const PaymentSummary = ({ cartItems, handleSubmit }) => {
         <div className="bg-white">
           <div className="flex justify-between mb-2">
             <p className="text-gray-500">Subtotal</p>
-            <p className="font-semibold">{`₹${getCartTotal()}`}</p>
+            <p className="font-semibold">{`₹${subtotal}`}</p>
           </div>
           <div className="flex justify-between mb-2">
             <p className="text-gray-500">Discount</p>
-            <p className="font-semibold">{`-₹${calculateDiscount()}`}</p>
+            <p className="font-semibold">{`-₹${calculateDiscount(discountPercentage)}`}</p>
           </div>
           <div className="flex justify-between mb-2">
             <p className="text-gray-500">Delivery Fee</p>
-            <p className="font-semibold">₹0</p>
+            <p className="font-semibold">{`₹${deliveryFee}`}</p>
           </div>
           <div className="border-t border-gray-300 pt-4 flex justify-between">
             <p className="font-bold">Total</p>
-            <p className="font-bold">{`₹${getCartTotal() - calculateDiscount()}`}</p>
+            <p className="font-bold">{`₹${totalPrice}`}</p>
           </div>
           <div className="mt-4">
             <button
@@ -99,7 +147,7 @@ const PaymentSummary = ({ cartItems, handleSubmit }) => {
             </button>
           </div>
           <button onClick={handleSubmit} className="bg-[#125872] text-white font-semibold w-full py-3 rounded-md mt-4">
-             Add Address
+            Add Address
           </button>
         </div>
       </div>
@@ -114,13 +162,13 @@ const PaymentSummary = ({ cartItems, handleSubmit }) => {
             {discountPercentage > 0 && (
               <div className="flex justify-between items-center mb-4">
                 <p className="text-gray-500">Discount</p>
-                <p className="font-semibold">{`-₹${calculateDiscount()}`}</p>
+                <p className="font-semibold">{`-₹${calculateDiscount(discountPercentage)}`}</p>
               </div>
             )}
             {/* Calculate and Display Total */}
             <div className="flex justify-between items-center mb-4">
               <p className="text-gray-500">Total</p>
-              <p className="font-semibold">{`₹${getCartTotal() - calculateDiscount()}`}</p>
+              <p className="font-semibold">{`₹${totalPrice}`}</p>
             </div>
             {/* Apply Coupon Button */}
             <button
@@ -132,7 +180,7 @@ const PaymentSummary = ({ cartItems, handleSubmit }) => {
             </button>
             {/* Checkout Button */}
             <button onClick={handleSubmit} className="bg-[#125872] text-white font-semibold w-full py-3 rounded-md mt-4">
-             Add Address
+              Add Address
             </button>
           </div>
         )}

@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const { getAllUsers } = require('./APIS/Users');
 const { getData, addProduct, updateProduct, deleteProduct } = require('./APIS/Data');
-const { registerUser, loginUser } = require('./APIS/Login');
+const { registerUser, loginUser,verifyEmail } = require('./APIS/Login');
 const { getProductsByCategory } = require('./APIS/ByCategory');
 const {getOrderDetailsByEmail} = require('./APIS/OrderDetailsByEmail')
 const {CreateOrder} = require("./APIS/CreateOrder")
@@ -58,6 +58,7 @@ app.get('/api/products', getProductsByCategory);
 //login register
 app.post('/api/register', registerUser);
 app.post('/api/login', loginUser);
+app.post('/api/verify-email', verifyEmail);
 app.post('/api/forgot-password',forgotPassword);
 app.post('/api/reset-password/:token',resetPassword);
 

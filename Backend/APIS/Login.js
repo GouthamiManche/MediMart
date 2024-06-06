@@ -22,7 +22,12 @@ const sendVerificationEmail = async (user, otp) => {
 
   await transporter.sendMail(mailOptions);
 };
+
 const crypto = require('crypto');
+
+const generateCustomerId = () => {
+  return uuid.v4();
+};
 
 const registerUser = async (req, res) => {
   try {
@@ -33,7 +38,7 @@ const registerUser = async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const otp = crypto.randomBytes(3).toString('hex');
+    const otp = generateNumericOtp();
     const otpExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes from now
 
     const newUser = new User({
@@ -54,6 +59,7 @@ const registerUser = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
 const verifyEmail = async (req, res) => {
   try {
     const { email, otp } = req.body;
@@ -74,6 +80,22 @@ const verifyEmail = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+const generateToken = (user) => {
+  const payload = {
+    userId: user._id,
+    username: user.username,
+    email: user.email,
+  };
+  const token = jwt.sign(payload, process.env.Secret_Key, { expiresIn: '3hr' });
+  return token;
+};
+
+const generateNumericOtp = () => {
+  return Math.floor(100000 + Math.random() * 900000).toString(); // Generates a 6-digit OTP
+};
+
+
 const loginUser = async (req, res) => {
   try {
     const { identifier, password } = req.body;

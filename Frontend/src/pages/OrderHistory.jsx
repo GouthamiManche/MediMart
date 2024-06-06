@@ -100,7 +100,7 @@ function OrderHistory() {
         <>
           {orders.length === 0 ? (
             <div className="text-center mb-4">
-              <p className="text-lg text-gray-800">No orders found.</p>
+              <p className="text-lg text-gray-800">No orders ordered yet.</p>
               <button
                 onClick={() => navigate('/shop')}
                 className="bg-[#125872] text-white hover:bg-[#0d4255] text-sm px-4 py-2 rounded-md mt-4"
@@ -161,7 +161,8 @@ function OrderHistory() {
                         <div className="text-xs md:text-sm text-gray-700">Payment ID: {order.razorpay_order_id}</div>
                         <div className="text-base md:text-lg font-semibold text-gray-800">Total: ₹{order.amount}</div>
                       </div>
-                      <button  onClick={() => handleViewInvoice(order.razorpay_order_id)}>
+                      
+                      <button onClick={() => handleViewInvoice(order.razorpay_order_id)}>
                         <FaFileInvoice />
                       </button>
                     </div>
@@ -177,3 +178,4 @@ function OrderHistory() {
 }
 
 export default OrderHistory;
+
