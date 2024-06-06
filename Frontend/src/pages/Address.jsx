@@ -8,6 +8,7 @@ import AddAddressModal from '../Components/AddAddressModal';
 import { FaTrashAlt, FaEdit } from 'react-icons/fa';
 import ManageAddModal from '../Components/ManageAddModal';
 import UserNavigation from '../Components/UserNavigation';
+
 const Address = () => {
   const { user } = useContext(AuthContext);
   const email = user?.email || '';
@@ -81,30 +82,32 @@ const Address = () => {
 
   return (
     <div className="flex justify-center">
-      <div className="h-full flex flex-col  min-h-full w-full mx-[4vw] text-gray-700">
-      <UserNavigation/>
-        <div className="bg-white p-6 max-w-2xl w-full mx-auto">
+      <div className="h-full flex flex-col min-h-full w-full mx-[4vw] text-gray-700">
+        <UserNavigation />
+        <div className="bg-white p-6 max-w-6xl w-full mx-auto">
           <h2 className="text-2xl font-bold mb-4 text-[#125872]">Saved Addresses</h2>
           <div>
             {addresses.length === 0 ? (
               <p>No addresses saved yet.</p>
             ) : (
-              addresses.map((address, index) => (
-                <div key={index} className="border border-gray-300 rounded-md p-4 mb-2">
-                  <h4 className="text-lg font-semibold">{address.fullName}</h4>
-                  <p>{address.contactNo}</p>
-                  <p>{address.address}</p>
-                  <p>{address.city}, {address.state} {address.pincode}</p>
-                  <div className="flex justify-between items-center">
-                    <button onClick={() => handleDeleteAddress(address.addressId)} className="text-gray-500 hover:text-red-700">
-                      <FaTrashAlt />
-                    </button>
-                    <button onClick={() => handleEditClick(address)} className="flex items-center text-gray-500 hover:text-blue-700">
-                      <FaEdit /><span className="ml-[4px]">Edit</span>
-                    </button>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                {addresses.map((address, index) => (
+                  <div key={index} className="border border-gray-300 rounded-md p-4">
+                    <h4 className="text-lg font-semibold">{address.fullName}</h4>
+                    <p>{address.contactNo}</p>
+                    <p>{address.address}</p>
+                    <p>{address.city}, {address.state} {address.pincode}</p>
+                    <div className="flex justify-between items-center">
+                      <button onClick={() => handleDeleteAddress(address.addressId)} className="text-gray-500 hover:text-red-700">
+                        <FaTrashAlt />
+                      </button>
+                      <button onClick={() => handleEditClick(address)} className="flex items-center text-gray-500 hover:text-blue-700">
+                        <FaEdit /><span className="ml-[4px]">Edit</span>
+                      </button>
+                    </div>
                   </div>
-                </div>
-              ))
+                ))}
+              </div>
             )}
             <button
               className="bg-[#125872] text-white px-4 py-2 rounded-md mt-2"
