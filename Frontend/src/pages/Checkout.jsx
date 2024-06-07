@@ -293,26 +293,17 @@ const AddressForm = () => {
               <p>No addresses saved yet.</p>
             ) : (
               addresses.map((address, index) => (
-                <div key={index} className="border border-gray-300 rounded-md p-4 mb-2">
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-lg font-semibold">{address.fullName}</h4>
-                    <label className="flex items-center cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={selectedAddress === address}
-                        onChange={() => handleSelectAddress(address)}
-                        className="hidden"
-                      />
-                      <span className="w-5 h-5 border border-gray-300 flex items-center justify-center">
-                        {selectedAddress === address && <img src={checkbox} alt="checkmark" className="w-full h-full" />}
-                      </span>
-                    </label>
-                  </div>
+                <div
+                  key={index}
+                  className={`border border-gray-300 rounded-md p-4 mb-2 ${
+                    selectedAddress === address ? 'bg-[#b3c9d2]' : ''
+                  }`}
+                  onClick={() => handleSelectAddress(address)}
+                >
+                  <h4 className="text-lg font-semibold">{address.fullName}</h4>
                   <p>{address.contactNo}</p>
                   <p>{address.address}</p>
                   <p>{address.city}, {address.state} {address.pincode}</p>
-                  {/* <div className="border-t border-[2px] border-dotted my-2"></div> */}
-                  {/* <hr className='m-1 border border-gray-300'></hr> */}
                   <div className="flex justify-between items-center ">
                     <button onClick={() => handleDeleteAddress(address.addressId)} className="text-gray-500 hover:text-red-700">
                       <FaTrashAlt />

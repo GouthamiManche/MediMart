@@ -33,13 +33,13 @@ const HomeImage = () => {
   }, []);
 
   return (
-    <Slider {...settings} className="mb-[3rem]">
+    <Slider {...settings} className="mb-[2rem]">
       {bannerPhotos.map((photo, index) => (
         <div key={index} className="relative">
           <img
             src={photo.Image}
             alt={photo.Title}
-            className="w-full h-[30vh] lg:h-[420px] object-cover"
+            className="w-full h-[22vh] md:h-[420px] md:object-cover"
           />
           <div className="absolute inset-0 flex items-center justify-start px-4 ml-[10vw]">
             <div className="text-white">

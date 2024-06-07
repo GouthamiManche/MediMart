@@ -1,4 +1,3 @@
-// Navbar.jsx
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
@@ -46,7 +45,7 @@ function Navbar() {
   const totalItemsInCart = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   return (
-    <div className="bg-white text-gray-900 z-50 w-full sticky top-0 shadow-lg">
+    <div className="bg-white text-gray-900 z-50 w-full sticky top-0 shadow-lg" onClick={toggleDropdown}>
       <header className="py-4 mx-8 flex items-center justify-between">
         <div className="flex items-center">
           <Link to='/'>
@@ -55,6 +54,17 @@ function Navbar() {
           <Link to="/" className="md:block hidden text-xl md:text-3xl font-bold ml-1 font-PlayFair">
             <span className="text-[#14496b]">Medi</span><span className="text-[#8ccf28]">Mart</span>
           </Link>
+          <div className="md:block hidden">
+            {categories.map(({ title, subCategory, category }, index) => (
+              <Link
+                key={index}
+                to={`/shop?subCategory=${subCategory || ''}&Category=${category || ''}`}
+                className="text-gray-900 hover:text-gray-700 transition duration-300 text-center mx-6"
+              >
+                {title}
+              </Link>
+            ))}
+          </div>
         </div>
         <div className="md:hidden flex text-gray-900">
           <button onClick={handleCartClick} className="font-bold py-2 rounded flex items-center mr-[1rem]">
@@ -70,17 +80,7 @@ function Navbar() {
           </button>
         </div>
         <nav className="hidden md:flex items-center ">
-          <div className="">
-            {categories.map(({ title, subCategory, category }, index) => (
-              <Link
-                key={index}
-                to={`/shop?subCategory=${subCategory || ''}&Category=${category || ''}`}
-                className="text-gray-900 hover:text-gray-700 transition duration-300 text-center mx-6"
-              >
-                {title}
-              </Link>
-            ))}
-          </div>
+        
           <nav className="hidden md:flex md:ml-[12vw]">
             <div className="flex gap-10 text-gray-900">
               <Link to="/shop" className="mr-[1rem]">
@@ -90,7 +90,7 @@ function Navbar() {
           </nav>
           <button onClick={handleCartClick} className="font-bold py-2 rounded flex items-center">
             <FaCartShopping className="text-xl" />
-            <span className="text-lg ml-1">({totalItemsInCart})</span>
+            <span className="text-lg ml-1">Cart({totalItemsInCart})</span>
           </button>
           {user ? (
             <div className="relative inline-block text-left">

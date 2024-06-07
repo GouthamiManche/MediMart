@@ -15,6 +15,7 @@ import { GenerateInvoice } from '../Components/GenerateInvoice'
 function OrderHistory() {
   const { user, logout } = useContext(AuthContext);
   const [orders, setOrders] = useState([]);
+  const [addresses, setAddresses] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [expandedOrderId, setExpandedOrderId] = useState(null);
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -45,15 +46,36 @@ function OrderHistory() {
   const fetchOrderHistory = async (email) => {
     setIsLoading(true);
     try {
-      const response = await fetch(`${apiUrl}/orders/${email}`);
-      const data = await response.json();
-      console.log("Fetched orders:", data); // Log the orders to confirm the order
-      setOrders(data);
+      const response = await axios.get(`${apiUrl}/orders/${email}`);
+      const ordersData = response.data;
+      setOrders(ordersData);
+      await fetchAddresses(email);
     } catch (error) {
       console.error('Error fetching order history:', error);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const fetchAddresses = async (email) => {
+    try {
+      const response = await axios.get(`${apiUrl}/user/addresses`, { params: { email } });
+      const addressesData = response.data.reduce((acc, address) => {
+        acc[address._id] = address;
+        return acc;
+      }, {});
+      setAddresses(addressesData);
+    } catch (error) {
+      console.error('Error fetching addresses:', error);
+    }
+  };
+
+  const addNewOrder = (newOrder) => {
+    setOrders((prevOrders) => [newOrder, ...prevOrders]);
+  };
+
+  const handleManageOrder = (orderId) => {
+    // Implement your logic for managing order here
   };
 
   const toggleOrderExpansion = (orderId) => {
@@ -104,7 +126,7 @@ function OrderHistory() {
           ) : (
             <div className="space-y-8">
               {orders.map((order) => (
-                <div key={order._id} className="bg-white rounded-md overflow-hidden border border-gray-200">
+                <div key={order._id} className="bg-white shadow-md rounded-md overflow-hidden border border-gray-200">
                   <div
                     className="p-4 md:p-6 border-b border-gray-200 flex justify-between items-center cursor-pointer"
                     onClick={() => toggleOrderExpansion(order._id)}
@@ -122,6 +144,19 @@ function OrderHistory() {
                   </div>
                   {expandedOrderId === order._id && (
                     <div className="p-4 md:p-6">
+                      <div className="mb-4">
+                        <h4 className="text-lg font-semibold text-gray-800">Delivery Address</h4>
+                        {addresses[order.addressId] ? (
+                          <div className="text-gray-700">
+                            <p>{addresses[order.addressId].fullName}</p>
+                            <p>{addresses[order.addressId].contactNo}</p>
+                            <p>{addresses[order.addressId].address}</p>
+                            <p>{addresses[order.addressId].city}, {addresses[order.addressId].state} {addresses[order.addressId].pincode}</p>
+                          </div>
+                        ) : (
+                          <p className="text-gray-600">Address information not available</p>
+                        )}
+                      </div>
                       {order.cartItems.map((item) => (
                         <div key={item._id} className="flex items-center mb-4">
                           {item.Image_URL && (
