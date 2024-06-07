@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
+// OrderHistory.jsx
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { AuthContext } from '../Components/AuthProvider';
 import moment from 'moment';
 import { IoIosArrowDown, IoIosArrowForward } from 'react-icons/io';
@@ -22,7 +23,7 @@ function OrderHistory() {
   const navigate = useNavigate();
   const [selectedOrderDetails, setSelectedOrderDetails] = useState(null);
 
-  const handleViewInvoice = async (razorpay_order_id) => {
+  const handleViewInvoice = useCallback(async (razorpay_order_id) => {
     try {
       const response = await fetch(`${apiUrl}/getorderdetails/${razorpay_order_id}`);
       if (!response.ok) {
@@ -34,7 +35,7 @@ function OrderHistory() {
       console.error('Error fetching invoice details:', error);
       toast.error('Failed to fetch invoice details');
     }
-  };
+  }, [apiUrl]);
 
   useEffect(() => {
     if (user) {
@@ -71,7 +72,6 @@ function OrderHistory() {
   };
 
   const handleManageOrder = (orderId) => {
-    // Implement your logic for managing order here
   };
 
   const toggleOrderExpansion = (orderId) => {
@@ -187,15 +187,14 @@ function OrderHistory() {
                       </button>
                     </div>
                   )}
-                  {selectedOrderDetails && <GenerateInvoice order={selectedOrderDetails} />}
                 </div>
               ))}
             </div>
           )}
+          {selectedOrderDetails && <GenerateInvoice order={selectedOrderDetails} />}
         </>
       )}
     </div>
   );
 }
-
 export default OrderHistory;
