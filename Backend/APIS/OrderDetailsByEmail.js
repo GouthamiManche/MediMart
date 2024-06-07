@@ -11,18 +11,14 @@ const getOrderDetailsByEmail = async (req, res) => {
           orderDateAsDate: {
             $dateFromString: {
               dateString: '$orderDate',
-              format: '%d/%m/%Y' // Specify the format of the date string
+              format: '%d/%m/%Y' // Specify the format of the date string without time
             }
           }
         }
       },
       { $sort: { orderDateAsDate: -1 } } // Sort by the new date field in descending order
     ]);
-
-    if (orders.length === 0) {
-      return res.status(404).json({ message: "No orders found for the provided email" });
-    }
-
+    
     res.status(200).json(orders);
   } catch (err) {
     console.error("Error fetching order details:", err);
@@ -31,3 +27,4 @@ const getOrderDetailsByEmail = async (req, res) => {
 };
 
 module.exports = { getOrderDetailsByEmail };
+

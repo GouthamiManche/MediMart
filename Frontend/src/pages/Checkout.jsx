@@ -77,7 +77,7 @@ const AddressForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!selectedAddress) {
       toast.error("Please select an address.");
       return;
@@ -90,6 +90,9 @@ const AddressForm = () => {
       const totalPrice = localStorage.getItem('totalPrice') || 0;
       const cartItemsResponse = await axios.get(`${apiUrl}/getcartitems?email=${email}`);
       const cartItems = cartItemsResponse.data;
+      const subtotal = localStorage.getItem('subtotal') || 0;
+      const discount = localStorage.getItem('discount') || 0;
+      const deliveryFee = localStorage.getItem('deliveryFee') || 0;
 
       const cartItemsWithProductId = cartItems.map((item) => ({
         Product_id: item.Product_id,
@@ -101,6 +104,9 @@ const AddressForm = () => {
 
       const orderData = {
         ...formData,
+        subtotal,
+        discount,
+        deliveryFee,
         amount: totalPrice,
         cartItems: cartItemsWithProductId,
         Image_URL: cartItems.length > 0 ? cartItems[0].Image_URL : '',
@@ -257,7 +263,7 @@ const AddressForm = () => {
       console.error('Error deleting address:', error);
     }
   };
- 
+
   const handleEditAddress = async (formData) => {
     if (!addressToEdit || !addressToEdit.addressId) {
       console.error('Invalid address data');
@@ -442,12 +448,23 @@ const AddressForm = () => {
       <div className="w-[30%] p-[2rem] h-full border border-gray-300 sticky top-[14rem] rounded-md md:block hidden shadow-md text-gray-700 mr-[4rem]">
         <h2 className="text-2xl font-bold mb-4">Order Total</h2>
         <div className="bg-white">
-          <div className="border-t border-gray-300 pt-4 flex justify-between">
+          <div className=" pt-4 flex justify-between">
+            <p className="font-bold">SubTotal</p>
+            <p className="font-bold">{`₹${localStorage.getItem('subtotal')}`}</p>
+          </div>
+          <div className=" pt-4 flex justify-between">
+            <p className="font-bold">Discount</p>
+            <p className="font-bold">-{`₹${localStorage.getItem('discount')}`}</p>
+          </div>
+          <div className=" pt-4 flex justify-between">
+            <p className="font-bold">Delivery Fee</p>
+            <p className="font-bold">+{`₹${localStorage.getItem('deliveryFee')}`}</p>
+          </div>
+          <div className="border-t border-gray-300 mt-3 pt-4 flex justify-between">
             <p className="font-bold">Total</p>
             <p className="font-bold">{`₹${localStorage.getItem('totalPrice')}`}</p>
           </div>
           <div className="mt-4">
-
           </div>
           <div className="flex justify-center">
             <button

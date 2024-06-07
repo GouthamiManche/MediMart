@@ -1,10 +1,9 @@
 const uuid = require('uuid');
 const Razorpay = require('razorpay');
 const OrderDetail = require('../models/orderdetails.model');
-
 const CreateOrder = async (req, res) => {
   try {
-    const { fullName, address, city, state, pincode, contactNo, amount, cartItems, email } = req.body;
+    const { fullName, address, city, state, pincode, contactNo, amount, cartItems, email, subtotal, discount, deliveryFee } = req.body;
 
     // Validate input fields
     if (!fullName || !address || !city || !state || !pincode || !contactNo || !amount || !cartItems || !email) {
@@ -12,10 +11,7 @@ const CreateOrder = async (req, res) => {
       return res.status(400).json({ error: "All fields including cartItems and email are required" });
     }
 
-    const orderDate = new Date().toLocaleDateString('en-GB');
-
-    // Initialize Razorpay instance with debugging logs
-    //console.log("Initializing Razorpay with Key ID:", process.env.RAZORPAY_KEY_ID);
+    const orderDate = new Date().toLocaleString('en-GB'); // Format date and time into a string
 
     const razorpay = new Razorpay({
       key_id: process.env.RAZORPAY_KEY_ID,
@@ -49,7 +45,10 @@ const CreateOrder = async (req, res) => {
       state,
       city,
       amount,
-      orderDate,
+      orderDate, // Save formatted date and time
+      subtotal, // Save subtotal
+      discount, // Save discount
+      deliveryFee,
       paymentStatus: 'not completed',
       cartItems,
       razorpay_order_id: razorpayOrder.id, // Save Razorpay order ID

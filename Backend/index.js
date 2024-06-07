@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const { getAllUsers } = require('./APIS/Users');
 const { getData, addProduct, updateProduct, deleteProduct } = require('./APIS/Data');
-const { registerUser, loginUser } = require('./APIS/Login');
+const { registerUser, loginUser,verifyEmail } = require('./APIS/Login');
 const { getProductsByCategory } = require('./APIS/ByCategory');
 const {getOrderDetailsByEmail} = require('./APIS/OrderDetailsByEmail')
 const {CreateOrder} = require("./APIS/CreateOrder")
@@ -55,9 +55,10 @@ app.put('/api/updateproduct/:Product_id', updateProduct);
 app.delete('/api/deleteproduct/:Product_id', deleteProduct);
 app.get('/api/products', getProductsByCategory);
 
-//login register 
+//login register
 app.post('/api/register', registerUser);
 app.post('/api/login', loginUser);
+app.post('/api/verify-email', verifyEmail);
 app.post('/api/forgot-password',forgotPassword);
 app.post('/api/reset-password/:token',resetPassword);
 
@@ -92,10 +93,10 @@ app.get('/', (req, res) => {
   res.json('Hello, Backend Readyyyy!!! ');
 });
 
-app.listen();
+// app.listen();
 
-// const PORT = 4000; // Specify the desired local port
+const PORT = 4000; // Specify the desired local port
 
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
