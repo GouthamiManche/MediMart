@@ -59,7 +59,7 @@ function Navbar() {
               <Link
                 key={index}
                 to={`/shop?subCategory=${subCategory || ''}&Category=${category || ''}`}
-                className="text-gray-900 hover:text-gray-700 transition duration-300 text-center mx-6"
+                className="text-gray-900 hover:text-[#125872] transition duration-300 text-center mx-6"
               >
                 {title}
               </Link>
@@ -67,9 +67,13 @@ function Navbar() {
           </div>
         </div>
         <div className="md:hidden flex text-gray-900">
-          <button onClick={handleCartClick} className="font-bold py-2 rounded flex items-center mr-[1rem]">
+        <button onClick={handleCartClick} className="font-bold py-2 rounded flex items-center relative">
             <FaCartShopping className="text-xl" />
-            <span className="text-lg">({totalItemsInCart})</span>
+            {totalItemsInCart > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                {totalItemsInCart}
+              </span>
+            )}
           </button>
           <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="focus:outline-none">
             {mobileMenuOpen ? (
@@ -80,7 +84,7 @@ function Navbar() {
           </button>
         </div>
         <nav className="hidden md:flex items-center ">
-        
+
           <nav className="hidden md:flex md:ml-[12vw]">
             <div className="flex gap-10 text-gray-900">
               <Link to="/shop" className="mr-[1rem]">
@@ -88,9 +92,13 @@ function Navbar() {
               </Link>
             </div>
           </nav>
-          <button onClick={handleCartClick} className="font-bold py-2 rounded flex items-center">
+          <button onClick={handleCartClick} className="font-bold py-2 rounded flex items-center relative">
             <FaCartShopping className="text-xl" />
-            <span className="text-lg ml-1">({totalItemsInCart})</span>
+            {totalItemsInCart > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                {totalItemsInCart}
+              </span>
+            )}
           </button>
           {user ? (
             <div className="relative inline-block text-left">
@@ -106,8 +114,8 @@ function Navbar() {
                       {user.username}
                     </Link>
                     <br />
-                    <button onClick={logout} className="text-gray-700 w-full px-4 py-2 text-left text-sm">
-                      Sign out
+                    <button onClick={logout} className="text-gray-700 hover:text-red-600 w-full px-4 py-2 text-left text-sm">
+                     Logout
                     </button>
                   </div>
                 </div>
@@ -135,8 +143,8 @@ function Navbar() {
               </div>
             </Link>
             {user ? (
-              <button onClick={logout} className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition duration-300">
-                Sign out
+              <button onClick={logout} className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-red-600 transition duration-300">
+                Logout
               </button>
             ) : (
               <Link onClick={() => setMobileMenuOpen(false)} to="/login" className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition duration-300">

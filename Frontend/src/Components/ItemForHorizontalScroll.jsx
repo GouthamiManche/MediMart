@@ -86,11 +86,11 @@ function ItemForHorizontalScroll({ item }) {
         }
       );
       if (res.status !== 200) {
-        setError("Error updating item quantity");
+        // setError("Error updating item quantity");
       }
     } catch (error) {
-      console.error("Error updating item quantity:", error);
-      setError(error.message);
+      // console.error("Error updating item quantity:", error);
+      // setError(error.message);
     }
   };
 
@@ -130,16 +130,16 @@ function ItemForHorizontalScroll({ item }) {
               ₹{item.Price}
             </h3>
             {isItemInCart ? (
-              <div className="flex items-center font-semi-bold border border-[#125872] border rounded-md px-4 py-1 shadow-md">
+              <div className="flex items-center font-semi-bold bg-[#125872] rounded-md px-4 py-1 shadow-md">
                 <button
-                  className="text-[#125872]"
+                  className="text-white"
                   onClick={() => handleQuantityChange(quantity - 1)}
                 >
                   -
                 </button>
-                <span className="mx-4 text-[#125872]">{quantity}</span>
+                <span className="mx-4 text-white">{quantity}</span>
                 <button
-                  className="text-[#125872]"
+                  className="text-white"
                   onClick={() => handleQuantityChange(quantity + 1)}
                 >
                   +
@@ -147,7 +147,7 @@ function ItemForHorizontalScroll({ item }) {
               </div>
             ) : (
               <button
-                className="flex items-center justify-center text-white rounded-md font-bold border py-1.5 px-8 text-sm bg-[#125872] transition duration-300 shadow-md"
+                className="flex items-center justify-center bg-[#12587222] border-[#125872]  text-[#125872] rounded-md font-bold border py-1.5 px-8 text-sm bg-[#125872] transition duration-300 shadow-md"
                 onClick={handleAddToCart}
               >
                 Add
