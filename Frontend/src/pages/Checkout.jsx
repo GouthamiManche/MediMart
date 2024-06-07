@@ -33,6 +33,7 @@ const AddressForm = () => {
   const [cartItems, setCartItems] = useState([]);
   const [discountPercentage, setDiscountPercentage] = useState(0);
   const [addressToEdit, setAddressToEdit] = useState(null);
+
   const calculateDiscount = () => {
     return (getCartTotal() * discountPercentage) / 100;
   };
@@ -93,7 +94,6 @@ const AddressForm = () => {
       const subtotal = localStorage.getItem('subtotal') || 0;
       const discount = localStorage.getItem('discount') || 0;
       const deliveryFee = localStorage.getItem('deliveryFee') || 0;
-
       const cartItemsWithProductId = cartItems.map((item) => ({
         Product_id: item.Product_id,
         Name: item.Name,
@@ -101,7 +101,6 @@ const AddressForm = () => {
         quantity: item.quantity,
         Image_URL: item.Image_URL,
       }));
-
       const orderData = {
         ...formData,
         subtotal,
@@ -135,6 +134,12 @@ const AddressForm = () => {
             if (validateRes.data.msg === 'success') {
               toast.success(`Payment successful`);
               deleteAllCartItems(email);
+              localStorage.removeItem('subtotal');
+              localStorage.removeItem('totalPrice');
+              localStorage.removeItem('coupon');
+              localStorage.removeItem('discount');
+              localStorage.removeItem('deliveryFee');
+              localStorage.removeItem('discountPercentage');
               navigate(`/orderplaced/${orderId}`);
             } else {
               toast.error('Payment validation failed');
@@ -166,7 +171,6 @@ const AddressForm = () => {
   const deleteAllCartItems = async (email) => {
     try {
       await axios.delete(`${apiUrl}/deleteallcartitems`, { data: { email } });
-      //console.log('All cart items deleted successfully');
     } catch (error) {
       console.error('Error deleting cart items:', error);
     }
@@ -212,7 +216,6 @@ const AddressForm = () => {
   };
 
   useEffect(() => {
-    // Fetch addresses from server
     const fetchAddresses = async () => {
       try {
         const response = await axios.get(`${apiUrl}/user/addresses`, { params: { email } });
@@ -295,9 +298,8 @@ const AddressForm = () => {
               addresses.map((address, index) => (
                 <div
                   key={index}
-                  className={`border border-gray-300 rounded-md p-4 mb-2 ${
-                    selectedAddress === address ? 'bg-[#b3c9d2]' : ''
-                  }`}
+                  className={`border border-gray-300 rounded-md p-4 mb-2 ${selectedAddress === address ? 'bg-[#b3c9d2]' : ''
+                    }`}
                   onClick={() => handleSelectAddress(address)}
                 >
                   <h4 className="text-lg font-semibold">{address.fullName}</h4>

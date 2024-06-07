@@ -16,9 +16,9 @@ const getOrderDetailsByEmail = async (req, res) => {
           }
         }
       },
-      { $sort: { orderDateAsDate: -1 } } // Sort by the new date field in descending order
+      { $sort: { orderDateAsDate: -1 } } 
     ]);
-    
+
     res.status(200).json(orders);
   } catch (err) {
     console.error("Error fetching order details:", err);

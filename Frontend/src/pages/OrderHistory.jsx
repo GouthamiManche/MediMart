@@ -130,7 +130,7 @@ function OrderHistory() {
                       <h3 className="text-lg font-semibold text-gray-800">
                         Order #{order._id.slice(0, 12)}...
                       </h3>
-                      <div className="text-base md:text-md md:pl-[54rem] font-semibold text-gray-800">Total: ₹{order.amount}</div>
+                      <div className="text-base md:text-md md:pl-[50rem] font-semibold text-gray-800">Total: ₹{order.amount}</div>
                     </div>
                     <div className="text-lg">
                       {expandedOrderId === order._id ? <IoIosArrowDown /> : <IoIosArrowForward />}
@@ -182,7 +182,7 @@ function OrderHistory() {
                         <div className="text-xs md:text-sm text-gray-700">Payment ID: {order.razorpay_order_id}</div>
                         <div className="text-base md:text-lg font-semibold text-gray-800">Total: ₹{order.amount}</div>
                       </div>
-                      <button onClick={() => handleViewInvoice(order.razorpay_order_id)} className="mt-4 flex items-center text-blue-500 hover:underline">
+                      <button onClick={() => handleViewInvoice(order.razorpay_order_id)} className="mt-4 flex items-center text-[#0d4255] hover:underline">
                         <FaFileInvoice className="mr-2" /> Download Invoice
                       </button>
                     </div>
@@ -197,4 +197,5 @@ function OrderHistory() {
     </div>
   );
 }
+
 export default OrderHistory;
