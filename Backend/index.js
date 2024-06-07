@@ -95,7 +95,6 @@ app.get('/', (req, res) => {
 app.listen();
 
 // const PORT = 4000; // Specify the desired local port
-
 // app.listen(PORT, () => {
 //   console.log(`Server is running on port ${PORT}`);
 // });
