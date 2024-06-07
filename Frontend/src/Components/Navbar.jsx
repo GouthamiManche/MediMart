@@ -45,7 +45,7 @@ function Navbar() {
   const totalItemsInCart = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   return (
-    <div className="bg-white text-gray-900 z-50 w-full sticky top-0 shadow-lg" onClick={toggleDropdown}>
+    <div className="bg-white text-gray-900 z-50 w-full sticky top-0 shadow-lg">
       <header className="py-4 mx-8 flex items-center justify-between">
         <div className="flex items-center">
           <Link to='/'>
@@ -90,7 +90,7 @@ function Navbar() {
           </nav>
           <button onClick={handleCartClick} className="font-bold py-2 rounded flex items-center">
             <FaCartShopping className="text-xl" />
-            <span className="text-lg ml-1">Cart({totalItemsInCart})</span>
+            <span className="text-lg ml-1">({totalItemsInCart})</span>
           </button>
           {user ? (
             <div className="relative inline-block text-left">

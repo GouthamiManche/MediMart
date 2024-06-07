@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const { getAllUsers } = require('./APIS/Users');
 const { getData, addProduct, updateProduct, deleteProduct } = require('./APIS/Data');
-const { registerUser, loginUser } = require('./APIS/Login');
+const { registerUser, loginUser,verifyEmail } = require('./APIS/Login');
 const { getProductsByCategory } = require('./APIS/ByCategory');
 const {getOrderDetailsByEmail} = require('./APIS/OrderDetailsByEmail')
 const {CreateOrder} = require("./APIS/CreateOrder")
@@ -55,9 +55,10 @@ app.put('/api/updateproduct/:Product_id', updateProduct);
 app.delete('/api/deleteproduct/:Product_id', deleteProduct);
 app.get('/api/products', getProductsByCategory);
 
-//login register 
+//login register
 app.post('/api/register', registerUser);
 app.post('/api/login', loginUser);
+app.post('/api/verify-email', verifyEmail);
 app.post('/api/forgot-password',forgotPassword);
 app.post('/api/reset-password/:token',resetPassword);
 
@@ -81,13 +82,11 @@ app.delete('/api/deleteorder/:id',deleteOrder);
 app.get('/api/orders', getAllOrders);
 app.get('/api/orders/:email', getOrderDetailsByEmail);
 
-
 //banner
 app.post('/api/addbanners', addBanner);
 app.delete('/api/deletebanners/:id', deleteBanner);
 app.get('/api/bannerPhotos',getBanner);
 app.put('/api/updatebanner/:id',updateBanner)
-
 
 app.get('/', (req, res) => {
   res.json('Hello, Backend Readyyyy!!! ');

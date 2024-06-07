@@ -66,22 +66,23 @@ const OrderPlaced = () => {
                           <p className="font-bold text-lg text-[#125872]">{item.Name}</p>
                           <p className="text-gray-600">₹{item.Price} x {item.quantity}</p>
                         </div>
-                        <div className="text-gray-800 font-bold">₹{orderDetails.amount}</div>
+                        <div className="text-gray-800 font-bold">₹{item.Price*item.quantity}</div>
                       </div>
                     ))}
                   </div>
                   <div className="border-t pt-4">
                     <div className="flex justify-between mb-2">
                       <span className="text-gray-600 font-bold">Sub Total:</span>
-                      <span className="text-gray-800 font-bold">₹{orderDetails.amount}</span>
+                      <span className="text-gray-800 font-bold">₹{orderDetails.subtotal}</span>
                     </div>
+
                     <div className="flex justify-between mb-2">
-                      <span className="text-gray-600 font-bold">Shipping:</span>
-                      <span className="text-gray-800 font-bold">₹0.00</span>
+                      <span className="text-gray-600 font-bold">Discount:</span>
+                      <span className="text-gray-800 font-bold">- ₹{orderDetails.discount}</span>
                     </div>
                     <div className="flex justify-between mb-4">
-                      <span className="text-gray-600 font-bold">Tax:</span>
-                      <span className="text-gray-800 font-bold">₹0.00</span>
+                      <span className="text-gray-600 font-bold">Shipping:</span>
+                      <span className="text-gray-800 font-bold">+ ₹{orderDetails.deliveryFee}</span>
                     </div>
                     <div className="flex justify-between font-bold text-xl text-[#125872]">
                       <span>Order Total:</span>

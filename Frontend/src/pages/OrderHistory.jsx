@@ -7,6 +7,10 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import UserNavigation from '../Components/UserNavigation';
+import { FaFileInvoice } from "react-icons/fa";
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import GenerateInvoice from '../Components/GenerateInvoice';
 
 function OrderHistory() {
   const { user, logout } = useContext(AuthContext);
@@ -15,8 +19,22 @@ function OrderHistory() {
   const [isLoading, setIsLoading] = useState(true);
   const [expandedOrderId, setExpandedOrderId] = useState(null);
   const apiUrl = import.meta.env.VITE_API_URL;
-  const apiKey = import.meta.env.VITE_API_KEY;
   const navigate = useNavigate();
+  const [selectedOrderDetails, setSelectedOrderDetails] = useState(null);
+
+  const handleViewInvoice = async (razorpay_order_id) => {
+    try {
+      const response = await fetch(`${apiUrl}/getorderdetails/${razorpay_order_id}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch invoice details');
+      }
+      const data = await response.json();
+      setSelectedOrderDetails(data.order);
+    } catch (error) {
+      console.error('Error fetching invoice details:', error);
+      toast.error('Failed to fetch invoice details');
+    }
+  };
 
   useEffect(() => {
     if (user) {
@@ -30,24 +48,21 @@ function OrderHistory() {
       const response = await axios.get(`${apiUrl}/orders/${email}`);
       const ordersData = response.data;
       setOrders(ordersData);
-      await fetchAddresses(email);
+      setAddresses(ordersData.reduce((acc, order) => {
+        acc[order._id] = {
+          fullName: order.fullName,
+          address: order.address,
+          city: order.city,
+          state: order.state,
+          pincode: order.pincode,
+          contactNo: order.contactNo
+        };
+        return acc;
+      }, {}));
     } catch (error) {
       console.error('Error fetching order history:', error);
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const fetchAddresses = async (email) => {
-    try {
-      const response = await axios.get(`${apiUrl}/user/addresses`, { params: { email } });
-      const addressesData = response.data.reduce((acc, address) => {
-        acc[address._id] = address;
-        return acc;
-      }, {});
-      setAddresses(addressesData);
-    } catch (error) {
-      console.error('Error fetching addresses:', error);
     }
   };
 
@@ -57,10 +72,6 @@ function OrderHistory() {
 
   const handleManageOrder = (orderId) => {
     // Implement your logic for managing order here
-  };
-
-  const handleViewInvoice = (orderId) => {
-    // Implement your logic for viewing invoice here
   };
 
   const toggleOrderExpansion = (orderId) => {
@@ -89,10 +100,6 @@ function OrderHistory() {
     }
   };
 
-  const handleViewProduct = (productId) => {
-    // Implement your logic for viewing product details here
-  };
-
   return (
     <div className="container mx-auto px-4 py-8 md:w-3/4 lg:w-[80%]">
       <UserNavigation />
@@ -103,7 +110,7 @@ function OrderHistory() {
         <>
           {orders.length === 0 ? (
             <div className="text-center mb-4">
-              <p className="text-lg text-gray-800">No orders found.</p>
+              <p className="text-lg text-gray-800">No orders ordered yet.</p>
               <button
                 onClick={() => navigate('/shop')}
                 className="bg-[#125872] text-white hover:bg-[#0d4255] text-sm px-4 py-2 rounded-md mt-4"
@@ -123,8 +130,7 @@ function OrderHistory() {
                       <h3 className="text-lg font-semibold text-gray-800">
                         Order #{order._id.slice(0, 12)}...
                       </h3>
-                      <div className="text-base md:text-md md:pl-[18rem] font-semibold text-gray-800">Order Date: {order.orderDate}</div>
-                      <div className="text-base md:text-md md:pl-[24rem] font-semibold text-gray-800">Total: ₹{order.amount}</div>
+                      <div className="text-base md:text-md md:pl-[54rem] font-semibold text-gray-800">Total: ₹{order.amount}</div>
                     </div>
                     <div className="text-lg">
                       {expandedOrderId === order._id ? <IoIosArrowDown /> : <IoIosArrowForward />}
@@ -134,12 +140,12 @@ function OrderHistory() {
                     <div className="p-4 md:p-6">
                       <div className="mb-4">
                         <h4 className="text-lg font-semibold text-gray-800">Delivery Address</h4>
-                        {addresses[order.addressId] ? (
+                        {addresses[order._id] ? (
                           <div className="text-gray-700">
-                            <p>{addresses[order.addressId].fullName}</p>
-                            <p>{addresses[order.addressId].contactNo}</p>
-                            <p>{addresses[order.addressId].address}</p>
-                            <p>{addresses[order.addressId].city}, {addresses[order.addressId].state} {addresses[order.addressId].pincode}</p>
+                            <p>{addresses[order._id].fullName}</p>
+                            <p>{addresses[order._id].contactNo}</p>
+                            <p>{addresses[order._id].address}</p>
+                            <p>{addresses[order._id].city}, {addresses[order._id].state} {addresses[order._id].pincode}</p>
                           </div>
                         ) : (
                           <p className="text-gray-600">Address information not available</p>
@@ -158,7 +164,7 @@ function OrderHistory() {
                             <div>
                               <h4 className="text-base md:text-lg font-semibold text-gray-800">{item.Name}</h4>
                               <p className="text-xs md:text-sm text-gray-600">
-                                Quantity :  {item.quantity} {item.Size}
+                                Quantity :  {item.quantity}
                               </p>
                               <p className="text-base md:text-lg font-semibold text-gray-800">₹{item.Price}</p>
                             </div>
@@ -173,10 +179,15 @@ function OrderHistory() {
                       ))}
                       <div className="flex justify-between items-center mt-4">
                         <div className="text-xs md:text-sm text-gray-700">Payment Status: {order.paymentStatus}</div>
+                        <div className="text-xs md:text-sm text-gray-700">Payment ID: {order.razorpay_order_id}</div>
                         <div className="text-base md:text-lg font-semibold text-gray-800">Total: ₹{order.amount}</div>
                       </div>
+                      <button onClick={() => handleViewInvoice(order.razorpay_order_id)} className="mt-4 flex items-center text-blue-500 hover:underline">
+                        <FaFileInvoice className="mr-2" /> Download Invoice
+                      </button>
                     </div>
                   )}
+                  {selectedOrderDetails && <GenerateInvoice order={selectedOrderDetails} />}
                 </div>
               ))}
             </div>

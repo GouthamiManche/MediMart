@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { useNavigate } from "react-router-dom";
+import 'react-toastify/dist/ReactToastify.css';
 import Logo from '/src/assets/logo.jpg';
 
 function Register() {
@@ -30,8 +30,7 @@ function Register() {
     if (Object.keys(errors).length === 0) {
       try {
         await axios.post(`${apiUrl}/register`, formData);
-        toast.success('Registered Successfully', { autoClose: 2000 });
-        navigate("/login");
+        navigate(`/verifyOTP?email=${formData.email}`);
       } catch (error) {
         console.error("Registration error:", error);
         if (error.response && error.response.data && error.response.data.error) {
