@@ -8,6 +8,9 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import UserNavigation from '../Components/UserNavigation';
 import { FaFileInvoice } from "react-icons/fa";
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import { GenerateInvoice } from '../Components/GenerateInvoice'
 
 function OrderHistory() {
   const { user, logout } = useContext(AuthContext);
@@ -15,7 +18,6 @@ function OrderHistory() {
   const [isLoading, setIsLoading] = useState(true);
   const [expandedOrderId, setExpandedOrderId] = useState(null);
   const apiUrl = import.meta.env.VITE_API_URL;
-  const apiKey = import.meta.env.VITE_API_KEY;
   const navigate = useNavigate();
   const [selectedOrderDetails, setSelectedOrderDetails] = useState(null);
 
@@ -26,11 +28,11 @@ function OrderHistory() {
         throw new Error('Failed to fetch invoice details');
       }
       const data = await response.json();
-      console.log('Invoice data:', data); // Log the data to check if it's correct
-      setSelectedOrderDetails(data[0]);
+      setSelectedOrder(data.order);
     } catch (error) {
       console.error('Error fetching invoice details:', error);
       toast.error('Failed to fetch invoice details');
+      return null;
     }
   };
 
@@ -53,7 +55,6 @@ function OrderHistory() {
       setIsLoading(false);
     }
   };
-
 
   const toggleOrderExpansion = (orderId) => {
     setExpandedOrderId((prevId) => (prevId === orderId ? null : orderId));
@@ -80,15 +81,7 @@ function OrderHistory() {
       toast.error('Failed to add item to cart');
     }
   };
-  const downloadPDF = () => {
-    if (selectedOrderDetails) {
-      const pdf = new jsPDF();
-      pdf.text(JSON.stringify(selectedOrderDetails), 10, 10); // Example: Add invoice data to PDF
-      pdf.save('invoice.pdf');
-    } else {
-      toast.error('Invoice data not available');
-    }
-  };
+
 
   return (
     <div className="container mx-auto px-4 py-8 md:w-3/4 lg:w-[80%]">
@@ -152,7 +145,6 @@ function OrderHistory() {
                             >
                               Buy Again
                             </button>
-
                           </div>
                         </div>
                       ))}
@@ -161,11 +153,12 @@ function OrderHistory() {
                         <div className="text-xs md:text-sm text-gray-700">Payment ID: {order.razorpay_order_id}</div>
                         <div className="text-base md:text-lg font-semibold text-gray-800">Total: ₹{order.amount}</div>
                       </div>
-                      <button  onClick={() => handleViewInvoice(order.razorpay_order_id)}>
-                        <FaFileInvoice />
+                      <button onClick={() => handleViewInvoice(order.razorpay_order_id)} className="mt-4 flex items-center text-blue-500 hover:underline">
+                        <FaFileInvoice className="mr-2" /> Download Invoice
                       </button>
                     </div>
                   )}
+                  {selectedOrder && <GenerateInvoice order={selectedOrder} />}
                 </div>
               ))}
             </div>
