@@ -39,7 +39,6 @@ const registerUser = async (req, res) => {
     if (existingUser) {
       return res.status(400).json({ error: 'Username or email already exists' });
     }
-
     const hashedPassword = await bcrypt.hash(password, 10);
     const otp = generateNumericOtp();
     const otpExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes from now
@@ -52,7 +51,6 @@ const registerUser = async (req, res) => {
       emailVerificationOtp: otp,
       emailVerificationOtpExpires: otpExpires,
     });
-
     await newUser.save();
     await sendVerificationEmail(newUser, otp);
 
@@ -90,7 +88,7 @@ const generateToken = (user) => {
     username: user.username,
     email: user.email,
   };
-  const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '3hr' });
+  const token = jwt.sign(payload, process.env.Secret_Key, { expiresIn: '3hr' });
   return token;
 };
 

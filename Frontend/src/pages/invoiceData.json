@@ -1,12 +1,12 @@
 {
     "company": {
-      "name": "Nexible",
-      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      "address": "64, Akshay Industrial Estate, Near New Cloth Market, Ahmedabad - 38562",
+      "name": "Medimart",
+      "description": "Online Pharmacy Website",
+      "address": ": 64, Akshay Industrial Estate, Near New Cloth Market, Mumbai - 400031",
       "contact": {
-        "tel": "079-25820309",
-        "web": "www.gftools.com",
-        "email": "info@gftools.com"
+        "tel": "(+91) 8652146200",
+        "web": "https://medimartt.netlify.app/",
+        "email": "teammedimart@gmail.com"
       },
       "GSTIN": "24HDE7487RE5RT4"
     },
