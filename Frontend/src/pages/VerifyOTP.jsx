@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -9,8 +9,35 @@ export default function VerifyOTP() {
   const [otp, setOtp] = useState(new Array(6).fill(""));
   const [otpError, setOtpError] = useState("");
   const [isVerified, setIsVerified] = useState(false);
+  const [email, setEmail] = useState("");
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
 
   const apiUrl = import.meta.env.VITE_API_URL;
+  const location = useLocation();
+
+  useEffect(() => {
+    const fetchEmailVerification = async () => {
+      const emailParam = new URLSearchParams(location.search).get('email');
+      if (emailParam) {
+        setEmail(emailParam);
+        try {
+          const response = await axios.post(`${apiUrl}/verify-email`, { email: emailParam });
+          if (response.data.message) {
+            setIsEmailVerified(true);
+          } else {
+            setOtpError('Email verification failed. Please try again.');
+          }
+        } catch (error) {
+          // console.error('Error verifying email:', error);
+          // setOtpError('Error verifying email. Please try again.');
+        }
+      } else {
+        setOtpError('No email provided for verification.');
+      }
+    };
+
+    fetchEmailVerification();
+  }, [location.search, apiUrl]);
 
   const handleChange = (element, index) => {
     let newOtp = [...otp];
@@ -19,16 +46,13 @@ export default function VerifyOTP() {
       newOtp[index] = element.value;
       setOtp(newOtp);
 
-      // Move to the next input box if a digit is entered
       if (element.value && index < 5) {
         document.getElementById(`otp-input-${index + 1}`).focus();
       }
 
-      // Move to the previous input box if backspace is pressed and the current box is empty
       if (element.value === "" && index > 0) {
         document.getElementById(`otp-input-${index - 1}`).focus();
       }
-
       setOtpError("");
     }
   };
@@ -48,7 +72,7 @@ export default function VerifyOTP() {
     }
 
     try {
-      await axios.post(`${apiUrl}/verify-otp`, { otp: otp.join("") });
+      await axios.post(`${apiUrl}/verify-email`, { email, otp: otp.join("") });
       setIsVerified(true);
       toast.success('OTP verified successfully', { autoClose: 2000 });
     } catch (error) {
@@ -103,8 +127,8 @@ export default function VerifyOTP() {
               </button>
             </div>
             <div className="flex justify-center">
-              <Link to="/login" className="text-[#125872] font-semibold">
-                Back to Login
+              <Link to="/register" className="text-[#125872]">
+                Want to change email?
               </Link>
             </div>
           </form>

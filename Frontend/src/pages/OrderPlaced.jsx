@@ -66,7 +66,7 @@ const OrderPlaced = () => {
                           <p className="font-bold text-lg text-[#125872]">{item.Name}</p>
                           <p className="text-gray-600">₹{item.Price} x {item.quantity}</p>
                         </div>
-                        <div className="text-gray-800 font-bold">₹{orderDetails.subtotal}</div>
+                        <div className="text-gray-800 font-bold">₹{item.Price*item.quantity}</div>
                       </div>
                     ))}
                   </div>

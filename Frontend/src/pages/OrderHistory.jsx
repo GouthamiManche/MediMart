@@ -10,7 +10,7 @@ import UserNavigation from '../Components/UserNavigation';
 import { FaFileInvoice } from "react-icons/fa";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import { GenerateInvoice } from '../Components/GenerateInvoice'
+import GenerateInvoice from '../Components/GenerateInvoice';
 
 function OrderHistory() {
   const { user, logout } = useContext(AuthContext);
@@ -29,11 +29,10 @@ function OrderHistory() {
         throw new Error('Failed to fetch invoice details');
       }
       const data = await response.json();
-      setSelectedOrder(data.order);
+      setSelectedOrderDetails(data.order);
     } catch (error) {
       console.error('Error fetching invoice details:', error);
       toast.error('Failed to fetch invoice details');
-      return null;
     }
   };
 
@@ -49,24 +48,21 @@ function OrderHistory() {
       const response = await axios.get(`${apiUrl}/orders/${email}`);
       const ordersData = response.data;
       setOrders(ordersData);
-      await fetchAddresses(email);
+      setAddresses(ordersData.reduce((acc, order) => {
+        acc[order._id] = {
+          fullName: order.fullName,
+          address: order.address,
+          city: order.city,
+          state: order.state,
+          pincode: order.pincode,
+          contactNo: order.contactNo
+        };
+        return acc;
+      }, {}));
     } catch (error) {
       console.error('Error fetching order history:', error);
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const fetchAddresses = async (email) => {
-    try {
-      const response = await axios.get(`${apiUrl}/user/addresses`, { params: { email } });
-      const addressesData = response.data.reduce((acc, address) => {
-        acc[address._id] = address;
-        return acc;
-      }, {});
-      setAddresses(addressesData);
-    } catch (error) {
-      console.error('Error fetching addresses:', error);
     }
   };
 
@@ -104,7 +100,6 @@ function OrderHistory() {
     }
   };
 
-
   return (
     <div className="container mx-auto px-4 py-8 md:w-3/4 lg:w-[80%]">
       <UserNavigation />
@@ -135,8 +130,7 @@ function OrderHistory() {
                       <h3 className="text-lg font-semibold text-gray-800">
                         Order #{order._id.slice(0, 12)}...
                       </h3>
-                      <div className="text-base md:text-md md:pl-[18rem] font-semibold text-gray-800">Order Date: {order.orderDate}</div>
-                      <div className="text-base md:text-md md:pl-[24rem] font-semibold text-gray-800">Total: ₹{order.amount}</div>
+                      <div className="text-base md:text-md md:pl-[54rem] font-semibold text-gray-800">Total: ₹{order.amount}</div>
                     </div>
                     <div className="text-lg">
                       {expandedOrderId === order._id ? <IoIosArrowDown /> : <IoIosArrowForward />}
@@ -146,12 +140,12 @@ function OrderHistory() {
                     <div className="p-4 md:p-6">
                       <div className="mb-4">
                         <h4 className="text-lg font-semibold text-gray-800">Delivery Address</h4>
-                        {addresses[order.addressId] ? (
+                        {addresses[order._id] ? (
                           <div className="text-gray-700">
-                            <p>{addresses[order.addressId].fullName}</p>
-                            <p>{addresses[order.addressId].contactNo}</p>
-                            <p>{addresses[order.addressId].address}</p>
-                            <p>{addresses[order.addressId].city}, {addresses[order.addressId].state} {addresses[order.addressId].pincode}</p>
+                            <p>{addresses[order._id].fullName}</p>
+                            <p>{addresses[order._id].contactNo}</p>
+                            <p>{addresses[order._id].address}</p>
+                            <p>{addresses[order._id].city}, {addresses[order._id].state} {addresses[order._id].pincode}</p>
                           </div>
                         ) : (
                           <p className="text-gray-600">Address information not available</p>
@@ -170,7 +164,7 @@ function OrderHistory() {
                             <div>
                               <h4 className="text-base md:text-lg font-semibold text-gray-800">{item.Name}</h4>
                               <p className="text-xs md:text-sm text-gray-600">
-                                Quantity :  {item.quantity} {item.Size}
+                                Quantity :  {item.quantity}
                               </p>
                               <p className="text-base md:text-lg font-semibold text-gray-800">₹{item.Price}</p>
                             </div>
@@ -193,7 +187,7 @@ function OrderHistory() {
                       </button>
                     </div>
                   )}
-                  {selectedOrder && <GenerateInvoice order={selectedOrder} />}
+                  {selectedOrderDetails && <GenerateInvoice order={selectedOrderDetails} />}
                 </div>
               ))}
             </div>
