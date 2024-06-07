@@ -3,18 +3,19 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const uuid = require('uuid');
 const nodemailer = require('nodemailer');
+const crypto = require('crypto');
 
 const sendVerificationEmail = async (user, otp) => {
   const transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
+      user: process.env.EMAIL,
+      pass: process.env.PASS,
     },
   });
 
   const mailOptions = {
-    from: process.env.EMAIL_USER,
+    from: process.env.EMAIL,
     to: user.email,
     subject: 'Email Verification',
     text: `Your OTP for email verification is ${otp}. It is valid for 10 minutes.`,
@@ -23,10 +24,12 @@ const sendVerificationEmail = async (user, otp) => {
   await transporter.sendMail(mailOptions);
 };
 
-const crypto = require('crypto');
-
 const generateCustomerId = () => {
   return uuid.v4();
+};
+
+const generateNumericOtp = () => {
+  return Math.floor(100000 + Math.random() * 900000).toString();
 };
 
 const registerUser = async (req, res) => {
@@ -87,14 +90,9 @@ const generateToken = (user) => {
     username: user.username,
     email: user.email,
   };
-  const token = jwt.sign(payload, process.env.Secret_Key, { expiresIn: '3hr' });
+  const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '3hr' });
   return token;
 };
-
-const generateNumericOtp = () => {
-  return Math.floor(100000 + Math.random() * 900000).toString(); // Generates a 6-digit OTP
-};
-
 
 const loginUser = async (req, res) => {
   try {

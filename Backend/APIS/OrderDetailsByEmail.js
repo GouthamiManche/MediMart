@@ -11,7 +11,7 @@ const getOrderDetailsByEmail = async (req, res) => {
           orderDateAsDate: {
             $dateFromString: {
               dateString: '$orderDate',
-              format: '%d/%m/%Y' // Specify the format of the date string without time
+              format: '%d/%m/%Y, %H:%M:%S' // Include time in the format
             }
           }
         }
@@ -27,4 +27,3 @@ const getOrderDetailsByEmail = async (req, res) => {
 };
 
 module.exports = { getOrderDetailsByEmail };
-
