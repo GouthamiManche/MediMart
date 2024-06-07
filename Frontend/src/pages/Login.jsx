@@ -97,12 +97,12 @@ function Login() {
 
   return (
     <div className="bg-[#f5f5f5] min-h-screen flex items-center justify-center">
-      <div className="max-w-[34%] w-full mx-auto bg-white rounded-lg shadow-lg p-8">
-        <div className="flex items-center justify-center mb-2">
-          
-          <div className="md:block hidden text-xl md:text-3xl font-bold ml-1 ">
+      <div className="max-w-md w-full mx-auto bg-white rounded-lg shadow-lg p-8">
+        <div className="flex items-center justify-center mb-6">
+         
+          <div to="/" className="md:block hidden text-xl md:text-3xl font-bold ml-1">
             <span className="text-[#14496b]">Login</span>
-          
+           
           </div>
         </div>
         <form onSubmit={handleSubmit}>
