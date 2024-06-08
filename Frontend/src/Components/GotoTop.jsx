@@ -26,7 +26,7 @@ const GoToTop = () => {
   }, []);
 
   return (
-    <div className="fixed bottom-8 md:right-8 right-2 z-50">
+    <div className="fixed bottom-8 md:right-8 animate-bounce right-2 z-50">
       {isVisible && (
         <button
           className="bg-blue-500 hover:bg-blue-600 text-white font-bold md:py-4 md:px-4 py-3 px-3 rounded-full shadow-md transition-colors duration-300"

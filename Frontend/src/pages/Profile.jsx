@@ -4,11 +4,12 @@ import { AuthContext } from '../Components/AuthProvider';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import UserNavigation from '../Components/UserNavigation';
+import defaultProfilePic from '../assets/logo.jpg';  // Make sure to adjust the path to your default profile picture
 
 function Profile() {
     const { user, logout } = useContext(AuthContext);
     const [profile, setProfile] = useState(null);
-    const [profilePic, setProfilePic] = useState('src/assets/img/profile.png');
+    const [profilePic, setProfilePic] = useState(defaultProfilePic);
     const [fullName, setFullName] = useState('');
     const [contactNumber, setContactNumber] = useState('');
     const [deliveryAddress, setDeliveryAddress] = useState('');
@@ -33,7 +34,7 @@ function Profile() {
             setFullName(fullName);
             setContactNumber(contactNumber);
             setDeliveryAddress(deliveryAddress);
-            setProfilePic(profilePic || 'src/assets/img/profile.png');
+            setProfilePic(profilePic || defaultProfilePic);
             setGender(gender);
             setDOB(dateOfBirth);
             setAddresses(addresses);

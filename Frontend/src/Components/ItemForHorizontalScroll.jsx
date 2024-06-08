@@ -96,7 +96,7 @@ function ItemForHorizontalScroll({ item }) {
 
   return (
     <div>
-      <div className="bg-white m-2 p-4 rounded-xl border border-gray-200 flex flex-col md:w-[16rem] md:h-[22rem] w-[12.6rem] h-[15.4rem] overflow-hidden shadow-md hover:shadow-xl transition duration-300">
+      <div className="bg-white m-2 p-4 rounded-xl border border-gray-200 hover:border-[#125872] flex flex-col md:w-[16rem] md:h-[22rem] w-[12.6rem] h-[15.4rem] overflow-hidden  transition duration-300">
         <Link
           to={`/${item.Sub_Category}/${item.Name}`}
           state={item}
@@ -105,7 +105,7 @@ function ItemForHorizontalScroll({ item }) {
             <img
               src={item.Image_URL}
               alt={item?.Medicine_Name || item.Name}
-              className="max-w-full max-h-full transition duration-300 hover:scale-105"
+              className="max-w-full max-h-full"
             />
           </div>
         </Link>

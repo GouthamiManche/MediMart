@@ -86,13 +86,13 @@ function Item({ item }) {
   const truncatedName = truncateString(item.Medicine_Name || item.Name, 20);
 
   return (
-    <div className="bg-white m-2 p-4 rounded-xl border border-gray-200 flex flex-col md:w-[16rem] w-[16rem] md:h-[22rem] h-[22rem] overflow-hidden  transition duration-300 ">
+    <div className="bg-white m-2 p-4 rounded-xl border border-gray-200 hover:border-[#125872] flex flex-col md:w-[16rem] w-[16rem] md:h-[22rem] h-[22rem] overflow-hidden  transition duration-300 ">
       <Link to={`/${item.Sub_Category}/${item.Name}`} state={item}>
         <div className="relative h-56 overflow-hidden rounded-lg flex items-center justify-center">
           <img
             src={item.Image_URL}
             alt={item.Medicine_Name || item.Name}
-            className="max-w-full max-h-full transition duration-300 hover:scale-105"
+            className="max-w-full max-h-full"
           />
         </div>
       </Link>

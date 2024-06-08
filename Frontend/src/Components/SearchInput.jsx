@@ -45,7 +45,7 @@ const SearchInput = ({ searchTerm, setSearchTerm, sortOption, setSortOption }) =
             className="pr-4 py-4 w-full shadow-md rounded-md border-[1px] border-[#125872] focus:outline-none mb-2 sm:mb-0 sm:mr-4 transition-all duration-500 ease-in-out pl-12"
           />
           {!searchTerm && (
-            <span className="absolute left-8 top-0 pl-4 py-4 text-gray-400">
+            <span className="absolute left-8 top-0 pl-4 py-4 text-gray-400 sm:block hidden">
               Search here{" "}
               <span className="font-semibold text-gray-600">
                 {currentPlaceholder}

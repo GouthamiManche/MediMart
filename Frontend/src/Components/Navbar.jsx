@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { GrCart } from "react-icons/gr";
 import { GrSearch } from "react-icons/gr";
+
 function Navbar() {
   const { user, logout } = useContext(AuthContext);
   const { state: { cartItems }, fetchCartItems } = useCart();
@@ -67,8 +68,8 @@ function Navbar() {
           </div>
         </div>
         <div className="md:hidden flex text-gray-900">
-        <button onClick={handleCartClick} className="font-bold py-2 rounded flex items-center relative">
-        <GrCart  className="text-xl" />
+          <button onClick={handleCartClick} className="font-bold py-2 rounded flex items-center relative ml-4">
+            <GrCart className="text-xl" />
             {totalItemsInCart > 0 && (
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                 {totalItemsInCart}
@@ -84,16 +85,15 @@ function Navbar() {
           </button>
         </div>
         <nav className="hidden md:flex items-center ">
-
           <nav className="hidden md:flex md:ml-[12vw]">
             <div className="flex gap-10 text-gray-900">
               <Link to="/shop" className="mr-[1rem]">
-              <GrSearch className="text-xl text-[#125872]" />
+                <GrSearch className="text-xl text-[#125872]" />
               </Link>
             </div>
           </nav>
           <button onClick={handleCartClick} className="font-bold py-2 rounded flex items-center relative">
-          <GrCart  className="text-xl text-[#125872]" />
+            <GrCart className="text-xl text-[#125872]" />
             {totalItemsInCart > 0 && (
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                 {totalItemsInCart}
@@ -115,7 +115,7 @@ function Navbar() {
                     </Link>
                     <br />
                     <button onClick={logout} className="text-gray-700 hover:text-red-600 w-full px-4 py-2 text-left text-sm">
-                     Logout
+                      Logout
                     </button>
                   </div>
                 </div>
@@ -147,13 +147,25 @@ function Navbar() {
                 Logout
               </button>
             ) : (
-              <Link onClick={() => setMobileMenuOpen(false)} to="/login" className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition duration-300">
-                Login
+              <Link onClick={() => setMobileMenuOpen(false)} to="/login" className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition duration-300">Login
               </Link>
             )}
             <Link to="/shop" className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition duration-300" onClick={() => setMobileMenuOpen(false)}>
               Shop
             </Link>
+            <div className="mt-4">
+              <h3 className="text-gray-700 font-semibold mb-2">Categories</h3>
+              {categories.map(({ title, subCategory, category }, index) => (
+                <Link
+                  key={index}
+                  to={`/shop?subCategory=${subCategory || ''}&Category=${category || ''}`}
+                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition duration-300"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {title}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </div>
