@@ -115,7 +115,7 @@ function ItemForHorizontalScroll({ item }) {
             to={`/${item.Sub_Category}/${item.Name}`}
             state={item}
           >
-            <h3 className="font-semibold md:text-lg text-md text-[#171A1FFF] transition duration-300 hover:text-[#3EBDE0FF]">
+            <h3 className="font-semibold md:text-lg text-md text-[#125872]">
               {truncatedName}
             </h3>
           </Link>
@@ -147,7 +147,7 @@ function ItemForHorizontalScroll({ item }) {
               </div>
             ) : (
               <button
-                className="flex items-center justify-center bg-[#12587222] border-[#125872]  text-[#125872] rounded-md font-bold border py-1.5 px-8 text-sm bg-[#125872] transition duration-300 shadow-md"
+                className="flex items-center justify-center bg-[#12587222] border-[#125872]  text-[#125872] rounded-md font-bold border py-1.5 px-8 text-sm  transition duration-300 shadow-md"
                 onClick={handleAddToCart}
               >
                 Add

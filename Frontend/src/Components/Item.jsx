@@ -99,7 +99,7 @@ function Item({ item }) {
       <hr className="border border-gray-300 " />
       <Link to={`/${item.Sub_Category}/${item.Name}`} state={item}>
         <div className="flex flex-col justify-between mt-6 relative">
-          <h3 className="font-semibold text-lg text-[#171A1FFF] transition duration-300 hover:text-[#3EBDE0FF]">
+          <h3 className="font-semibold text-lg text-[#125872]">
             {truncatedName}
           </h3>
         </div>

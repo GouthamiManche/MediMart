@@ -316,9 +316,9 @@ const AddressForm = () => {
               ))
             )}
             <button
-              className="bg-[#125872] text-white px-4 py-2 rounded-md mt-2"
+              className="bg-[#125872] text-white px-[42.7%] text-center py-2 rounded-md mt-2"
               onClick={() => setShowAddModal(true)}>
-              Add address
+              Add Address
             </button>
           </div>
           <form className="hidden" onSubmit={handleSubmit}>

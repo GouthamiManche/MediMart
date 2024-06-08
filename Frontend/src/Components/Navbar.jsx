@@ -4,12 +4,12 @@ import { CgProfile } from "react-icons/cg";
 import { FaBars, FaTimes } from "react-icons/fa";
 import Logo from '/src/assets/logo.jpg';
 import { ImSearch } from "react-icons/im";
-import { FaCartShopping } from "react-icons/fa6";
 import { AuthContext } from "./AuthProvider";
 import { useCart } from "./CartProvider";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { GrCart } from "react-icons/gr";
+import { GrSearch } from "react-icons/gr";
 function Navbar() {
   const { user, logout } = useContext(AuthContext);
   const { state: { cartItems }, fetchCartItems } = useCart();
@@ -68,7 +68,7 @@ function Navbar() {
         </div>
         <div className="md:hidden flex text-gray-900">
         <button onClick={handleCartClick} className="font-bold py-2 rounded flex items-center relative">
-            <FaCartShopping className="text-xl" />
+        <GrCart  className="text-xl" />
             {totalItemsInCart > 0 && (
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                 {totalItemsInCart}
@@ -88,12 +88,12 @@ function Navbar() {
           <nav className="hidden md:flex md:ml-[12vw]">
             <div className="flex gap-10 text-gray-900">
               <Link to="/shop" className="mr-[1rem]">
-                <ImSearch className="text-xl" />
+              <GrSearch className="text-xl text-[#125872]" />
               </Link>
             </div>
           </nav>
           <button onClick={handleCartClick} className="font-bold py-2 rounded flex items-center relative">
-            <FaCartShopping className="text-xl" />
+          <GrCart  className="text-xl text-[#125872]" />
             {totalItemsInCart > 0 && (
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                 {totalItemsInCart}
@@ -104,7 +104,7 @@ function Navbar() {
             <div className="relative inline-block text-left">
               <div className="flex items-center">
                 <button onClick={toggleDropdown} className="focus:outline-none ml-2">
-                  <CgProfile className="text-2xl" />
+                  <CgProfile className="text-2xl text-[#125872]" />
                 </button>
               </div>
               {dropdownOpen && (
