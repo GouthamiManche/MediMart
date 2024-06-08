@@ -69,14 +69,14 @@ function Navbar() {
         </div>
         <div className="md:hidden flex text-gray-900">
           <button onClick={handleCartClick} className="font-bold py-2 rounded flex items-center relative ml-4">
-            <GrCart className="text-xl" />
+            <GrCart className="text-2xl mr-[1rem] text-[#125872]" />
             {totalItemsInCart > 0 && (
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+              <span className="absolute -top-1 -right-[0px] bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                 {totalItemsInCart}
               </span>
             )}
           </button>
-          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="focus:outline-none">
+          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="focus:outline-none text-[#125872]">
             {mobileMenuOpen ? (
               <FaTimes className="text-xl" />
             ) : (
@@ -92,7 +92,7 @@ function Navbar() {
               </Link>
             </div>
           </nav>
-          <button onClick={handleCartClick} className="font-bold py-2 rounded flex items-center relative">
+          <button onClick={handleCartClick} className="font-bold py-2 rounded flex items-center relative mr-[0.5rem]">
             <GrCart className="text-xl text-[#125872]" />
             {totalItemsInCart > 0 && (
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
@@ -101,7 +101,7 @@ function Navbar() {
             )}
           </button>
           {user ? (
-            <div className="relative inline-block text-left">
+            <div className="relative inline-block text-left mr-[1rem]">
               <div className="flex items-center">
                 <button onClick={toggleDropdown} className="focus:outline-none ml-2">
                   <CgProfile className="text-2xl text-[#125872]" />
@@ -154,7 +154,7 @@ function Navbar() {
               Shop
             </Link>
             <div className="mt-4">
-              <h3 className="text-gray-700 font-semibold mb-2">Categories</h3>
+             
               {categories.map(({ title, subCategory, category }, index) => (
                 <Link
                   key={index}

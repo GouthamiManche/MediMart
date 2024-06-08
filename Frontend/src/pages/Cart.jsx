@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from "axios";
 import { BsTrash } from 'react-icons/bs';
-import HorizontalCardScroll from '../Components/HorizontalCardScroll';
+import HorizontalCardScrollCart from '../Components/HorizontalCardScrollCart';
 import LoadingGif from "../Components/LoadingGif";
 import { AuthContext } from '../Components/AuthProvider';
 import { toast } from 'react-toastify';
@@ -295,7 +295,7 @@ const Cart = () => {
       </div>
 
       <div className='md:mt-[2rem]'>
-        <HorizontalCardScroll itemForHorizontalScroll={items} />
+        <HorizontalCardScrollCart itemForHorizontalScrollCart={items} />
       </div>
     </>
   );
