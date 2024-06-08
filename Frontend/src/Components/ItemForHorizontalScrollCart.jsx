@@ -46,7 +46,7 @@ function ItemForHorizontalScrollCart({ item }) {
 
   const reloadPage = useCallback(debounce(() => {
     window.location.reload();
-  }, 500), []);
+  }, 1000), []);
 
   const handleAddToCart = async () => {
     if (!user) {
