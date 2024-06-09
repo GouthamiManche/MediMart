@@ -9,6 +9,8 @@ import AddAddressModal from '../Components/AddAddressModal';
 import { FaTrashAlt, FaEdit } from 'react-icons/fa';
 import ManageAddModal from '../Components/ManageAddModal';
 import checkbox from '../assets/checkmark.png'
+import { IoHomeOutline } from "react-icons/io5";
+
 const AddressForm = () => {
   const { user } = useContext(AuthContext);
   const email = user?.email || '';
@@ -305,13 +307,17 @@ const AddressForm = () => {
               addresses.map((address, index) => (
                 <div
                   key={index}
-                  className={`border border-gray-300 rounded-md p-4 mb-2 ${
-                    selectedAddress === address ? 'bg-gray-100' : ''
-                  }`}
+                  className={`border border-gray-300 rounded-md p-4 mb-2 ${selectedAddress === address ? 'bg-gray-100' : ''
+                    }`}
                   onClick={() => handleSelectAddress(address)}
                 >
-                  <h4 className="text-lg font-semibold">{address.fullName}</h4>
-                  <h4 className="text-lg font-semibold">{address.addresstype}</h4>
+                  <div className='flex justify-between items-center'>
+                    <h4 className="text-lg font-semibold">{address.fullName}</h4>
+                    <div className="flex items-center">
+                      <IoHomeOutline className="mr-1" />
+                      <h4 className="text-lg font-semibold">{address.addressType}</h4>
+                    </div>
+                  </div>
                   <p>{address.contactNo}</p>
                   <p>{address.address}</p>
                   <p>{address.city}, {address.state} {address.pincode}</p>
@@ -469,18 +475,18 @@ const AddressForm = () => {
           <div className="mt-4">
           </div>
           <div className="flex justify-center">
-          {loading ? (
-        <button className="bg-[#125872] text-white font-semibold w-full py-3 rounded-md mt-4" disabled>
-          Loading...
-        </button>
-      ) : (
-            <button
-              type="submit"
-              onClick={handleSubmit}
-              className="flex items-center justify-center px-24 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#125872] hover:bg-[#0E4E63] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0E4E63]"
-            >
-              RazorPay <SiRazorpay className="ml-2" />
-            </button>
+            {loading ? (
+              <button className="bg-[#125872] text-white font-semibold w-full py-3 rounded-md mt-4" disabled>
+                Loading...
+              </button>
+            ) : (
+              <button
+                type="submit"
+                onClick={handleSubmit}
+                className="flex items-center justify-center px-24 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#125872] hover:bg-[#0E4E63] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0E4E63]"
+              >
+                RazorPay <SiRazorpay className="ml-2" />
+              </button>
             )}
           </div>
         </div>

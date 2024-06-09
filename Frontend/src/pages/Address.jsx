@@ -105,7 +105,7 @@ const Address = () => {
                       <p>{address.contactNo}</p>
                       <p>{address.address}</p>
                       <p>{address.city}, {address.state} {address.pincode}</p>
-                      <p>Address Type: {address.addressType}</p> {/* Display address type */}
+                      <p>Address Type: {address.addressType}</p>
                       <div className="flex justify-between items-center">
                         <button onClick={() => handleDeleteAddress(address.addressId)} className="text-gray-500 hover:text-red-700">
                           <FaTrashAlt />

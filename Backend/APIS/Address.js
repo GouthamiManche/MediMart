@@ -2,23 +2,29 @@ const User = require('../models/user.model');
 
 // Add new address
 async function addAddress(req, res) {
-  const userEmail = req.body.email;
-  const newAddress = req.body.address;
-  const addressType = req.body.addressType; // New line
+  const { email, address, addressType, otherAddressName } = req.body;
 
   try {
-    const user = await User.findOne({ email: userEmail });
+    const user = await User.findOne({ email });
     if (!user) {
       return res.status(404).send('User not found');
     }
-    newAddress.addressType = addressType; // Assign address type to the new address
+
+    const newAddress = { ...address, addressType };
+
+    if (addressType === 'Other' && otherAddressName) {
+      newAddress.otherAddressName = otherAddressName;
+    }
+
     user.addresses.push(newAddress);
     await user.save();
+
     res.status(200).send(user.addresses);
   } catch (error) {
     res.status(500).send(error.message);
   }
 }
+
 
 // Fetch addresses
 async function getAddresses(req, res) {

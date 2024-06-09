@@ -10,6 +10,7 @@ const ManageAddressModal = ({ isOpen, onClose, onAddAddress, addressToEdit }) =>
     state: '',
     pincode: '',
     contactNo: '',
+    addressType: '',
   });
   const [errors, setErrors] = useState({});
 
@@ -21,7 +22,7 @@ const ManageAddressModal = ({ isOpen, onClose, onAddAddress, addressToEdit }) =>
     }));
     setErrors((prevErrors) => ({
       ...prevErrors,
-      [name]: '', 
+      [name]: '',
     }));
   };
 
@@ -219,6 +220,37 @@ const ManageAddressModal = ({ isOpen, onClose, onAddAddress, addressToEdit }) =>
               required
             />
             {errors.state && <p className="text-red-500 text-sm mt-1">{errors.state}</p>}
+          </div>
+          <div className="mb-[0.5rem]">
+            <label htmlFor="addressType" className="block text-sm font-medium text-gray-700">
+              Address Type
+            </label>
+            <select
+              id="addressType"
+              name="addressType"
+              value={formData.addressType}
+              onChange={handleChange}
+              className={` p-2 py-3 block w-full border ${errors.addressType ? 'border-red-500' : 'border-gray-300'
+                } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+              required
+            >
+              <option value="Home">Home</option>
+              <option value="Office">Office</option>
+              <option value="Other">Other</option>
+            </select>
+            {formData.addressType === 'Other' && (
+              <input
+                type="text"
+                id="otherAddressName"
+                name="otherAddressName"
+                value={formData.otherAddressName}
+                onChange={handleChange}
+                placeholder="Enter Other Address Name"
+                className=" p-2 py-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm"
+                required
+              />
+            )}
+            {errors.addressType && <p className="text-red-500 text-sm mt-1">{errors.addressType}</p>}
           </div>
           <div className="flex justify-end mt-4">
             <button

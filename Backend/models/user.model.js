@@ -10,6 +10,7 @@ const addressSchema = new Schema({
   state: String,
   pincode: String,
   addressType: { type: String, enum: ['Home', 'Office', 'Other'], default: 'Home' },
+  otherAddressName: String 
 }, { _id: false });
 
 const userSchema = new Schema({
