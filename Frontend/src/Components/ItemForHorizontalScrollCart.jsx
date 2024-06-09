@@ -112,7 +112,7 @@ function ItemForHorizontalScrollCart({ item }) {
 
   return (
     <div>
-      <div className="bg-white m-2 p-4 rounded-xl border border-gray-200 hover:border-[#125872] flex flex-col md:w-[16rem] md:h-[22rem] w-[12.6rem] h-[15.4rem] overflow-hidden  transition duration-300">
+      <div className="bg-white m-2 p-4 rounded-xl border border-gray-200 hover:border-[#125872] flex flex-col md:w-[16rem] md:h-[22rem] w-[12.6rem] h-[16.4rem] overflow-hidden  transition duration-300">
         <Link
           to={`/${item.Sub_Category}/${item.Name}`}
           state={item}
