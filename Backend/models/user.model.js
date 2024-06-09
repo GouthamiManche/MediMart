@@ -2,13 +2,14 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const addressSchema = new Schema({
-  addressId: { type: String, default: () => Math.random().toString(36).substr(2, 9) }, 
+  addressId: { type: String, default: () => Math.random().toString(36).substr(2, 9) },
   fullName: String,
   contactNo: String,
   address: String,
   city: String,
   state: String,
   pincode: String,
+  addressType: { type: String, enum: ['Home', 'Office', 'Other'], default: 'Home' },
 }, { _id: false });
 
 const userSchema = new Schema({

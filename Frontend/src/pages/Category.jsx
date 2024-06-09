@@ -16,14 +16,13 @@ const Category = () => {
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
   const [items, setItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const apiUrl = import.meta.env.VITE_API_URL;
   const apiKey = import.meta.env.VITE_API_KEY;
   const { isAuthenticated, user } = useContext(AuthContext);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
-    setIsLoading(true);
     const fetchData = async () => {
       try {
         const response = await axios.get(`${apiUrl}/products?sub_category=${product.Sub_Category}`, {
@@ -35,9 +34,7 @@ const Category = () => {
       } catch (error) {
         console.error("Error fetching data:", error.message);
       }
-      finally {
-        setIsLoading(false);
-      }
+     
     };
     fetchData();
   }, []);
@@ -94,14 +91,19 @@ const Category = () => {
       email: user.email
     };
 
+    setIsLoading(true); // Set loading to true when the button is clicked
+
     try {
       await axios.post(`${apiUrl}/addtocart`, cartItem);
       toast.success('Item Added To Cart', { autoClose: 2000 });
     } catch (error) {
       console.error("Error adding item to cart:", error.message);
       toast.error('Failed to add item to cart');
+    } finally {
+      setIsLoading(false); // Set loading back to false after the operation is complete
     }
   };
+
 
   const handleImageChange = (index) => {
     setCurrentImageIndex(index);
@@ -173,9 +175,8 @@ const Category = () => {
                 {productImages.map((image, index) => (
                   <div
                     key={index}
-                    className={`mr-2 border border-gray-300 p-1 cursor-pointer ${
-                      currentImageIndex === index ? 'border-blue-500' : ''
-                    }`}
+                    className={`mr-2 border border-gray-300 p-1 cursor-pointer ${currentImageIndex === index ? 'border-blue-500' : ''
+                      }`}
                     onClick={() => handleImageChange(index)}
                   >
                     <img src={image} alt={`Product Image ${index}`} className="w-16 h-16 object-cover" />
@@ -186,9 +187,8 @@ const Category = () => {
                 {productImages.map((image, index) => (
                   <div
                     key={index}
-                    className={`mb-2 md:mb-0 md:mr-2 border border-gray-300 p-1 cursor-pointer ${
-                      currentImageIndex === index ? 'border-blue-500' : ''
-                    }`}
+                    className={`mb-2 md:mb-0 md:mr-2 border border-gray-300 p-1 cursor-pointer ${currentImageIndex === index ? 'border-blue-500' : ''
+                      }`}
                     onClick={() => handleImageChange(index)}
                   >
                     <img src={image} alt={`Product Image ${index}`} className="w-16 h-16 object-cover" />
@@ -256,11 +256,17 @@ const Category = () => {
                     </button>
                     <div className="md:ml-[12rem] ml-[2rem]">
                       <button
-                        className="flex items-center justify-center bg-[#125872] text-white font-bold py-2 md:px-8 px-[6px] rounded transition-colors duration-300"
+                        className={`flex items-center justify-center bg-[#125872] text-white font-bold py-2 md:px-8 px-[6px] rounded transition-colors duration-300 ${isLoading ? 'opacity-50 cursor-not-allowed' : ''
+                          }`}
                         onClick={handleAddToCart}
+                        disabled={isLoading}
                       >
-                        <BsCart3 className="mr-2" />
-                        Add to Cart
+                        {isLoading ? 'Adding to Cart...' : (
+                          <>
+                            <BsCart3 className="mr-2" />
+                            Add to Cart
+                          </>
+                        )}
                       </button>
                     </div>
                   </div>

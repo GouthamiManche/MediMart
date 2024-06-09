@@ -12,6 +12,7 @@ function Register() {
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmit, setIsSubmit] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false); // Add loading state
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -28,6 +29,8 @@ function Register() {
     setFormErrors(errors);
 
     if (Object.keys(errors).length === 0) {
+      setLoading(true); // Set loading to true when submitting
+
       try {
         await axios.post(`${apiUrl}/register`, formData);
         navigate(`/verifyOTP?email=${formData.email}`);
@@ -38,6 +41,8 @@ function Register() {
         } else {
           setErrorMessage("An internal server error occurred during registration.");
         }
+      } finally {
+        setLoading(false); // Set loading to false regardless of success or failure
       }
     }
   };
@@ -75,9 +80,9 @@ function Register() {
     <div className="bg-[#f5f5f5] min-h-screen flex items-center justify-center">
       <div className="max-w-[34%] w-full mx-auto bg-white rounded-lg shadow-lg p-8">
         <div className="flex items-center justify-center mb-2">
-          <div  className="md:block hidden text-xl md:text-3xl font-bold ml-1 font-PlayFair">
+          <div className="md:block hidden text-xl md:text-3xl font-bold ml-1 font-PlayFair">
             <span className="text-[#14496b]">Register</span>
-      
+
           </div>
         </div>
         <form onSubmit={handleSubmit}>
@@ -92,9 +97,8 @@ function Register() {
               value={formData.username}
               onChange={handleChange}
               required
-              className={`border-b border-gray-400 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-[#125872] ${
-                formErrors.username && isSubmit ? 'border-red-500' : ''
-              }`}
+              className={`border-b border-gray-400 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-[#125872] ${formErrors.username && isSubmit ? 'border-red-500' : ''
+                }`}
             />
             <div className="absolute inset-y-0 right-0 flex items-center px-2">
               <svg
@@ -125,9 +129,8 @@ function Register() {
               value={formData.email}
               onChange={handleChange}
               required
-              className={`border-b border-gray-400 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-[#125872] ${
-                formErrors.email && isSubmit ? 'border-red-500' : ''
-              }`}
+              className={`border-b border-gray-400 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-[#125872] ${formErrors.email && isSubmit ? 'border-red-500' : ''
+                }`}
             />
             <div className="absolute inset-y-0 right-0 flex items-center px-2">
               <svg
@@ -159,9 +162,8 @@ function Register() {
                 value={formData.password}
                 onChange={handleChange}
                 required
-                className={`border-b border-gray-400 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-[#125872] ${
-                  formErrors.password && isSubmit ? 'border-red-500' : ''
-                }`}
+                className={`border-b border-gray-400 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-[#125872] ${formErrors.password && isSubmit ? 'border-red-500' : ''
+                  }`}
               />
               <div
                 className="absolute inset-y-0 right-0 flex items-center px-2 cursor-pointer"
@@ -204,8 +206,9 @@ function Register() {
             <button
               type="submit"
               className="bg-[#125872] text-white font-bold py-2 px-4 rounded w-full"
+              disabled={loading} // Disable button when loading
             >
-              Register
+              {loading ? 'Loading...' : 'Register'} {/* Show loading text when loading */}
             </button>
           </div>
         </form>

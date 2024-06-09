@@ -2,36 +2,43 @@ import React, { useEffect, useMemo, useRef } from 'react';
 import { jsPDF } from 'jspdf';
 import 'jspdf-autotable';
 import invoiceData from '../pages/invoiceData.json';
+import { FaRupeeSign } from 'react-icons/fa';
+
 const GenerateInvoice = React.memo(({ order }) => {
   const orderRef = useRef(null);
   const isDownloaded = useRef(false);
+
   useEffect(() => {
     if (order && order !== orderRef.current) {
       orderRef.current = order;
       isDownloaded.current = false;
     }
   }, [order]);
+
   useEffect(() => {
     if (!isDownloaded.current && order) {
       downloadPDF();
       isDownloaded.current = true;
     }
   }, [order]);
+
   const downloadPDF = useMemo(() => {
     const generatePDF = async () => {
       const {
         company,
-        invoiceDetails,
-        customer,
-        products,
-        totalAmount,
         bankDetails,
         termsAndConditions,
       } = invoiceData;
+
       const pdf = new jsPDF('p', 'mm', 'a4');
+
+      // Set font to helvetica which includes the rupee symbol
+      pdf.setFont('times');
+
       const margin = 10;
       let currentY = margin;
 
+      // Company details
       pdf.setFontSize(18);
       pdf.text(company.name, margin, currentY);
       currentY += 8;
@@ -44,11 +51,8 @@ const GenerateInvoice = React.memo(({ order }) => {
       currentY += 6;
       pdf.text(`GSTIN: ${company.GSTIN}`, margin, currentY);
       currentY += 10;
-      pdf.text('TAX INVOICE', margin, currentY);
-      currentY += 6;
-      pdf.text('ORIGINAL FOR RECIPIENT', margin, currentY);
-      currentY += 10;
 
+      // Customer details
       pdf.text('Customer Detail:', margin, currentY);
       currentY += 6;
       pdf.text(`M/S: ${order.fullName}`, margin, currentY);
@@ -60,39 +64,21 @@ const GenerateInvoice = React.memo(({ order }) => {
       pdf.text(`Email: ${order.email}`, margin, currentY);
       currentY += 10;
 
-      pdf.text(`Invoice No: ${invoiceDetails.invoiceNo}`, margin, currentY);
-      currentY += 6;
-      pdf.text(`Invoice Date: ${invoiceDetails.invoiceDate}`, margin, currentY);
-      currentY += 6;
-      pdf.text(`Challan No: ${invoiceDetails.challanNo}`, margin, currentY);
-      currentY += 6;
-      pdf.text(`Challan Date: ${invoiceDetails.challanDate}`, margin, currentY);
-      currentY += 6;
-      pdf.text(`P.O. No: ${invoiceDetails.PONo}`, margin, currentY);
-      currentY += 6;
-      pdf.text(`Delivery Date: ${invoiceDetails.deliveryDate}`, margin, currentY);
-      currentY += 6;
-      pdf.text(`L.R. No: ${invoiceDetails.LRNo}`, margin, currentY);
-      currentY += 6;
-      pdf.text(`E-Way No: ${invoiceDetails.ewayNo}`, margin, currentY);
-      currentY += 6;
-      pdf.text(`Reverse Charge: ${invoiceDetails.reverseCharge}`, margin, currentY);
-      currentY += 6;
-      pdf.text(`Due Date: ${invoiceDetails.dueDate}`, margin, currentY);
-      currentY += 10;
+      // Product details
+      const tableColumn = ["Sr. No.", "Name of Product / Service", "Qty", "Rate", "Taxable Value", "Total"];
+      const tableRows = order.cartItems.map((item, index) => {
+        const taxableValue = item.Price * item.quantity;
+        const totalAmount = taxableValue;
 
-      const tableColumn = ["Sr. No.", "Name of Product / Service", "HSN / SAC", "Qty", "Rate", "Taxable Value", "IGST %", "IGST Amount", "Total"];
-      const tableRows = order.cartItems.map((item, index) => [
-        index + 1,
-        item.Name,
-        item.Product_id,
-        item.quantity,
-        item.Price,
-        item.Price * item.quantity,
-        "0%",
-        "0",
-        item.Price * item.quantity,
-      ]);
+        return [
+          index + 1,
+          item.Name,
+          item.quantity,
+          item.Price.toFixed(2),
+          taxableValue.toFixed(2),
+          totalAmount.toFixed(2)
+        ];
+      });
 
       pdf.autoTable({
         head: [tableColumn],
@@ -104,9 +90,16 @@ const GenerateInvoice = React.memo(({ order }) => {
 
       currentY = pdf.autoTable.previous.finalY + 10;
 
-      pdf.text('Total Amount:', margin, currentY);
-      pdf.text(`₹ ${order.amount}`, margin + 30, currentY);
+      // Total amount
+      const totalTaxableValue = tableRows.reduce((acc, row) => acc + parseFloat(row[4]), 0);
+      const totalAmount = tableRows.reduce((acc, row) => acc + parseFloat(row[5]), 0);
+
+      pdf.text(`Total Taxable Value: ${totalTaxableValue.toFixed(2)}`, margin, currentY);
+      currentY += 6;
+      pdf.text(`Total Amount:${totalAmount.toFixed(2)}`, margin, currentY);
       currentY += 10;
+
+      // Bank details
       pdf.text('Bank Details:', margin, currentY);
       currentY += 6;
       pdf.text(`Bank Name: ${bankDetails.bankName}`, margin, currentY);
@@ -118,6 +111,7 @@ const GenerateInvoice = React.memo(({ order }) => {
       pdf.text(`Bank Branch IFSC: ${bankDetails.branchIFSC}`, margin, currentY);
       currentY += 10;
 
+      // Terms and conditions
       pdf.text('Terms and Conditions:', margin, currentY);
       currentY += 6;
       termsAndConditions.forEach((condition, index) => {
@@ -130,8 +124,8 @@ const GenerateInvoice = React.memo(({ order }) => {
 
     return generatePDF;
   }, [order]);
+
   return null;
-}, (prevProps, nextProps) => {
-  return prevProps.order === nextProps.order;
-});
+}, (prevProps, nextProps) => prevProps.order === nextProps.order);
+
 export default GenerateInvoice;

@@ -9,6 +9,7 @@ export default function ForgetPassword() {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false); // Added loading state
 
   const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -30,12 +31,15 @@ export default function ForgetPassword() {
     }
 
     try {
+      setLoading(true); // Set loading to true when form is submitted
       await axios.post(`${apiUrl}/forgot-password`, { email });
       setIsSubmitted(true);
       toast.success('Password reset email sent', { autoClose: 2000 });
     } catch (error) {
       console.error('Error sending reset email:', error);
       setEmailError('An error occurred while sending the reset email.');
+    } finally {
+      setLoading(false); // Set loading to false after request is complete
     }
   };
 
@@ -79,9 +83,9 @@ export default function ForgetPassword() {
               <button
                 type="submit"
                 className="bg-[#125872] text-white font-bold w-full py-2 px-4 rounded"
-                disabled={!email}
+                disabled={!email || loading} // Disable button when email is empty or when loading is true
               >
-                Send Reset Link
+                {loading ? 'Sending...' : 'Send Reset Link'} {/* Show loading text when loading */}
               </button>
             </div>
             <div className="flex justify-center">

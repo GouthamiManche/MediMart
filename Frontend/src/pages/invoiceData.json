@@ -22,42 +22,6 @@
       "reverseCharge": "No",
       "dueDate": "19-Mar-2020"
     },
-    "customer": {
-      "name": "Kevin Motors",
-      "address": "Chandani Chok, New Delhi, Opposite Statue, New Delhi, Delhi - 110014",
-      "phone": "9372346666",
-      "GSTIN": "07A0LCC1206D1ZG",
-      "placeOfSupply": "Delhi (07)"
-    },
-    "products": [
-      {
-        "srNo": 1,
-        "name": "Automatic Saw",
-        "HSN": "8202",
-        "qty": "1.00 PCS",
-        "rate": "586.00",
-        "taxableValue": "586.00",
-        "IGSTPercentage": "9.00",
-        "IGSTAmount": "52.74",
-        "total": "638.74"
-      },
-      {
-        "srNo": 2,
-        "name": "Stanley Hammer",
-        "HSN": "8205",
-        "qty": "1.00 PCS",
-        "rate": "568.00",
-        "taxableValue": "568.00",
-        "IGSTPercentage": "9.00",
-        "IGSTAmount": "51.12",
-        "total": "619.12"
-      }
-    ],
-    "totalAmount": {
-      "taxableAmount": "1,154.00",
-      "IGST": "103.86",
-      "totalAmountAfterTax": "1,258.00"
-    },
     "bankDetails": {
       "bankName": "State Bank of India",
       "branchName": "RAF CAMP",
@@ -65,10 +29,9 @@
       "branchIFSC": "SBIN0000488"
     },
     "termsAndConditions": [
-      "Subject to Ahmedabad Jurisdiction.",
+      "Subject to Mumbai Jurisdiction.",
       "Our responsibility ceases as soon as the goods leave our premises.",
       "Goods once sold will not be taken back.",
       "Delivery ex-premises."
     ]
   }
-  

@@ -10,8 +10,6 @@ export default function VerifyOTP() {
   const [otpError, setOtpError] = useState("");
   const [isVerified, setIsVerified] = useState(false);
   const [email, setEmail] = useState("");
-  const [isEmailVerified, setIsEmailVerified] = useState(false);
-
   const apiUrl = import.meta.env.VITE_API_URL;
   const location = useLocation();
 
@@ -23,13 +21,12 @@ export default function VerifyOTP() {
         try {
           const response = await axios.post(`${apiUrl}/verify-email`, { email: emailParam });
           if (response.data.message) {
-            setIsEmailVerified(true);
+            setIsVerified(true);
           } else {
             setOtpError('Email verification failed. Please try again.');
           }
         } catch (error) {
-          // console.error('Error verifying email:', error);
-          // setOtpError('Error verifying email. Please try again.');
+          setOtpError('An error occurred while verifying email.');
         }
       } else {
         setOtpError('No email provided for verification.');
@@ -55,29 +52,25 @@ export default function VerifyOTP() {
       }
       setOtpError("");
     }
+
+    if (newOtp.join("").length === 6) {
+      verifyOTP(newOtp.join(""));
+    }
+  };
+
+  const verifyOTP = async (otp) => {
+    try {
+      await axios.post(`${apiUrl}/verify-email`, { email, otp });
+      setIsVerified(true);
+      toast.success('OTP verified successfully', { autoClose: 2000 });
+    } catch (error) {
+      setOtpError('Invalid OTP. Please try again.');
+    }
   };
 
   const handleKeyDown = (e, index) => {
     if (e.key === 'Backspace' && !otp[index] && index > 0) {
       document.getElementById(`otp-input-${index - 1}`).focus();
-    }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (otp.join("").length !== 6) {
-      setOtpError('Please enter a 6-digit OTP.');
-      return;
-    }
-
-    try {
-      await axios.post(`${apiUrl}/verify-email`, { email, otp: otp.join("") });
-      setIsVerified(true);
-      toast.success('OTP verified successfully', { autoClose: 2000 });
-    } catch (error) {
-      console.error('Error verifying OTP:', error);
-      setOtpError('Invalid OTP. Please try again.');
     }
   };
 

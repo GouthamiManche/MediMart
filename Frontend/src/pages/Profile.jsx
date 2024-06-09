@@ -4,7 +4,7 @@ import { AuthContext } from '../Components/AuthProvider';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import UserNavigation from '../Components/UserNavigation';
-import defaultProfilePic from '../assets/logo.jpg';  // Make sure to adjust the path to your default profile picture
+import defaultProfilePic from '../assets/logo.jpg'; 
 
 function Profile() {
     const { user, logout } = useContext(AuthContext);
@@ -16,6 +16,7 @@ function Profile() {
     const [gender, setGender] = useState('');
     const [dob, setDOB] = useState('');
     const [addresses, setAddresses] = useState([]);
+    const [loading, setLoading] = useState(false); // Loading state for the save button
 
     const apiUrl = import.meta.env.VITE_API_URL;
     const apiKey = import.meta.env.VITE_API_KEY;
@@ -45,6 +46,7 @@ function Profile() {
 
     const handleSaveProfile = async () => {
         try {
+            setLoading(true); // Set loading state to true when saving profile
             const response = await axios.post(`${apiUrl}/profile`, {
                 email: user.email,
                 fullName: fullName,
@@ -58,6 +60,8 @@ function Profile() {
             toast.success("Profile updated");
         } catch (error) {
             console.error(error);
+        } finally {
+            setLoading(false); // Set loading state to false when saving is complete
         }
     };
 
@@ -160,7 +164,7 @@ function Profile() {
                             />
                         </div>
                         <button onClick={handleSaveProfile} className="bg-[#125872] text-white px-6 py-2 rounded">
-                            Save changes
+                            {loading ? 'Saving...' : 'Save changes'}
                         </button>
                     </div>
                 </div>
@@ -170,3 +174,4 @@ function Profile() {
 }
 
 export default Profile;
+

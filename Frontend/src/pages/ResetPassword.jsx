@@ -78,7 +78,9 @@ export default function ResetPassword() {
           </div>
           {error && <p className="text-red-500 text-xs mt-2">{error}</p>}
           {loading ? (
-            <p>Loading...</p>
+            <div className="flex items-center justify-center mb-4">
+              <p>Password Resetting.....</p>
+            </div>
           ) : (
             <div className="flex items-center justify-center mb-4">
               <button

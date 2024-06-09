@@ -101,15 +101,16 @@ function OrderHistory() {
   };
 
   return (
-    <div className="container  mx-auto px-4 py-8 md:w-3/4 lg:w-[80%] ">
+    <div className="container  mx-auto px-4 md:w-3/4 lg:w-[80%] ">
+      <div className='mb-6 bg-white flex flex-col items-center'>
       <UserNavigation />
-      <h2 className="text-3xl font-semibold mb-6 text-gray-800 text-center">Purchase History</h2>
+      </div>
       {isLoading ? (
         <LoadingGif />
       ) : (
         <>
           {orders.length === 0 ? (
-            <div className="text-center  mb-4">
+            <div className="text-center mb-4">
               <p className="text-lg text-gray-800">No orders ordered yet.</p>
               <button
                 onClick={() => navigate('/shop')}
@@ -119,7 +120,7 @@ function OrderHistory() {
               </button>
             </div>
           ) : (
-            <div className="space-y-8 ">
+            <div className="space-y-8 mb-6 ">
               {orders.map((order) => (
                 <div key={order._id} className="bg-white  rounded-md overflow-hidden border border-gray-300 hover:border-[#125872]">
                   <div
@@ -132,7 +133,7 @@ function OrderHistory() {
                       </h3>
                       <div className="text-base md:text-md md:pl-[50rem] font-semibold text-gray-800">Total: ₹{order.amount}</div>
                     </div>
-                    <div className="text-lg">
+                    <div className="text-lg mb-4">
                       {expandedOrderId === order._id ? <IoIosArrowDown /> : <IoIosArrowForward />}
                     </div>
                   </div>

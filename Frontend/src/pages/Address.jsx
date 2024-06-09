@@ -5,9 +5,9 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddAddressModal from '../Components/AddAddressModal';
 import { FaTrashAlt, FaEdit } from 'react-icons/fa';
-import ManageAddModal from '../Components/ManageAddModal';
 import UserNavigation from '../Components/UserNavigation';
 import LoadingGif from '../Components/LoadingGif';
+import ManageAddModal from '../Components/ManageAddModal';
 
 const Address = () => {
   const { user } = useContext(AuthContext);
@@ -38,9 +38,9 @@ const Address = () => {
     }
   }, [email, apiUrl]);
 
-  const handleAddAddress = async (newAddress) => {
+  const handleAddAddress = async (newAddress, addressType) => { // Updated to pass addressType
     try {
-      const response = await axios.post(`${apiUrl}/user/add-address`, { email, address: newAddress });
+      const response = await axios.post(`${apiUrl}/user/add-address`, { email, address: newAddress, addressType }); // Passed addressType
       setAddresses(response.data);
       setShowAddModal(false);
     } catch (error) {
@@ -85,10 +85,12 @@ const Address = () => {
 
   return (
     <div className="flex justify-center">
+
       <div className="h-full flex flex-col min-h-full w-full mx-[4vw] text-gray-700">
-        <UserNavigation />
+        <div className='mb-6 bg-white flex flex-col items-center'>
+          <UserNavigation />
+        </div>
         <div className="bg-white p-6 max-w-6xl w-full mx-auto">
-          <h2 className="text-2xl font-bold mb-4 text-[#125872]">Saved Addresses</h2>
           {isLoading ? (
             <LoadingGif />
           ) : (
@@ -103,6 +105,7 @@ const Address = () => {
                       <p>{address.contactNo}</p>
                       <p>{address.address}</p>
                       <p>{address.city}, {address.state} {address.pincode}</p>
+                      <p>Address Type: {address.addressType}</p> {/* Display address type */}
                       <div className="flex justify-between items-center">
                         <button onClick={() => handleDeleteAddress(address.addressId)} className="text-gray-500 hover:text-red-700">
                           <FaTrashAlt />

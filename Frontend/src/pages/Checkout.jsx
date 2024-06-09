@@ -14,6 +14,7 @@ const AddressForm = () => {
   const email = user?.email || '';
   const apiUrl = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     fullName: '',
     address: '',
@@ -77,13 +78,16 @@ const AddressForm = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
 
+    e.preventDefault();
+    setLoading(true);
     if (!selectedAddress) {
+      setLoading(false);
       toast.error("Please select an address.");
       return;
     }
     if (!validateForm()) {
+      setLoading(false);
       return;
     }
 
@@ -165,6 +169,9 @@ const AddressForm = () => {
       console.error("Error in order creation or payment initiation:", err);
       toast.error("Go back and Please try again.");
       navigate('/checkout');
+    }
+    finally {
+      setLoading(false); // Resetting loading state in both success and error cases
     }
   };
 
@@ -304,6 +311,7 @@ const AddressForm = () => {
                   onClick={() => handleSelectAddress(address)}
                 >
                   <h4 className="text-lg font-semibold">{address.fullName}</h4>
+                  <h4 className="text-lg font-semibold">{address.addresstype}</h4>
                   <p>{address.contactNo}</p>
                   <p>{address.address}</p>
                   <p>{address.city}, {address.state} {address.pincode}</p>
@@ -461,6 +469,11 @@ const AddressForm = () => {
           <div className="mt-4">
           </div>
           <div className="flex justify-center">
+          {loading ? (
+        <button className="bg-[#125872] text-white font-semibold w-full py-3 rounded-md mt-4" disabled>
+          Loading...
+        </button>
+      ) : (
             <button
               type="submit"
               onClick={handleSubmit}
@@ -468,31 +481,12 @@ const AddressForm = () => {
             >
               RazorPay <SiRazorpay className="ml-2" />
             </button>
+            )}
           </div>
         </div>
       </div>
 
-      {/* Mobile View */}
-      <div className="md:hidden text-gray-700">
-        {cartItems.length > 0 && (
-          <div className="bg-white rounded-md p-4">
-            <h2 className="text-2xl font-bold mb-4">Order Total</h2>
 
-            {/* Calculate and Display Total */}
-
-            <div className="flex justify-between items-center mb-4">
-              <p className="text-gray-500">Total</p>
-              <p className="font-semibold">{`₹${localStorage.getItem('totalPrice')}`}</p>
-            </div>
-            {/* Apply Coupon Button */}
-
-            {/* Checkout Button */}
-            <button onClick={handleSubmit} className="bg-[#125872] text-white font-semibold w-full py-3 rounded-md mt-4">
-              Checkout
-            </button>
-          </div>
-        )}
-      </div>
     </div>
   );
 };

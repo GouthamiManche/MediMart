@@ -98,7 +98,7 @@ const PaymentSummary = ({ cartItems, handleSubmit }) => {
   useEffect(() => {
     localStorage.setItem('deliveryFee', JSON.stringify(deliveryFee));
   }, [deliveryFee]);
-  
+
 
   const updateTotalPrice = (items, discount) => {
     const newSubtotal = getCartTotal();
@@ -158,14 +158,25 @@ const PaymentSummary = ({ cartItems, handleSubmit }) => {
           <div className="bg-white rounded-md p-4">
             <h2 className="text-2xl font-bold mb-4">Order Total</h2>
 
+            <div className="flex justify-between items-center mb-4">
+              <p className="text-gray-500">Subtotal</p>
+              <p className="font-semibold">{`₹${subtotal}`}</p>
+            </div>
+
             {/* Display Discount */}
             {discountPercentage > 0 && (
               <div className="flex justify-between items-center mb-4">
                 <p className="text-gray-500">Discount</p>
                 <p className="font-semibold">{`-₹${calculateDiscount(discountPercentage)}`}</p>
               </div>
+
             )}
-            {/* Calculate and Display Total */}
+            <div className="flex justify-between items-center mb-4">
+              <p className="text-gray-500">Delivery Fee</p>
+              <p className="font-semibold">{`₹${deliveryFee}`}</p>
+            </div>
+            {/*
+             Calculate and Display Total */}
             <div className="flex justify-between items-center mb-4">
               <p className="text-gray-500">Total</p>
               <p className="font-semibold">{`₹${totalPrice}`}</p>

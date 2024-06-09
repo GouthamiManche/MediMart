@@ -20,6 +20,7 @@ function Login() {
   const [passwordError, setPasswordError] = useState("");
   const [userNotFound, setUserNotFound] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false); // State to manage loading state
 
   const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -63,6 +64,8 @@ function Login() {
       return; // Stop further execution
     }
 
+    setLoading(true); // Set loading state to true when submitting
+
     try {
       const response = await axios.post(`${apiUrl}/login`, formData);
       const { token, user } = response.data;
@@ -88,6 +91,8 @@ function Login() {
         setErrorMessage('An error occurred during login.');
         setPasswordError('');
       }
+    } finally {
+      setLoading(false); // Reset loading state
     }
   };
 
@@ -99,10 +104,10 @@ function Login() {
     <div className="bg-[#f5f5f5] min-h-screen flex items-center justify-center">
       <div className="max-w-md w-full mx-auto bg-white rounded-lg shadow-lg p-8">
         <div className="flex items-center justify-center mb-6">
-         
+
           <div to="/" className="md:block hidden text-xl md:text-3xl font-bold ml-1">
             <span className="text-[#14496b]">Login</span>
-           
+
           </div>
         </div>
         <form onSubmit={handleSubmit}>
@@ -151,7 +156,7 @@ function Login() {
                   </svg>
                 ) : (
                   <svg className="h-5 w-5 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
                   </svg>
                 )}
               </div>
@@ -164,9 +169,9 @@ function Login() {
             <button
               type="submit"
               className="bg-[#125872] text-white font-bold w-full py-2 px-4 rounded"
-              disabled={!formData.identifier || !formData.password}
+              disabled={!formData.identifier || !formData.password || loading} // Disable button when loading
             >
-              Log in
+              {loading ? 'Logging in...' : 'Log in'} {/* Change button text based on loading state */}
             </button>
           </div>
           <div className="flex">
@@ -192,3 +197,4 @@ function Login() {
 }
 
 export default Login;
+

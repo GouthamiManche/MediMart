@@ -13,7 +13,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </>
 );
 
-// Register the service worker
 if ('serviceWorker' in navigator) {
   registerSW();
 }
