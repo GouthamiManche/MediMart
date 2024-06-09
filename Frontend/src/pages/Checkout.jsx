@@ -298,8 +298,9 @@ const AddressForm = () => {
               addresses.map((address, index) => (
                 <div
                   key={index}
-                  className={`border border-gray-300 rounded-md p-4 mb-2 ${selectedAddress === address ? 'bg-[#b3c9d2]' : ''
-                    }`}
+                  className={`border border-gray-300 rounded-md p-4 mb-2 ${
+                    selectedAddress === address ? 'bg-gray-100' : ''
+                  }`}
                   onClick={() => handleSelectAddress(address)}
                 >
                   <h4 className="text-lg font-semibold">{address.fullName}</h4>
@@ -318,9 +319,9 @@ const AddressForm = () => {
               ))
             )}
             <button
-              className="bg-[#125872] text-white px-4 py-2 rounded-md mt-2"
+              className="bg-[#125872] text-white px-[42.7%] text-center py-2 rounded-md mt-2"
               onClick={() => setShowAddModal(true)}>
-              Add address
+              Add Address
             </button>
           </div>
           <form className="hidden" onSubmit={handleSubmit}>

@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useContext, useCallback } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from '../Components/AuthProvider';
 import { toast } from 'react-toastify';
@@ -24,14 +24,29 @@ function getItemDetails(item) {
   }
 }
 
-function ItemForHorizontalScroll({ item }) {
+function ItemForHorizontalScrollCart({ item }) {
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [isItemInCart, setIsItemInCart] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const [error, setError] = useState("");
 
   const truncatedName = truncateString(item?.Medicine_Name || item.Name, 16);
   const { detail, detailLabel } = getItemDetails(item);
+
+  const debounce = (func, delay) => {
+    let timeoutId;
+    return (...args) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        func(...args);
+      }, delay);
+    };
+  };
+
+  const reloadPage = useCallback(debounce(() => {
+    window.location.reload();
+  }, 1000), []);
 
   const handleAddToCart = async () => {
     if (!user) {
@@ -53,12 +68,13 @@ function ItemForHorizontalScroll({ item }) {
       );
       if (res.status === 201) {
         setIsItemInCart(true);
+        setTimeout(reloadPage, 1000); // Delayed reload after 1 second
       }
     } catch (error) {
-      
+      console.error("Error adding item to cart:", error);
+      toast.error('Failed to add item to cart', { autoClose: 2000 });
     }
   };
-
   const removeFromCart = async () => {
     try {
       await axios.delete(
@@ -66,7 +82,7 @@ function ItemForHorizontalScroll({ item }) {
       );
       setIsItemInCart(false);
     } catch (error) {
-     
+      console.error("Error removing item from cart:", error);
     }
   };
 
@@ -86,11 +102,11 @@ function ItemForHorizontalScroll({ item }) {
         }
       );
       if (res.status !== 200) {
-        // setError("Error updating item quantity");
+        setError("Error updating item quantity");
       }
     } catch (error) {
-      // console.error("Error updating item quantity:", error);
-      // setError(error.message);
+      console.error("Error updating item quantity:", error);
+      setError(error.message);
     }
   };
 
@@ -161,4 +177,4 @@ function ItemForHorizontalScroll({ item }) {
   );
 }
 
-export default ItemForHorizontalScroll;
+export default ItemForHorizontalScrollCart;

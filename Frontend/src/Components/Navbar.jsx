@@ -4,11 +4,12 @@ import { CgProfile } from "react-icons/cg";
 import { FaBars, FaTimes } from "react-icons/fa";
 import Logo from '/src/assets/logo.jpg';
 import { ImSearch } from "react-icons/im";
-import { FaCartShopping } from "react-icons/fa6";
 import { AuthContext } from "./AuthProvider";
 import { useCart } from "./CartProvider";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { GrCart } from "react-icons/gr";
+import { GrSearch } from "react-icons/gr";
 
 function Navbar() {
   const { user, logout } = useContext(AuthContext);
@@ -59,7 +60,7 @@ function Navbar() {
               <Link
                 key={index}
                 to={`/shop?subCategory=${subCategory || ''}&Category=${category || ''}`}
-                className="text-gray-900 hover:text-gray-700 transition duration-300 text-center mx-6"
+                className="text-gray-900 hover:text-[#125872] transition duration-300 text-center mx-6"
               >
                 {title}
               </Link>
@@ -67,11 +68,15 @@ function Navbar() {
           </div>
         </div>
         <div className="md:hidden flex text-gray-900">
-          <button onClick={handleCartClick} className="font-bold py-2 rounded flex items-center mr-[1rem]">
-            <FaCartShopping className="text-xl" />
-            <span className="text-lg">({totalItemsInCart})</span>
+          <button onClick={handleCartClick} className="font-bold py-2 rounded flex items-center relative ml-4">
+            <GrCart className="text-2xl mr-[1rem] text-[#125872]" />
+            {totalItemsInCart > 0 && (
+              <span className="absolute -top-1 -right-[0px] bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                {totalItemsInCart}
+              </span>
+            )}
           </button>
-          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="focus:outline-none">
+          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="focus:outline-none text-[#125872]">
             {mobileMenuOpen ? (
               <FaTimes className="text-xl" />
             ) : (
@@ -80,23 +85,26 @@ function Navbar() {
           </button>
         </div>
         <nav className="hidden md:flex items-center ">
-        
           <nav className="hidden md:flex md:ml-[12vw]">
             <div className="flex gap-10 text-gray-900">
               <Link to="/shop" className="mr-[1rem]">
-                <ImSearch className="text-xl" />
+                <GrSearch className="text-xl text-[#125872]" />
               </Link>
             </div>
           </nav>
-          <button onClick={handleCartClick} className="font-bold py-2 rounded flex items-center">
-            <FaCartShopping className="text-xl" />
-            <span className="text-lg ml-1">({totalItemsInCart})</span>
+          <button onClick={handleCartClick} className="font-bold py-2 rounded flex items-center relative mr-[0.5rem]">
+            <GrCart className="text-xl text-[#125872]" />
+            {totalItemsInCart > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                {totalItemsInCart}
+              </span>
+            )}
           </button>
           {user ? (
-            <div className="relative inline-block text-left">
+            <div className="relative inline-block text-left mr-[1rem]">
               <div className="flex items-center">
                 <button onClick={toggleDropdown} className="focus:outline-none ml-2">
-                  <CgProfile className="text-2xl" />
+                  <CgProfile className="text-2xl text-[#125872]" />
                 </button>
               </div>
               {dropdownOpen && (
@@ -106,8 +114,8 @@ function Navbar() {
                       {user.username}
                     </Link>
                     <br />
-                    <button onClick={logout} className="text-gray-700 w-full px-4 py-2 text-left text-sm">
-                      Sign out
+                    <button onClick={logout} className="text-gray-700 hover:text-red-600 w-full px-4 py-2 text-left text-sm">
+                      Logout
                     </button>
                   </div>
                 </div>
@@ -135,17 +143,29 @@ function Navbar() {
               </div>
             </Link>
             {user ? (
-              <button onClick={logout} className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition duration-300">
-                Sign out
+              <button onClick={logout} className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:text-red-600 transition duration-300">
+                Logout
               </button>
             ) : (
-              <Link onClick={() => setMobileMenuOpen(false)} to="/login" className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition duration-300">
-                Login
+              <Link onClick={() => setMobileMenuOpen(false)} to="/login" className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition duration-300">Login
               </Link>
             )}
             <Link to="/shop" className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition duration-300" onClick={() => setMobileMenuOpen(false)}>
               Shop
             </Link>
+            <div className="mt-4">
+             
+              {categories.map(({ title, subCategory, category }, index) => (
+                <Link
+                  key={index}
+                  to={`/shop?subCategory=${subCategory || ''}&Category=${category || ''}`}
+                  className="block px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-100 transition duration-300"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {title}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </div>

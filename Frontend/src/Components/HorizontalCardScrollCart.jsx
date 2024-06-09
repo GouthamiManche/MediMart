@@ -1,0 +1,73 @@
+import React, { useRef } from "react";
+import ItemForHorizontalScrollCart from "./ItemForHorizontalScrollCart";
+
+const HorizontalCardScrollCart = ({ itemForHorizontalScrollCart }) => {
+  const scrollRef = useRef(null);
+
+  const scrollLeft = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: -550, behavior: "smooth" });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ left: 550, behavior: "smooth" });
+    }
+  };
+
+  return (
+    <div>
+      <p className="text-gray-700 text-lg md:text-3xl font-bold ml-[1rem] mb-[2rem]">
+        Our Products
+      </p>
+      <div className="relative bg-blue-100">
+        <div className="flex overflow-x-auto space-x-4 p-4" ref={scrollRef}>
+          {itemForHorizontalScrollCart.map((item, index) => (
+            <ItemForHorizontalScrollCart key={index} item={item} />
+          ))}
+        </div>
+        <button
+          className="hidden md:block absolute top-1/2 left-4 -translate-y-1/2 bg-blue-500 p-2 rounded-full"
+          onClick={scrollLeft}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 text-white"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+        </button>
+        <button
+          className="hidden md:block absolute top-1/2 right-4 -translate-y-1/2 bg-blue-500 p-2 rounded-full"
+          onClick={scrollRight}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 text-white"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default HorizontalCardScrollCart;

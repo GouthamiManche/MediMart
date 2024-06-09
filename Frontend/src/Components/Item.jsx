@@ -86,20 +86,20 @@ function Item({ item }) {
   const truncatedName = truncateString(item.Medicine_Name || item.Name, 20);
 
   return (
-    <div className="bg-white m-2 p-4 rounded-xl border border-gray-200 flex flex-col md:w-[16rem] w-[16rem] md:h-[22rem] h-[22rem] overflow-hidden shadow-md hover:shadow-xl transition duration-300 ">
+    <div className="bg-white m-2 p-4 rounded-xl border border-gray-200 hover:border-[#125872] flex flex-col md:w-[16rem] w-[16rem] md:h-[22rem] h-[22rem] overflow-hidden  transition duration-300 ">
       <Link to={`/${item.Sub_Category}/${item.Name}`} state={item}>
         <div className="relative h-56 overflow-hidden rounded-lg flex items-center justify-center">
           <img
             src={item.Image_URL}
             alt={item.Medicine_Name || item.Name}
-            className="max-w-full max-h-full transition duration-300 hover:scale-105"
+            className="max-w-full max-h-full"
           />
         </div>
       </Link>
       <hr className="border border-gray-300 " />
       <Link to={`/${item.Sub_Category}/${item.Name}`} state={item}>
         <div className="flex flex-col justify-between mt-6 relative">
-          <h3 className="font-semibold text-lg text-[#171A1FFF] transition duration-300 hover:text-[#3EBDE0FF]">
+          <h3 className="font-semibold text-lg text-[#125872]">
             {truncatedName}
           </h3>
         </div>
@@ -107,16 +107,16 @@ function Item({ item }) {
       <div className="flex justify-between items-center mt-2">
         <h3 className="text-2xl font-bold text-[#323743FF]">₹{item.Price}</h3>
         {isItemInCart ? (
-          <div className="flex items-center font-semi-bold border border-[#125872] border rounded-md px-4 py-1 shadow-md">
+          <div className="flex items-center font-semi-bold  bg-[#125872]  rounded-md px-4 py-1 shadow-md">
             <button
-              className="text-[#125872] "
+              className="text-white"
               onClick={() => handleQuantityChange(quantity - 1)}
             >
               -
             </button>
-            <span className="mx-4 text-[#125872]">{quantity}</span>
+            <span className="mx-4 text-white">{quantity}</span>
             <button
-              className="text-[#125872] "
+              className="text-white"
               onClick={() => handleQuantityChange(quantity + 1)}
             >
               +
@@ -124,7 +124,7 @@ function Item({ item }) {
           </div>
         ) : (
           <button
-            className="flex items-center justify-center bg-[#125872] text-white rounded-md font-bold border py-1.5 px-8 text-sm hover:bg-[#0d4456] transition duration-300 shadow-md"
+            className="flex items-center justify-center bg-[#12587222] border-[#125872]  text-[#125872] rounded-md font-bold border py-1.5 px-8 text-sm  transition duration-300 "
             onClick={handleAddToCart}
           >
             Add
