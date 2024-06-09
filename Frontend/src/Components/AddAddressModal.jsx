@@ -101,14 +101,12 @@ const AddAddressModal = ({ isOpen, onClose, onAddAddress }) => {
     e.preventDefault();
     const validationErrors = validateForm(formData);
     if (Object.keys(validationErrors).length === 0) {
-      console.log("Submitting form data: ", formData); // Log form data
-      onAddAddress(formData); // Call the onAddAddress function with the form data
+      onAddAddress(formData);
       onClose();
     } else {
       setErrors(validationErrors);
     }
   };
-
 
   if (!isOpen) {
     return null;
@@ -130,8 +128,7 @@ const AddAddressModal = ({ isOpen, onClose, onAddAddress }) => {
               name="fullName"
               value={formData.fullName}
               onChange={handleChange}
-              className={` py-3 p-2 block w-full border ${errors.fullName ? 'border-red-500' : 'border-gray-300'
-                } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+              className={` py-3 p-2 block w-full border ${errors.fullName ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
               required
             />
             {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>}
@@ -146,8 +143,7 @@ const AddAddressModal = ({ isOpen, onClose, onAddAddress }) => {
               name="contactNo"
               value={formData.contactNo}
               onChange={handleChange}
-              className={` p-2 block py-3 w-full border ${errors.contactNo ? 'border-red-500' : 'border-gray-300'
-                } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+              className={` p-2 block py-3 w-full border ${errors.contactNo ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
               required
             />
             {errors.contactNo && <p className="text-red-500 text-sm mt-1">{errors.contactNo}</p>}
@@ -162,8 +158,7 @@ const AddAddressModal = ({ isOpen, onClose, onAddAddress }) => {
               name="address"
               value={formData.address}
               onChange={handleChange}
-              className={` p-2 py-3 block w-full border ${errors.address ? 'border-red-500' : 'border-gray-300'
-                } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+              className={` p-2 py-3 block w-full border ${errors.address ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
               required
             />
             {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
@@ -179,8 +174,7 @@ const AddAddressModal = ({ isOpen, onClose, onAddAddress }) => {
                 name="pincode"
                 value={formData.pincode}
                 onChange={handlePincodeChange}
-                className={` p-2 py-3 block w-full border ${errors.pincode ? 'border-red-500' : 'border-gray-300'
-                  } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+                className={` p-2 py-3 block w-full border ${errors.pincode ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
                 required
               />
               {errors.pincode && <p className="text-red-500 text-sm mt-1">{errors.pincode}</p>}
@@ -195,8 +189,7 @@ const AddAddressModal = ({ isOpen, onClose, onAddAddress }) => {
                 name="city"
                 value={formData.city}
                 onChange={handleChange}
-                className={` p-2 py-3 block w-full border ${errors.city ? 'border-red-500' : 'border-gray-300'
-                  } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+                className={` p-2 py-3 block w-full border ${errors.city ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
                 required
               />
               {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city}</p>}
@@ -212,8 +205,7 @@ const AddAddressModal = ({ isOpen, onClose, onAddAddress }) => {
               name="state"
               value={formData.state}
               onChange={handleChange}
-              className={` p-2 py-3 block w-full border ${errors.state ? 'border-red-500' : 'border-gray-300'
-                } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+              className={` p-2 py-3 block w-full border ${errors.state ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
               required
             />
             {errors.state && <p className="text-red-500 text-sm mt-1">{errors.state}</p>}
@@ -227,8 +219,7 @@ const AddAddressModal = ({ isOpen, onClose, onAddAddress }) => {
               name="addressType"
               value={formData.addressType}
               onChange={handleChange}
-              className={` p-2 py-3 block w-full border ${errors.addressType ? 'border-red-500' : 'border-gray-300'
-                } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+              className={` p-2 py-3 block w-full border ${errors.addressType ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
               required
             >
               <option value="Home">Home</option>
