@@ -31,7 +31,7 @@ const CartProvider = ({ children }) => {
         dispatch({ type: "SET_CART_ITEMS", payload: data });
       } catch (error) {
         console.error("Failed to fetch cart items:", error);
-        toast.error("Failed to fetch cart items");
+        //toast.error("Failed to fetch cart items");
       }
     }
   };

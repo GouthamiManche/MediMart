@@ -101,6 +101,7 @@ const AddAddressModal = ({ isOpen, onClose, onAddAddress }) => {
     e.preventDefault();
     const validationErrors = validateForm(formData);
     if (Object.keys(validationErrors).length === 0) {
+      console.log("Submitting form data: ", formData); // Log form data
       onAddAddress(formData); // Call the onAddAddress function with the form data
       onClose();
     } else {

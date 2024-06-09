@@ -315,7 +315,10 @@ const AddressForm = () => {
                     <h4 className="text-lg font-semibold">{address.fullName}</h4>
                     <div className="flex items-center">
                       <IoHomeOutline className="mr-1" />
-                      <h4 className="text-lg font-semibold">{address.addressType}</h4>
+
+                      <p className="text-lg font-semibold">
+                        {address.addressType === 'Other' ? address.otherAddressName : address.addressType}
+                      </p>
                     </div>
                   </div>
                   <p>{address.contactNo}</p>

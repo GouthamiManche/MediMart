@@ -8,6 +8,7 @@ import { FaTrashAlt, FaEdit } from 'react-icons/fa';
 import UserNavigation from '../Components/UserNavigation';
 import LoadingGif from '../Components/LoadingGif';
 import ManageAddModal from '../Components/ManageAddModal';
+import { IoHomeOutline } from "react-icons/io5";
 
 const Address = () => {
   const { user } = useContext(AuthContext);
@@ -101,11 +102,19 @@ const Address = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                   {addresses.map((address, index) => (
                     <div key={index} className="border border-gray-300 rounded-md p-4">
-                      <h4 className="text-lg font-semibold">{address.fullName}</h4>
+                      <div className='flex justify-between items-center'>
+                    <h4 className="text-lg font-semibold">{address.fullName}</h4>
+                    <div className="flex items-center">
+                      <IoHomeOutline className="mr-1" />
+                      <p className="text-lg font-semibold">
+                        {address.addressType === 'Other' ? address.otherAddressName : address.addressType}
+                      </p>
+                    </div>
+                  </div>
                       <p>{address.contactNo}</p>
                       <p>{address.address}</p>
                       <p>{address.city}, {address.state} {address.pincode}</p>
-                      <p>Address Type: {address.addressType}</p>
+
                       <div className="flex justify-between items-center">
                         <button onClick={() => handleDeleteAddress(address.addressId)} className="text-gray-500 hover:text-red-700">
                           <FaTrashAlt />
