@@ -77,12 +77,11 @@ function Register() {
   };
 
   return (
-    <div className="bg-[#f5f5f5] min-h-screen flex items-center justify-center">
-      <div className="max-w-[34%] w-full mx-auto bg-white rounded-lg shadow-lg p-8">
-        <div className="flex items-center justify-center mb-2">
-          <div className="md:block hidden text-xl md:text-3xl font-bold ml-1 font-PlayFair">
+    <div className="bg-[#f5f5f5] min-h-screen flex items-center justify-center px-4">
+      <div className="w-full max-w-md mx-auto bg-white rounded-lg shadow-lg p-8">
+        <div className="flex items-center justify-center mb-4">
+          <div className="text-xl md:text-3xl font-bold ml-1">
             <span className="text-[#14496b]">Register</span>
-
           </div>
         </div>
         <form onSubmit={handleSubmit}>
@@ -100,20 +99,6 @@ function Register() {
               className={`border-b border-gray-400 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-[#125872] ${formErrors.username && isSubmit ? 'border-red-500' : ''
                 }`}
             />
-            <div className="absolute inset-y-0 right-0 flex items-center px-2">
-              <svg
-                className="h-5 w-5 text-gray-400"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-              </svg>
-            </div>
             {isSubmit && formErrors.username && (
               <p className="text-red-500 text-xs mt-2">{formErrors.username}</p>
             )}
@@ -132,20 +117,6 @@ function Register() {
               className={`border-b border-gray-400 w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-[#125872] ${formErrors.email && isSubmit ? 'border-red-500' : ''
                 }`}
             />
-            <div className="absolute inset-y-0 right-0 flex items-center px-2">
-              <svg
-                className="h-5 w-5 text-gray-400"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                <polyline points="22,6 12,13 2,6" />
-              </svg>
-            </div>
             {isSubmit && formErrors.email && (
               <p className="text-red-500 text-xs mt-2">{formErrors.email}</p>
             )}

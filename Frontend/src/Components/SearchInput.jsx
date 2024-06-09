@@ -26,7 +26,7 @@ const SearchInput = ({ searchTerm, setSearchTerm, sortOption, setSortOption }) =
         setCurrentPlaceholder(placeholders[newIndex]);
         return newIndex;
       });
-    }, 3000);
+    }, 1500);
     return () => clearInterval(interval);
   }, []);
 

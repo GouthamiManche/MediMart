@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Logo from '/src/assets/logo.jpg';
 
 function Login() {
   const { login, isAuthenticated } = useContext(AuthContext);
@@ -101,13 +100,11 @@ function Login() {
   };
 
   return (
-    <div className="bg-[#f5f5f5] min-h-screen flex items-center justify-center">
-      <div className="max-w-md w-full mx-auto bg-white rounded-lg shadow-lg p-8">
+    <div className="bg-[#f5f5f5] min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8">
+      <div className="max-w-md w-full mx-auto bg-white rounded-lg shadow-lg p-6 sm:p-8">
         <div className="flex items-center justify-center mb-6">
-
-          <div to="/" className="md:block hidden text-xl md:text-3xl font-bold ml-1">
+          <div className="text-xl md:text-3xl font-bold ml-1">
             <span className="text-[#14496b]">Login</span>
-
           </div>
         </div>
         <form onSubmit={handleSubmit}>
@@ -174,20 +171,20 @@ function Login() {
               {loading ? 'Logging in...' : 'Log in'} {/* Change button text based on loading state */}
             </button>
           </div>
-          <div className="flex">
-            <p className="text-gray-500 mr-2">New User?</p>
+          <div className="flex flex-wrap justify-between text-sm">
+            <p className="text-gray-500">New User?</p>
             <Link to="/Register" className="text-[#125872] font-semibold">
               Register
             </Link>
-            <div className="ml-[7.5rem]">
-              <Link to="/forgetpassword" className="text-[#125872]">Forget Password</Link>
-            </div>
+            <Link to="/forgetpassword" className="text-[#125872] ml-auto">
+              Forget Password
+            </Link>
           </div>
         </form>
         {userNotFound && (
           <div className="mt-6 text-center">
             <p className="text-red-500 text-xs">
-              User not found. Please <Link to="/Register" style={{ color: "#125872" }}>Register</Link> instead.
+              User not found. Please <Link to="/Register" className="text-[#125872]">Register</Link> instead.
             </p>
           </div>
         )}
@@ -197,4 +194,3 @@ function Login() {
 }
 
 export default Login;
-

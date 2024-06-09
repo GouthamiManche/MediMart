@@ -41,13 +41,10 @@ export default function ResetPassword() {
     <div className="bg-[#f5f5f5] min-h-screen flex items-center justify-center">
       <div className="max-w-md w-full mx-auto bg-white rounded-lg shadow-lg p-8">
         <div className="flex items-center justify-center mb-6">
-          <Link to="/">
-            <img className="h-12" src={Logo} alt="Logo" />
-          </Link>
-          <Link to="/" className="md:block hidden text-xl md:text-3xl font-bold ml-1 font-PlayFair">
-            <span className="text-[#14496b]">Medi</span>
-            <span className="text-[#8ccf28]">Mart</span>
-          </Link>
+          
+          <div className="md:block hidden text-xl md:text-3xl font-bold ml-1 ">
+            <span className="text-[#14496b]">Reset Password</span>   
+          </div>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="mb-4 relative">

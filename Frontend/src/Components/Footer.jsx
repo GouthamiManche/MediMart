@@ -56,7 +56,9 @@ function Footer() {
               </p>
             </div>
             <div className="w-full md:w-auto text-center md:text-right">
+              <Link to='PrivacyPolicyTermsCondition'>
               <p>Privacy Policy Terms & Condition</p>
+              </Link>
             </div>
           </div>
         </div>

@@ -27,6 +27,7 @@ const OrderPlaced = lazy(() => import('./pages/OrderPlaced'));
 const ErrorPage = lazy(() => import('./pages/ErrorPage'));
 const OrderHistory = lazy(() => import('./pages/OrderHistory'));
 const Address = lazy(() => import('./pages/Address'));
+const PrivacyPolicyTermsCondition = lazy(() => import('./pages/PrivacyPolicyTermsCondition'));
 
 const AppWrapper = () => {
   const navigate = useNavigate();
@@ -56,6 +57,7 @@ const AppWrapper = () => {
               <Route exact path="/orderhistory" element={<OrderHistory />} />
               <Route exact path="/address" element={<Address />} />
               <Route exact path="/faq" element={<FAQ />} />
+              <Route exact path="/PrivacyPolicyTermsCondition" element={<PrivacyPolicyTermsCondition />} />
             </Routes>
             <GotoTop />
             <Footer />
