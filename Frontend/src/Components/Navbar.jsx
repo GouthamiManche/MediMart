@@ -43,7 +43,7 @@ function Navbar() {
     { title: "Health Devices", subCategory: "Health Devices" },
   ];
 
-  const totalItemsInCart = cartItems.reduce((total, item) => total + item.quantity, 0);
+  const totalItemsInCart = user ? cartItems.reduce((total, item) => total + item.quantity, 0) : 0;
 
   return (
     <div className="bg-white text-gray-900 z-50 w-full sticky top-0 shadow-lg">
@@ -154,7 +154,7 @@ function Navbar() {
               Shop
             </Link>
             <div className="mt-4">
-             
+
               {categories.map(({ title, subCategory, category }, index) => (
                 <Link
                   key={index}

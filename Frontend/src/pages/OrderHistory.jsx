@@ -67,13 +67,6 @@ function OrderHistory() {
     }
   };
 
-  const addNewOrder = (newOrder) => {
-    setOrders((prevOrders) => [newOrder, ...prevOrders]);
-  };
-
-  const handleManageOrder = (orderId) => {
-  };
-
   const toggleOrderExpansion = (orderId) => {
     setExpandedOrderId((prevId) => (prevId === orderId ? null : orderId));
   };
@@ -101,9 +94,9 @@ function OrderHistory() {
   };
 
   return (
-    <div className="container  mx-auto px-4 md:w-3/4 lg:w-[80%] ">
+    <div className="container mx-auto px-4 md:w-3/4 lg:w-[80%]">
       <div className='mb-6 bg-white flex flex-col items-center'>
-      <UserNavigation />
+        <UserNavigation />
       </div>
       {isLoading ? (
         <LoadingGif />
@@ -120,9 +113,9 @@ function OrderHistory() {
               </button>
             </div>
           ) : (
-            <div className="space-y-8 mb-6 ">
+            <div className="space-y-8 mb-6">
               {orders.map((order) => (
-                <div key={order._id} className="bg-white  rounded-md overflow-hidden border border-gray-300 hover:border-[#125872]">
+                <div key={order._id} className="bg-white rounded-md overflow-hidden border border-gray-300 hover:border-[#125872]">
                   <div
                     className="p-4 md:p-6 border-b border-gray-200 flex justify-between items-center cursor-pointer"
                     onClick={() => toggleOrderExpansion(order._id)}
@@ -152,6 +145,7 @@ function OrderHistory() {
                           <p className="text-gray-600">Address information not available</p>
                         )}
                       </div>
+                      <h4 className="text-lg font-semibold text-gray-800">Ordered Products </h4>
                       {order.cartItems.map((item) => (
                         <div key={item._id} className="flex items-center mb-4">
                           {item.Image_URL && (
@@ -165,7 +159,7 @@ function OrderHistory() {
                             <div>
                               <h4 className="text-base md:text-lg font-semibold text-gray-800">{item.Name}</h4>
                               <p className="text-xs md:text-sm text-gray-600">
-                                Quantity :  {item.quantity}
+                                Quantity: {item.quantity}
                               </p>
                               <p className="text-base md:text-lg font-semibold text-gray-800">₹{item.Price}</p>
                             </div>
@@ -183,9 +177,11 @@ function OrderHistory() {
                         <div className="text-xs md:text-sm text-gray-700">Payment ID: {order.razorpay_order_id}</div>
                         <div className="text-base md:text-lg font-semibold text-gray-800">Total: ₹{order.amount}</div>
                       </div>
-                      <button onClick={() => handleViewInvoice(order.razorpay_order_id)} className="mt-4 flex items-center text-[#125872] hover:underline">
-                        <FaFileInvoice className="mr-2" /> Download Invoice
-                      </button>
+                      {order.paymentStatus === 'Completed' && (
+                        <button onClick={() => handleViewInvoice(order.razorpay_order_id)} className="mt-4 flex items-center text-[#125872] hover:underline">
+                          <FaFileInvoice className="mr-2" /> Download Invoice
+                        </button>
+                      )}
                     </div>
                   )}
                 </div>

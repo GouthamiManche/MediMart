@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Logo from '/src/assets/logo.jpg';
 
 export default function VerifyOTP() {
   const [otp, setOtp] = useState(new Array(6).fill(""));

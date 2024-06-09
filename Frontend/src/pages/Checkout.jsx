@@ -296,43 +296,42 @@ const AddressForm = () => {
 
   return (
     <div className="flex flex-col md:flex-row justify-center px-4 md:px-0">
-    <div className="w-full md:w-2/3 mr-0 md:mr-8">
-      <div className="bg-white p-6 rounded-lg mb-6 md:mb-0">
-        <h2 className="text-2xl font-bold mb-4 text-[#125872]">Shipping Address</h2>
-        <div>
-          <h3 className="text-lg font-semibold mb-2">Saved Addresses</h3>
-          {addresses.length === 0 ? (
-            <p>No addresses saved yet.</p>
-          ) : (
-            addresses.map((address, index) => (
-              <div
-                key={index}
-                className={`border border-gray-300 rounded-md p-4 mb-2 cursor-pointer ${
-                  selectedAddress === address ? 'bg-gray-100' : ''
-                }`}
-                onClick={() => handleSelectAddress(address)}
-              >
-                <h4 className="text-lg font-semibold">{address.fullName}</h4>
-                <p>{address.contactNo}</p>
-                <p>{address.address}</p>
-                <p>{address.city}, {address.state} {address.pincode}</p>
-                <div className="flex justify-between items-center mt-2">
-                  <button onClick={() => handleDeleteAddress(address.addressId)} className="text-gray-500 hover:text-red-700">
-                    <FaTrashAlt />
-                  </button>
-                  <button onClick={() => handleEditClick(address)} className="flex items-center text-gray-500 hover:text-blue-700">
-                    <FaEdit /><span className='ml-1'>Edit</span>
-                  </button>
+      <div className="w-full md:w-2/3 mr-0 md:mr-8">
+        <div className="bg-white p-6 rounded-lg mb-6 md:mb-0">
+          <h2 className="text-2xl font-bold mb-4 text-[#125872]">Shipping Address</h2>
+          <div>
+            <h3 className="text-lg font-semibold mb-2">Saved Addresses</h3>
+            {addresses.length === 0 ? (
+              <p>No addresses saved yet.</p>
+            ) : (
+              addresses.map((address, index) => (
+                <div
+                  key={index}
+                  className={`border border-gray-300 rounded-md p-4 mb-2 cursor-pointer ${selectedAddress === address ? 'bg-gray-100' : ''
+                    }`}
+                  onClick={() => handleSelectAddress(address)}
+                >
+                  <h4 className="text-lg font-semibold">{address.fullName}</h4>
+                  <p>{address.contactNo}</p>
+                  <p>{address.address}</p>
+                  <p>{address.city}, {address.state} {address.pincode}</p>
+                  <div className="flex justify-between items-center mt-2">
+                    <button onClick={() => handleDeleteAddress(address.addressId)} className="text-gray-500 hover:text-red-700">
+                      <FaTrashAlt />
+                    </button>
+                    <button onClick={() => handleEditClick(address)} className="flex items-center text-gray-500 hover:text-blue-700">
+                      <FaEdit /><span className='ml-1'>Edit</span>
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))
-          )}
-          <button
-            className="bg-[#125872] text-white w-full py-2 rounded-md mt-4 hover:bg-[#0E4E63]"
-            onClick={() => setShowAddModal(true)}>
-            Add Address
-          </button>
-        </div>
+              ))
+            )}
+            <button
+              className="bg-[#125872] text-white w-full py-2 rounded-md mt-4 hover:bg-[#0E4E63]"
+              onClick={() => setShowAddModal(true)}>
+              Add Address
+            </button>
+          </div>
           <form className="hidden" onSubmit={handleSubmit}>
             <div className="md:flex md:mb-[2rem]">
               <div className="w-full md:w-1/2 md:mr-2 mb-4 md:mb-0">
@@ -487,31 +486,44 @@ const AddressForm = () => {
         </div>
       </div>
       <div className="md:hidden text-gray-700">
-  <div className="bg-white rounded-md p-4">
-    <h2 className="text-2xl font-bold mb-4">Order Total</h2>
+        <div className="bg-white rounded-md p-4">
+          <h2 className="text-2xl font-bold mb-4">Order Total</h2>
 
-    <div className="flex justify-between items-center mb-4">
-      <p className="font-bold">SubTotal</p>
-      <p className="font-bold">{`₹${localStorage.getItem('subtotal')}`}</p>
-    </div>
-    <div className="flex justify-between items-center mb-4">
-      <p className="font-bold">Discount</p>
-      <p className="font-bold">-{`₹${localStorage.getItem('discount')}`}</p>
-    </div>
-    <div className="flex justify-between items-center mb-4">
-      <p className="font-bold">Delivery Fee</p>
-      <p className="font-bold">+{`₹${localStorage.getItem('deliveryFee')}`}</p>
-    </div>
-    <div className="flex justify-between items-center mb-4">
-      <p className="font-bold">Total</p>
-      <p className="font-bold">{`₹${localStorage.getItem('totalPrice')}`}</p>
-    </div>
+          <div className="flex justify-between items-center mb-4">
+            <p className="font-bold">SubTotal</p>
+            <p className="font-bold">{`₹${localStorage.getItem('subtotal')}`}</p>
+          </div>
+          <div className="flex justify-between items-center mb-4">
+            <p className="font-bold">Discount</p>
+            <p className="font-bold">-{`₹${localStorage.getItem('discount')}`}</p>
+          </div>
+          <div className="flex justify-between items-center mb-4">
+            <p className="font-bold">Delivery Fee</p>
+            <p className="font-bold">+{`₹${localStorage.getItem('deliveryFee')}`}</p>
+          </div>
+          <div className="flex justify-between items-center mb-4">
+            <p className="font-bold">Total</p>
+            <p className="font-bold">{`₹${localStorage.getItem('totalPrice')}`}</p>
+          </div>
 
-    <button onClick={handleSubmit} className="bg-[#125872] text-white font-semibold w-full py-2 rounded-md mt-4">
-      RazorPay
-    </button>
-  </div>
-</div>
+          <div className="flex justify-center flex-col items-center">
+            {loading ? (
+              <button className="bg-[#125872] text-white font-semibold w-full py-3 rounded-md mt-4" disabled>
+                Loading...
+              </button>
+            ) : (
+              <>
+                <button
+                  onClick={handleSubmit}
+                  className="bg-[#125872] text-white font-semibold w-full py-2 rounded-md mt-4 md:hidden"
+                >
+                  RazorPay
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

@@ -159,51 +159,110 @@ const Cart = () => {
     const discountAmount = (cartTotal * discount) / 100;
     return cartTotal - discountAmount;
   };
+
   if (isLoading) {
     return <LoadingGif />;
   }
 
-  if (cartItems.length === 0) {
-    return (
-      <div className="text-center py-8">
-        <p className="text-xl font-semibold text-gray-700">Your cart is empty</p>
-        <p className="mt-4">Please shop for products to add them to your cart.</p>
-        <button
-          className="mt-8 bg-[#125872] text-white px-4 py-2 rounded-md"
-          onClick={() => navigate('/shop')}
-        >
-          Shop Now
-        </button>
-      </div>
-    );
-  }
   return (
     <>
-      <div className="hidden md:block">
-        <div className="flex justify-between mx-auto max-w-7xl py-8">
-          <div className="w-3/5">
-            <h2 className="text-2xl text-gray-700 font-bold mb-4">Order Summary</h2>
-            <div className="bg-white p-4">
+      {cartItems.length === 0 && !isLoading ? (
+        <div className="text-center py-8">
+          <p className="text-xl font-semibold text-gray-700">Your cart is empty</p>
+          <p className="mt-4">Please shop for products to add them to your cart.</p>
+          <button
+            className="mt-8 bg-[#125872] text-white px-4 py-2 rounded-md"
+            onClick={() => navigate('/shop')}
+          >
+            Shop Now
+          </button>
+        </div>
+      ) : (
+        <>
+          <div className="hidden md:block">
+            <div className="flex justify-between mx-auto max-w-7xl py-8">
+              <div className="w-3/5">
+                <h2 className="text-2xl text-gray-700 font-bold mb-4">Order Summary</h2>
+                <div className="bg-white p-4">
+                  {cartItems.map((item, index) => (
+                    <div key={index} className="flex items-center border rounded-md border-gray-300 mb-4">
+                      <div className="flex ml-[2rem] items-center justify-center w-24 h-24 my-[1rem]">
+                        <img
+                          src={item.Image_URL}
+                          alt={item.isMedicine ? item.Medicine_Name : item.Name}
+                          className="max-w-full h-24"
+                        />
+                      </div>
+                      <div className='ml-[2rem]'>
+                        <div>
+                          <h3 className="text-lg font-semibold">
+                            {item.isMedicine ? item.Medicine_Name : item.Name}
+                          </h3>
+                        </div>
+                        <p className=''>{item.Manufacturer}</p>
+                        <p className="text-lg font-semibold">{`₹${item.Price}`}</p>
+                      </div>
+                      <div className="flex items-center mr-[2rem] ml-auto mt-2 gap-2">
+                        <div className="flex items-center border rounded-md px-2 py-1">
+                          <button
+                            className="text-gray-500 hover:text-gray-800"
+                            onClick={() => handleQuantityChange(index, item.quantity - 1)}
+                          >
+                            -
+                          </button>
+                          <span className="mx-2">{item.quantity}</span>
+                          <button
+                            className="text-gray-500 hover:text-gray-800"
+                            onClick={() => handleQuantityChange(index, item.quantity + 1)}
+                          >
+                            +
+                          </button>
+                        </div>
+                        <p className="ml-4 font-semibold">{`₹${item.Price * item.quantity}`}</p>
+                        <button
+                          className="ml-4 text-red-400 hover:text-red-600"
+                          onClick={() => handleRemoveFromCart(index, item.Product_id)}
+                        >
+                          <BsTrash className="text-lg" />
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <PaymentSummary
+                cartItems={cartItems}
+                discountPercentage={discountPercentage}
+                coupon={coupon}
+                setCoupon={setCoupon}
+                handleApplyCoupon={handleApplyCoupon}
+                handleSubmit={handleSubmit}
+              />
+            </div>
+          </div>
+          <div className="md:hidden">
+            <div className="p-4">
+              <h2 className="text-2xl font-bold mb-4">Order Summary</h2>
               {cartItems.map((item, index) => (
-                <div key={index} className="flex items-center border rounded-md border-gray-300 mb-4">
-                  <div className="flex ml-[2rem] items-center justify-center w-24 h-24 my-[1rem]">
-                    <img
-                      src={item.Image_URL}
-                      alt={item.isMedicine ? item.Medicine_Name : item.Name}
-                      className="max-w-full h-24"
-                    />
-                  </div>
-                  <div className='ml-[2rem]'>
-                    <div>
+                <div key={index} className="bg-white rounded-md mb-4">
+                  <div className="flex items-center p-4 border-b border-gray-200">
+                    <div className="w-1/3">
+                      <img
+                        src={item.Image_URL}
+                        alt={item.isMedicine ? item.Medicine_Name : item.Name}
+                        className="w-full h-auto rounded-md"
+                      />
+                    </div>
+                    <div className="w-2/3 pl-4">
                       <h3 className="text-lg font-semibold">
                         {item.isMedicine ? item.Medicine_Name : item.Name}
                       </h3>
+                      <p className="text-sm text-gray-500">{item.Manufacturer}</p>
+                      <p className="text-lg font-semibold">{`₹${item.Price}`}</p>
                     </div>
-                    <p className=''>{item.Manufacturer}</p>
-                    <p className="text-lg font-semibold">{`₹${item.Price}`}</p>
                   </div>
-                  <div className="flex items-center mr-[2rem] ml-auto mt-2 gap-2">
-                    <div className="flex items-center border rounded-md px-2 py-1">
+                  <div className="flex justify-between items-center p-4">
+                    <div className="flex items-center">
                       <button
                         className="text-gray-500 hover:text-gray-800"
                         onClick={() => handleQuantityChange(index, item.quantity - 1)}
@@ -218,95 +277,36 @@ const Cart = () => {
                         +
                       </button>
                     </div>
-                    <p className="ml-4 font-semibold">{`₹${item.Price * item.quantity}`}</p>
-                    <button
-                      className="ml-4 text-red-400 hover:text-red-600"
-                      onClick={() => handleRemoveFromCart(index, item.Product_id)}
-                    >
-                      <BsTrash className="text-lg" />
-                    </button>
+                    <div>
+                      <p className="text-lg font-semibold">{`₹${item.Price * item.quantity}`}</p>
+                    </div>
+                    <div>
+                      <button
+                        className="text-red-400 hover:text-red-600"
+                        onClick={() => handleRemoveFromCart(index, item.Product_id)}
+                      >
+                        <BsTrash className="text-lg" />
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
+            <PaymentSummary
+              cartItems={cartItems}
+              discountPercentage={discountPercentage}
+              coupon={coupon}
+              setCoupon={setCoupon}
+              handleApplyCoupon={handleApplyCoupon}
+              handleSubmit={handleSubmit}
+            />
           </div>
-          <PaymentSummary
-            cartItems={cartItems}
-            discountPercentage={discountPercentage}
-            coupon={coupon}
-            setCoupon={setCoupon}
-            handleApplyCoupon={handleApplyCoupon}
-            handleSubmit={handleSubmit}
-          />
-        </div>
-      </div>
-
-      <div className="md:hidden">
-        <div className="p-4">
-          <h2 className="text-2xl font-bold mb-4">Order Summary</h2>
-          {cartItems.map((item, index) => (
-            <div key={index} className="bg-white rounded-md mb-4">
-              <div className="flex items-center p-4 border-b border-gray-200">
-                <div className="w-1/3">
-                  <img
-                    src={item.Image_URL}
-                    alt={item.isMedicine ? item.Medicine_Name : item.Name}
-                    className="w-full h-auto rounded-md"
-                  />
-                </div>
-                <div className="w-2/3 pl-4">
-                  <h3 className="text-lg font-semibold">
-                    {item.isMedicine ? item.Medicine_Name : item.Name}
-                  </h3>
-                  <p className="text-sm text-gray-500">{item.Manufacturer}</p>
-                  <p className="text-lg font-semibold">{`₹${item.Price}`}</p>
-                </div>
-              </div>
-              <div className="flex justify-between items-center p-4">
-                <div className="flex items-center">
-                  <button
-                    className="text-gray-500 hover:text-gray-800"
-                    onClick={() => handleQuantityChange(index, item.quantity - 1)}
-                  >
-                    -
-                  </button>
-                  <span className="mx-2">{item.quantity}</span>
-                  <button
-                    className="text-gray-500 hover:text-gray-800"
-                    onClick={() => handleQuantityChange(index, item.quantity + 1)}
-                  >
-                    +
-                  </button>
-                </div>
-                <div>
-                  <p className="text-lg font-semibold">{`₹${item.Price * item.quantity}`}</p>
-                </div>
-                <div>
-                  <button
-                    className="text-red-400 hover:text-red-600"
-                    onClick={() => handleRemoveFromCart(index, item.Product_id)}
-                  >
-                    <BsTrash className="text-lg" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-        <PaymentSummary
-          cartItems={cartItems}
-          discountPercentage={discountPercentage}
-          coupon={coupon}
-          setCoupon={setCoupon}
-          handleApplyCoupon={handleApplyCoupon}
-          handleSubmit={handleSubmit}
-        />
-      </div>
-<div className='md:mt-[2rem]'>
-  <HorizontalCardScrollCart itemForHorizontalScrollCart={items} />
-</div>
-</>
-
+          <div className='md:mt-[2rem]'>
+            <HorizontalCardScrollCart itemForHorizontalScrollCart={items} />
+          </div>
+        </>
+      )}
+    </>
   );
 };
 
