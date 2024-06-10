@@ -6,11 +6,16 @@ const getProductsByCategory = async (req, res) => {
     if (!category && !sub_category) {
       return res.status(400).json({ message: 'Please provide a valid search criteria (category or sub_category)' });
     }
+
+    // Decode and replace dashes with spaces for category and sub_category
+    const decodedCategory = category ? decodeURIComponent(category).replace(/-/g, ' ') : null;
+    const decodedSubCategory = sub_category ? decodeURIComponent(sub_category).replace(/-/g, ' ') : null;
+
     // Convert category and sub_category to lowercase and uppercase
-    const lowerCaseCategory = category ? category.toLowerCase() : null;
-    const upperCaseCategory = category ? category.toUpperCase() : null;
-    const lowerCaseSubCategory = sub_category ? sub_category.toLowerCase() : null;
-    const upperCaseSubCategory = sub_category ? sub_category.toUpperCase() : null;
+    const lowerCaseCategory = decodedCategory ? decodedCategory.toLowerCase() : null;
+    const upperCaseCategory = decodedCategory ? decodedCategory.toUpperCase() : null;
+    const lowerCaseSubCategory = decodedSubCategory ? decodedSubCategory.toLowerCase() : null;
+    const upperCaseSubCategory = decodedSubCategory ? decodedSubCategory.toUpperCase() : null;
 
     let query = {};
     // Query with lowercase and uppercase

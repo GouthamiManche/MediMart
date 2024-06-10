@@ -109,12 +109,12 @@ function ItemForHorizontalScrollCart({ item }) {
       setError(error.message);
     }
   };
-
+  const formattedSubCategory = item.Sub_Category.replace(/ /g, '-');
+  const formattedName = item.Name.replace(/ /g, '-');
   return (
     <div>
       <div className="bg-white m-2 p-4 rounded-xl border border-gray-200 hover:border-[#125872] flex flex-col md:w-[16rem] md:h-[22rem] w-[12.6rem] h-[16.4rem] overflow-hidden  transition duration-300">
-        <Link
-          to={`/${item.Sub_Category}/${item.Name}`}
+        <Link to={`/${formattedSubCategory}/${formattedName}`}
           state={item}
         >
           <div className="relative h-40 md:h-56 overflow-hidden rounded-lg flex items-center justify-center">
@@ -127,8 +127,7 @@ function ItemForHorizontalScrollCart({ item }) {
         </Link>
         <hr className="border border-gray-300" />
         <div className="flex flex-col justify-between md:mt-6 relative">
-          <Link
-            to={`/${item.Sub_Category}/${item.Name}`}
+          <Link to={`/${formattedSubCategory}/${formattedName}`}
             state={item}
           >
             <h3 className="font-semibold md:text-lg text-md text-[#125872]">

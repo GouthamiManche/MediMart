@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link ,useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from '../Components/AuthProvider';
 
@@ -43,7 +43,7 @@ function Item({ item }) {
         setIsItemInCart(true);
       }
     } catch (error) {
-     console.log(error)
+      console.log(error)
     }
   };
 
@@ -54,8 +54,8 @@ function Item({ item }) {
       );
       setIsItemInCart(false);
     } catch (error) {
-      
-     
+
+
     }
   };
 
@@ -75,19 +75,22 @@ function Item({ item }) {
         }
       );
       if (res.status !== 200) {
-       
+
       }
     } catch (error) {
-     
-   
+
+
     }
   };
 
   const truncatedName = truncateString(item.Medicine_Name || item.Name, 20);
 
+  const formattedSubCategory = item.Sub_Category.replace(/ /g, '-');
+  const formattedName = item.Name.replace(/ /g, '-');
+  
   return (
     <div className="bg-white m-2 p-4 rounded-xl border border-gray-200 hover:border-[#125872] flex flex-col md:w-[16rem] w-[16rem] md:h-[22rem] h-[22rem] overflow-hidden  transition duration-300 ">
-      <Link to={`/${item.Sub_Category}/${item.Name}`} state={item}>
+      <Link to={`/${formattedSubCategory}/${formattedName}`} state={item}>
         <div className="relative h-56 overflow-hidden rounded-lg flex items-center justify-center">
           <img
             src={item.Image_URL}
@@ -97,7 +100,7 @@ function Item({ item }) {
         </div>
       </Link>
       <hr className="border border-gray-300 " />
-      <Link to={`/${item.Sub_Category}/${item.Name}`} state={item}>
+      <Link to={`/${formattedSubCategory}/${formattedName}`} state={item}>
         <div className="flex flex-col justify-between mt-6 relative">
           <h3 className="font-semibold text-lg text-[#125872]">
             {truncatedName}
