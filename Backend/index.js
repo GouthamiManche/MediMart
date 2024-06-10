@@ -17,6 +17,7 @@ const { forgotPassword } = require('./APIS/ForgetPassword');
 const { resetPassword } = require('./APIS/PasswordReset');
 const { addAddress, getAddresses, editAddress, deleteAddress } = require('./APIS/Address');
 const { getBanner, updateBanner, deleteBanner ,addBanner} = require('./APIS/Banner');
+const { saveReview, getReviews } = require('./APIS/Review');
 
 const app = express();
 const URI = process.env.MONGO_URL;
@@ -92,10 +93,14 @@ app.get('/', (req, res) => {
   res.json('Hello, Backend Readyyyy!!! ');
 });
 
-// app.listen();
+//review
+app.post('/api/savereviews',saveReview);
+app.get('/api/getreviews', getReviews);
 
-const PORT = 4000; // Specify the desired local port
+app.listen();
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// const PORT = 4000; // Specify the desired local port
+
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });
