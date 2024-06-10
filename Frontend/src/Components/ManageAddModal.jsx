@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const ManageAddressModal = ({ isOpen, onClose, onAddAddress, addressToEdit }) => {
-
   const [formData, setFormData] = useState({
     fullName: '',
     address: '',
@@ -11,6 +10,7 @@ const ManageAddressModal = ({ isOpen, onClose, onAddAddress, addressToEdit }) =>
     pincode: '',
     contactNo: '',
     addressType: '',
+    otherAddressName: '',
   });
   const [errors, setErrors] = useState({});
 
@@ -120,42 +120,44 @@ const ManageAddressModal = ({ isOpen, onClose, onAddAddress, addressToEdit }) =>
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="fixed inset-0 bg-black bg-opacity-50" onClick={onClose} />
-      <div className="bg-white rounded-lg shadow-lg p-6 max-w-md w-full z-10">
+      <div className="bg-white rounded-lg shadow-lg p-4 md:p-6 max-w-md w-full mx-2 md:mx-auto z-10">
         <h2 className="text-2xl font-bold mb-4">Edit Address</h2>
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label htmlFor="fullName" className="text-sm font-medium text-gray-700">
-              Full Name
-            </label>
-            <input
-              type="text"
-              id="fullName"
-              name="fullName"
-              value={formData.fullName}
-              onChange={handleChange}
-              className={`mt-1 py-3 p-2 block w-full border ${errors.fullName ? 'border-red-500' : 'border-gray-300'
-                } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
-              required
-            />
-            {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-[0.5rem]">
+            <div>
+              <label htmlFor="fullName" className="text-sm font-medium text-gray-700">
+                Full Name
+              </label>
+              <input
+                type="text"
+                id="fullName"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleChange}
+                className={`mt-1 py-2 p-2 block w-full border ${errors.fullName ? 'border-red-500' : 'border-gray-300'
+                  } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+                required
+              />
+              {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>}
+            </div>
+            <div>
+              <label htmlFor="contactNo" className="text-sm font-medium text-gray-700">
+                Contact number
+              </label>
+              <input
+                type="text"
+                id="contactNo"
+                name="contactNo"
+                value={formData.contactNo}
+                onChange={handleChange}
+                className={`mt-1 p-2 block py-2 w-full border ${errors.contactNo ? 'border-red-500' : 'border-gray-300'
+                  } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+                required
+              />
+              {errors.contactNo && <p className="text-red-500 text-sm mt-1">{errors.contactNo}</p>}
+            </div>
           </div>
-          <div className="mb-4">
-            <label htmlFor="contactNo" className="text-sm font-medium text-gray-700">
-              Contact number
-            </label>
-            <input
-              type="text"
-              id="contactNo"
-              name="contactNo"
-              value={formData.contactNo}
-              onChange={handleChange}
-              className={`mt-1 p-2 block py-3 w-full border ${errors.contactNo ? 'border-red-500' : 'border-gray-300'
-                } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
-              required
-            />
-            {errors.contactNo && <p className="text-red-500 text-sm mt-1">{errors.contactNo}</p>}
-          </div>
-          <div className="mb-4">
+          <div className="mb-[0.5rem]">
             <label htmlFor="address" className="block text-sm font-medium text-gray-700">
               Address
             </label>
@@ -165,13 +167,13 @@ const ManageAddressModal = ({ isOpen, onClose, onAddAddress, addressToEdit }) =>
               name="address"
               value={formData.address}
               onChange={handleChange}
-              className={`mt-1 p-2 py-3 block w-full border ${errors.address ? 'border-red-500' : 'border-gray-300'
+              className={`mt-1 p-2 py-2 block w-full border ${errors.address ? 'border-red-500' : 'border-gray-300'
                 } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
               required
             />
             {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-[0.5rem]">
             <div>
               <label htmlFor="pincode" className="block text-sm font-medium text-gray-700">
                 Pincode
@@ -182,7 +184,7 @@ const ManageAddressModal = ({ isOpen, onClose, onAddAddress, addressToEdit }) =>
                 name="pincode"
                 value={formData.pincode}
                 onChange={handlePincodeChange}
-                className={`mt-1 p-2 py-3 block w-full border ${errors.pincode ? 'border-red-500' : 'border-gray-300'
+                className={`mt-1 p-2 block py-2 w-full border ${errors.pincode ? 'border-red-500' : 'border-gray-300'
                   } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
                 required
               />
@@ -198,14 +200,14 @@ const ManageAddressModal = ({ isOpen, onClose, onAddAddress, addressToEdit }) =>
                 name="city"
                 value={formData.city}
                 onChange={handleChange}
-                className={`mt-1 p-2 py-3 block w-full border ${errors.city ? 'border-red-500' : 'border-gray-300'
+                className={`mt-1 p-2 block py-2 w-full border ${errors.city ? 'border-red-500' : 'border-gray-300'
                   } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
                 required
               />
               {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city}</p>}
             </div>
           </div>
-          <div className="mb-4">
+          <div className="mb-[0.5rem]">
             <label htmlFor="state" className="block text-sm font-medium text-gray-700">
               State
             </label>
@@ -215,7 +217,7 @@ const ManageAddressModal = ({ isOpen, onClose, onAddAddress, addressToEdit }) =>
               name="state"
               value={formData.state}
               onChange={handleChange}
-              className={`mt-1 p-2 py-3 block w-full border ${errors.state ? 'border-red-500' : 'border-gray-300'
+              className={`mt-1 p-2 block py-2 w-full border ${errors.state ? 'border-red-500' : 'border-gray-300'
                 } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
               required
             />
@@ -230,7 +232,7 @@ const ManageAddressModal = ({ isOpen, onClose, onAddAddress, addressToEdit }) =>
               name="addressType"
               value={formData.addressType}
               onChange={handleChange}
-              className={` p-2 py-3 block w-full border ${errors.addressType ? 'border-red-500' : 'border-gray-300'
+              className={` p-2 py-2 block w-full border ${errors.addressType ? 'border-red-500' : 'border-gray-300'
                 } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
               required
             >
@@ -246,7 +248,7 @@ const ManageAddressModal = ({ isOpen, onClose, onAddAddress, addressToEdit }) =>
                 value={formData.otherAddressName}
                 onChange={handleChange}
                 placeholder="Enter Other Address Name"
-                className=" p-2 py-3 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm"
+                className=" p-2 py-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm"
                 required
               />
             )}

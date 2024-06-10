@@ -135,37 +135,39 @@ const AddAddressModal = ({ isOpen, onClose, onAddAddress }) => {
       <div className="bg-white rounded-lg shadow-lg p-4 md:p-6 max-w-md w-full  mx-2 md:mx-auto z-10">
         <h2 className="text-2xl font-bold mb-4">Add Address</h2>
         <form onSubmit={handleSubmit}>
-          <div className="mb-[0.5rem]">
-            <label htmlFor="fullName" className="text-sm font-medium text-gray-700">
-              Full Name
-            </label>
-            <input
-              type="text"
-              id="fullName"
-              name="fullName"
-              value={formData.fullName}
-              onChange={handleChange}
-              className={`mt-1 py-2 p-2 block w-full border ${errors.fullName ? 'border-red-500' : 'border-gray-300'
-                } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
-              required
-            />
-            {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>}
-          </div>
-          <div className="mb-[0.5rem]">
-            <label htmlFor="contactNo" className="text-sm font-medium text-gray-700">
-              Contact number
-            </label>
-            <input
-              type="text"
-              id="contactNo"
-              name="contactNo"
-              value={formData.contactNo}
-              onChange={handleChange}
-              className={`mt-1 p-2 block py-2 w-full border ${errors.contactNo ? 'border-red-500' : 'border-gray-300'
-                } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
-              required
-            />
-            {errors.contactNo && <p className="text-red-500 text-sm mt-1">{errors.contactNo}</p>}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-[0.5rem]">
+            <div>
+              <label htmlFor="fullName" className="text-sm font-medium text-gray-700">
+                Full Name
+              </label>
+              <input
+                type="text"
+                id="fullName"
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleChange}
+                className={`mt-1 py-2 p-2 block w-full border ${errors.fullName ? 'border-red-500' : 'border-gray-300'
+                  } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+                required
+              />
+              {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName}</p>}
+            </div>
+            <div>
+              <label htmlFor="contactNo" className="text-sm font-medium text-gray-700">
+                Contact number
+              </label>
+              <input
+                type="text"
+                id="contactNo"
+                name="contactNo"
+                value={formData.contactNo}
+                onChange={handleChange}
+                className={`mt-1 p-2 block py-2 w-full border ${errors.contactNo ? 'border-red-500' : 'border-gray-300'
+                  } rounded-md shadow-sm focus:ring-[#125872] focus:border-[#125872] sm:text-sm`}
+                required
+              />
+              {errors.contactNo && <p className="text-red-500 text-sm mt-1">{errors.contactNo}</p>}
+            </div>
           </div>
           <div className="mb-[0.5rem]">
             <label htmlFor="address" className="block text-sm font-medium text-gray-700">
