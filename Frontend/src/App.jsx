@@ -46,7 +46,7 @@ const AppWrapper = () => {
               <Route exact path="/forgetpassword" element={<ForgetPassword />} />
               <Route path="/reset-password/:token" element={<ResetPassword />} />
               <Route exact path="/Register" element={<Register />} />
-              <Route exact path="/:category/:id" element={<Category />} />
+              <Route path="/:subCategory/:formattedName" element={<Category />} />
               <Route exact path="/cart" element={<Cart />} />
               <Route exact path="/about" element={<About />} />
               <Route exact path="/contact" element={<Contact />} />

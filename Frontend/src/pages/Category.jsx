@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import HorizontalCardScroll from '../Components/HorizontalCardScroll';
 import axios from "axios";
 import ReviewSection from '../Components/ReviewSection';
@@ -11,11 +11,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import ReactImageMagnify from 'react-image-magnify';
 
 const Category = () => {
-  const location = useLocation();
-  const product = location.state;
+  const { subCategory, formattedName } = useParams();
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
-  const [items, setItems] = useState([]);
+  const [product, setProduct] = useState(null);
+  const [items, setItems] = useState([]); // Initialize items state
   const [isLoading, setIsLoading] = useState(false);
   const apiUrl = import.meta.env.VITE_API_URL;
   const apiKey = import.meta.env.VITE_API_KEY;
@@ -25,19 +25,36 @@ const Category = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${apiUrl}/products?sub_category=${product.Sub_Category}`, {
+        setIsLoading(true);
+        const response = await axios.get(`${apiUrl}/products?sub_category=${subCategory}`, {
           headers: {
             apikey: apiKey,
           },
-        });
-        setItems(response.data);
+        });        
+        
+        const productData = response.data.find(item => 
+          item.Name.replace(/ /g, '-') === formattedName
+        );
+        
+        setItems(response.data)
+        if (productData) {
+          setProduct(productData);
+        } else {
+          setProduct(null);
+        }
       } catch (error) {
         console.error("Error fetching data:", error.message);
+        setProduct(null);
+      } finally {
+        setIsLoading(false);
       }
-     
     };
     fetchData();
-  }, []);
+  }, [subCategory, formattedName]);
+
+  if (isLoading) {
+    return <LoadingGif />;
+  }
 
   if (!product) {
     return <div className="text-center text-gray-600">Product not found</div>;
@@ -48,7 +65,6 @@ const Category = () => {
   const handleBackClick = () => {
     navigate(-1);
   };
-
   const handleQuantityChange = async (value) => {
     const newQuantity = Math.max(1, value);
 
