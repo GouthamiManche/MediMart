@@ -41,7 +41,7 @@ function Navbar() {
     { title: "Women Care", subCategory: "Women Care" },
     { title: "Baby Care", subCategory: "Baby Care" },
     { title: "Health Devices", subCategory: "Health Devices" },
-    { title: "Protein", subCategory: "Protein" },
+
   ];
 
   const totalItemsInCart = user ? cartItems.reduce((total, item) => total + item.quantity, 0) : 0;
