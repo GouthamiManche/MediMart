@@ -140,11 +140,14 @@ function OrderHistory() {
                             <p>{addresses[order._id].contactNo}</p>
                             <p>{addresses[order._id].address}</p>
                             <p>{addresses[order._id].city}, {addresses[order._id].state} {addresses[order._id].pincode}</p>
+                            <p className=''>Date & Time: {order.orderDate}</p>
                           </div>
+
                         ) : (
                           <p className="text-gray-600">Address information not available</p>
                         )}
                       </div>
+                      
                       <h4 className="text-lg font-semibold text-gray-800">Ordered Products </h4>
                       {order.cartItems.map((item) => (
                         <div key={item._id} className="flex items-center mb-4">

@@ -81,7 +81,7 @@ function Profile() {
     return (
         <div className="min-h-screen bg-white flex flex-col items-center">
             <UserNavigation />
-            <div className="container mx-auto p-6 mt-6">
+            <div className="container mx-auto p-6 ">
                 <div className="flex flex-col md:flex-row">
                     <div className="md:w-1/3 flex flex-col items-center">
                         <img
@@ -89,14 +89,14 @@ function Profile() {
                             src={profilePic}
                             alt="Profile"
                         />
-                        <label htmlFor="photo-upload" className="bg-[#125872] text-white mt-4 px-4 py-2 rounded cursor-pointer">
+                        <label htmlFor="photo-upload" className="bg-[#125872] text-white px-4 py-2 rounded cursor-pointer">
                             Change photo
                         </label>
                         <input id="photo-upload" type="file" accept="image/*" onChange={handleFileChange} className="hidden" />
                     </div>
                     <div className="md:w-2/3 md:pl-8">
                         <div className="mb-6">
-                            <label htmlFor="name" className="block text-sm font-medium text-gray-700">Full Name</label>
+                            <label htmlFor="name" className="block text-sm font-medium mt-4 text-gray-700">Full Name</label>
                             <input
                                 type="text"
                                 id="name"

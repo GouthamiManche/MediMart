@@ -172,9 +172,9 @@ function Login() {
             </button>
           </div>
           <div className="flex flex-wrap justify-between text-sm">
-            <p className="text-gray-500">New User?</p>
+            <p className="text-gray-500">New User ? </p>
             <Link to="/Register" className="text-[#125872] font-semibold">
-              Register
+               Register
             </Link>
             <Link to="/forgetpassword" className="text-[#125872] ml-auto">
               Forget Password

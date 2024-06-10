@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const UserNavigation = () => {
   return (
 
-    <div className="mt-[1rem] flex space-x-8">
+    <div className="mt-[1rem] flex space-x-2 md:space-x-8">
       <Link to="/profile">
         <button className="py-2 px-4 border border-gray-400 rounded-xl transition-colors duration-300">
           Profile

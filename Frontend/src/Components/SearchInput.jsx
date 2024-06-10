@@ -46,7 +46,7 @@ const SearchInput = ({ searchTerm, setSearchTerm, sortOption, setSortOption }) =
           />
           {!searchTerm && (
             <span className="absolute left-8 top-0 pl-4 py-4 text-gray-400 sm:block hidden">
-              Search here{" "}
+              Search for{" "}
               <span className="font-semibold text-gray-600">
                 {currentPlaceholder}
               </span>

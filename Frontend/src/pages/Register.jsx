@@ -177,9 +177,9 @@ function Register() {
             <button
               type="submit"
               className="bg-[#125872] text-white font-bold py-2 px-4 rounded w-full"
-              disabled={loading} // Disable button when loading
+              disabled={loading} 
             >
-              {loading ? 'Loading...' : 'Register'} {/* Show loading text when loading */}
+              {loading ? 'Registering...' : 'Register'} {/* Show loading text when loading */}
             </button>
           </div>
         </form>

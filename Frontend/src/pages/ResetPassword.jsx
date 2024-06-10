@@ -41,9 +41,9 @@ export default function ResetPassword() {
     <div className="bg-[#f5f5f5] min-h-screen flex items-center justify-center">
       <div className="max-w-md w-full mx-auto bg-white rounded-lg shadow-lg p-8">
         <div className="flex items-center justify-center mb-6">
-          
+
           <div className="md:block hidden text-xl md:text-3xl font-bold ml-1 ">
-            <span className="text-[#14496b]">Reset Password</span>   
+            <span className="text-[#14496b]">Reset Password</span>
           </div>
         </div>
         <form onSubmit={handleSubmit}>
@@ -74,20 +74,15 @@ export default function ResetPassword() {
             />
           </div>
           {error && <p className="text-red-500 text-xs mt-2">{error}</p>}
-          {loading ? (
-            <div className="flex items-center justify-center mb-4">
-              <p>Password Resetting.....</p>
-            </div>
-          ) : (
-            <div className="flex items-center justify-center mb-4">
-              <button
-                type="submit"
-                className="bg-[#125872] text-white font-bold w-full py-2 px-4 rounded"
-              >
-                Reset Password
-              </button>
-            </div>
-          )}
+          <div className="flex items-center justify-center mb-4">
+            <button
+              type="submit"
+              className={`bg-[#125872] text-white font-bold w-full py-2 px-4 rounded transition-opacity duration-300 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+              disabled={loading}
+            >
+              {loading ? 'Password Resetting...' : 'Reset Password'}
+            </button>
+          </div>
         </form>
       </div>
     </div>

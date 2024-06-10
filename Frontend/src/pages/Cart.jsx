@@ -8,9 +8,10 @@ import { AuthContext } from '../Components/AuthProvider';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PaymentSummary from '../Components/PaymentSummary';
+import { useCart } from '../Components/CartProvider'; // Import useCart hook
 
 const Cart = () => {
-  const [cartItems, setCartItems] = useState([]);
+  const { state: { cartItems }, setCartItems, fetchCartItems } = useCart(); // Use cart context
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [coupon, setCoupon] = useState('');
@@ -22,7 +23,6 @@ const Cart = () => {
   const apiKey = import.meta.env.VITE_API_KEY;
   const [totalPrice, setTotalPrice] = useState(0);
 
-  // Initialize local storage values when the component mounts
   useEffect(() => {
     localStorage.setItem('discount', '0');
   }, []);
@@ -47,24 +47,8 @@ const Cart = () => {
   }, []);
 
   useEffect(() => {
-    setIsLoading(true);
-    const fetchData = async () => {
-      try {
-        // Fetch cart items from the API
-        const response = await axios.get(`${apiUrl}/getcartitems?email=${user.email}`, {
-          headers: {
-            apikey: apiKey,
-          },
-        });
-        setCartItems(response.data);
-      } catch (error) {
-        console.error("Error fetching cart items:", error.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-  }, [user.email]);
+    fetchCartItems();
+  }, [user.email]); // Fetch cart items when the user's email changes
 
   const handleRemoveFromCart = async (index, productId) => {
     try {
@@ -72,7 +56,6 @@ const Cart = () => {
       const updatedCartItems = [...cartItems];
       updatedCartItems.splice(index, 1);
       setCartItems(updatedCartItems);
-      //toast.success('Product removed from cart successfully', { autoClose: 2000 });
     } catch (error) {
       console.error("Error removing product from cart:", error.message);
       toast.error('Failed to remove product from cart', { autoClose: 2000 });
@@ -166,18 +149,7 @@ const Cart = () => {
 
   return (
     <>
-      {cartItems.length === 0 && !isLoading ? (
-        <div className="text-center py-8">
-          <p className="text-xl font-semibold text-gray-700">Your cart is empty</p>
-          <p className="mt-4">Please shop for products to add them to your cart.</p>
-          <button
-            className="mt-8 bg-[#125872] text-white px-4 py-2 rounded-md"
-            onClick={() => navigate('/shop')}
-          >
-            Shop Now
-          </button>
-        </div>
-      ) : (
+      {cartItems.length > 0 || isLoading ? (
         <>
           <div className="hidden md:block">
             <div className="flex justify-between mx-auto max-w-7xl py-8">
@@ -305,10 +277,20 @@ const Cart = () => {
             <HorizontalCardScrollCart itemForHorizontalScrollCart={items} />
           </div>
         </>
+      ) : (
+        <div className="text-center py-8">
+          <p className="text-xl font-semibold text-gray-700">Your cart is empty</p>
+          <p className="mt-4">Please shop for products to add them to your cart.</p>
+          <button
+            className="mt-8 bg-[#125872] text-white px-4 py-2 rounded-md"
+            onClick={() => navigate('/shop')}
+          >
+            Shop Now
+          </button>
+        </div>
       )}
     </>
   );
 };
 
 export default Cart;
-

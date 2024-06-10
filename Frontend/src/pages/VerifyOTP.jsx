@@ -1,14 +1,17 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Logo from '/src/assets/logo.jpg';
 
 export default function VerifyOTP() {
   const [otp, setOtp] = useState(new Array(6).fill(""));
   const [otpError, setOtpError] = useState("");
   const [isVerified, setIsVerified] = useState(false);
   const [email, setEmail] = useState("");
+  const [isEmailVerified, setIsEmailVerified] = useState(false);
+  const [loading, setLoading] = useState(false);
   const apiUrl = import.meta.env.VITE_API_URL;
   const location = useLocation();
 
@@ -20,12 +23,13 @@ export default function VerifyOTP() {
         try {
           const response = await axios.post(`${apiUrl}/verify-email`, { email: emailParam });
           if (response.data.message) {
-            setIsVerified(true);
+            setIsEmailVerified(true);
           } else {
             setOtpError('Email verification failed. Please try again.');
           }
         } catch (error) {
-          // Error handling remains the same
+          // console.error('Error verifying email:', error);
+          // setOtpError('Error verifying email. Please try again.');
         }
       } else {
         setOtpError('No email provided for verification.');
@@ -51,20 +55,6 @@ export default function VerifyOTP() {
       }
       setOtpError("");
     }
-
-    if (newOtp.join("").length === 6) {
-      verifyOTP(newOtp.join(""));
-    }
-  };
-
-  const verifyOTP = async (otp) => {
-    try {
-      await axios.post(`${apiUrl}/verify-email`, { email, otp });
-      setIsVerified(true);
-      toast.success('OTP verified successfully', { autoClose: 2000 });
-    } catch (error) {
-      setOtpError('Invalid OTP. Please try again.');
-    }
   };
 
   const handleKeyDown = (e, index) => {
@@ -73,20 +63,46 @@ export default function VerifyOTP() {
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    if (otp.join("").length !== 6) {
+      setOtpError('Please enter a 6-digit OTP.');
+      return;
+    }
+
+    try {
+      await axios.post(`${apiUrl}/verify-email`, { email, otp: otp.join("") });
+      setIsVerified(true);
+      toast.success('OTP verified successfully', { autoClose: 2000 });
+    } catch (error) {
+      console.error('Error verifying OTP:', error);
+      setOtpError('Invalid OTP. Please try again.');
+    } finally {
+      setLoading(false); // Set loading to false regardless of success or failure
+    }
+  };
+
   return (
-    <div className="bg-[#f5f5f5] min-h-screen flex items-center justify-center px-4">
-      <div className="w-full max-w-sm bg-white rounded-lg shadow-lg p-6">
-        <div className="flex flex-col items-center justify-center mb-6">
-          <h2 className="text-2xl md:text-3xl font-bold text-[#14496b]">Verify OTP</h2>
+    <div className="bg-[#f5f5f5] min-h-screen flex items-center justify-center">
+      <div className="max-w-md w-full mx-auto bg-white rounded-lg shadow-lg p-8">
+        <div className="flex items-center justify-center mb-6">
+          <Link to="/">
+            <img className="h-12" src={Logo} alt="Logo" />
+          </Link>
+          <Link to="/" className="md:block hidden text-xl md:text-3xl font-bold ml-1 font-PlayFair">
+            <span className="text-[#14496b]">Medi</span>
+            <span className="text-[#8ccf28]">Mart</span>
+          </Link>
         </div>
         {isVerified ? (
           <div className="text-center text-green-500">
-            <p className="text-lg">OTP verified successfully!</p>
-            <Link to="/login" className="text-[#125872] mt-4 block text-base hover:underline">Back to Login</Link>
+            <p>OTP verified successfully!</p>
+            <Link to="/login" className="text-[#125872] mt-4 block">Back to Login</Link>
           </div>
         ) : (
           <form onSubmit={handleSubmit}>
-            <div className="mb-6 flex justify-between">
+            <div className="mb-4 flex justify-between">
               {otp.map((digit, index) => (
                 <input
                   key={index}
@@ -96,24 +112,24 @@ export default function VerifyOTP() {
                   value={otp[index]}
                   onChange={(e) => handleChange(e.target, index)}
                   onKeyDown={(e) => handleKeyDown(e, index)}
-                  className="border border-gray-400 w-10 h-10 sm:w-12 sm:h-12 text-center text-gray-700 leading-tight focus:outline-none focus:border-[#125872] text-lg sm:text-xl"
+                  className="border border-gray-400 w-12 h-12 text-center text-gray-700 leading-tight focus:outline-none focus:border-[#125872] text-xl"
                   required
                 />
               ))}
             </div>
             {otpError && (
-              <p className="text-red-500 text-sm mt-2 text-center mb-4">{otpError}</p>
+              <p className="text-red-500 text-xs mt-2 text-center">{otpError}</p>
             )}
             <div className="flex items-center justify-center mb-4">
               <button
                 type="submit"
-                className="bg-[#125872] text-white font-bold w-full py-3 px-4 rounded-md hover:bg-[#0E4E63] transition duration-300"
-              >
-                Verify OTP
+                className="bg-[#125872] text-white font-bold w-full py-2 px-4 rounded"
+                disabled={loading}  >
+                {loading ? 'Verifying OTP ...' : 'Verify OTP'}
               </button>
             </div>
             <div className="flex justify-center">
-              <Link to="/register" className="text-[#125872] text-sm hover:underline">
+              <Link to="/register" className="text-[#125872]">
                 Want to change email?
               </Link>
             </div>
