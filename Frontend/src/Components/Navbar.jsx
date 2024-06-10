@@ -41,6 +41,7 @@ function Navbar() {
     { title: "Women Care", subCategory: "Women Care" },
     { title: "Baby Care", subCategory: "Baby Care" },
     { title: "Health Devices", subCategory: "Health Devices" },
+    { title: "Protein", subCategory: "Protein" },
   ];
 
   const totalItemsInCart = user ? cartItems.reduce((total, item) => total + item.quantity, 0) : 0;
@@ -60,7 +61,7 @@ function Navbar() {
               <Link
                 key={index}
                 to={`/shop?subCategory=${subCategory || ''}&Category=${category || ''}`}
-                className="text-gray-900 hover:text-[#125872] transition duration-300 text-center mx-6"
+                className="text-gray-900 hover:text-[#125872] transition duration-300 text-center mx-[30px]"
               >
                 {title}
               </Link>
@@ -85,7 +86,7 @@ function Navbar() {
           </button>
         </div>
         <nav className="hidden md:flex items-center ">
-          <nav className="hidden md:flex md:ml-[12vw]">
+          <nav className="hidden md:flex ">
             <div className="flex gap-10 text-gray-900">
               <Link to="/shop" className="font-bold py-2 rounded flex items-center text-[#125872] relative mr-[0.5rem]">
                 <GrSearch className="text-xl text-[#125872] mr-1" />Shop
