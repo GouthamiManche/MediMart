@@ -136,18 +136,20 @@ function OrderHistory() {
                         <h4 className="text-lg font-semibold text-gray-800">Delivery Address</h4>
                         {addresses[order._id] ? (
                           <div className="text-gray-700">
+                            <div className='flex space-x-2'>
                             <p>{addresses[order._id].fullName}</p>
+                            <p>|</p>
                             <p>{addresses[order._id].contactNo}</p>
+                            </div>
+                            
                             <p>{addresses[order._id].address}</p>
                             <p>{addresses[order._id].city}, {addresses[order._id].state} {addresses[order._id].pincode}</p>
-                            <p className=''>Date & Time: {order.orderDate}</p>
                           </div>
-
                         ) : (
                           <p className="text-gray-600">Address information not available</p>
                         )}
                       </div>
-                      
+
                       <h4 className="text-lg font-semibold text-gray-800">Ordered Products </h4>
                       {order.cartItems.map((item) => (
                         <div key={item._id} className="flex items-center mb-4">
@@ -173,12 +175,23 @@ function OrderHistory() {
                               Buy Again
                             </button>
                           </div>
+
                         </div>
+
                       ))}
-                      <div className="flex justify-between items-center mt-4">
-                        <div className="text-xs md:text-sm text-gray-700">Payment Status: {order.paymentStatus}</div>
-                        <div className="text-xs md:text-sm text-gray-700">Payment ID: {order.razorpay_order_id}</div>
-                        <div className="text-base md:text-lg font-semibold text-gray-800">Total: ₹{order.amount}</div>
+
+                      <div className="flex justify-between mt-4">
+                        <div>
+                          <div className="text-xs md:text-sm text-gray-700">Payment Status: {order.paymentStatus}</div>
+                          <div className="text-xs md:text-sm text-gray-700">Payment ID: {order.razorpay_order_id}</div>
+                        </div>
+                        <div className=''>
+                          <p className='text-xs md:text-sm text-gray-700'>Subtotal: {order.subtotal}</p>
+                          <p className='text-xs md:text-sm text-gray-700'>Discount: {order.discount}</p>
+                          <p className='text-xs md:text-sm text-gray-700'>Delivery Fee: {order.deliveryFee}</p>
+                          <div className="text-base md:text-lg font-semibold text-gray-800">Total: ₹{order.amount}</div>
+                        </div>
+
                       </div>
                       {order.paymentStatus === 'Completed' && (
                         <button onClick={() => handleViewInvoice(order.razorpay_order_id)} className="mt-4 flex items-center text-[#125872] hover:underline">
