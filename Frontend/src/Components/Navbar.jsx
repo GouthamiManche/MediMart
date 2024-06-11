@@ -41,6 +41,7 @@ function Navbar() {
     { title: "Women Care", subCategory: "Women Care" },
     { title: "Baby Care", subCategory: "Baby Care" },
     { title: "Health Devices", subCategory: "Health Devices" },
+
   ];
 
   const totalItemsInCart = user ? cartItems.reduce((total, item) => total + item.quantity, 0) : 0;
@@ -60,7 +61,7 @@ function Navbar() {
               <Link
                 key={index}
                 to={`/shop?subCategory=${subCategory || ''}&Category=${category || ''}`}
-                className="text-gray-900 hover:text-[#125872] transition duration-300 text-center mx-6"
+                className="text-gray-900 hover:text-[#125872] transition duration-300 text-center mx-[30px]"
               >
                 {title}
               </Link>
@@ -85,30 +86,30 @@ function Navbar() {
           </button>
         </div>
         <nav className="hidden md:flex items-center ">
-          <nav className="hidden md:flex md:ml-[12vw]">
+          <nav className="hidden md:flex ">
             <div className="flex gap-10 text-gray-900">
-              <Link to="/shop" className="mr-[1rem]">
-                <GrSearch className="text-xl text-[#125872]" />
+              <Link to="/shop" className="font-bold py-2 rounded flex items-center text-[#125872] relative mr-[0.5rem]">
+                <GrSearch className="text-xl text-[#125872] mr-1" />Shop
               </Link>
             </div>
           </nav>
-          <button onClick={handleCartClick} className="font-bold py-2 rounded flex items-center relative mr-[0.5rem]">
-            <GrCart className="text-xl text-[#125872]" />
+          <button onClick={handleCartClick} className="font-bold py-2 rounded flex items-center text-[#125872] relative mr-[0.5rem] ml-[10px]">
+            <GrCart className="text-xl text-[#125872] mr-1" />Cart
             {totalItemsInCart > 0 && (
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+              <span className="absolute -top-[6px] -right-[-24px] bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                 {totalItemsInCart}
               </span>
             )}
           </button>
           {user ? (
             <div className="relative inline-block text-left mr-[1rem]">
-              <div className="flex items-center">
-                <button onClick={toggleDropdown} className="focus:outline-none ml-2">
-                  <CgProfile className="text-2xl text-[#125872]" />
+              <div className="flex items-center ml-[10px]">
+                <button onClick={toggleDropdown} className="font-bold text-[#125872] py-2 rounded flex items-center relative mr-[0.5rem]">
+                  <CgProfile className="text-2xl text-[#125872] mr-1" />User
                 </button>
               </div>
               {dropdownOpen && (
-                <div className="absolute right-0 z-10 w-48 rounded-md bg-white shadow-lg">
+                <div className="absolute right-0 h-[4rem] z-10 w-48 rounded-md bg-white shadow-lg">
                   <div>
                     <Link to="/profile" className="text-gray-700 px-4 py-2 text-sm">
                       {user.username}

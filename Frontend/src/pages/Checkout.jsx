@@ -311,7 +311,15 @@ const AddressForm = () => {
                     }`}
                   onClick={() => handleSelectAddress(address)}
                 >
+                   <div className="flex items-center">
                   <h4 className="text-lg font-semibold">{address.fullName}</h4>
+        
+                      <IoHomeOutline className="ml-auto mr-2" />
+                      <p className="text-lg font-semibold">
+                        {address.addressType === 'Other' ? address.otherAddressName : address.addressType}
+                      </p>
+                  
+                    </div>
                   <p>{address.contactNo}</p>
                   <p>{address.address}</p>
                   <p>{address.city}, {address.state} {address.pincode}</p>
@@ -447,7 +455,7 @@ const AddressForm = () => {
           addressToEdit={addressToEdit}
         />
       </div>
-      <div className="w-[30%] p-[2rem] h-full border border-gray-300 sticky top-[14rem] rounded-md md:block hidden  text-gray-700 mr-[4rem]">
+      <div className="w-[30%] p-[2rem] h-full border border-gray-300 sticky top-[11.8rem] rounded-md md:block hidden  text-gray-700 mr-[4rem]">
         <h2 className="text-2xl font-bold mb-4">Order Total</h2>
         <div className="bg-white">
           <div className=" pt-4 flex justify-between">
