@@ -46,9 +46,9 @@ const Cart = () => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    fetchCartItems();
-  }, [user.email]); // Fetch cart items when the user's email changes
+  // useEffect(() => {
+  //   fetchCartItems();
+  // }, [user.email]); // Fetch cart items when the user's email changes
 
   const handleRemoveFromCart = async (index, productId) => {
     try {

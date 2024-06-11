@@ -16,7 +16,7 @@ export default function About() {
             </div>
             <div className='w-full md:w-1/2'>
               <img
-                src='https://media.giphy.com/media/3o7btYLAYVBIZkNQmk/giphy.gif'
+                src='https://i.pinimg.com/originals/a1/de/f3/a1def358ff6f1f8f2ff53256c36daae5.gif'
                 alt='Pills Animation'
                 className='w-full rounded-lg shadow-md'
               />
@@ -25,7 +25,7 @@ export default function About() {
           <div className='mb-10 flex flex-wrap justify-between'>
             <div className='w-full md:w-1/2 md:pr-4'>
               <img
-                src='https://media.giphy.com/media/3o6nUPEMDDFUfDPHVu/giphy.gif'
+                src='https://i.pinimg.com/originals/d4/55/e3/d455e3be112235e6f70ce41be9ffd6d2.gif'
                 alt='Medical Care Animation'
                 className='w-full rounded-lg shadow-md'
               />
