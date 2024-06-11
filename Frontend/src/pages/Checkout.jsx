@@ -478,7 +478,7 @@ const AddressForm = () => {
           </div>
           <div className="flex justify-center">
             {loading ? (
-              <button className="bg-[#125872] text-white font-semibold w-full py-3 rounded-md mt-4" disabled>
+              <button className="bg-[#125872] text-white font-semibold py-2 rounded-md  w-[15rem]" disabled>
                 Loading...
               </button>
             ) : (

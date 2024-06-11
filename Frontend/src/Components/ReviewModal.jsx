@@ -6,7 +6,8 @@ const ReviewModal = ({ onClose, onSubmit, productName }) => {
   const { user } = useContext(AuthContext); // Access the user from the AuthContext
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState('');
-
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const apiKey = import.meta.env.VITE_API_KEY;
   const reviewerName = user ? user.username : '';
 
   const handleSubmit = async (e) => {
@@ -21,7 +22,7 @@ const ReviewModal = ({ onClose, onSubmit, productName }) => {
 
     try {
       // Save review to the database
-      await axios.post('https://medicine-website-two.vercel.app/api/savereviews', newReview);
+      await axios.post(`${apiUrl}/savereviews`, newReview);
 
       // Call the onSubmit callback with the new review data
       onSubmit(newReview);

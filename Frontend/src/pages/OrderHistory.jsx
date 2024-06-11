@@ -184,11 +184,12 @@ function OrderHistory() {
                         <div>
                           <div className="text-xs md:text-sm text-gray-700">Payment Status: {order.paymentStatus}</div>
                           <div className="text-xs md:text-sm text-gray-700">Payment ID: {order.razorpay_order_id}</div>
+                          <div className="text-xs md:text-sm text-gray-700">Order ID: {order._id}</div>
                         </div>
                         <div className=''>
-                          <p className='text-xs md:text-sm text-gray-700'>Subtotal: {order.subtotal}</p>
-                          <p className='text-xs md:text-sm text-gray-700'>Discount: {order.discount}</p>
-                          <p className='text-xs md:text-sm text-gray-700'>Delivery Fee: {order.deliveryFee}</p>
+                          <p className='text-xs md:text-sm text-gray-700'>Subtotal: ₹{order.subtotal}</p>
+                          <p className='text-xs md:text-sm text-gray-700'>Discount: ₹ {order.discount}</p>
+                          <p className='text-xs md:text-sm text-gray-700'>Delivery Fee: ₹ {order.deliveryFee}</p>
                           <div className="text-base md:text-lg font-semibold text-gray-800">Total: ₹{order.amount}</div>
                         </div>
 

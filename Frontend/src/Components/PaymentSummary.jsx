@@ -189,7 +189,6 @@ const PaymentSummary = ({ cartItems, handleSubmit }) => {
               <LuBadgePercent className="inline-block text-xl mr-2" />
               Apply Coupon
             </button>
-            {/* Checkout Button */}
             <button onClick={handleSubmit} className="bg-[#125872] text-white font-semibold w-full py-3 rounded-md mt-4">
               Add Address
             </button>
