@@ -29,8 +29,8 @@ const Category = () => {
           headers: {
             apikey: apiKey,
           },
-        });        
-        const productData = response.data.find(item => 
+        });
+        const productData = response.data.find(item =>
           item.Name.replace(/ /g, '-') === formattedName
         );
         setItems(response.data)
@@ -42,7 +42,7 @@ const Category = () => {
       } catch (error) {
         console.error("Error fetching data:", error.message);
         setProduct(null);
-      } 
+      }
     };
     fetchData();
   }, [subCategory, formattedName]);
@@ -52,8 +52,8 @@ const Category = () => {
   // }
 
   if (!product) {
-    return <div className='h-[36rem] flex justify-center'>
-    <div className="my-auto"><LoadingGif /></div>
+    return <div >
+      <LoadingGif />
     </div>;
   }
 
