@@ -103,7 +103,7 @@ const PaymentSummary = ({ cartItems, handleSubmit }) => {
   const updateTotalPrice = (items, discount) => {
     const newSubtotal = getCartTotal();
     const newTotalPrice = calculateTotalPrice(newSubtotal, discount);
-    localStorage.setItem('totalPrice', JSON.stringify(newTotalPrice));
+   // localStorage.setItem('totalPrice', JSON.stringify(newTotalPrice));
     setTotalPrice(newTotalPrice);
     setSubtotal(newSubtotal);
   };
