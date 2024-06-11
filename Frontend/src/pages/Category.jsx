@@ -57,8 +57,8 @@ const Category = () => {
   // }
 
   if (!product) {
-    return <div className='h-[36rem] flex justify-center'>
-    <div className="my-auto"><LoadingGif /></div>
+    return <div>
+      <LoadingGif />
     </div>;
   }
 
