@@ -7,8 +7,8 @@ import loadinggif from "../assets/282.gif"
 function LoadingGif() {
     return (
         // <img src={loadingGif} alt="loading..." />
-        <div className="flex gap-4 p-4 flex-wrap justify-center">
-<img className="" src={loadinggif} alt="Loading icon" />
+        <div className="h-[36rem] flex justify-center">
+<img className="my-auto" src={loadinggif} alt="Loading icon" />
   {/* <img className="w-10 h-10 animate-spin" src="https://www.svgrepo.com/show/491270/loading-spinner.svg" alt="Loading icon" /> */}
 </div>
     )

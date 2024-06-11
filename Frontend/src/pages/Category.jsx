@@ -30,12 +30,12 @@ const Category = () => {
           headers: {
             apikey: apiKey,
           },
-        });        
-        
-        const productData = response.data.find(item => 
+        });
+
+        const productData = response.data.find(item =>
           item.Name.replace(/ /g, '-') === formattedName
         );
-        
+
         setItems(response.data)
         if (productData) {
           setProduct(productData);
@@ -52,12 +52,14 @@ const Category = () => {
     fetchData();
   }, [subCategory, formattedName]);
 
-  if (isLoading) {
-    return <LoadingGif />;
-  }
+  // if (isLoading) {
+  //   return <LoadingGif />;
+  // }
 
   if (!product) {
-    return <div className="text-center text-gray-600">Product not found</div>;
+    return <div className='h-[36rem] flex justify-center'>
+    <div className="my-auto"><LoadingGif /></div>
+    </div>;
   }
 
   const isMedicine = !!product.Medicine_Name;
