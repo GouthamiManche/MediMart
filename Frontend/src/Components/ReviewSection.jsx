@@ -1,4 +1,3 @@
-// ReviewSection.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ReviewModal from './ReviewModal';
@@ -12,21 +11,26 @@ const ReviewSection = () => {
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const reviewsPerPage = 3;
-  const { formattedSubCategory, formattedName } = useParams();
-  const decodedName = decodeURIComponent(formattedName.replace(/-/g, ' '));
+  const { formattedName } = useParams();
+const decodedName = decodeURIComponent(formattedName.replace(/-/g, ' '));
+  const apiUrl = import.meta.env.VITE_API_URL;
+  const apiKey = import.meta.env.VITE_API_KEY;
 
   useEffect(() => {
-    const fetchReviews = async () => {
-      try {
-        const response = await axios.get('https://medicine-website-two.vercel.app/api/getreviews');
-        setReviews(response.data);
-      } catch (error) {
-        console.error('Error fetching reviews:', error);
-      }
-    };
+  const fetchReviews = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/getreviews`);
+      const filteredReviews = response.data.filter(
+        (review) => review.Product_Name === decodedName
+      );
+      setReviews(filteredReviews);
+    } catch (error) {
+      console.error('Error fetching reviews:', error);
+    }
+  };
 
-    fetchReviews();
-  }, []);
+  fetchReviews();
+}, [decodedName]);
 
   const handleSubmitReview = (review) => {
     setReviews((prevReviews) => [...prevReviews, review]);
