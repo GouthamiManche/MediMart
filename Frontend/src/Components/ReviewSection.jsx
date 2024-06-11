@@ -26,7 +26,7 @@ const ReviewSection = () => {
     };
 
     fetchReviews();
-  }, []);
+  }, [reviews]);
 
   const handleSubmitReview = (review) => {
     setReviews((prevReviews) => [...prevReviews, review]);
