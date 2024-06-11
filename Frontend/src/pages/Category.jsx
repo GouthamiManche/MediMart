@@ -25,17 +25,14 @@ const Category = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setIsLoading(true);
         const response = await axios.get(`${apiUrl}/products?sub_category=${subCategory}`, {
           headers: {
             apikey: apiKey,
           },
         });        
-        
         const productData = response.data.find(item => 
           item.Name.replace(/ /g, '-') === formattedName
         );
-        
         setItems(response.data)
         if (productData) {
           setProduct(productData);
@@ -45,16 +42,10 @@ const Category = () => {
       } catch (error) {
         console.error("Error fetching data:", error.message);
         setProduct(null);
-      } finally {
-        setIsLoading(false);
-      }
+      } 
     };
     fetchData();
   }, [subCategory, formattedName]);
-
-  if (isLoading) {
-    return <LoadingGif />;
-  }
 
   if (!product) {
     return <div className="text-center text-gray-600">Product not found</div>;

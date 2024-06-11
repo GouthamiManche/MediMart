@@ -30,7 +30,7 @@ const decodedName = decodeURIComponent(formattedName.replace(/-/g, ' '));
   };
 
   fetchReviews();
-}, [decodedName]);
+}, [decodedName,reviews]);
 
   const handleSubmitReview = (review) => {
     setReviews((prevReviews) => [...prevReviews, review]);
