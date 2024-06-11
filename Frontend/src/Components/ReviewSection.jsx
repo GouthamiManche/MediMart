@@ -1,14 +1,32 @@
-import React, { useState } from 'react';
+// ReviewSection.jsx
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import ReviewModal from './ReviewModal';
 import ReviewStars from './ReviewStars';
 import { PiPencilLine } from "react-icons/pi";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { useParams } from 'react-router-dom';
 
 const ReviewSection = () => {
   const [reviews, setReviews] = useState([]);
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const reviewsPerPage = 3;
+  const { formattedSubCategory, formattedName } = useParams();
+  const decodedName = decodeURIComponent(formattedName.replace(/-/g, ' '));
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await axios.get('https://medicine-website-two.vercel.app/api/getreviews');
+        setReviews(response.data);
+      } catch (error) {
+        console.error('Error fetching reviews:', error);
+      }
+    };
+
+    fetchReviews();
+  }, []);
 
   const handleSubmitReview = (review) => {
     setReviews((prevReviews) => [...prevReviews, review]);
@@ -20,7 +38,7 @@ const ReviewSection = () => {
   };
 
   const ratingCounts = reviews.reduce((acc, review) => {
-    acc[review.rating] = (acc[review.rating] || 0) + 1;
+    acc[review.Review_Star] = (acc[review.Review_Star] || 0) + 1;
     return acc;
   }, {});
 
@@ -50,7 +68,7 @@ const ReviewSection = () => {
           <ReviewStars
             rating={
               reviews.length > 0
-                ? reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length
+                ? reviews.reduce((sum, review) => sum + review.Review_Star, 0) / reviews.length
                 : 0
             }
           />
@@ -82,20 +100,20 @@ const ReviewSection = () => {
               <span className="text-gray-800 font-semibold">{reviews.length} Reviews</span>
             </div>
             <div className="space-y-4">
-  {currentReviews.length === 0 ? (
-    <p className="text-gray-600 text-center">No reviews yet.</p>
-  ) : (
-    currentReviews.map((review, index) => (
-      <div key={index} className="flex items-center my-2 pb-2 border-b border-gray-300">
-        <ReviewStars rating={review.rating} />
-        <span className="text-gray-800 font-semibold ml-2">
-          Review {index + 1}
-        </span>
-        <p className="text-gray-700 ml-4">{review.review}</p>
-      </div>
-    ))
-  )}
-</div>
+              {currentReviews.length === 0 ? (
+                <p className="text-gray-600 text-center">No reviews yet.</p>
+              ) : (
+                currentReviews.map((review, index) => (
+                  <div key={index} className="flex items-center my-2 pb-2 border-b border-gray-300">
+                    <ReviewStars rating={review.Review_Star} />
+                    <span className="text-gray-800 font-semibold ml-2">
+                      {review.Reviewer_Name}
+                    </span>
+                    <p className="text-gray-700 ml-4">{review.Review}</p>
+                  </div>
+                ))
+              )}
+            </div>
             <div className="mt-[5rem] flex justify-center items-end">
               {currentPage > 1 && (
                 <button
@@ -139,6 +157,7 @@ const ReviewSection = () => {
         <ReviewModal
           onClose={() => setShowReviewModal(false)}
           onSubmit={handleSubmitReview}
+          productName={decodedName}
         />
       )}
     </div>
