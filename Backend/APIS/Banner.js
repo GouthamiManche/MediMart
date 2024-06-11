@@ -9,19 +9,18 @@ const getBanner = async (req, res) => {
     res.status(500).send('Server error');
   }
 };
-
 const updateBanner = async (req, res) => {
   try {
     const { id } = req.params;
-    const { Title, Image } = req.body;
+    const { Title, Image, Link } = req.body;
 
-    if (!id || !Title || !Image) {
+    if (!id || !Title || !Image || !Link) { // Updated to include Link
       return res.status(400).json({ message: 'Missing required fields' });
     }
 
     const updatedBanner = await Banner.findByIdAndUpdate(
       id,
-      { Title, Image },
+      { Title, Image, Link }, // Updated to include Link
       { new: true }
     );
 
@@ -38,15 +37,16 @@ const updateBanner = async (req, res) => {
 
 const addBanner = async (req, res) => {
   try {
-    const { Title, Image } = req.body;
+    const { Title, Image, Link } = req.body; // Updated to include Link
 
-    if (!Title || !Image) {
+    if (!Title || !Image || !Link) { // Updated to include Link
       return res.status(400).json({ message: 'Missing required fields' });
     }
 
     const newBanner = new Banner({
       Title,
-      Image
+      Image,
+      Link // Updated to include Link
     });
 
     await newBanner.save();

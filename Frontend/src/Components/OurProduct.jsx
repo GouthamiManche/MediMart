@@ -9,7 +9,7 @@ import healthdevices from '../assets/healthdevices.jpg'
 import medicine from '../assets/medicines.jpg'
 export default function OurProduct() {
   return (
-    <div className="m-4 md:mx-6rem text-center font-semibold md:pb-4rem  text-gray-700">
+    <div className="m-4 md:mx-6rem text-center font-semibold md:pb-4rem text-gray-700">
       <h1 className="text-xl md:text-4xl lg:mb-2rem lg:text-3vw md:pt-2rem ">Product Categories</h1>
       <div className="flex flex-wrap justify-center gap-4 md:gap-4 mt-8 ">
         <OurProductCard imageSrc={personalcare} title="Personal Care" subCategory="Personal Care" />

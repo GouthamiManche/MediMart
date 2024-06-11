@@ -1,13 +1,15 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from '../Components/AuthProvider';
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ReCAPTCHA from "react-google-recaptcha";
 
 function Login() {
   const { login, isAuthenticated } = useContext(AuthContext);
+  const [verfied, setVerifed] = useState(false);
   const [formData, setFormData] = useState({
     identifier: "",
     password: "",
@@ -36,7 +38,10 @@ function Login() {
       setPasswordError("");
     }
   };
-
+  function onChange(value) {
+    //console.log("Captcha value:", value);
+    setVerifed(true);
+  }
   const validateIdentifier = (identifier) => {
     // Add any specific validation for identifier if needed
     return identifier.length > 0;
@@ -99,8 +104,9 @@ function Login() {
     setShowPassword(!showPassword);
   };
 
+  const siteKey = import.meta.env.VITE_SITE_KEY;
   return (
-    <div className="bg-[#f5f5f5] min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8">
+    <div className="bg-gray-200 min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8">
       <div className="max-w-md w-full mx-auto bg-white rounded-lg shadow-lg p-6 sm:p-8">
         <div className="flex items-center justify-center mb-6">
           <div className="text-xl md:text-3xl font-bold ml-1">
@@ -153,7 +159,7 @@ function Login() {
                   </svg>
                 ) : (
                   <svg className="h-5 w-5 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                      <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
                   </svg>
                 )}
               </div>
@@ -163,18 +169,24 @@ function Login() {
             )}
           </div>
           <div className="flex items-center justify-center mb-4">
+            <ReCAPTCHA
+              sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+              onChange={onChange}
+            />
+          </div>
+          <div className="flex items-center justify-center mb-4">
             <button
               type="submit"
               className="bg-[#125872] text-white font-bold w-full py-2 px-4 rounded"
-              disabled={!formData.identifier || !formData.password || loading} // Disable button when loading
+              disabled={!formData.identifier || !formData.password || loading || !verfied} // Disable button when loading
             >
               {loading ? 'Logging in...' : 'Log in'} {/* Change button text based on loading state */}
             </button>
           </div>
           <div className="flex flex-wrap justify-between text-sm">
-            <p className="text-gray-500">New User ? </p>
+            <p className="text-gray-500">New User?</p>
             <Link to="/Register" className="text-[#125872] font-semibold">
-               Register
+              Register
             </Link>
             <Link to="/forgetpassword" className="text-[#125872] ml-auto">
               Forget Password

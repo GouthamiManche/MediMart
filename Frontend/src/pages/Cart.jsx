@@ -46,9 +46,9 @@ const Cart = () => {
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   fetchCartItems();
-  // }, [user.email]); // Fetch cart items when the user's email changes
+  useEffect(() => {
+    updateTotalPrice(cartItems, discountPercentage);
+  }, [cartItems, discountPercentage]);
 
   const handleRemoveFromCart = async (index, productId) => {
     try {
@@ -127,13 +127,8 @@ const Cart = () => {
     }
   };
 
-  useEffect(() => {
-    updateTotalPrice(cartItems, discountPercentage);
-  }, [cartItems, discountPercentage]);
-
   const updateTotalPrice = (items, discount) => {
     const newTotalPrice = calculateTotalPrice(items, discount);
-    localStorage.setItem('totalPrice', JSON.stringify(newTotalPrice));
     setTotalPrice(newTotalPrice);
   };
 
