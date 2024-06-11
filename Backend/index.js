@@ -97,10 +97,10 @@ app.get('/', (req, res) => {
 app.post('/api/savereviews',saveReview);
 app.get('/api/getreviews', getReviews);
 
-// app.listen();
+app.listen();
 
-const PORT = 4000; // Specify the desired local port
+// const PORT = 4000; // Specify the desired local port
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });
