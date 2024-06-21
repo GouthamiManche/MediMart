@@ -1,1 +1,2 @@
-![image](https://github.com/GouthamiManche/MediMart/assets/159453534/f5b9f00e-9fbc-4f0a-b30c-65e6eebe7a2c)
+
+![image](https://github.com/GouthamiManche/MediMart/assets/159453534/962de492-f7e0-4469-b185-1690d4ba4cef)
